@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+env/
+.conda/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# ML datasets
+data/
+dataset/
+datasets/
+
+# Model weights / checkpoints
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+
+# Logs and experiment tracking
+logs/
+runs/
+wandb/
+lightning_logs/
+
+# Temporary files
+*.tmp
+*.log
