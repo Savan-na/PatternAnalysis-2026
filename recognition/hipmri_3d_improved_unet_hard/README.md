@@ -2,7 +2,7 @@
 
 ## Project Status
 
-Production filename discovery, MRI/segmentation pairing, and frozen patient-level split checks passed on the real Rangpur HipMRI dataset. One-pair NIfTI loading, spatial validation, 3D physical resampling, and MRI intensity normalisation are implemented. The student-run Batch 2.3 Rangpur regression suite passed 71/71 tests; two real pairs passed normalisation checks. Full-dataset array-content verification and preprocessing, model training, and final performance evaluation remain incomplete.
+Production filename discovery, MRI/segmentation pairing, and frozen patient-level split checks passed on the real Rangpur HipMRI dataset. One-pair NIfTI loading, spatial validation, 3D physical resampling, MRI intensity normalisation, and an on-demand 3D Patch Dataset are implemented. The student-run Batch 2.4 Rangpur regression suite passed 87/87 tests; one real training and one real validation DataLoader patch passed acceptance checks. Full-dataset processing, model training, and final performance evaluation remain incomplete.
 
 ## Problem
 
@@ -44,7 +44,7 @@ Matching declared physical spatial units are accepted only with matching geometr
 
 After this correction, the student ran 33/33 tests successfully on Rangpur and loaded the real `K019_Week1` pair. Both decoded arrays had shape `(256, 256, 144)`; MRI dtype was `float32`, segmentation dtype `uint8`, axis codes were `('L', 'P', 'S')`, and labels present were `(0, 1, 2, 3, 4, 5)`. The working unit was `mm`, while the mask header remained `unknown` and its unit inference flag was `True`.
 
-Still pending: array-content verification and resampling for all 211 pairs; one-hot mask encoding; PyTorch training dataset preparation; Standard and Improved 3D U-Net training; and final Dice/IoU evaluation.
+Still pending: array-content verification and resampling for all 211 pairs; Standard and Improved 3D U-Net training; full-volume inference; and final Dice/IoU evaluation. The initial Patch Dataset retains integer mask IDs rather than one-hot encoding them.
 
 ## 3D Resampling and Spatial Alignment
 
@@ -82,6 +82,23 @@ The focused local synthetic suite passed **18/18** tests in WSL with an import s
 
 For both cases, unchanged mask and affine checks passed and the process exited with status `0`. Peak RSS is for the **whole verification process**, not memory exclusively allocated by normalisation. These are two real examples only: full 211-volume normalisation, clinical accuracy, and training remain unverified.
 
+## On-Demand 3D Patch Dataset
+
+`HipMRIPatchDataset` in `patch_dataset.py` accepts only `train` and `validation`, using the frozen patient-disjoint assignments from `discover_dataset()`. Each `__getitem__` loads, resamples, and normalises **one** MRI/mask pair through the approved functions; no processed full-volume cache is retained. The source NumPy convention `(X,Y,Z)` is transposed to tensor `(D,H,W)=(Z,Y,X)`, then MRI and mask receive identical crop coordinates. This axis permutation is not another physical resampling operation. Each sample contains a `float32` MRI tensor `[1,D,H,W]`, a `torch.long` mask `[D,H,W]` with integer IDs 0–5, and patient ID, Week, crop origin in DHW order, and sampling mode.
+
+`patch_dataset_config.json` sets an initial `(64,64,64)` patch, one training patch per volume, foreground-sampling probability `0.5`, prostate foreground label `5`, seed `3710`, and center-crop validation. Patch dimensions can be configured but must be positive, divisible by 16, and fit the processed volume without padding. Training crop choices are reproducible from seed, epoch, and sample index; `set_epoch()` allows them to vary reproducibly between epochs. If foreground sampling selects label 5 and it exists, the sampled patch contains a prostate voxel; an absent label safely falls back to a random crop. Validation uses a deterministic center crop without label-guided selection. The initial DataLoader uses `num_workers=0` and CPU preprocessing.
+
+Codex reported **16/16 focused local synthetic tests passed** in WSL. They used constructed arrays, mocked preprocessing interfaces, and an in-memory NiBabel import shim; they were not real-data tests. The student ran the five-module Rangpur regression suite: `Ran 87 tests in 8.646s`, then `OK` (71 previously verified tests plus 16 Patch Dataset tests).
+
+The student then ran a CPU-only, read-only real-data check with `HipMRIPatchDataset`, `Subset`, and `DataLoader` (`batch_size=1`, `num_workers=0`). MRI shape/dtype and finiteness, mask shape/dtype and labels, prostate-aware training sampling with label 5 present, and deterministic validation center sampling passed:
+
+| Split and case | MRI batch | Mask batch | Labels | Crop origin DHW | Mode | Result |
+| --- | --- | --- | --- | --- | --- | --- |
+| Train `K019_Week1` | `(1,1,64,64,64)` float32 | `(1,64,64,64)` int64 | `[0,1,2,3,5]` | `[40,60,64]` | `prostate` | PASS |
+| Validation `B040_Week0` | `(1,1,64,64,64)` float32 | `(1,64,64,64)` int64 | `[1,2,3,4,5]` | `[32,87,87]` | `center` | PASS |
+
+The final output was `PASS: REAL PATCH DATASET VERIFICATION`; process wall time was **11.72 s**, maximum resident set size **768352 KiB**, and exit status **0**. RSS covers the whole Python verification process, not GPU memory or an isolated Patch Dataset allocation. Only two real patches were accepted. All 211 MRI arrays have not been processed through the full pipeline; center crops may miss the prostate in other validation cases, and repeated on-demand preprocessing may limit training throughput. Full-volume inference, clinical accuracy, model training, and Dice/IoU evaluation remain pending.
+
 ## Engineering Question
 
 Compared with a Standard 3D U-Net (Normal Difficulty baseline), does a 3D Improved U-Net (Hard Difficulty) with volumetric residual units and deep supervision reduce clinically important prostate boundary and slice-transition errors, improve segmentation performance, and justify its additional computational cost?
@@ -113,9 +130,12 @@ Compared with a Standard 3D U-Net (Normal Difficulty baseline), does a 3D Improv
 - `intensity_normalization.py`: One-pair MRI-only clipping and nonzero Z-score normalisation.
 - `normalization_config.json`: Frozen initial percentile, selection, precision, and zero policies.
 - `test_intensity_normalization.py`: Synthetic normalisation and input-integrity tests.
+- `patch_dataset.py`: On-demand, aligned 3D training and validation patches.
+- `patch_dataset_config.json`: Initial patch shape and sampling policy.
+- `test_patch_dataset.py`: Synthetic tensor-axis, crop, sampling, split, and DataLoader tests.
 - `train.py`: Training workflow for the planned models.
 - `predict.py`: Inference workflow for the planned models.
 
 ## Artificial Intelligence Usage Disclosure
 
-AI assistance was used to draft the discovery code, split validation, NIfTI loader, resampling and normalisation implementations, synthetic tests, and documentation, and to review reported failures and propose targeted corrections. The approved patient assignments, expected counts, CSIRO labels, training-derived spacing evidence, and real intensity-audit results were provided as project facts; they were not generated by the assistant. The student executed the Rangpur tests, 211-pair header audit, and real-pair loading, resampling, and normalisation checks. The detailed AI contribution and command record is maintained in `ai.md`.
+AI assistance was used to draft the discovery code, split validation, NIfTI loader, resampling, normalisation, and Patch Dataset implementations, synthetic tests, and documentation, and to review reported failures and propose targeted corrections. The approved patient assignments, expected counts, CSIRO labels, training-derived spacing evidence, and real intensity-audit results were provided as project facts; they were not generated by the assistant. The student executed the Rangpur tests, 211-pair header audit, and real-pair loading, resampling, normalisation, and DataLoader checks. The detailed AI contribution and command record is maintained in `ai.md`.

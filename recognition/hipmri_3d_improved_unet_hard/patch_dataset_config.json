@@ -1,0 +1,8 @@
+{
+  "patch_shape_dhw": [64, 64, 64],
+  "train_patches_per_volume": 1,
+  "train_foreground_probability": 0.5,
+  "foreground_label": 5,
+  "seed": 3710,
+  "validation_crop": "center"
+}

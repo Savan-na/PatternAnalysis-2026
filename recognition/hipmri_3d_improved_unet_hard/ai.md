@@ -6,7 +6,7 @@ This is a cumulative record for the HipMRI project. A command is marked **verifi
 
 AI assistance helped draft `dataset.py`, its synthetic tests, the project README updates, and the temporary read-only verifier. Later entries document AI-assisted NIfTI loading, resampling, synthetic tests and targeted corrections. The approved patient assignments, expected counts, and CSIRO labels came from the project evidence supplied by the student; AI did not infer or generate them. The student executed the interactive Rangpur and GitHub commands and reported their outputs. The real-data results below are from that Rangpur execution, not from the earlier local synthetic dry run. Local Git metadata was also checked while preparing this record.
 
-Commands proposed for a future batch are **not** verified commands and must not be added to the reference as completed work. M1-B4 Batch 1 proves filename discovery, pairing, and patient-level split integrity; it did not prove image-content processing or model performance. Batch 2.1, Batch 2.2, and Batch 2.3 evidence is recorded separately below.
+Commands proposed for a future batch are **not** verified commands and must not be added to the reference as completed work. M1-B4 Batch 1 proves filename discovery, pairing, and patient-level split integrity; it did not prove image-content processing or model performance. Batch 2.1, Batch 2.2, Batch 2.3, and Batch 2.4 evidence is recorded separately below.
 
 ## B. Verified Command Reference
 
@@ -208,9 +208,43 @@ For real-case verification, the student used a Bash loop over `K019:1` and `S035
 
 The 71-test result and two real-case values were reported from the student's Rangpur execution, not rerun during this documentation update. Full 211-volume normalisation, model training and clinical performance evaluation remain unverified.
 
+### M1-B4 Batch 2.4 — Minimal PyTorch 3D Patch Dataset
+
+**Status:** Technically approved after source review, student-run Rangpur regression and two real DataLoader patch checks. The remote results below were supplied by the student; Codex did not access Rangpur. The exact combined regression command is available. The original SCP/login commands and complete real-data Python here-document have not been supplied for this record and are not reconstructed.
+
+The exact student-executed five-module regression command and reported terminal ending were:
+
+```bash
+CUDA_VISIBLE_DEVICES='' python -B -m unittest \
+  recognition.hipmri_3d_improved_unet_hard.test_dataset \
+  recognition.hipmri_3d_improved_unet_hard.test_volume_io \
+  recognition.hipmri_3d_improved_unet_hard.test_resampling \
+  recognition.hipmri_3d_improved_unet_hard.test_intensity_normalization \
+  recognition.hipmri_3d_improved_unet_hard.test_patch_dataset \
+  -v
+```
+
+```text
+Ran 87 tests in 8.646s
+
+OK
+```
+
+For the real check, the student ran a Python here-document with `/usr/bin/time -v env CUDA_VISIBLE_DEVICES='' python -B -`. It used `HipMRIPatchDataset`, `Subset`, and `DataLoader` with `batch_size=1`, `num_workers=0`. The complete original Python command is not available here; the verified procedure and outputs follow.
+
+| Environment | Command or procedure | Purpose | Expected Output | Why Expected | Actual Result | Interpretation | Limitations |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Local WSL `torch` Python | Focused `test_patch_dataset` synthetic suite with mocked preprocessing and an in-memory NiBabel import shim; exact local command is in the Codex execution history. | Check tensor axes and dtypes, aligned crops, sampling, split restrictions, DataLoader collation and non-mutation. | 16 tests ending in `OK`. | The new module has 16 synthetic test cases. | **16/16 PASS**, Codex-reported local execution. | Tests Patch Dataset logic with constructed arrays. | No real NIfTI was loaded; the production preprocessing calls were mocked. |
+| Windows PowerShell to Rangpur | Student manual SCP transfer of `patch_dataset.py`, `test_patch_dataset.py`, and `patch_dataset_config.json`, followed by interactive login and `torch` activation; exact transcript unavailable here. | Place the new files in the verification workspace and select its Python environment. | Files transfer and the new module imports remotely. | Rangpur requires current files and the existing dependencies. | The student reported transfer/login and successfully ran the tests and real check. | Identifies student-executed remote setup. | No password, SCP progress log, or invented command is included. |
+| Rangpur `torch` environment, GPU hidden | Exact five-module command shown above. | Regress earlier pipeline tests with Patch Dataset tests. | 87 tests ending in `OK`. | Previous 71 plus 16 new tests total 87. | `Ran 87 tests in 8.646s`, then `OK` (**87/87 PASS**). | Student-run combined regression evidence. | Most tests are synthetic; this command alone does not verify real patch output. |
+| Rangpur CPU, real train patch | Timed Python procedure with `HipMRIPatchDataset`, `Subset`, `DataLoader(batch_size=1, num_workers=0)`. | Check a prostate-aware K019 Week1 patch using the approved on-demand pipeline. | `[1,1,64,64,64]` float32 MRI, `[1,64,64,64]` int64 mask, finite values, labels 0–5 and prostate present. | The train sampler selects a class-5 voxel when foreground sampling succeeds. | Patient `K019`, Week `1`; MRI `(1,1,64,64,64)` float32; mask `(1,64,64,64)` int64; labels `[0,1,2,3,5]`; crop origin DHW `[40,60,64]`; mode `prostate`; **PASS**. | One real training patch contained prostate label 5 with aligned tensor shapes. | This is one patch, not all longitudinal scans or full-volume inference. |
+| Rangpur CPU, real validation patch | Same timed procedure using the frozen validation split. | Check deterministic center-crop output for B040 Week0. | The same batch dtypes/shapes, finite values and valid labels; `center` mode. | Validation selection has no training-time crop randomness. | Patient `B040`, Week `0`; MRI `(1,1,64,64,64)` float32; mask `(1,64,64,64)` int64; labels `[1,2,3,4,5]`; crop origin DHW `[32,87,87]`; mode `center`; **PASS**. | One real validation center patch passed. | A center crop may omit the prostate in other cases. |
+
+The real procedure ended `PASS: REAL PATCH DATASET VERIFICATION`; `/usr/bin/time -v` reported wall time **11.72 s**, maximum resident set size **768352 KiB**, and exit status **0**. RSS measures the whole Python verification process, not GPU memory or an isolated Dataset allocation. Only two real patches were accepted. Full 211-volume processing, training, full-volume inference, clinical accuracy and Dice/IoU evaluation remain unverified.
+
 ## C. AI-Assisted Development Log
 
-This log complements the command reference above. **Repository evidence** means the current files or Git objects inspected while updating this document. **Reported terminal evidence** means command output supplied by the student from an earlier session; it was not rerun for this log. **Codex-reported** means an earlier execution report without an independent reproduction here. **Synthetic** means generated inputs: empty files for Batch 1 discovery tests, genuine small NIfTI files for Batch 2.1 loading tests, constructed 3D arrays for Batch 2.2 resampling tests, and synthetic 3D arrays for Batch 2.3 normalisation tests. **Real-dataset** means student-run checks on Rangpur HipMRI files; their scope is stated for each batch. A planned action has no PASS result.
+This log complements the command reference above. **Repository evidence** means the current files or Git objects inspected while updating this document. **Reported terminal evidence** means command output supplied by the student from an earlier session; it was not rerun for this log. **Codex-reported** means an earlier execution report without an independent reproduction here. **Synthetic** means generated inputs: empty files for Batch 1 discovery tests, genuine small NIfTI files for Batch 2.1 loading tests, constructed 3D arrays for Batch 2.2 resampling tests, synthetic 3D arrays for Batch 2.3 normalisation tests, and constructed arrays with mocked preprocessing for Batch 2.4 Patch Dataset tests. **Real-dataset** means student-run checks on Rangpur HipMRI files; their scope is stated for each batch. A planned action has no PASS result.
 
 ### Earlier substantiated milestones — M0 and M1-B1 through M1-B3
 
@@ -284,6 +318,16 @@ These rows retain the available facts without treating a commit author or a late
 **Human transfer and remote verification.** The student manually copied the three new files with SCP, logged into Rangpur interactively, selected the `torch` environment and ran the exact combined command in Section B. The student supplied `Ran 71 tests in 0.214s` followed by `OK`, then ran the real-case Bash loop for K019 Week1 and S035 Week0 with `/usr/bin/time -v`. The Python verification invoked production discovery, loading, resampling and normalisation and checked finite float32 output, original-zero preservation, unchanged mask/affine and output selected mean/std within `1e-4` of 0/1. Section B contains the actual reported per-case values, measured whole-process RSS, wall times and exit statuses. Codex did not independently access Rangpur or reproduce these real-data outputs.
 
 **Review, limits and disclosure.** ChatGPT-assisted final source review found no blocking issue within the Batch 2.3 scope, and the student requested this documentation update after technical approval. AI materially contributed algorithm planning, code generation, synthetic tests, source review and documentation. The student established priorities and constraints, supplied the initial real-data evidence, executed Rangpur transfer/tests/real-case checks, reviewed outputs and approved the technical decisions. Git authorship alone would not separate those contributions. The 71 tests and two real examples support this one-pair normalisation pipeline; they do **not** establish success on all 211 volumes, clinical contour quality, model training or Dice/IoU performance. No Batch 2.3 commit or push is claimed here.
+
+### M1-B4 Batch 2.4 — minimal PyTorch 3D Patch Dataset
+
+**Scope and AI instructions.** The student approved the smallest Patch Dataset needed to prepare a future Standard 3D U-Net smoke test. They required reuse of the frozen patient-disjoint split and established discovery → loading → resampling → normalisation pipeline, CPU-only on-demand processing, `(64,64,64)` patches, correct `(X,Y,Z)` to `(Z,Y,X)` tensor-axis mapping, aligned MRI/mask crops, reproducible foreground-aware training selection, deterministic validation and no model or training code. ChatGPT assisted with the implementation specification. **Prompt Summary — Not Verbatim:** create only `patch_dataset.py`, `test_patch_dataset.py`, and `patch_dataset_config.json`; use existing APIs rather than duplicate preprocessing; test synthetic alignment, shapes, masks, sampling, split isolation and one-batch DataLoader output; stop before Rangpur access, training, documentation or Git submission. The full original implementation prompt exists in the project conversation and is not presented here as a reconstructed quotation.
+
+**Codex implementation and synthetic evidence.** Codex created those three files. `HipMRIPatchDataset` accepts only `train`/`validation`, takes their `VolumePair` records from `discover_dataset()`, and invokes `load_volume_pair()`, `resample_volume_pair()` and `normalize_volume_pair()` in `__getitem__`; it holds no processed volume cache. It transposes both arrays from `(X,Y,Z)` to `(D,H,W)=(Z,Y,X)`, applies the same crop slices, returns float32 MRI `[1,D,H,W]` and integer `torch.long` mask `[D,H,W]`, and records patient, Week, origin and sampling mode. Training uses seed/epoch/index to draw random or prostate-containing patches, with a fallback when class 5 is absent; validation uses a center crop. The config records patch shape, one training patch per volume, probability `0.5`, label `5`, seed `3710`, and center validation. Codex reported **16/16 PASS** in WSL using constructed arrays and mocked preprocessing with an in-memory NiBabel import shim. This is synthetic evidence, not a real HipMRI result.
+
+**Student verification and review sequence.** The student manually transferred the three files with SCP, logged into Rangpur, activated `torch`, and ran the exact five-module command in Section B. The student supplied `Ran 87 tests in 8.646s` and `OK`. ChatGPT then assisted with source review; Batch 2.4 passed that review. The student next ran the timed CPU-only real-data DataLoader check with `Subset`, `batch_size=1`, and `num_workers=0`. They inspected and supplied the K019 Week1 training and B040 Week0 validation batches, including tensor shapes/dtypes, valid labels, crop origins and modes, with actual prostate label 5 in the training patch. Both passed; the final reported output and whole-process measurements appear in Section B. This sequence reflects student-executed Rangpur commands; Codex did not independently log in or rerun the cases.
+
+**Outcome, limits and disclosure.** The student reviewed the results and approved the technical decisions, then requested this Codex documentation update. AI materially generated the Patch Dataset and synthetic tests, assisted the specification and source review, and drafted this record. The student set the scope, performed remote transfer and verification, checked the real outputs and approved the batch. The 87-test regression and two real patches support a first on-demand patch pipeline, not full 211-volume coverage. Validation center crops may miss the prostate elsewhere, and repeated full-volume preprocessing per patch may be a training bottleneck. Full-volume inference, architecture training, clinical accuracy and Dice/IoU evaluation remain **PENDING**. No Batch 2.4 commit or push is claimed here.
 
 ### Future record standard
 
