@@ -1,0 +1,11 @@
+{
+  "target_spacing_mm": [1.6796875, 1.6796875, 1.55999755859375],
+  "target_spacing_provenance": "Training-only patient-weighted median from 26 patients and 143 volumes; initial candidate, not clinically validated",
+  "max_estimated_bytes": 536870912,
+  "memory_safety_multiplier": 4,
+  "mri_interpolation_order": 1,
+  "segmentation_interpolation_order": 0,
+  "mri_boundary_mode": "nearest",
+  "segmentation_boundary_mode": "grid-constant",
+  "boundary_value": 0
+}
