@@ -2,7 +2,7 @@
 
 ## Project Status
 
-Production filename discovery, MRI/segmentation pairing, and frozen patient-level split checks passed on the real Rangpur HipMRI dataset. One-pair NIfTI loading, spatial validation, and 3D physical resampling are implemented. After the Batch 2.2 boundary correction, the student-run Rangpur regression suite passed 53/53 tests, and two real pairs passed resampling checks. Full-dataset array-content verification and resampling, later preprocessing, model training, and final performance evaluation remain incomplete.
+Production filename discovery, MRI/segmentation pairing, and frozen patient-level split checks passed on the real Rangpur HipMRI dataset. One-pair NIfTI loading, spatial validation, 3D physical resampling, and MRI intensity normalisation are implemented. The student-run Batch 2.3 Rangpur regression suite passed 71/71 tests; two real pairs passed normalisation checks. Full-dataset array-content verification and preprocessing, model training, and final performance evaluation remain incomplete.
 
 ## Problem
 
@@ -44,7 +44,7 @@ Matching declared physical spatial units are accepted only with matching geometr
 
 After this correction, the student ran 33/33 tests successfully on Rangpur and loaded the real `K019_Week1` pair. Both decoded arrays had shape `(256, 256, 144)`; MRI dtype was `float32`, segmentation dtype `uint8`, axis codes were `('L', 'P', 'S')`, and labels present were `(0, 1, 2, 3, 4, 5)`. The working unit was `mm`, while the mask header remained `unknown` and its unit inference flag was `True`.
 
-Still pending: array-content verification and resampling for all 211 pairs; intensity normalisation; one-hot mask encoding; PyTorch training dataset preparation; Standard and Improved 3D U-Net training; and final Dice/IoU evaluation.
+Still pending: array-content verification and resampling for all 211 pairs; one-hot mask encoding; PyTorch training dataset preparation; Standard and Improved 3D U-Net training; and final Dice/IoU evaluation.
 
 ## 3D Resampling and Spatial Alignment
 
@@ -66,6 +66,21 @@ The student-run **updated Rangpur suite passed 53/53 tests**. Real acceptance ex
 | `S035_Week0` | `(256, 256, 128)` → `(286, 286, 128)` | 3,478 → 4,448 | 185,740 KiB | 0 |
 
 Only these **two real MRI arrays** were resampled as acceptance examples. The complete 211-volume dataset has not been fully resampled or clinically validated; the voxel-count change for S035 is not a segmentation-performance result.
+
+## MRI Intensity Normalisation
+
+`normalize_volume_pair()` in `intensity_normalization.py` processes one validated `ResampledVolumePair` on CPU. It selects voxels where the **original MRI intensity is nonzero**, using MRI intensities alone and never the ground-truth segmentation. It computes the 0.5th and 99.5th percentiles of those values, clips them to the resulting bounds, then computes the clipped values' `float64` mean and population standard deviation (`ddof=0`). It Z-scores the selected values and writes a new finite `float32` MRI of the same shape. Original zero-intensity locations remain zero. The segmentation is retained by reference without in-place modification; the affine is copied, and pair identity, spatial geometry, label metadata, and spatial-unit provenance are preserved.
+
+An entirely zero MRI, non-finite values, invalid 3D shape or dtype, and zero or numerically degenerate clipped nonzero standard deviation are rejected. The result records the selected voxel count, percentile bounds, mean and standard deviation used, original zero fraction, and output statistics on the originally selected voxels. `normalization_config.json` freezes the original-MRI-nonzero selection, percentile values `0.5`/`99.5`, selected-voxel clipping, `ddof=0`, zero preservation, `float64` statistics, and `float32` output. The module reads and validates this policy. These settings are an initial engineering choice for both future model arms, not a clinically optimised formula.
+
+The focused local synthetic suite passed **18/18** tests in WSL with an import shim because NiBabel was unavailable locally. The student-run combined Rangpur suite passed **71/71** tests in **0.214 s**. The student then reported these two real acceptance examples:
+
+| Case | Selected voxels | Clipping bounds | Clipped mean / population std | Output selected mean / std | Peak process RSS | Wall time |
+| --- | ---: | --- | --- | --- | ---: | ---: |
+| `K019_Week1`, `(256, 256, 144)` | 7,199,017 | 1.0 / 298.0 | 62.71922972261352 / 70.6617517907729 | -2.0519089452645352e-09 / 0.9999999993619909 | 341780 KiB | 5.66 s |
+| `S035_Week0`, `(286, 286, 128)` | 7,136,647 | 0.012912326492369175 / 292.36941619872994 | 64.3451434267759 / 73.6351732255404 | -1.364474822943357e-09 / 0.9999999989009823 | 345368 KiB | 5.54 s |
+
+For both cases, unchanged mask and affine checks passed and the process exited with status `0`. Peak RSS is for the **whole verification process**, not memory exclusively allocated by normalisation. These are two real examples only: full 211-volume normalisation, clinical accuracy, and training remain unverified.
 
 ## Engineering Question
 
@@ -95,9 +110,12 @@ Compared with a Standard 3D U-Net (Normal Difficulty baseline), does a 3D Improv
 - `resampling.py`: One-pair shared-grid 3D physical resampling and integrity checks.
 - `resampling_config.json`: Approved initial spacing, memory limit, and boundary policy.
 - `test_resampling.py`: Synthetic spatial, label, boundary, and memory-guard tests.
+- `intensity_normalization.py`: One-pair MRI-only clipping and nonzero Z-score normalisation.
+- `normalization_config.json`: Frozen initial percentile, selection, precision, and zero policies.
+- `test_intensity_normalization.py`: Synthetic normalisation and input-integrity tests.
 - `train.py`: Training workflow for the planned models.
 - `predict.py`: Inference workflow for the planned models.
 
 ## Artificial Intelligence Usage Disclosure
 
-AI assistance was used to draft the discovery code, split validation, NIfTI loader, synthetic tests, resampling implementation, and documentation, and to review reported failures and propose the targeted spatial-unit and resampling-boundary corrections. The approved patient assignments, expected counts, CSIRO labels, and training-derived spacing evidence were provided as project facts; they were not generated by the assistant. The student executed the Rangpur tests, 211-pair header audit, and real-pair loading and resampling checks. The detailed AI contribution and command record is maintained in `ai.md`.
+AI assistance was used to draft the discovery code, split validation, NIfTI loader, resampling and normalisation implementations, synthetic tests, and documentation, and to review reported failures and propose targeted corrections. The approved patient assignments, expected counts, CSIRO labels, training-derived spacing evidence, and real intensity-audit results were provided as project facts; they were not generated by the assistant. The student executed the Rangpur tests, 211-pair header audit, and real-pair loading, resampling, and normalisation checks. The detailed AI contribution and command record is maintained in `ai.md`.

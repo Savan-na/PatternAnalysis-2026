@@ -1,0 +1,10 @@
+{
+  "lower_nonzero_percentile": 0.5,
+  "upper_nonzero_percentile": 99.5,
+  "voxel_selection": "original_mri_nonzero",
+  "clipping_scope": "selected_mri_voxels_only",
+  "zscore_ddof": 0,
+  "original_zero_policy": "preserve_zero",
+  "statistics_dtype": "float64",
+  "output_dtype": "float32"
+}
