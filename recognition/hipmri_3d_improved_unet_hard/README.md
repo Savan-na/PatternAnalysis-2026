@@ -2,7 +2,7 @@
 
 ## Project Status
 
-Production filename discovery, MRI/segmentation pairing, and frozen patient-level split checks passed on the real Rangpur HipMRI dataset. One-pair NIfTI loading, spatial validation, 3D physical resampling, MRI intensity normalisation, and an on-demand 3D Patch Dataset are implemented. The student-run Batch 2.4 Rangpur regression suite passed 87/87 tests; one real training and one real validation DataLoader patch passed acceptance checks. Full-dataset processing, model training, and final performance evaluation remain incomplete.
+Production filename discovery, MRI/segmentation pairing, and frozen patient-level split checks passed on the real Rangpur HipMRI dataset. One-pair NIfTI loading, spatial validation, 3D physical resampling, MRI intensity normalisation, an on-demand 3D Patch Dataset, and the Standard 3D U-Net baseline are implemented. The student-run Rangpur CPU regression suite passed 97/97 tests. One real training and one real validation DataLoader patch passed acceptance checks, and one real K019 Week1 patch completed exactly one float32 GPU optimisation step on an allocated A100 compute node. Full-dataset processing, full-epoch training, validation performance, and final Dice/IoU evaluation remain incomplete.
 
 ## Problem
 
@@ -99,6 +99,30 @@ The student then ran a CPU-only, read-only real-data check with `HipMRIPatchData
 
 The final output was `PASS: REAL PATCH DATASET VERIFICATION`; process wall time was **11.72 s**, maximum resident set size **768352 KiB**, and exit status **0**. RSS covers the whole Python verification process, not GPU memory or an isolated Patch Dataset allocation. Only two real patches were accepted. All 211 MRI arrays have not been processed through the full pipeline; center crops may miss the prostate in other validation cases, and repeated on-demand preprocessing may limit training throughput. Full-volume inference, clinical accuracy, model training, and Dice/IoU evaluation remain pending.
 
+## Standard 3D U-Net and Real GPU Smoke Test
+
+`StandardUNet3D` in `modules.py` is the Normal Difficulty baseline, with `in_channels=1`, `out_channels=6`, and `base_channels=16`. It has four encoder downsampling stages, two padded 3D convolutions with GroupNorm and ReLU per block, a bottleneck, and four learnable transposed-convolution decoder stages with concatenated encoder skips. A final 1×1×1 convolution returns six raw logits without softmax or argmax. The default model has **5,646,470 trainable scalar parameters**. For a 64³ patch, encoder widths are 16/32/64/128 at 64³/32³/16³/8³, the bottleneck has 256 channels at 4³, and decoder widths are 128/64/32/16 before the six-channel output at 64³.
+
+Codex reported **10/10 local synthetic CPU tests passed**. The student transferred `modules.py` and `test_standard_unet.py` to Rangpur and ran the six-module CPU regression suite: `Ran 97 tests in 10.212s`, followed by `OK` (87 earlier tests plus 10 architecture tests). A nonfatal CUDA driver warning appeared on the login node; all tests passed. That CPU result did not establish GPU compatibility.
+
+The student first requested a `comp3710` allocation, which remained queued and was manually cancelled, then obtained interactive Slurm job **647039**, partition **a100**, compute node **a100-5**, with an **NVIDIA A100-PCIE-40GB**. In the allocated session, the student verified PyTorch **2.13.0+cu130**, CUDA build **13.0**, NVIDIA driver **590.48.01**, `torch.cuda.is_available() = True`, and successful CUDA tensor creation.
+
+The student ran `python -B -m recognition.hipmri_3d_improved_unet_hard.smoke_standard_unet`. The script used the frozen training split, seed 3710, prostate-sampling probability 1.0, and `DataLoader(batch_size=1, num_workers=0, shuffle=False)`. It preprocessed the MRI on CPU, transferred only patch tensors to the GPU, and used the default model for exactly one float32 forward → cross-entropy loss → backward → SGD update, with learning rate **0.001** and no automatic mixed precision.
+
+| Check | Student-reported result |
+| --- | --- |
+| Case / crop origin DHW | `K019_Week1` / `[40, 60, 64]` |
+| Integer target labels | `[0, 1, 2, 3, 5]` |
+| MRI / target batch | `(1, 1, 64, 64, 64)` float32 / `(1, 64, 64, 64)` torch.long |
+| Raw logits | Finite float32 `(1, 6, 64, 64, 64)` check passed |
+| Initial cross-entropy loss | `1.92833924` |
+| Gradients | All 64 trainable parameter tensors had finite gradients |
+| Parameter update | 59/64 trainable parameter tensors changed after one SGD step |
+| GPU allocated / reserved | `55286272` / `465567744` bytes |
+| Peak GPU allocated / reserved | `441744384` / `465567744` bytes |
+
+The final output was `PASS: ONE REAL STANDARD 3D U-NET GPU OPTIMISATION STEP`. This demonstrates training-pipeline executability for one real training patch. The loss is an initial single-patch value; finite gradients do not establish convergence, and 59 changed parameter tensors satisfy the smoke-test requirement that at least one parameter changes. GPU memory figures belong to this exact configuration and run. No full-epoch training, validation-performance measurement, Dice/IoU evaluation, or checkpointing occurred. The GPU results were supplied by the student and were not independently rerun by Codex.
+
 ## Engineering Question
 
 Compared with a Standard 3D U-Net (Normal Difficulty baseline), does a 3D Improved U-Net (Hard Difficulty) with volumetric residual units and deep supervision reduce clinically important prostate boundary and slice-transition errors, improve segmentation performance, and justify its additional computational cost?
@@ -119,7 +143,9 @@ Compared with a Standard 3D U-Net (Normal Difficulty baseline), does a 3D Improv
 
 ## Repository Structure
 
-- `modules.py`: Model components for the planned comparison.
+- `modules.py`: Standard 3D U-Net baseline for the planned comparison.
+- `test_standard_unet.py`: Synthetic CPU architecture, logits, gradient, and optimiser tests.
+- `smoke_standard_unet.py`: Exactly one real float32 GPU optimisation step on an allocated compute node.
 - `dataset.py`: Approved patient split, filename discovery, pairing, and coverage checks.
 - `test_dataset.py`: Synthetic tests for discovery and split validation.
 - `volume_io.py`: One-pair 3D NIfTI decoding and spatial/content validation.
@@ -138,4 +164,4 @@ Compared with a Standard 3D U-Net (Normal Difficulty baseline), does a 3D Improv
 
 ## Artificial Intelligence Usage Disclosure
 
-AI assistance was used to draft the discovery code, split validation, NIfTI loader, resampling, normalisation, and Patch Dataset implementations, synthetic tests, and documentation, and to review reported failures and propose targeted corrections. The approved patient assignments, expected counts, CSIRO labels, training-derived spacing evidence, and real intensity-audit results were provided as project facts; they were not generated by the assistant. The student executed the Rangpur tests, 211-pair header audit, and real-pair loading, resampling, normalisation, and DataLoader checks. The detailed AI contribution and command record is maintained in `ai.md`.
+AI assistance was used to draft the discovery code, split validation, NIfTI loader, resampling, normalisation, and Patch Dataset implementations, synthetic tests, and documentation, and to review reported failures and propose targeted corrections. ChatGPT assisted model planning, source review, and smoke-test interpretation; Codex assisted Standard 3D U-Net implementation and created the architecture tests and GPU smoke-test script. The approved patient assignments, expected counts, CSIRO labels, training-derived spacing evidence, and real intensity-audit results were provided as project facts; they were not generated by the assistant. The student specified the tasks, manually transferred files, requested the GPU allocation, executed the Rangpur regressions, 211-pair header audit, real-pair preprocessing/DataLoader checks and single GPU optimisation step, and reviewed and supplied the outputs. Codex did not independently rerun the Rangpur GPU results. The detailed AI contribution and command record is maintained in `ai.md`.

@@ -6,7 +6,7 @@ This is a cumulative record for the HipMRI project. A command is marked **verifi
 
 AI assistance helped draft `dataset.py`, its synthetic tests, the project README updates, and the temporary read-only verifier. Later entries document AI-assisted NIfTI loading, resampling, synthetic tests and targeted corrections. The approved patient assignments, expected counts, and CSIRO labels came from the project evidence supplied by the student; AI did not infer or generate them. The student executed the interactive Rangpur and GitHub commands and reported their outputs. The real-data results below are from that Rangpur execution, not from the earlier local synthetic dry run. Local Git metadata was also checked while preparing this record.
 
-Commands proposed for a future batch are **not** verified commands and must not be added to the reference as completed work. M1-B4 Batch 1 proves filename discovery, pairing, and patient-level split integrity; it did not prove image-content processing or model performance. Batch 2.1, Batch 2.2, Batch 2.3, and Batch 2.4 evidence is recorded separately below.
+Commands proposed for a future batch are **not** verified commands and must not be added to the reference as completed work. M1-B4 Batch 1 proves filename discovery, pairing, and patient-level split integrity; it did not prove image-content processing or model performance. Batch 2.1, Batch 2.2, Batch 2.3, Batch 2.4, and the Standard 3D U-Net GPU smoke-test evidence are recorded separately below.
 
 ## B. Verified Command Reference
 
@@ -242,6 +242,68 @@ For the real check, the student ran a Python here-document with `/usr/bin/time -
 
 The real procedure ended `PASS: REAL PATCH DATASET VERIFICATION`; `/usr/bin/time -v` reported wall time **11.72 s**, maximum resident set size **768352 KiB**, and exit status **0**. RSS measures the whole Python verification process, not GPU memory or an isolated Dataset allocation. Only two real patches were accepted. Full 211-volume processing, training, full-volume inference, clinical accuracy and Dice/IoU evaluation remain unverified.
 
+### Standard 3D U-Net — Architecture and First Real GPU Optimisation Step
+
+**Status and evidence:** Source review, local synthetic CPU verification, student-run Rangpur CPU regression, and one real GPU optimisation step passed. The last pushed commit supplied for this milestone is `938449a`, branch `topic-recognition`; no subsequent model commit or push is claimed here. Remote outputs below were supplied by the student and were not independently rerun by Codex. The student subsequently supplied the original Slurm allocation transcript and cancellation command, recorded below. Exact dependency-inspection and six-module CPU regression command transcripts were not supplied in this documentation request; their verified procedures and results are recorded without reconstructed commands.
+
+| Environment | Command or procedure | Purpose | Expected Output | Why Expected | Actual Result | Interpretation | Limitations |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Local WSL PyTorch, CPU | Codex synthetic `test_standard_unet` execution. | Check shapes, channels, skip concatenation, finite logits, integer-label cross entropy, finite backward gradients, an SGD update and seeded initialisation. | 10 tests ending in `OK`. | The architecture suite adds 10 focused synthetic tests. | Codex reported **10/10 PASS**. | Synthetic model execution and optimiser update worked locally. | Reduced channel widths were used for practical CPU tests; synthetic optimisation does not establish segmentation quality. |
+| Rangpur login node, CPU-only | Student transfer of `modules.py` and `test_standard_unet.py`, followed by the six-module combined regression suite. | Regress the approved preprocessing/Patch Dataset pipeline with architecture tests. | 97 tests ending in `OK`. | 87 earlier tests plus 10 new architecture tests total 97. | `Ran 97 tests in 10.212s`, then `OK`; a nonfatal CUDA driver warning appeared. | **97/97 PASS** on CPU despite the warning. | No GPU optimisation was performed on the login node; this result did not verify allocated-node CUDA compatibility. |
+| Rangpur Slurm | Student executed the `srun` request below; cancelled queued job `647036` using Ctrl+C and later executed `scancel 647036`; repeated the request with `--partition=a100`. | Acquire an authorised GPU compute session. | An allocated GPU compute node. | GPU work requires a compute allocation. | Job **647036** queued and was cancelled; the second request allocated job **647039**, partition **a100**, node **a100-5**, GPU **NVIDIA A100-PCIE-40GB**. | Successful GPU allocation after the queued attempt. | Allocation evidence does not establish model correctness; separate CPU and GPU results follow. |
+| Allocated `a100-5` session | Student inspected versions, CUDA availability and CUDA tensor creation. | Establish that the allocated environment can execute CUDA operations. | CUDA available and a CUDA tensor created successfully. | A working GPU/driver/PyTorch combination is required before the smoke test. | PyTorch **2.13.0+cu130**, CUDA build **13.0**, NVIDIA driver **590.48.01**; `torch.cuda.is_available() = True`; CUDA tensor creation passed. | Basic CUDA execution succeeded on the allocated node. | Exact inspection commands were not supplied; broader compatibility or training stability is not established. |
+| Allocated `a100-5` session | Exact GPU command below. | Execute exactly one real K019 Week1 forward/loss/backward/SGD update. | Final `PASS: ONE REAL STANDARD 3D U-NET GPU OPTIMISATION STEP` after all checks. | The script raises an error and exits non-zero for incompatible batches, non-finite logits/loss/gradients or no parameter change. | Final PASS; detailed values below. | One real float32 training-pipeline optimisation step completed. | No full epoch, validation-performance measurement, Dice/IoU result or checkpoint was produced. |
+
+The original first interactive Slurm request supplied by the student was:
+
+```bash
+srun \
+  --partition=comp3710 \
+  --gres=gpu:a100:1 \
+  --nodes=1 \
+  --ntasks=1 \
+  --cpus-per-task=2 \
+  --time=00:20:00 \
+  --pty /bin/bash
+```
+
+Job **647036** queued and was cancelled by the student using Ctrl+C. The student later executed:
+
+```bash
+scancel 647036
+```
+
+The second request used the same resource settings with `--partition=a100`; Slurm allocated job **647039** on node **a100-5**.
+
+The exact student-executed GPU command was:
+
+```bash
+python -B -m recognition.hipmri_3d_improved_unet_hard.smoke_standard_unet
+```
+
+`-B` prevents Python bytecode-cache writes; `-m` runs the project module with package-relative imports. The script uses the default `StandardUNet3D(in_channels=1, out_channels=6, base_channels=16)`, **5,646,470 trainable scalar parameters**, seed **3710**, a configured 64³ patch, foreground probability **1.0**, and `DataLoader(batch_size=1, num_workers=0, shuffle=False)`. MRI loading/preprocessing runs on CPU; only the patch tensors move to GPU. The model performs one float32 forward pass producing finite raw logits `(1, 6, 64, 64, 64)`, cross entropy against integer labels, `zero_grad(set_to_none=True)`, one backward pass and one SGD update with learning rate **0.001**, without AMP.
+
+| Observed check | Student-supplied result |
+| --- | --- |
+| Case | `K019_Week1` |
+| Crop origin DHW | `[40, 60, 64]` |
+| Labels | `[0, 1, 2, 3, 5]` |
+| MRI batch | `(1, 1, 64, 64, 64)` float32 |
+| Target batch | `(1, 64, 64, 64)` torch.long |
+| Gradient checks | All **64** trainable parameter tensors had finite gradients |
+| Initial cross-entropy loss | **1.92833924** |
+| Parameter-update check | **59/64** trainable parameter tensors changed after exactly one update |
+| GPU allocated | **55286272 bytes** |
+| GPU reserved | **465567744 bytes** |
+| Peak GPU allocated | **441744384 bytes** |
+| Peak GPU reserved | **465567744 bytes** |
+
+```text
+PASS: ONE REAL STANDARD 3D U-NET GPU OPTIMISATION STEP
+```
+
+**Interpretation:** The result demonstrates training-pipeline executability on one real HipMRI training patch. The reported loss is an initial single-patch loss, not a validation or convergence metric. Finite gradients do not establish model convergence. The 59 changed parameter tensors satisfy the requirement that at least one trainable parameter changes; scalar parameter count and parameter-tensor count describe different quantities. GPU memory measurements belong to this exact model, patch, dtype and execution configuration and do not predict full-training memory. No full-epoch training, validation performance, Dice/IoU evaluation or checkpointing occurred.
+
 ## C. AI-Assisted Development Log
 
 This log complements the command reference above. **Repository evidence** means the current files or Git objects inspected while updating this document. **Reported terminal evidence** means command output supplied by the student from an earlier session; it was not rerun for this log. **Codex-reported** means an earlier execution report without an independent reproduction here. **Synthetic** means generated inputs: empty files for Batch 1 discovery tests, genuine small NIfTI files for Batch 2.1 loading tests, constructed 3D arrays for Batch 2.2 resampling tests, synthetic 3D arrays for Batch 2.3 normalisation tests, and constructed arrays with mocked preprocessing for Batch 2.4 Patch Dataset tests. **Real-dataset** means student-run checks on Rangpur HipMRI files; their scope is stated for each batch. A planned action has no PASS result.
@@ -328,6 +390,18 @@ These rows retain the available facts without treating a commit author or a late
 **Student verification and review sequence.** The student manually transferred the three files with SCP, logged into Rangpur, activated `torch`, and ran the exact five-module command in Section B. The student supplied `Ran 87 tests in 8.646s` and `OK`. ChatGPT then assisted with source review; Batch 2.4 passed that review. The student next ran the timed CPU-only real-data DataLoader check with `Subset`, `batch_size=1`, and `num_workers=0`. They inspected and supplied the K019 Week1 training and B040 Week0 validation batches, including tensor shapes/dtypes, valid labels, crop origins and modes, with actual prostate label 5 in the training patch. Both passed; the final reported output and whole-process measurements appear in Section B. This sequence reflects student-executed Rangpur commands; Codex did not independently log in or rerun the cases.
 
 **Outcome, limits and disclosure.** The student reviewed the results and approved the technical decisions, then requested this Codex documentation update. AI materially generated the Patch Dataset and synthetic tests, assisted the specification and source review, and drafted this record. The student set the scope, performed remote transfer and verification, checked the real outputs and approved the batch. The 87-test regression and two real patches support a first on-demand patch pipeline, not full 211-volume coverage. Validation center crops may miss the prostate elsewhere, and repeated full-volume preprocessing per patch may be a training bottleneck. Full-volume inference, architecture training, clinical accuracy and Dice/IoU evaluation remain **PENDING**. No Batch 2.4 commit or push is claimed here.
+
+### Standard 3D U-Net — architecture, CPU regression and real GPU smoke test
+
+**Task and prompts.** With the approved one-pair preprocessing and Patch Dataset pipeline complete, the student requested a conventional Normal Difficulty Standard 3D U-Net and a minimal first real GPU optimisation check. ChatGPT assisted planning, code review and interpretation. **Prompt Summary — Not Verbatim:** preserve existing meaningful `modules.py` content; use four downsampling stages, paired padded Conv3d layers, GroupNorm/ReLU, transposed-convolution upsampling and concatenated skips; return six raw logits; add focused CPU tests. Then create only `smoke_standard_unet.py`, reuse the approved APIs and K019 Week1 frozen training assignment, preprocess on CPU, require CUDA and execute exactly one float32 forward/loss/backward/SGD update. Exclude full training, model changes, validation loops, schedulers, checkpointing, automatic Rangpur access and Git submission. Complete original user instructions exist in the project conversation; this summary is not a quotation.
+
+**AI implementation and local verification.** Codex assisted model implementation and reviewed the Standard 3D U-Net implementation already present as an uncommitted `modules.py` change when inspected. It preserved that implementation, created `test_standard_unet.py`, and reported **10/10 local synthetic CPU tests passed**, including cross-entropy/backward/parameter-update checks and a separate no-gradient 64³ shape check with reduced feature width. The default model has widths 16/32/64/128, bottleneck width 256, four decoder stages, GroupNorm/ReLU and a six-channel raw-logit head; its measured trainable scalar parameter count is **5,646,470**. Codex then created `smoke_standard_unet.py` with CUDA diagnostics, one-pair CPU preprocessing, seed 3710, finite-value/gradient checks, host parameter snapshots to verify an update and GPU memory reporting. Local syntax, whitespace and CLI-help checks passed; Codex did not execute this real GPU test locally. The student directed requirements and later supplied remote execution evidence.
+
+**Student CPU regression and allocation troubleshooting.** The student manually transferred `modules.py` and `test_standard_unet.py` and ran the six-module regression on Rangpur: **97/97 PASS**, `Ran 97 tests in 10.212s`, then `OK`. The login-node CPU run emitted a nonfatal CUDA driver warning. ChatGPT-assisted review distinguished that warning from allocated-node GPU compatibility, which remained unverified at that point. The first interactive `srun` request used partition `comp3710` and queued as job **647036**; the student cancelled it using Ctrl+C and later executed `scancel 647036`. The second request used the same resource settings with partition `a100` and allocated Slurm job **647039** on node **a100-5**, with an **NVIDIA A100-PCIE-40GB**. The original request and cancellation command supplied by the student are preserved in Section B. The student verified PyTorch **2.13.0+cu130**, CUDA build **13.0**, driver **590.48.01**, CUDA availability and successful CUDA tensor creation in the allocated session. No dependency-upgrade action is inferred from these version observations.
+
+**Student real GPU execution and result.** The student manually ran the exact module command in Section B. It selected `K019_Week1`, prostate crop origin `[40, 60, 64]`, labels `[0, 1, 2, 3, 5]`, MRI batch `(1, 1, 64, 64, 64)` and integer target `(1, 64, 64, 64)`. Exactly one float32 optimisation step passed: initial cross entropy **1.92833924**, all **64** trainable parameter tensors with finite gradients, and **59/64** tensors changed after SGD at **0.001**. The final PASS and allocated/reserved/peak GPU memory values are preserved in Section B. The student inspected and supplied these outputs for ChatGPT-assisted interpretation and requested this documentation update. Codex did not independently access Rangpur or rerun the reported GPU result.
+
+**Disclosure and limits.** AI materially assisted architecture planning and implementation, authored the architecture tests and one-step smoke-test script, assisted source review and result interpretation, and drafted these documentation additions. The student specified the scope, manually transferred files, requested/cancelled GPU allocations, executed Rangpur CPU and GPU checks, inspected results and supplied the evidence. One real training patch establishes executability of this configuration; the initial loss and finite gradients do not establish convergence, segmentation quality or clinical accuracy. No full epoch, validation-performance measurement, Dice/IoU evaluation or checkpointing occurred. The existing architecture/script changes remain pending Git submission; this documentation update performs no commit or push.
 
 ### Future record standard
 
