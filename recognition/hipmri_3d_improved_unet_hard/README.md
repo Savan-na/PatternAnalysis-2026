@@ -2,7 +2,7 @@
 
 ## Project Status
 
-Production filename discovery, MRI/segmentation pairing, and frozen patient-level split checks passed on the real Rangpur HipMRI dataset. One-pair NIfTI loading, spatial validation, 3D physical resampling, MRI intensity normalisation, an on-demand 3D Patch Dataset, and the Standard 3D U-Net baseline are implemented. The student-run Rangpur CPU regression suite passed 97/97 tests. One real training and one real validation DataLoader patch passed acceptance checks, and one real K019 Week1 patch completed exactly one float32 GPU optimisation step on an allocated A100 compute node. Full-dataset processing, full-epoch training, validation performance, and final Dice/IoU evaluation remain incomplete.
+Production filename discovery, MRI/segmentation pairing, and frozen patient-level split checks passed on the real Rangpur HipMRI dataset. One-pair NIfTI loading, spatial validation, 3D physical resampling, MRI intensity normalisation, an on-demand 3D Patch Dataset, and the Standard 3D U-Net baseline are implemented. The student-run Rangpur CPU regression suite passed 97/97 tests. One real training and one real validation DataLoader patch passed acceptance checks, and one real K019 Week1 patch completed exactly one float32 GPU optimisation step on an allocated A100 compute node. The subsequent CPU throughput and coverage audit successfully loaded, resampled and normalised all 181 Train/Validation volumes, with zero failures. Test-split array processing, full-epoch training, validation performance, full-volume inference, and final Dice/IoU evaluation remain incomplete.
 
 ## Problem
 
@@ -44,7 +44,7 @@ Matching declared physical spatial units are accepted only with matching geometr
 
 After this correction, the student ran 33/33 tests successfully on Rangpur and loaded the real `K019_Week1` pair. Both decoded arrays had shape `(256, 256, 144)`; MRI dtype was `float32`, segmentation dtype `uint8`, axis codes were `('L', 'P', 'S')`, and labels present were `(0, 1, 2, 3, 4, 5)`. The working unit was `mm`, while the mask header remained `unknown` and its unit inference flag was `True`.
 
-Still pending: array-content verification and resampling for all 211 pairs; Standard and Improved 3D U-Net training; full-volume inference; and final Dice/IoU evaluation. The initial Patch Dataset retains integer mask IDs rather than one-hot encoding them.
+The later throughput and coverage audit completed production loading, resampling and normalisation checks for all 181 Train/Validation pairs. Array processing of the 30 Test pairs remains unverified, as do Standard and Improved 3D U-Net full training, full-volume inference, and final Dice/IoU evaluation. The initial Patch Dataset retains integer mask IDs rather than one-hot encoding them.
 
 ## 3D Resampling and Spatial Alignment
 
@@ -65,7 +65,7 @@ The student-run **updated Rangpur suite passed 53/53 tests**. Real acceptance ex
 | `K019_Week1` | `(256, 256, 144)` → `(256, 256, 144)` | 17,245 → 17,245 | 182,120 KiB | 0 |
 | `S035_Week0` | `(256, 256, 128)` → `(286, 286, 128)` | 3,478 → 4,448 | 185,740 KiB | 0 |
 
-Only these **two real MRI arrays** were resampled as acceptance examples. The complete 211-volume dataset has not been fully resampled or clinically validated; the voxel-count change for S035 is not a segmentation-performance result.
+At Batch 2.2 acceptance, only these **two real MRI arrays** were resampled as examples. The subsequent throughput and coverage audit resampled all 181 Train/Validation volumes. The complete 211-volume dataset has not been fully resampled or clinically validated; the voxel-count change for S035 is not a segmentation-performance result.
 
 ## MRI Intensity Normalisation
 
@@ -80,7 +80,7 @@ The focused local synthetic suite passed **18/18** tests in WSL with an import s
 | `K019_Week1`, `(256, 256, 144)` | 7,199,017 | 1.0 / 298.0 | 62.71922972261352 / 70.6617517907729 | -2.0519089452645352e-09 / 0.9999999993619909 | 341780 KiB | 5.66 s |
 | `S035_Week0`, `(286, 286, 128)` | 7,136,647 | 0.012912326492369175 / 292.36941619872994 | 64.3451434267759 / 73.6351732255404 | -1.364474822943357e-09 / 0.9999999989009823 | 345368 KiB | 5.54 s |
 
-For both cases, unchanged mask and affine checks passed and the process exited with status `0`. Peak RSS is for the **whole verification process**, not memory exclusively allocated by normalisation. These are two real examples only: full 211-volume normalisation, clinical accuracy, and training remain unverified.
+For both cases, unchanged mask and affine checks passed and the process exited with status `0`. Peak RSS is for the **whole verification process**, not memory exclusively allocated by normalisation. These were the two Batch 2.3 acceptance examples; the subsequent coverage audit normalised all 181 Train/Validation volumes. Full 211-volume normalisation, clinical accuracy, and full training remain unverified.
 
 ## On-Demand 3D Patch Dataset
 
@@ -123,6 +123,33 @@ The student ran `python -B -m recognition.hipmri_3d_improved_unet_hard.smoke_sta
 
 The final output was `PASS: ONE REAL STANDARD 3D U-NET GPU OPTIMISATION STEP`. This demonstrates training-pipeline executability for one real training patch. The loss is an initial single-patch value; finite gradients do not establish convergence, and 59 changed parameter tensors satisfy the smoke-test requirement that at least one parameter changes. GPU memory figures belong to this exact configuration and run. No full-epoch training, validation-performance measurement, Dice/IoU evaluation, or checkpointing occurred. The GPU results were supplied by the student and were not independently rerun by Codex.
 
+## Batch 1 — Preprocessing Throughput and Full Train/Validation Coverage
+
+`profile_pipeline.py` calls the approved `discover_dataset()` → `load_volume_pair()` → `resample_volume_pair()` → `normalize_volume_pair()` pipeline sequentially on CPU, one pair at a time, without caches or dataset writes. It measures each production stage and checks finite normalised MRI values, matching spatial geometry, valid mask IDs 0–5 and foreground-label integrity. Its default audit is deliberately small; `--full-coverage` explicitly requests all Train/Validation volumes. Test-volume arrays are excluded, although discovery validates all approved filenames.
+
+The student transferred the script and ran the targeted audit on Rangpur:
+
+| Case | Frozen split | Result | Total processing seconds |
+| --- | --- | --- | ---: |
+| `K019_Week1` | Train | PASS | 4.960915867239237 |
+| `S035_Week0` | Train | PASS | 5.4963636212050915 |
+| `B040_Week0` | Validation | PASS | 4.075449131429195 |
+
+This run had **3 successes, 0 failures**, session wall time **15.359112702310085 s**, and a correctly false full-coverage flag: it verified selected cases only.
+
+The first CPU Slurm submission was rejected for its `--mem=4G` request before job creation. The student resubmitted without that option and completed job **647115**, partition **cpu**, node **vcpu-5**, requesting **2 CPUs** and a **1-hour** limit. Final Slurm state was **COMPLETED**, `ExitCode=0:0`, elapsed time **00:14:20**, and stderr was empty. The full audit reported **143/143 training volumes from 26 patients**, **38/38 validation volumes from 6 patients**, **181/181 successes**, **0 failures**, full-coverage flag **true**, and final **PASS**. No test-volume arrays were processed.
+
+| Measured quantity | Total seconds | Mean seconds/case |
+| --- | ---: | ---: |
+| Loading | 265.0306965364143 | 1.4642579919138914 |
+| Resampling | 545.37738248799 | 3.0131347098783974 |
+| Normalisation | 26.101277890615165 | 0.14420595519676888 |
+| Total per-case processing, including integrity checks | 856.6517753805965 | 4.732882736909373 |
+
+Session wall time was **859.4736277926713 s**. Peak RSS was **345210880 bytes**, the cumulative **whole-process RAM peak**, not GPU VRAM or a per-stage allocation. Resampling accounted for approximately **63.7%** of summed per-case processing time. Stage totals exclude additional integrity checks; session wall time also includes setup, reporting and cleanup.
+
+These student-supplied measurements establish complete preprocessing executability for the **181 Train/Validation volumes**, not clinical annotation accuracy, model convergence, Dice/IoU, full-volume inference correctness, Test-split array-processing success or actual full-training runtime. The on-demand Patch Dataset repeats full-volume preprocessing for each requested patch; a preprocessing cache is worth evaluating, but **no cache is approved or implemented**. No projected training runtime is reported as a measurement. Only two real DataLoader patches have been accepted; full preprocessing coverage does not extend that patch-level acceptance evidence.
+
 ## Engineering Question
 
 Compared with a Standard 3D U-Net (Normal Difficulty baseline), does a 3D Improved U-Net (Hard Difficulty) with volumetric residual units and deep supervision reduce clinically important prostate boundary and slice-transition errors, improve segmentation performance, and justify its additional computational cost?
@@ -159,9 +186,10 @@ Compared with a Standard 3D U-Net (Normal Difficulty baseline), does a 3D Improv
 - `patch_dataset.py`: On-demand, aligned 3D training and validation patches.
 - `patch_dataset_config.json`: Initial patch shape and sampling policy.
 - `test_patch_dataset.py`: Synthetic tensor-axis, crop, sampling, split, and DataLoader tests.
+- `profile_pipeline.py`: Read-only CPU stage timing and explicit Train/Validation volume-coverage audit.
 - `train.py`: Training workflow for the planned models.
 - `predict.py`: Inference workflow for the planned models.
 
 ## Artificial Intelligence Usage Disclosure
 
-AI assistance was used to draft the discovery code, split validation, NIfTI loader, resampling, normalisation, and Patch Dataset implementations, synthetic tests, and documentation, and to review reported failures and propose targeted corrections. ChatGPT assisted model planning, source review, and smoke-test interpretation; Codex assisted Standard 3D U-Net implementation and created the architecture tests and GPU smoke-test script. The approved patient assignments, expected counts, CSIRO labels, training-derived spacing evidence, and real intensity-audit results were provided as project facts; they were not generated by the assistant. The student specified the tasks, manually transferred files, requested the GPU allocation, executed the Rangpur regressions, 211-pair header audit, real-pair preprocessing/DataLoader checks and single GPU optimisation step, and reviewed and supplied the outputs. Codex did not independently rerun the Rangpur GPU results. The detailed AI contribution and command record is maintained in `ai.md`.
+AI assistance was used to draft the discovery code, split validation, NIfTI loader, resampling, normalisation, and Patch Dataset implementations, synthetic tests, and documentation, and to review reported failures and propose targeted corrections. ChatGPT assisted model planning, source review, and smoke-test interpretation; Codex assisted Standard 3D U-Net implementation and created the architecture tests and GPU smoke-test script. The approved patient assignments, expected counts, CSIRO labels, training-derived spacing evidence, and real intensity-audit results were provided as project facts; they were not generated by the assistant. The student specified the tasks, manually transferred files, requested the GPU allocation, executed the Rangpur regressions, 211-pair header audit, real-pair preprocessing/DataLoader checks and single GPU optimisation step, and reviewed and supplied the outputs. Codex did not independently rerun the Rangpur GPU results. For the throughput and coverage batch, Codex implemented `profile_pipeline.py` and performed local synthetic/CLI checks; ChatGPT assisted scope definition, source review and output interpretation. The student transferred the profiler, executed the targeted audit, submitted and monitored the CPU batch job, verified Slurm completion and supplied the real measurements; Codex did not independently execute these Rangpur audits. The detailed AI contribution and command record is maintained in `ai.md`.

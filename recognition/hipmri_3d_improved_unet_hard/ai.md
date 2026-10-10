@@ -244,7 +244,7 @@ The real procedure ended `PASS: REAL PATCH DATASET VERIFICATION`; `/usr/bin/time
 
 ### Standard 3D U-Net — Architecture and First Real GPU Optimisation Step
 
-**Status and evidence:** Source review, local synthetic CPU verification, student-run Rangpur CPU regression, and one real GPU optimisation step passed. The last pushed commit supplied for this milestone is `938449a`, branch `topic-recognition`; no subsequent model commit or push is claimed here. Remote outputs below were supplied by the student and were not independently rerun by Codex. The student subsequently supplied the original Slurm allocation transcript and cancellation command, recorded below. Exact dependency-inspection and six-module CPU regression command transcripts were not supplied in this documentation request; their verified procedures and results are recorded without reconstructed commands.
+**Status and evidence:** Source review, local synthetic CPU verification, student-run Rangpur CPU regression, and one real GPU optimisation step passed. At the original milestone documentation stage, the last pushed commit supplied was `938449a`, branch `topic-recognition`, and the architecture and smoke-test files were pending submission. They were subsequently committed and pushed in `dc20457`: `Implement and verify Standard 3D U-Net baseline`. Remote outputs below were supplied by the student and were not independently rerun by Codex. The student subsequently supplied the original Slurm allocation transcript and cancellation command, recorded below. Exact dependency-inspection and six-module CPU regression command transcripts were not supplied in this documentation request; their verified procedures and results are recorded without reconstructed commands.
 
 | Environment | Command or procedure | Purpose | Expected Output | Why Expected | Actual Result | Interpretation | Limitations |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -303,6 +303,108 @@ PASS: ONE REAL STANDARD 3D U-NET GPU OPTIMISATION STEP
 ```
 
 **Interpretation:** The result demonstrates training-pipeline executability on one real HipMRI training patch. The reported loss is an initial single-patch loss, not a validation or convergence metric. Finite gradients do not establish model convergence. The 59 changed parameter tensors satisfy the requirement that at least one trainable parameter changes; scalar parameter count and parameter-tensor count describe different quantities. GPU memory measurements belong to this exact model, patch, dtype and execution configuration and do not predict full-training memory. No full-epoch training, validation performance, Dice/IoU evaluation or checkpointing occurred.
+
+### Batch 1 — Preprocessing Throughput and Full Train/Validation Coverage
+
+**Evidence and state:** Student-executed Rangpur audits passed; remote outputs were supplied by the student, not independently rerun by Codex. The baseline repository state is `dc20457` on `topic-recognition`. The profiler is implemented but uncommitted; this documentation batch performs no commit or push. This throughput Batch 1 is distinct from the earlier M1-B4 Batch 1 discovery milestone.
+
+| Environment | Command or procedure | Purpose | Expected Output | Why Expected | Actual Result | Interpretation | Limitations |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Local Windows Python | Codex syntax, CLI and synthetic checks of `profile_pipeline.py`. | Validate small default selection, argument rejection, test-patient exclusion, reporting and failure handling. | Syntax valid and synthetic assertions pass. | The checks use constructed inputs and mocked loading/resampling, with actual production normalisation. | Syntax and help checks passed; **11 synthetic/CLI assertions passed**. Production invocation exited 1 with `No module named 'nibabel'`; separate inspection also found SciPy missing. | Local control-flow evidence; a dependency failure was correctly reported without a coverage PASS. | No local real-volume throughput or coverage result; no dependency installation. Full original local commands are not reproduced here. |
+| Rangpur verification workspace, CPU | Student transferred `profile_pipeline.py` and executed the targeted command below. | Profile three selected Train/Validation cases before full coverage. | Three successful case records, zero failures, final PASS scoped to selected cases; full-coverage flag false. | Default/targeted mode processes only selected cases through the approved production pipeline. | K019 Week1 Train PASS **4.960915867239237 s**; S035 Week0 Train PASS **5.4963636212050915 s**; B040 Week0 Validation PASS **4.075449131429195 s**. Successful **3**, failed **0**; session wall **15.359112702310085 s**; full-coverage flag **false**. | Three real cases passed, without claiming 181-volume coverage. | Transfer command and complete per-stage targeted transcript were not supplied in this request; no invented transcript. |
+| Rangpur Slurm CPU submission | Student attempted a CPU batch submission with `--mem=4G`, then submitted the same job without that option. | Run full coverage on a CPU compute node. | A CPU job created and completed with exit status zero. | A compute allocation permits the sequential full-volume audit without GPU work. | First memory request rejected **before job creation**. Retry created job **647115**, partition **cpu**, node **vcpu-5**, **2 requested CPUs**, **1-hour limit**; final state **COMPLETED**, `ExitCode=0:0`, elapsed **00:14:20**, empty stderr. | Submission correction succeeded; Slurm completion corroborates the module output. | The original submission commands, rejection errors and final `sacct` command were subsequently supplied by the student and are preserved below; Codex did not execute them. No first-job ID is invented. Slurm elapsed is distinct from Python session wall time. |
+| Rangpur verification workspace on `vcpu-5`, CPU; explicit existing torch Python | Student executed the full-coverage module command below inside job 647115. | Decode, resample, normalise and validate every Train/Validation pair. | 143 Train volumes/26 patients and 38 Validation volumes/6 patients; 181 successes, zero failures, coverage true and final PASS. | Production discovery enforces frozen coverage, and full mode explicitly selects only Train/Validation arrays. | Train **143/143**, **26 patients**; Validation **38/38**, **6 patients**; total **181/181**, failed **0**; full-coverage flag **true**, final **PASS**; **no test-volume arrays processed**. Timings and RAM below. | Complete preprocessing executability for the 181 Train/Validation volumes. | No model inference, training, Dice/IoU, clinical accuracy or Test-split array-processing validation. |
+
+**Subsequently supplied original CPU Slurm submission evidence:** These commands and terminal results were supplied by the student from the conversation; Codex did not independently execute them. They were unavailable to Codex during the earlier documentation drafting, rather than absent from the historical evidence.
+
+First attempted command:
+
+```bash
+sbatch \
+  --partition=cpu \
+  --nodes=1 \
+  --ntasks=1 \
+  --cpus-per-task=2 \
+  --mem=4G \
+  --time=01:00:00 \
+  --job-name=hipmri-coverage \
+  --output="$HOME/comp3710_hipmri_verify/profile_181_%j.jsonl" \
+  --error="$HOME/comp3710_hipmri_verify/profile_181_%j.err" \
+  --wrap='cd "$HOME/comp3710_hipmri_verify" && CUDA_VISIBLE_DEVICES="" "$HOME/miniconda3/envs/torch/bin/python" -B -m recognition.hipmri_3d_improved_unet_hard.profile_pipeline --full-coverage'
+```
+
+Actual error:
+
+```text
+sbatch: error: Memory specification can not be satisfied
+sbatch: error: Batch job submission failed: Requested node configuration is not available
+```
+
+The student then executed the same command without `--mem=4G`:
+
+```bash
+sbatch \
+  --partition=cpu \
+  --nodes=1 \
+  --ntasks=1 \
+  --cpus-per-task=2 \
+  --time=01:00:00 \
+  --job-name=hipmri-coverage \
+  --output="$HOME/comp3710_hipmri_verify/profile_181_%j.jsonl" \
+  --error="$HOME/comp3710_hipmri_verify/profile_181_%j.err" \
+  --wrap='cd "$HOME/comp3710_hipmri_verify" && CUDA_VISIBLE_DEVICES="" "$HOME/miniconda3/envs/torch/bin/python" -B -m recognition.hipmri_3d_improved_unet_hard.profile_pipeline --full-coverage'
+```
+
+Actual result:
+
+```text
+Submitted batch job 647115
+```
+
+Final student-executed verification command:
+
+```bash
+sacct -j 647115 --format=JobID,State,ExitCode,Elapsed
+```
+
+Actual main-job result:
+
+```text
+647115 COMPLETED 0:0 00:14:20
+```
+
+The stderr file was empty. This evidence confirms submission recovery and final Slurm completion; preprocessing results and their limitations remain recorded separately below. No additional monitoring commands are inferred.
+
+Exact student-executed targeted command:
+
+```bash
+CUDA_VISIBLE_DEVICES='' python -B -m \
+  recognition.hipmri_3d_improved_unet_hard.profile_pipeline \
+  --cases K019_Week1 S035_Week0 B040_Week0
+```
+
+Exact student-executed full-coverage Python command, from the Rangpur verification workspace:
+
+```bash
+CUDA_VISIBLE_DEVICES='' "$HOME/miniconda3/envs/torch/bin/python" -B -m \
+  recognition.hipmri_3d_improved_unet_hard.profile_pipeline \
+  --full-coverage
+```
+
+`CUDA_VISIBLE_DEVICES=''` hides GPUs; the profiler itself uses CPU preprocessing and does not import a model or perform CUDA work. `-B` prevents bytecode-cache writes, and `-m` preserves package-relative imports. The explicit interpreter selects the existing torch environment without relying on batch-shell activation. `--cases` limits scope; `--full-coverage` explicitly requests all 181 Train/Validation volumes. Production discovery checks all approved filenames, but no Test arrays are decoded. The script writes reporting to stdout; the remote JSONL/error logs are not added to Git by this documentation update.
+
+**Measured full-coverage output supplied by the student:**
+
+| Quantity | Total seconds | Mean seconds/case |
+| --- | ---: | ---: |
+| Loading | 265.0306965364143 | 1.4642579919138914 |
+| Resampling | 545.37738248799 | 3.0131347098783974 |
+| Normalisation | 26.101277890615165 | 0.14420595519676888 |
+| Total per-case processing | 856.6517753805965 | 4.732882736909373 |
+
+Session wall: **859.4736277926713 seconds**. Peak RSS: **345210880 bytes**, cumulative whole-process RAM peak, **not GPU VRAM or a per-stage allocation**. Resampling accounts for approximately **63.7%** of total per-case processing time. Total per-case timing includes integrity checks beyond the three production-call timings; session wall additionally includes setup, reporting and cleanup. These are actual audit measurements, not projected full-training runtime. No runtime extrapolation is represented as measured evidence.
+
+**Interpretation and limitations:** This audit extends the earlier one/two-case preprocessing evidence to all 181 Train/Validation volumes. It does not establish clinical annotation accuracy, convergence, segmentation Dice/IoU, full-volume inference correctness, Test-split array-processing success or full-training runtime. Only two real DataLoader patches have been accepted separately. On-demand Patch Dataset access repeats full-volume preprocessing per requested patch. A preprocessing cache is worth evaluating given the measured resampling cost, but no cache is approved or implemented. The frozen split and preprocessing policies remain unchanged.
 
 ## C. AI-Assisted Development Log
 
@@ -401,7 +503,23 @@ These rows retain the available facts without treating a commit author or a late
 
 **Student real GPU execution and result.** The student manually ran the exact module command in Section B. It selected `K019_Week1`, prostate crop origin `[40, 60, 64]`, labels `[0, 1, 2, 3, 5]`, MRI batch `(1, 1, 64, 64, 64)` and integer target `(1, 64, 64, 64)`. Exactly one float32 optimisation step passed: initial cross entropy **1.92833924**, all **64** trainable parameter tensors with finite gradients, and **59/64** tensors changed after SGD at **0.001**. The final PASS and allocated/reserved/peak GPU memory values are preserved in Section B. The student inspected and supplied these outputs for ChatGPT-assisted interpretation and requested this documentation update. Codex did not independently access Rangpur or rerun the reported GPU result.
 
-**Disclosure and limits.** AI materially assisted architecture planning and implementation, authored the architecture tests and one-step smoke-test script, assisted source review and result interpretation, and drafted these documentation additions. The student specified the scope, manually transferred files, requested/cancelled GPU allocations, executed Rangpur CPU and GPU checks, inspected results and supplied the evidence. One real training patch establishes executability of this configuration; the initial loss and finite gradients do not establish convergence, segmentation quality or clinical accuracy. No full epoch, validation-performance measurement, Dice/IoU evaluation or checkpointing occurred. The existing architecture/script changes remain pending Git submission; this documentation update performs no commit or push.
+**Disclosure and limits.** AI materially assisted architecture planning and implementation, authored the architecture tests and one-step smoke-test script, assisted source review and result interpretation, and drafted these documentation additions. The student specified the scope, manually transferred files, requested/cancelled GPU allocations, executed Rangpur CPU and GPU checks, inspected results and supplied the evidence. One real training patch establishes executability of this configuration; the initial loss and finite gradients do not establish convergence, segmentation quality or clinical accuracy. No full epoch, validation-performance measurement, Dice/IoU evaluation or checkpointing occurred. At this historical documentation stage, the architecture/script changes were pending Git submission. They were subsequently committed and pushed in `dc20457`: `Implement and verify Standard 3D U-Net baseline`. The current Batch 1 profiler and documentation remain uncommitted; this documentation update performs no commit or push.
+
+### Batch 1 — preprocessing throughput and full Train/Validation coverage
+
+**Task and motivation.** After the Standard 3D U-Net execution milestone, the student requested a bounded throughput and real-volume coverage audit before building full training. The technical question was whether the approved on-demand preprocessing pipeline executes reliably across Train/Validation and how much CPU time it consumes. Model convergence and segmentation quality were outside scope. Baseline commit: `dc20457`; no new commit is claimed for this batch.
+
+**Instructions and roles. Prompt Summary — Not Verbatim:** create only `profile_pipeline.py`; inspect and reuse production discovery, NIfTI loading, resampling, normalisation and approved configurations; provide a small targeted mode and explicit full Train/Validation coverage mode; measure stages, validate geometry and labels, report failures and cumulative process RSS; exclude Test-array processing, GPU work, automatic remote access, caches, training, dependency installation and Git submission. ChatGPT assisted scope definition, source review and interpretation. Codex implemented the profiler and its local checks; the student defined constraints and executed all real Rangpur measurements.
+
+**Implementation and local evidence.** Codex inspected the production APIs and configurations and implemented sequential `discover_dataset()` → `load_volume_pair()` → `resample_volume_pair()` → `normalize_volume_pair()` use, without duplicating preprocessing algorithms. The profiler uses `time.perf_counter()` for stage timings, returns scalar case records rather than retained full-volume arrays, releases current-case objects between cases, records exception details and exits non-zero on required failures. It checks finite MRI values, matching geometry, mask IDs/counts and foreground survival. Default selection is K019 Week1, S035 Week0 and B040 Week0; all 181 volumes require `--full-coverage`. RSS is explicitly cumulative process-level memory. Codex reported syntax/help checks and **11 local synthetic/CLI assertions passed**, using mocked loading/resampling and actual normalisation. Missing NiBabel and SciPy blocked local production execution; this was disclosed, not recorded as a real-data PASS. These local checks do not establish Rangpur throughput.
+
+**Student targeted execution.** The student manually transferred the script and ran the exact targeted command recorded in Section B. All three real cases passed: K019 Week1 **4.960915867239237 s**, S035 Week0 **5.4963636212050915 s**, B040 Week0 **4.075449131429195 s**; **3 successes**, **0 failures**, session wall **15.359112702310085 s**. The false full-coverage flag correctly limited the claim to selected cases. The student supplied outputs for ChatGPT-assisted review; Codex did not independently rerun them.
+
+**Failure → correction → full-coverage verification.** The student's first CPU Slurm submission requested `--mem=4G`; Slurm rejected that request before creating a job. The student removed the option and successfully submitted the same CPU job as **647115**, on partition **cpu**, node **vcpu-5**, requesting **2 CPUs** and a **1-hour** limit. The original submission commands and rejection transcript were subsequently supplied by the student and are preserved verbatim in Section B, together with the final `sacct` command; they were not independently executed by Codex. The student executed the full-coverage Python command in Section B, monitored the output and checked Slurm completion: **COMPLETED**, `ExitCode=0:0`, elapsed **00:14:20**, empty stderr. The real audit reported **143/143 training volumes, 26 patients**, **38/38 validation volumes, 6 patients**, **181/181 successes**, **0 failures**, full-coverage flag **true**, final **PASS**, and no Test-array processing.
+
+**Results, interpretation and decision boundary.** The actual stage totals, means, session wall and **345210880-byte** process peak RSS are preserved in Section B and the README. Resampling consumed approximately **63.7%** of total per-case processing time, identifying a measured runtime concern for repeated on-demand volume preprocessing. ChatGPT assisted interpretation; a cache is worth evaluating, but remains an unapproved future option, not an implemented optimisation. This demonstrates complete preprocessing executability for Train/Validation only. It does not demonstrate clinical annotation accuracy, model convergence, Dice/IoU, full-volume inference correctness, Test-array success or actual training runtime. No extra experiment or runtime projection is claimed.
+
+**Disclosure and documentation.** Codex generated the profiler, performed local synthetic/CLI checks and prepared these documentation updates. ChatGPT assisted scope definition, source review and output interpretation. The student manually transferred the script, ran the targeted audit, submitted and monitored the CPU job, verified final Slurm completion, supplied real outputs and requested documentation finalisation. Real Rangpur evidence is student-supplied terminal evidence, not independently executed by Codex. Historical milestones are preserved; no preprocessing cache, source change, additional measurement, training, commit or push is performed by this documentation batch.
 
 ### Future record standard
 
