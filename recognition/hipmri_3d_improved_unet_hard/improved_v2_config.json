@@ -1,0 +1,36 @@
+{
+  "experiment_id": "improved_v2_wce_sqrt_v1",
+  "epochs": 10,
+  "class_names": [
+    "Background",
+    "Body",
+    "Bones",
+    "Bladder",
+    "Rectum",
+    "Prostate"
+  ],
+  "exposure_file": "patch_full_650736.jsonl",
+  "exposure_sha256": "028a495c41e14bec4855bad5fd55c1dcea51472c890285d7c499f5f4d93b22a1",
+  "training_patch_count": 1430,
+  "voxel_counts": [
+    69380520,
+    246261463,
+    34110362,
+    15115893,
+    4618511,
+    5379171
+  ],
+  "frequency_exponent": -0.5,
+  "weight_normalization": "sum(frequency * weight) = 1",
+  "class_weights": [
+    1.1775485072270662,
+    0.6250278281358197,
+    1.6794010379962119,
+    2.522787537775463,
+    4.564010031706509,
+    4.229021628686302
+  ],
+  "ce_reduction": "sum(weight[target] * unweighted_voxel_ce) / voxel_count",
+  "ce_weight": 0.5,
+  "dice_weight": 0.5
+}
