@@ -1,0 +1,23 @@
+{
+  "experiment_id": "v4_prostate_fp_tversky_paired_v1",
+  "parent_sha256": "bb0d03c7a047ed187fadb5e1bf6ac1776448b351621764e9b6f0ff1fb67660d4",
+  "receipt_sha256": "fffe08a6c6502989e1ad033a0b78ea5117377dbad2de762791a3a895b2e189da",
+  "parent_epoch": 12,
+  "end_epoch": 14,
+  "steps_per_epoch": 143,
+  "alpha_control": 0.5,
+  "alpha_treatment": 0.7,
+  "changed_class": 5,
+  "epsilon": 0.00001,
+  "selection": {
+    "prostate_patient_macro_gain_vs_control": 0.03,
+    "prostate_fp_reduction_vs_control": 0.15,
+    "maximum_prostate_recall_drop_vs_control": 0.05,
+    "maximum_other_class_patient_macro_drop": 0.02,
+    "minimum_nonregressing_prostate_patients": 4,
+    "require_tp_all_volumes_classes": [2, 3, 4, 5],
+    "require_prostate_patient_macro_above_v3": true,
+    "require_minority_patient_macro_not_below_v3": true
+  },
+  "evidence_scope": "exploratory paired development comparison; six Validation patients previously used for selection; no independent confirmation or Test evaluation"
+}
