@@ -1,0 +1,7 @@
+# Preserve byte-exact protected experiment sources.
+hipmri_3d_improved_unet_hard/train_improved.py -text
+hipmri_3d_improved_unet_hard/train_improved_v2.py -text
+hipmri_3d_improved_unet_hard/validate_improved_v2.py -text
+hipmri_3d_improved_unet_hard/validate_improved.py -text
+hipmri_3d_improved_unet_hard/improved_v2_config.json -text
+hipmri_3d_improved_unet_hard/prostate_fp_e20_config.json -text
