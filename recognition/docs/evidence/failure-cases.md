@@ -2,7 +2,7 @@
 
 ## Scope, provenance and figure permissions
 
-This metadata-only register supports [Final Report Section 5](FINAL-REPORT.md#5-controlled-validation-comparison-and-failure-case-evidence). It records six locally inspected JSON/PNG pairs from student-run Rangpur job **650490** and two B040 PNGs from reported prediction jobs **650442** (Standard) and **650468** (Improved). No MRI arrays, prediction arrays, PNGs, checkpoints or complete experiment logs are copied into Git.
+This metadata-only register supports [Final Report Section 5](../../FINAL-REPORT.md#5-controlled-validation-comparison-and-failure-case-evidence). It records six locally inspected JSON/PNG pairs from student-run Rangpur job **650490** and two B040 PNGs from reported prediction jobs **650442** (Standard) and **650468** (Improved). No MRI arrays, prediction arrays, PNGs, checkpoints or complete experiment logs are copied into Git.
 
 The local specification requests 3–5 multi-panel failure studies (Section 2.2, p. 5), permits README visual content while prohibiting dataset/model commits (Section 4.1, p. 13; Section 8, p. 16), and requires a comprehensive README/PDF (Section 5.3, p. 14; Section 8). No explicit HipMRI licence or course authorisation establishing public redistribution of derived MRI images was found locally. The repository Apache licence is not evidence of dataset image rights. **Figure insertion is deferred**; originals remain external. If course/dataset permissions allow local PDF use, insert the unmodified paired originals with A=Standard/B=Improved labels and the report captions, retaining all four columns, Z labels and legends. No such PDF or layout is generated in this batch.
 
@@ -32,7 +32,7 @@ All stored per-class Dice and IoU, true/predicted voxel counts and intersections
 | Standard | `C:\Users\ruiji\Downloads\B040_Week0_standard_E10.png` | `3f89a582a00cc5f0ce824b32dab5f149c0ad852a6403c3614b04f37cef168624` |
 | Improved | `C:\Users\ruiji\Downloads\B040_Week0_improved_E10.png` | `98a9663b10d5acfddf36dd36cc2230fac89ed672fa9ecdc7fafa70cad3e4167b` |
 
-B040 prediction-driver `results.json` files remain **unavailable locally**; their original Rangpur paths are not invented. The newly inspected full-validation logs independently provide B040 confusion counts: Standard/Improved Bladder DSC **0.5365188544298019 / 0.8694770976895014**, TP=44,071 / 96,525, GT=119,585, predicted=44,700 / 102,445. Count-derived recall is approximately **36.9% / 80.7%**, precision **98.6% / 94.2%**. GT Prostate=7,105; predicted Prostate=0 for both; Standard's Prostate truth row assigns 7,093 Body + 12 Bladder, Improved's 7,042 Body + 63 Bladder. These match the previously student-supplied numbers. This authenticates the full-validation numerical evidence, not the missing prediction-driver JSON or the B040 PNG model attribution. Preserve the [original B040 narrative](Failiure-analysis.md).
+B040 prediction-driver `results.json` files remain **unavailable locally**; their original Rangpur paths are not invented. The newly inspected full-validation logs independently provide B040 confusion counts: Standard/Improved Bladder DSC **0.5365188544298019 / 0.8694770976895014**, TP=44,071 / 96,525, GT=119,585, predicted=44,700 / 102,445. Count-derived recall is approximately **36.9% / 80.7%**, precision **98.6% / 94.2%**. GT Prostate=7,105; predicted Prostate=0 for both; Standard's Prostate truth row assigns 7,093 Body + 12 Bladder, Improved's 7,042 Body + 63 Bladder. These match the previously student-supplied numbers. This authenticates the full-validation numerical evidence, not the missing prediction-driver JSON or the B040 PNG model attribution. The original B040 narrative is preserved byte-for-byte in the local-only archive at `research_archive/07_model_development_snapshots/P5-08_superseded_active_docs_2026-10-15/recognition/Failiure-analysis.md`; the [course-facing case discussion](../../FINAL-REPORT.md#53-paired-anatomical-failure-case-studies) remains current.
 
 ## M030_Week5
 
@@ -200,7 +200,7 @@ Only events present in the two original training files are listed. Means below a
 | Improved | 9 | 143 / 1287 | 0.516944142 | 0.705877416 | 0.611410784 | 782.145660 |
 | Improved | 10 | 143 / 1430 | 0.507581607 | 0.714721878 | 0.611151745 | 779.711557 |
 
-![Recorded epoch losses only; missing epochs are shaded](figures/e10_recorded_training_losses.png)
+![Recorded epoch losses only; missing epochs are shaded](../../figures/e10_recorded_training_losses.png)
 
 The plot contains numeric loss records only, no medical-image data. Standard epochs **1–3** and Improved epoch **1** require the original initial/resume stdout segments containing their setup, step and completed-epoch events. The existing `loss-history` auditor correctly returns **INCOMPLETE**, with precisely these missing epochs; all available epoch component means are verified against their 143 step records. This is incomplete historical coverage, not failure of the recorded E10 jobs.
 

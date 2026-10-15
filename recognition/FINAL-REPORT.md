@@ -1,5 +1,7 @@
 # HipMRI 3D U-Net Final Report
 
+The [unified experiment history](docs/experiments.md) records Baseline through V4 in a common protocol/results/decision format. This course-facing report interprets the E10 comparison, failures and V4 decision; detailed source mappings reside in [traceability](docs/evidence/traceability.md).
+
 ## 1. Dataset and Preprocessing
 
 ### Dataset
@@ -119,7 +121,7 @@ This strategy was intended to increase the exposure of the models to a clinicall
 
 ![Recorded CE, foreground Soft Dice and total training losses, with missing epochs shaded](figures/e10_recorded_training_losses.png)
 
-**Figure 3.1.** Only genuine epoch events are plotted: Standard 4–10 and Improved 2–10, each with 143 verified step records. Standard epochs 1–3 and Improved epoch 1 require earlier logs and are not estimated. [Exact recorded values and timings](FAILURE_CASE_EVIDENCE.md#recorded-training-loss-trajectory) accompany the plot. Standard total loss falls from 0.791711 to 0.699227 over its recorded segment; Improved falls from 0.810483 to 0.611152. Both trajectories are non-monotonic, and both Soft Dice losses rise from epoch 9 to 10. Improved components include weighted auxiliary heads, whereas Standard uses its main head only; neither their absolute difference nor declining within-model losses establishes class-specific convergence or generalisation.
+**Figure 3.1.** Only genuine epoch events are plotted: Standard 4–10 and Improved 2–10, each with 143 verified step records. Standard epochs 1–3 and Improved epoch 1 require earlier logs and are not estimated. [Exact recorded values and timings](docs/evidence/failure-cases.md#recorded-training-loss-trajectory) accompany the plot. Standard total loss falls from 0.791711 to 0.699227 over its recorded segment; Improved falls from 0.810483 to 0.611152. Both trajectories are non-monotonic, and both Soft Dice losses rise from epoch 9 to 10. Improved components include weighted auxiliary heads, whereas Standard uses its main head only; neither their absolute difference nor declining within-model losses establishes class-specific convergence or generalisation.
 
 ### Experimental Control
 
@@ -197,7 +199,7 @@ Third, the combined Cross-Entropy and foreground Soft Dice objective may not pro
 
 Finally, the ten-epoch training budget may be insufficient for the network to learn all anatomical structures reliably.
 
-These explanations remain hypotheses. Source/synthetic loss checks and real reconstruction class counts now support the measurement methods; actual per-class corrective gradients and model probabilities remain unmeasured. A fixed Train/Validation checkpoint probability diagnostic is the next gate before considering retraining.
+These explanations remain hypotheses. Source/synthetic loss checks and reconstructed Train-patch counts support the measurement methods. The subsequent student-run Job 650924 measured E10 checkpoint probabilities on two fixed Train crops and one Validation center crop; its downloaded aggregate records were authenticated locally, as described in [Section 5.4](#54-cross-case-failure-patterns). These selected-patch measurements show probability suppression and class competition, not their causes or full-volume performance. Per-class parameter-gradient strength and causal attribution remain unmeasured; any bounded Train-only gradient audit requires separate approval before retraining is considered.
 
 ### Critical Evaluation
 
@@ -217,7 +219,7 @@ Improved Epoch 10 full validation subsequently completed in job **650393** (38 s
 
 Both architectures completed ten epochs and 1,430 optimiser updates using the same 143 training volumes, frozen patient split, preprocessing, 64³ patches and sampling policy. Standard full Validation completed in job **649669**; Improved full Validation completed in **650393**, replacing cancelled job **649912**. Each successful evaluation covered the same 38 volumes from six validation patients. These results are Validation evidence, not final held-out Test performance.
 
-The following table is recomputed from the downloaded original **649669 / 650393** per-volume confusion matrices and agrees with both `overall_pooled` summaries. Counts are pooled across all 38 volumes before computing class overlap; this is not an equal-patient or equal-volume macro average. Six-decimal entries agree with the previous Section 5.1 table; scientific notation now distinguishes negligible positive Improved Bones overlap from exact zero. [The evidence manifest](FAILURE_CASE_EVIDENCE.md#full-validation-numerical-provenance) records full-precision scores, pooled counts and exact prediction coverage. This is local log authentication and arithmetic verification, not a rerun of Rangpur inference.
+The following table is recomputed from the downloaded original **649669 / 650393** per-volume confusion matrices and agrees with both `overall_pooled` summaries. Counts are pooled across all 38 volumes before computing class overlap; this is not an equal-patient or equal-volume macro average. Six-decimal entries agree with the previous Section 5.1 table; scientific notation now distinguishes negligible positive Improved Bones overlap from exact zero. [The evidence manifest](docs/evidence/failure-cases.md#full-validation-numerical-provenance) records full-precision scores, pooled counts and exact prediction coverage. This is local log authentication and arithmetic verification, not a rerun of Rangpur inference.
 
 | Class | Standard DSC | Improved DSC | Standard IoU | Improved IoU |
 | --- | ---: | ---: | ---: | ---: |
@@ -247,7 +249,7 @@ All pairs use Epoch 10 checkpoints, the same MRI identity, shared resampled grid
 | S022_Week5 | 44, 54, 64 | 0.6243267375 | 0.2489808244 | 5,966 | 0 |
 | K008_Week0 | 56, 70, 84 | 0.5598804442 | 0.6861527220 | 11,114 | 0 |
 
-Six local JSONs are the full-precision numerical sources for the last three pairs. Dice/IoU were recomputed from their confusion matrices and agree; precision is `TP/Npred` and recall is `TP/Ntrue`. B040 values also agree with both original full-validation records; its missing prediction-driver JSON is not claimed inspected. Exact artefact paths, hashes, checkpoint identities and evidence limitations are in the [failure-case evidence manifest](FAILURE_CASE_EVIDENCE.md).
+Six local JSONs are the full-precision numerical sources for the last three pairs. Dice/IoU were recomputed from their confusion matrices and agree; precision is `TP/Npred` and recall is `TP/Ntrue`. B040 values also agree with both original full-validation records; its missing prediction-driver JSON is not claimed inspected. Exact artefact paths, hashes, checkpoint identities and evidence limitations are in the [failure-case evidence manifest](docs/evidence/failure-cases.md).
 
 ### 5.3 Paired Anatomical Failure Case Studies
 
@@ -259,9 +261,9 @@ Each original has four aligned columns: Normalised MRI, Ground Truth, Prediction
 
 Bladder DSC rises from **0.5365 to 0.8695**, with recorded recall approximately **36.9% → 80.7%** and precision **98.6% → 94.2%**. In the inspected slices, Improved Body predictions contain fewer conspicuous internal gaps, while the high-Z slice shows Bladder overlap. The full-volume numbers establish the Bladder gain; three displayed slices do not establish uniform boundary accuracy.
 
-Both predictions omit Bones, Rectum and Prostate. All **7,105** reference Prostate voxels become other labels: Standard assigns **7,093 to Body and 12 to Bladder**; Improved assigns **7,042 to Body and 63 to Bladder**. Each row sums correctly to 7,105. Pink reference prostate regions correspond to cyan false-negative regions, including Z=62. This is complete organ omission, not a small contour displacement. The original [B040 analysis](Failiure-analysis.md) is retained.
+Both predictions omit Bones, Rectum and Prostate. All **7,105** reference Prostate voxels become other labels: Standard assigns **7,093 to Body and 12 to Bladder**; Improved assigns **7,042 to Body and 63 to Bladder**. Each row sums correctly to 7,105. Pink reference prostate regions correspond to cyan false-negative regions, including Z=62. This is complete organ omission, not a small contour displacement. The original B040 narrative is preserved byte-for-byte in the local-only archive at `research_archive/07_model_development_snapshots/P5-08_superseded_active_docs_2026-10-15/recognition/Failiure-analysis.md`.
 
-> **Figure 5.1 — insertion placeholder.** B040_Week0, Epoch 10: (A) Standard and (B) Improved; rows Z=51,62,73, columns MRI / Ground Truth / Prediction / Error Map. Improved Body coverage is more continuous in these slices; reference Prostate, Rectum and Bones are absent from both predictions. Artefacts: [B040 manifest entry](FAILURE_CASE_EVIDENCE.md#b040_week0).
+> **Figure 5.1 — insertion placeholder.** B040_Week0, Epoch 10: (A) Standard and (B) Improved; rows Z=51,62,73, columns MRI / Ground Truth / Prediction / Error Map. Improved Body coverage is more continuous in these slices; reference Prostate, Rectum and Bones are absent from both predictions. Artefacts: [B040 manifest entry](docs/evidence/failure-cases.md#b040_week0).
 
 #### Case 2 — M030_Week5
 
@@ -269,7 +271,7 @@ Bladder DSC increases from **0.4279 to 0.8515**; recall rises from **27.26% to 7
 
 Bones, Rectum and Prostate remain absent from both predictions despite their presence in ground truth. The **5,932** Prostate voxels yield zero predicted Prostate voxels, and the central pink region remains a cyan false-negative region at Z=55. Improved Bladder coverage therefore does not resolve the principal target-organ failure.
 
-> **Figure 5.2 — insertion placeholder.** M030_Week5: (A) Standard and (B) Improved, Z=43,55,67; four aligned columns as in Figure 5.1. Larger Bladder overlap at Z=67 and fewer Body gaps coexist with persistent Prostate false negatives. Artefacts: [M030 manifest entry](FAILURE_CASE_EVIDENCE.md#m030_week5).
+> **Figure 5.2 — insertion placeholder.** M030_Week5: (A) Standard and (B) Improved, Z=43,55,67; four aligned columns as in Figure 5.1. Larger Bladder overlap at Z=67 and fewer Body gaps coexist with persistent Prostate false negatives. Artefacts: [M030 manifest entry](docs/evidence/failure-cases.md#m030_week5).
 
 #### Case 3 — S022_Week5
 
@@ -277,7 +279,7 @@ Bladder DSC decreases from **0.6243 to 0.2490**. Standard correctly predicts **1
 
 At Z=64, the Improved blue Bladder prediction is visibly much smaller than the reference region, with extensive other-class error overlay. Although Body overlays appear more continuous in some slices, this does not compensate for worse Bladder coverage. Both models still omit the **5,966** reference Prostate voxels. This case demonstrates that pooled improvement can conceal a substantial patient-specific regression; its cause cannot be inferred from these panels.
 
-> **Figure 5.3 — insertion placeholder.** S022_Week5: (A) Standard and (B) Improved, Z=44,54,64; MRI / Ground Truth / Prediction / Error Map. The high-Z row illustrates reduced Improved Bladder coverage; cyan Prostate false negatives persist. Artefacts: [S022 manifest entry](FAILURE_CASE_EVIDENCE.md#s022_week5).
+> **Figure 5.3 — insertion placeholder.** S022_Week5: (A) Standard and (B) Improved, Z=44,54,64; MRI / Ground Truth / Prediction / Error Map. The high-Z row illustrates reduced Improved Bladder coverage; cyan Prostate false negatives persist. Artefacts: [S022 manifest entry](docs/evidence/failure-cases.md#s022_week5).
 
 #### Case 4 — K008_Week0
 
@@ -285,7 +287,7 @@ Bladder DSC improves from **0.5599 to 0.6862**, with recall **41.96% → 57.74%*
 
 Ground truth contains **11,114** Prostate voxels, yet neither model predicts any. The pink reference region at Z=70 remains cyan in both error maps. Failure on this larger screened prostate challenges the explanation that omission is merely a consequence of exceptionally small prostate volume; it does not disprove class imbalance or identify a cause.
 
-> **Figure 5.4 — insertion placeholder.** K008_Week0: (A) Standard and (B) Improved, Z=56,70,84; four aligned columns. Improved Body/Bladder coverage coexists with total Prostate omission. Artefacts: [K008 manifest entry](FAILURE_CASE_EVIDENCE.md#k008_week0).
+> **Figure 5.4 — insertion placeholder.** K008_Week0: (A) Standard and (B) Improved, Z=56,70,84; four aligned columns. Improved Body/Bladder coverage coexists with total Prostate omission. Artefacts: [K008 manifest entry](docs/evidence/failure-cases.md#k008_week0).
 
 ### 5.4 Cross-Case Failure Patterns
 
@@ -293,7 +295,7 @@ The central pattern is **partial class prediction collapse**: both architectures
 
 Bladder under-segmentation varies considerably. Improved gains in three selected cases coexist with S022's marked regression; the full 38-volume pooled gain should not be presented as a guarantee for individual patients. Sparse displayed Z levels support qualitative continuity observations but cannot quantify consecutive-slice transitions, surface distances or clinical base/apex errors. Full Train reconstruction now quantifies imbalance and sampling variation; their causal role, loss behaviour, optimisation and anatomical variability remain unproven.
 
-The subsequent [fixed-patch probability probe](CLASS_COLLAPSE_DIAGNOSIS.md#authenticated-real-probability-results), job 650924, evaluates two Train crops and one Validation center crop with both E10 models. Bones true-class means are 0.135745-0.199654 and usually rank second, yet Body wins every true Bones voxel. Rectum means are only 0.013411-0.028011; Prostate improves in the Improved model but has zero TP in all selected outputs. Failure already on both Train crops weakens a Validation-only explanation. These selected-patch manifestations are not causes or replacements for the full-volume metrics above.
+The subsequent [fixed-patch probability probe](docs/analysis/class-prediction-collapse.md#authenticated-real-probability-results), job 650924, evaluates two Train crops and one Validation center crop with both E10 models. Bones true-class means are 0.135745-0.199654 and usually rank second, yet Body wins every true Bones voxel. Rectum means are only 0.013411-0.028011; Prostate improves in the Improved model but has zero TP in all selected outputs. Failure already on both Train crops weakens a Validation-only explanation. These selected-patch manifestations are not causes or replacements for the full-volume metrics above.
 
 ### 5.5 Computational and Operational Considerations
 
@@ -320,35 +322,34 @@ Original validation logs additionally record loop times of **508.611325 s** (Sta
 
 The Improved model improves pooled Background, Body and Bladder segmentation under the recorded ten-epoch protocol, but does not deliver reliable prostate segmentation. Complete Prostate/Rectum omission and S022's regression preclude recommending either current checkpoint as an autonomous radiotherapy contouring tool. For the project manager, the supported recommendation is to retain them as research prototypes and require specialist review of all contours; selected Bladder gains do not establish clinical safety.
 
-The findings establish observed failures, not their root causes or the isolated efficacy of residual learning or deep supervision. Source/synthetic loss checks and the authentic recorded loss trajectory do not establish class-specific learning. [Job 650736 Train-only exposure evidence](CLASS_COLLAPSE_DIAGNOSIS.md#original-full-train-audit-authentication) now verifies 143 volumes / 26 patients / 1,430 reconstructed patches. Every raw/resampled volume contains all six classes. Prostate-aware sampling enriches all four investigated classes, and strong Bones exposure contrasts with negligible Validation predictions; simple rarity or tiny fragments alone cannot explain that failure. Background+Body still occupy 84.20% of patch voxels. Job 650924 now provides authenticated selected-patch probabilities; component/parameter gradients remain unmeasured, and replay does not independently prove historical image-file immutability. One seed, purposive case selection, missing early training segments, absent historical Standard Validation checkpoint hash and incomplete repeated matched compute profiling limit the conclusions. Original E10 training/validation logs are now inspected locally, resolving the previous full-run-log evidence gap. Exact anatomical base/apex analysis, surface metrics and clinical annotation review remain uncompleted.
+The findings establish observed failures, not their root causes or the isolated efficacy of residual learning or deep supervision. Source/synthetic loss checks and the authentic recorded loss trajectory do not establish class-specific learning. [Job 650736 Train-only exposure evidence](docs/analysis/class-prediction-collapse.md#original-full-train-audit-authentication) now verifies 143 volumes / 26 patients / 1,430 reconstructed patches. Every raw/resampled volume contains all six classes. Prostate-aware sampling enriches all four investigated classes, and strong Bones exposure contrasts with negligible Validation predictions; simple rarity or tiny fragments alone cannot explain that failure. Background+Body still occupy 84.20% of patch voxels. Job 650924 now provides authenticated selected-patch probabilities; component/parameter gradients remain unmeasured, and replay does not independently prove historical image-file immutability. One seed, purposive case selection, missing early training segments, absent historical Standard Validation checkpoint hash and incomplete repeated matched compute profiling limit the conclusions. Original E10 training/validation logs are now inspected locally, resolving the previous full-run-log evidence gap. Exact anatomical base/apex analysis, surface metrics and clinical annotation review remain uncompleted.
 
-The probe's current Standard snapshot and `last.pt` have identical file SHA-256 and state tensors in its protected preflight, but the original Validation log does not hash the past `last.pt`. All six probability outputs/fixed identities are authenticated locally from the downloaded log; raw arrays and binaries are not independently rerun. Improved raises selected-patch Bladder recall but lowers precision, and K019 Rectum NLL/Soft Dice slightly regress. A [bounded Train-only CE/Dice parameter-gradient attribution measurement](CLASS_COLLAPSE_DIAGNOSIS.md#recommended-next-measurement) is recommended before retraining: probabilities/class frequencies do not measure effective gradients. No new Validation performance would result from that read-only measurement.
+The probe's current Standard snapshot and `last.pt` have identical file SHA-256 and state tensors in its protected preflight, but the original Validation log does not hash the past `last.pt`. All six probability outputs/fixed identities are authenticated locally from the downloaded log; raw arrays and binaries are not independently rerun. Improved raises selected-patch Bladder recall but lowers precision, and K019 Rectum NLL/Soft Dice slightly regress. A [bounded Train-only CE/Dice parameter-gradient attribution measurement](docs/analysis/class-prediction-collapse.md#recommended-next-measurement) is recommended before retraining: probabilities/class frequencies do not measure effective gradients. No new Validation performance would result from that read-only measurement.
 
-The held-out **30-volume Test** evaluation remains separate and unexecuted here; no test Dice target attainment is claimed. Tutor check-off and final submission are also unverified. The comprehensive task README/PDF still needs its outstanding assessment material and authorised figure insertion; this report and manifest do not by themselves establish submission completion.
+The held-out **30-volume Test** evaluation remains separate and unexecuted here; no test Dice target attainment is claimed. A separate `predict_v3.py` adapter now has synthetic CPU admission checks, but its real E12 checkpoint/receipt preflight and Validation equivalence remain pending; it is not a formally frozen final path. Tutor check-off and final submission are also unverified. The comprehensive task README/PDF still needs its outstanding assessment material and authorised figure insertion; this report and manifest do not by themselves establish submission completion.
 
-## V4 E20: Planned Controlled Follow-up Experiment
+## V4 E20: Completed Paired Validation Experiment
 
-**Status as of 13 October 2026: implementation and CPU verification
-completed; V4 GPU execution and performance results pending.**
+**Current status (14 October 2026):** the frozen Control/Treatment continuation and scheduled E14/E16/E18/E20 full-volume Validation completed. Treatment was rejected under the frozen conjunctive rule; V3 E12 remains the protected candidate. Control E20 was not automatically selected. No formal model freeze or Held-out Test evaluation has occurred.
 
 ### Motivation
 
 The selected V3 E12 model provides the parent checkpoint for
 an exploratory follow-up targeting Prostate false positives.
 
-This follow-up tests a loss-function intervention rather than
+This follow-up tested a loss-function intervention rather than
 introducing a new architecture or changing the dataset split.
 
 ### Experimental design
 
-The Control continues the original V3 objective. The Treatment
-increases the Prostate Tversky false-positive coefficient from
+The Control continued the original V3 objective. The Treatment
+increased the Prostate Tversky false-positive coefficient from
 alpha=0.5 to alpha=0.7.
 
-Both arms start from the selected V3 E12 checkpoint and are
-planned to continue through E20.
+Both arms started from the selected V3 E12 checkpoint and
+continued through E20.
 
-The planned comparison uses the same Train/Validation split,
+The paired comparison used the same Train/Validation split,
 143 optimiser updates per epoch and full-volume Validation
 at E14, E16, E18 and E20.
 
@@ -365,8 +366,7 @@ The predeclared E20 decision rules include:
 - Required class coverage and comparison with the
   selected V3 parent baseline.
 
-These criteria are prospective acceptance thresholds,
-not observed V4 outcomes.
+These criteria were specified before E20; their observed outcomes are reported below.
 
 ### Engineering verification
 
@@ -379,24 +379,12 @@ The latest E20 Runner also passed its final three-test
 CPU numerical regression.
 
 Several checks used synthetic data or mocked dependencies.
-They do not replace GPU execution or real-MRI evaluation.
+These bounded checks alone did not establish real-MRI performance; the later full-volume Validation evidence is reported below.
 
 ### Results and limitations
 
-**No V4 results are reported at this stage.**
+Treatment reduced **pooled Prostate false positives by 32.30%**. At E20, pooled Prostate Dice was 0.617164 for Control and 0.650778 for Treatment; **patient-macro** Prostate Dice was 0.616010 and 0.643060, respectively. Pooled, volume-macro and patient-macro scores are distinct aggregation methods; the independent audit reports all three.
 
-Specifically, no E20 Dice improvement, false-positive reduction,
-recall preservation, successful full-volume Validation or
-Held-out Test performance is claimed.
+Three mandatory conjunctive gates failed: patient-macro Prostate Dice gain was 0.027050, below 0.03; pooled Prostate Recall loss was 0.076124, above 0.05; and maximum other-class patient-macro Dice decrease was 0.048440, above 0.02, driven by Rectum. The frozen decision (local-only: `research_archive/10_scientific_documentation/COMP3710_V4_FINAL_DOCS_20261014/V4_ACCEPTANCE_DECISION.md`) rejected Treatment and retained V3 E12 as the protected candidate. Control E20 was not automatically selected. The P4-04C independent audit (local-only: `research_archive/08_validation_and_independent_audit/COMP3710_P4-04C_audit_20261014/INDEPENDENT_AUDIT.md`) recomputed the Validation metrics and rule; P4-04E (local-only: `research_archive/08_validation_and_independent_audit/COMP3710_P4-04E_20261014/V4_EVIDENCE_CLOSURE.md`) closed V4 numerical reproducibility while local checkpoint-payload inspection remains unknown.
 
-The six Validation patients were previously used during model
-development and parent selection. Subsequent V4 Validation
-comparisons are exploratory and do not constitute independent
-confirmation.
-
-Once actual E20 results exist, this section must be updated
-using audited Checkpoints, Journals, per-patient metrics and
-the frozen decision criteria.
-
-Implementation details and source identities are recorded in
-`REPORT_CODE_TRACEABILITY.md`.
+The six Validation patients had previously informed model development and parent selection, so this comparison is exploratory, not independent confirmation. The retained candidate is **not formally frozen**. The P4-05A readiness audit (local-only: `research_archive/12_handover_and_pretest_readiness/COMP3710_P4-05A_20261014/P4-05A_READINESS_AUDIT.md`) found that the existing `predict.py` is not a verified V3 E12 final inference path. Held-out Test has not been evaluated; no Test metric, clinical reliability or final submission completion is claimed.

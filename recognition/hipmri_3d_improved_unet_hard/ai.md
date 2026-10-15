@@ -414,7 +414,7 @@ This is a documentation/evidence batch, not a new inference experiment. Original
 
 | Environment / command or procedure | Purpose | Expected output / why expected | Actual result | Interpretation / limitations |
 | --- | --- | --- | --- | --- |
-| Windows PowerShell file inventory and SHA-256 inspection of the specified Downloads directories | Locate and fingerprint original case evidence without copying it into Git | Six additional JSON/PNG pairs and two B040 PNGs, if the reported downloads exist | All 14 files exist; eight PNGs inspected; exact paths/hashes in [manifest](../FAILURE_CASE_EVIDENCE.md) | Direct local existence/content evidence; PNG titles identify case but not model |
+| Windows PowerShell file inventory and SHA-256 inspection of the specified Downloads directories | Locate and fingerprint original case evidence without copying it into Git | Six additional JSON/PNG pairs and two B040 PNGs, if the reported downloads exist | All 14 files exist; eight PNGs inspected; exact paths/hashes in [manifest](../docs/evidence/failure-cases.md) | Direct local existence/content evidence; PNG titles identify case but not model |
 | Local Python standard-library JSON audit, executed inline | Check setup model/checkpoint/epoch, case, Validation scope, PASS, geometry/Z agreement and confusion-derived metrics | E10/1,430 updates; identical paired grids/settings; metrics equal count formulas | Six JSONs authenticate three pairs; all per-class Dice/IoU/counts agree within 1e-12; derived precision/recall recorded | Arithmetic audit, not rerun inference; no MRI arrays loaded; B040 JSON/full-validation JSONL not found locally |
 | Local source/specification inspection and protected-file SHA-256 comparison | Preserve inference/model policies and verify documentation-only scope | Shared evaluator/metrics; executable/configuration bytes unchanged | Source contracts inspected; 29 Python/JSON files snapshotted for final comparison | Source supports methods; no independent remote source/version verification or checkpoint binary hashing |
 | `git diff --check` in the local repository | Detect whitespace errors in tracked diffs | No errors, because edited Markdown uses consistent whitespace | Passed during documentation review; repeated in final checks | Does not inspect untracked report/manifest files; those require separate content/link/whitespace checks |
@@ -795,7 +795,7 @@ The training-log SHA-256 authenticates its **current imperfect bytes**; it does 
 
 ### Improved V3 continuation - local implementation and proposed remote batch (12 October 2026)
 
-This entry records authorised local work only. No V3 Rangpur job, real MRI step or Validation result has been executed. The exact proposed transfer/preflight/Slurm/acceptance/evidence commands and their expected outcomes are in [IMPROVED_V3_EXPERIMENT.md](../IMPROVED_V3_EXPERIMENT.md); they are not historical executed commands.
+At the time of this historical entry, this work was local only: no V3 Rangpur job, real MRI step or Validation result had been executed. The exact proposed transfer/preflight/Slurm/acceptance/evidence commands and their expected outcomes are in the original `IMPROVED_V3_EXPERIMENT.md` (local-only: `research_archive/07_model_development_snapshots/P5-08_superseded_active_docs_2026-10-15/recognition/IMPROVED_V3_EXPERIMENT.md`). They are proposals, not executed commands; the later result and decision are in the [current experiment history](../docs/experiments.md#improved-v3--bounded-e12-continuation).
 
 | Field | Record |
 | --- | --- |
@@ -1090,7 +1090,7 @@ correctness.
 
 Windows/Rangpur SHA-256 equality was checked after E20 source
 transfers. The source identity snapshot is recorded in
-`REPORT_CODE_TRACEABILITY.md`.
+The current [report-to-code traceability register](../docs/evidence/traceability.md).
 
 Rangpur login-node CPU autograd emitted a CUDA driver compatibility
 warning, but the CPU tests completed successfully. This does not

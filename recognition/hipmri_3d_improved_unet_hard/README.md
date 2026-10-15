@@ -2,9 +2,58 @@
 
 ## Project Status
 
-Production discovery, pairing, the frozen patient split, NIfTI loading, spatial resampling, intensity normalisation, the on-demand Patch Dataset, and both 3D U-Net architectures are implemented. Historical student-run regression, real preprocessing/patch checks and Standard GPU smoke evidence are preserved below. Both models completed 10 epochs / 1,430 updates: Standard job **648790**, Improved **649668**. Full Validation completed 38/38 with zero failures for Standard **649669** and Improved **650393** (reported 8m04s); original Improved job **649912** was CANCELLED and replaced. Four original E10 training/validation JSONL files are now downloaded and inspected locally: step/epoch accounting, source hashes, matched inference settings and all 38 confusion matrices per model pass the evidence audit. Original checkpoint binaries remain unavailable locally; this is log verification, not independently repeated remote execution. Six paired-case JSONs and eight PNGs were inspected locally. Four failure studies now exist, with images external pending permission. Final Test evaluation, clinical validity, tutor check-off, submission and a repeated matched resource benchmark remain unverified. See [report Sections 1–5](../FINAL-REPORT.md), the [evidence register](../REPORT_CODE_TRACEABILITY.md) and [artefact manifest](../FAILURE_CASE_EVIDENCE.md).
+Production discovery, pairing, the frozen patient split, NIfTI loading, spatial resampling, intensity normalisation, the on-demand Patch Dataset, and both 3D U-Net architectures are implemented. Historical student-run regression, real preprocessing/patch checks and Standard GPU smoke evidence are preserved below. Both models completed 10 epochs / 1,430 updates: Standard job **648790**, Improved **649668**. Full Validation completed 38/38 with zero failures for Standard **649669** and Improved **650393** (reported 8m04s); original Improved job **649912** was CANCELLED and replaced. Four original E10 training/validation JSONL files are now downloaded and inspected locally: step/epoch accounting, source hashes, matched inference settings and all 38 confusion matrices per model pass the evidence audit. Original checkpoint binaries remain unavailable locally; this is log verification, not independently repeated remote execution. Six paired-case JSONs and eight PNGs were inspected locally. Four failure studies now exist, with images external pending permission. Final Test evaluation, clinical validity, tutor check-off, submission and a repeated matched resource benchmark remain unverified. See [report Sections 1–5](../FINAL-REPORT.md), the [evidence register](../docs/evidence/traceability.md) and [artefact manifest](../docs/evidence/failure-cases.md).
 
-The required `predict.py` entry point is functional for protected Standard/Improved checkpoint inference, full-volume metrics and aligned PNG panels. Local CPU verification passed 22 focused prediction tests and a 92-test selected regression suite. Student-run real MRI/A100 acceptance subsequently passed for both architectures on B040_Week0 (jobs **650442 / 650468**); job **650490** generated six additional PASS paired-case outputs. These are separate synthetic and real evidence levels. Held-out Test evaluation remains pending.
+The required `predict.py` entry point is functional for the original Standard and Improved E10 checkpoint families, full-volume metrics and aligned PNG panels. Its Improved branch uses the original E10 loader; it is not a verified V3 E12 or V4 checkpoint inference path. Local CPU verification passed 22 focused prediction tests and a 92-test selected regression suite. Student-run real MRI/A100 acceptance subsequently passed for both architectures on B040_Week0 (jobs **650442 / 650468**); job **650490** generated six additional PASS paired-case outputs. These are separate synthetic and real evidence levels. Held-out Test evaluation remains pending.
+
+## Model version and source navigation
+
+Start with the training entry point in the row of interest, then open its architecture and evaluation links. For the Baseline, open [train.py](train.py) and [StandardUNet3D in modules.py](modules.py) first. The Improved family reuses [ImprovedUNet3D in improved_modules.py](improved_modules.py); V2–V4 change the objective or continuation protocol, not the network class. The shared patient split and sampling implementation are in [dataset.py](dataset.py) and [patch_dataset.py](patch_dataset.py); resampling and normalisation policies are in [resampling_config.json](resampling_config.json) and [normalization_config.json](normalization_config.json). The [unified experiment history](../docs/experiments.md) gives the full numerical record and evidence limits.
+
+| Model / Version | Architecture | Training Entry Point | Evaluation Entry Point | Configuration | Main Change | Actual Outcome |
+|---|---|---|---|---|---|---|
+| Standard Baseline E10 | [StandardUNet3D](modules.py) | [train.py](train.py) | [validate.py](validate.py) | [shared patch policy](patch_dataset_config.json); no version-specific JSON | Original 3D U-Net and CE/foreground Dice | E10 full Validation completed; architectural baseline, with Bones/Rectum/Prostate omission. |
+| Improved V1 E10 | [ImprovedUNet3D](improved_modules.py) | [train_improved.py](train_improved.py) | [validate_improved.py](validate_improved.py) | [shared patch policy](patch_dataset_config.json); no version-specific JSON | Residual blocks and deep supervision, with the original objective | E10 full Validation completed; large-organ gains but minority-class omission persisted. |
+| Improved V2 E10 | [ImprovedUNet3D](improved_modules.py) | [train_improved_v2.py](train_improved_v2.py) | [validate_improved_v2.py](validate_improved_v2.py) | [improved_v2_config.json](improved_v2_config.json) | Inverse-square-root class-weighted CE; original Dice/model/sampler | Recorded 38-volume Validation recovered minority overlap; its E10 checkpoint became the V3 parent. |
+| Improved V3 split E12 | [ImprovedUNet3D](improved_modules.py) | [run_improved_v3_split.py](run_improved_v3_split.py) using [train_improved_v3.py](train_improved_v3.py) | [split Stage C](run_improved_v3_split.py) using [shared evaluator](validate.py) | [improved_v3_config.json](improved_v3_config.json) plus inherited V2 policy | Continue V2 model/optimizer/RNG through E11–E12; separate training A/B and 38-volume Validation/selection C | E12 selected as protected candidate; no formal freeze. |
+| V4 E20 Control / Treatment | [ImprovedUNet3D](improved_modules.py) | [experiment_prostate_fp_e20.py](experiment_prostate_fp_e20.py) for both arms | [scheduled full Validation in the E20 runner](experiment_prostate_fp_e20.py) | [prostate_fp_e20_config.json](prostate_fp_e20_config.json) | Paired V3 E12 continuation; Treatment alone changes Prostate overlap to Tversky alpha 0.7 | E20 Treatment reduced pooled Prostate FP 32.30% but failed three acceptance gates and was rejected; Control not automatically selected. |
+
+The earlier [E14 V4 draft runner](experiment_prostate_fp.py) and [draft configuration](prostate_fp_config.json) are historical development inputs, not the frozen E20 decision implementation. [predict.py](predict.py) covers the original Standard/Improved E10 checkpoint families; it has not been validated for V3 E12 final inference. Held-out Test remains unevaluated.
+
+### Protected V3 E12 inference adapter status
+
+[predict_v3.py](predict_v3.py) is a separate candidate path. It requires the original V3 A/B/C run tree, the B-stage E12 checkpoint and C-stage `selection.json`; it verifies their recorded SHA-256 identities, reruns the complete lineage audit, checks checkpoint metadata and strict `ImprovedUNet3D` state compatibility, and reuses the established full-volume preprocessing, sliding-window evaluator, metrics and panels. `--preflight-only` performs CPU metadata checks without decoding MRI or running inference. Full-split Validation compares all 38 new per-case confusion matrices against the authenticated V3 C journal and fails admission if they differ. Prediction defaults to Validation. Test additionally requires `--split test`, `--allow-test` and an independently reviewed `--freeze-receipt` binding the candidate, adapter source and passed Validation-equivalence check. This receipt has not been created. Outputs and metrics use the shared resampled XYZ grid, without inverse resampling to source geometry. The original E10 `predict.py` is unchanged.
+
+Synthetic CPU admission tests passed locally. This is implementation evidence only: the actual E12 checkpoint, receipt, A/B/C logs and HipMRI data were not available here, so the adapter has not passed real-candidate preflight or Validation equivalence and is **not yet the formally frozen final inference path**. No Test data were opened. The local virtual environment also lacks Matplotlib, so the existing visualization tests could not pass in that environment; install the declared dependencies before a complete regression run.
+
+For closure on Rangpur, run `python -m recognition.hipmri_3d_improved_unet_hard.predict_v3` with `--run-root`, `--checkpoint`, `--selection-receipt` and `--preflight-only` first. Then use the same evidence paths with `--all-split --output-dir <new-external-directory>` in an allocated GPU session to verify all 38 Validation cases against V3 C. An independent review must confirm the resulting `historical_v3_c_confusion_equivalence=true`, source/configuration hashes and official assessment requirements before recording a formal freeze. A freeze receipt for later Test admission must bind `candidate_checkpoint_sha256`, `selection_sha256`, `config_sha256` and the current `adapter_sha256`, and record `validation_equivalence: "PASS"`, `formal_freeze: true` and `test_evaluated_before_freeze: false`. These fields express a review decision; the adapter does not create or independently certify that decision. Only then can a separate Test run be considered. No such run or receipt is claimed here.
+
+## Local environment and complete regression suite
+
+The CPU regression suite is standard-library `unittest`; Pytest is not
+required. Python 3.11 is the documented environment (the historical WSL
+regression run used Python 3.11.15). From the repository root, create an
+isolated environment and install the bounded runtime dependencies:
+
+```powershell
+py -3.11 -m venv .venv-regression
+.\.venv-regression\Scripts\Activate.ps1
+python -m pip install -r recognition\requirements.txt
+python -m unittest discover -v -s recognition\hipmri_3d_improved_unet_hard -t .
+```
+
+Discovery includes both the task-level and nested `diagnostics` test modules.
+These tests use synthetic fixtures and do not access the dataset, checkpoints,
+GPU or Slurm. The dependency file specifies compatible ranges rather than
+locking every transitive dependency. For real CUDA training/inference, install
+a PyTorch build appropriate to the machine and use the required Slurm
+allocation; a successful local CPU regression is not GPU or real-data
+acceptance.
+
+Latest local regression run: **279 tests passed** in **22.012 s** using
+Windows/Python 3.11.16, CPU PyTorch 2.13.0, NumPy 2.4.6, NiBabel 5.4.2,
+SciPy 1.17.1 and Matplotlib 3.11.2. CUDA was unavailable; this run verifies
+the synthetic CPU suite only.
 
 ## Problem
 
@@ -166,7 +215,7 @@ Completed epochs save atomic model/optimiser/configuration/RNG checkpoints. Resu
 
 ### Current recorded results
 
-Original training logs record **10 completed epochs / 1,430 optimiser updates for both arms** on Rangpur A100. Standard resumed from epoch 3 and records epochs 4–10; Improved resumed from epoch 1 and records epochs 2–10. Earlier step/loss events require prior logs, not interpolation. These are equal update budgets, not equal compute budgets. Standard E10 validation **649669** and Improved **650393** each completed **38/38**, zero failures. The recomputed full-precision `overall_pooled` values, counts and provenance are preserved in the [manifest](../FAILURE_CASE_EVIDENCE.md#full-validation-numerical-provenance); the [Section 5 comparison](../FINAL-REPORT.md#51-controlled-validation-comparison) interprets them without calling them final Test results.
+Original training logs record **10 completed epochs / 1,430 optimiser updates for both arms** on Rangpur A100. Standard resumed from epoch 3 and records epochs 4–10; Improved resumed from epoch 1 and records epochs 2–10. Earlier step/loss events require prior logs, not interpolation. These are equal update budgets, not equal compute budgets. Standard E10 validation **649669** and Improved **650393** each completed **38/38**, zero failures. The recomputed full-precision `overall_pooled` values, counts and provenance are preserved in the [manifest](../docs/evidence/failure-cases.md#full-validation-numerical-provenance); the [Section 5 comparison](../FINAL-REPORT.md#51-controlled-validation-comparison) interprets them without calling them final Test results.
 
 Recorded Standard E10 Dice values are Background **0.94134160556791**, Body **0.8427898257960118**, Bladder **0.6220039283221238**, and **0.0** for Bones, Rectum and Prostate. No Bones, Rectum or Prostate voxels were predicted in any of its 38 cases. Improved predicts no Rectum/Prostate and only three Bones voxels across two cases. Partial class prediction collapse is observed; its cause has not been isolated. Cancelled job 649912 is retained as failed-attempt history, not a successful Validation result.
 
@@ -183,23 +232,23 @@ Both Epoch 10 models were evaluated on the same 38 volumes/six Validation patien
 | Rectum | 0.000000 | 0.000000 | 0.000000 | 0.000000 |
 | Prostate | 0.000000 | 0.000000 | 0.000000 | 0.000000 |
 
-Background, Body and Bladder are predicted in all 38 volumes by both models. Improved predicts three Bones voxels (two TP, one FP) across K018_Week1 and K018_Week4, giving positive DSC=3.943109603265999e-7, not useful segmentation. Both models predict zero Rectum/Prostate voxels. Exact class counts and coverage are in the [manifest](../FAILURE_CASE_EVIDENCE.md#full-validation-numerical-provenance). Residual units and deep supervision were changed jointly, so individual causal effects cannot be inferred.
+Background, Body and Bladder are predicted in all 38 volumes by both models. Improved predicts three Bones voxels (two TP, one FP) across K018_Week1 and K018_Week4, giving positive DSC=3.943109603265999e-7, not useful segmentation. Both models predict zero Rectum/Prostate voxels. Exact class counts and coverage are in the [manifest](../docs/evidence/failure-cases.md#full-validation-numerical-provenance). Residual units and deep supervision were changed jointly, so individual causal effects cannot be inferred.
 
 ### Recorded training losses
 
 ![Genuine recorded epoch losses; missing epochs are shaded](../figures/e10_recorded_training_losses.png)
 
-Standard total loss changes from 0.791711 (epoch 4) to 0.699227 (epoch 10); Improved from 0.810483 (epoch 2) to 0.611152 (epoch 10). Both are non-monotonic and both Soft Dice losses rise at epoch 10. Improved's CE/Dice components include auxiliary heads; absolute losses are not directly comparable main-head quality measures. The [epoch/component/runtime table](../FAILURE_CASE_EVIDENCE.md#recorded-training-loss-trajectory) preserves every available event, missing epochs and timing scope. Declining losses do not establish adequate training-patch class exposure or class-specific convergence. Standard full validation names `standard_unet_last.pt`, paired-case predictions name `standard_unet_epoch10.pt`; E10 metadata matches; job 650924 preflight now records equal current Standard file hashes/state tensors. Historical Validation-time `last.pt` hash remains absent; binaries are not independently inspected locally.
+Standard total loss changes from 0.791711 (epoch 4) to 0.699227 (epoch 10); Improved from 0.810483 (epoch 2) to 0.611152 (epoch 10). Both are non-monotonic and both Soft Dice losses rise at epoch 10. Improved's CE/Dice components include auxiliary heads; absolute losses are not directly comparable main-head quality measures. The [epoch/component/runtime table](../docs/evidence/failure-cases.md#recorded-training-loss-trajectory) preserves every available event, missing epochs and timing scope. Declining losses do not establish adequate training-patch class exposure or class-specific convergence. Standard full validation names `standard_unet_last.pt`, paired-case predictions name `standard_unet_epoch10.pt`; E10 metadata matches; job 650924 preflight now records equal current Standard file hashes/state tensors. Historical Validation-time `last.pt` hash remains absent; binaries are not independently inspected locally.
 
 ### Train-only patch exposure evidence
 
 The student completed reconstruction job **650736** (reported Slurm COMPLETED 0:0, 00:18:46). Its original external JSONL is now authenticated locally: **143 Train volumes, 26 patients, 1,430 unique volume/epoch patches**, PASS, full Train=true. Independent counts/distributions match the summary. Bones appears in **1,230 patches (86.01%)**, occupying **9.10%** of pooled patch voxels; Bladder **869 (60.77%) / 4.03%**, Rectum **777 (54.34%) / 1.23%**, Prostate **880 (61.54%) / 1.43%**. All 754 prostate-aware crops contain Bones and Prostate; 676 random crops have lower target exposure. Bones positive-patch median occupancy is **10.08%**, so simple lack of examples or tiny fragments alone does not explain its near-total Validation failure. Background+Body still occupy **84.20%** of sampled voxels.
 
-[The diagnosis](../CLASS_COLLAPSE_DIAGNOSIS.md#original-full-train-audit-authentication) preserves the original file hash, raw/resampled/patch denominators, physical voxel sizes, fragment thresholds and patient/epoch/branch variability. This is Standard-checkpoint-authenticated replay of the common configured sampler, not proof of unchanged historical MRI/mask bytes or a newly executed training run. The subsequent student-run protected probability probe (650924) is now authenticated locally below. No gradient measurement/retraining occurred; no Test arrays were used.
+[The diagnosis](../docs/analysis/class-prediction-collapse.md#original-full-train-audit-authentication) preserves the original file hash, raw/resampled/patch denominators, physical voxel sizes, fragment thresholds and patient/epoch/branch variability. This is Standard-checkpoint-authenticated replay of the common configured sampler, not proof of unchanged historical MRI/mask bytes or a newly executed training run. The subsequent student-run protected probability probe (650924) is now authenticated locally below. No gradient measurement/retraining occurred; no Test arrays were used.
 
 ### Read-only E10 checkpoint probability evidence
 
-Original external `prob_probe_650924.jsonl` verifies three fixed patches / six main-head forwards (two Train crops and B040 Validation center crop), PASS; zero backward passes, optimiser updates or Test arrays. The student supplied Slurm COMPLETED 0:0 / 25 s on an A100. Local aggregate/source checks pass; [the diagnosis](../CLASS_COLLAPSE_DIAGNOSIS.md#authenticated-real-probability-results) records SHA-256, exact crop/checkpoint identities, all statistics and evidence limits.
+Original external `prob_probe_650924.jsonl` verifies three fixed patches / six main-head forwards (two Train crops and B040 Validation center crop), PASS; zero backward passes, optimiser updates or Test arrays. The student supplied Slurm COMPLETED 0:0 / 25 s on an A100. Local aggregate/source checks pass; [the diagnosis](../docs/analysis/class-prediction-collapse.md#authenticated-real-probability-results) records SHA-256, exact crop/checkpoint identities, all statistics and evidence limits.
 
 Bones often ranks second but never wins on true Bones; Rectum probabilities are low; Improved raises Prostate scores without any TP. Both Train crops already omit all three classes. Bladder recall improves but precision decreases; K019 Rectum slightly regresses. These selected-patch findings are not full-volume Dice or causal proof. One separately authorised **Train-only loss-component parameter-gradient attribution measurement**, not immediate retraining/reweighting, is recommended. Source/checkpoints remain unchanged.
 
@@ -214,7 +263,7 @@ The cases are four distinct patients selected purposively to expose improvements
 | S022_Week5 | 44,54,64 | 0.6243 / 0.2490 | 5,966; 0 | Genuine regression: Bladder TP 10,838→3,298 of 20,816; recall 52.07%→15.84%, precision 77.95%→58.10% |
 | K008_Week0 | 56,70,84 | 0.5599 / 0.6862 | 11,114; 0 | Largest prostate in representative screening still omitted; small size alone is not an established explanation |
 
-**Figures 5.1–5.4: insertion deferred pending permission.** Eight original PNGs exist outside Git, each displaying MRI / Ground Truth / Prediction / Error Map. [Report Section 5.3](../FINAL-REPORT.md#53-paired-anatomical-failure-case-studies) supplies paired captions and careful panel descriptions; the [manifest](../FAILURE_CASE_EVIDENCE.md) records exact external paths/hashes and JSON identities. No broken image embeds are used. The course permits README visual content, but explicit permission to publicly redistribute HipMRI-derived images was not established locally. Insert unchanged originals into the final local PDF only if course/dataset rules allow it, labelling A=Standard and B=Improved. Source-axis Z slices are not asserted to be anatomical apex/base.
+**Figures 5.1–5.4: insertion deferred pending permission.** Eight original PNGs exist outside Git, each displaying MRI / Ground Truth / Prediction / Error Map. [Report Section 5.3](../FINAL-REPORT.md#53-paired-anatomical-failure-case-studies) supplies paired captions and careful panel descriptions; the [manifest](../docs/evidence/failure-cases.md) records exact external paths/hashes and JSON identities. No broken image embeds are used. The course permits README visual content, but explicit permission to publicly redistribute HipMRI-derived images was not established locally. Insert unchanged originals into the final local PDF only if course/dataset rules allow it, labelling A=Standard and B=Improved. Source-axis Z slices are not asserted to be anatomical apex/base.
 
 ### Available resource evidence and recommendation
 
@@ -380,7 +429,13 @@ Subsequent conversation records document Codex-generated training/validation int
 
 For the prediction-driver batch, Codex implemented the driver and focused synthetic tests, reused approved production APIs, ran the local 92-test CPU suite and updated this README/traceability document. The student specified the scope, Test opt-in and checkpoint-protection requirements and subsequently supplied real A100 acceptance/paired-case records. In the Section 5 batch, Codex inspected six local JSONs and eight PNGs, checked confusion-derived arithmetic, reconciled documentation and prepared captions plus a metadata-only manifest. The student performed the remote training, Validation and prediction experiments; Codex did not rerun them. No new inference, Test evaluation or experimental metric was generated in this documentation batch. Historical AI records are preserved in [ai.md](ai.md).
 
-## V4 E20 - Paired Prostate FP Experiment (13 October 2026)
+For the complete Baseline–V4 research timeline and evidence levels, see the [unified experiment history](../docs/experiments.md). This package README documents implementation, execution interfaces and assessment gaps.
+
+## V4 E20 - Paired Prostate FP Experiment
+
+**Current Validation decision (14 October 2026):** Control and Treatment completed the frozen paired E13–E20 protocol, with full-volume Validation at E14/E16/E18/E20. Treatment reduced pooled Prostate false positives by 32.30%, but failed the mandatory Prostate patient-macro Dice gain (0.027050 < 0.03), pooled Recall-loss (0.076124 > 0.05), and other-class patient-macro regression (0.048440 > 0.02, Rectum) gates. The frozen rule rejected Treatment, retained V3 E12 as the protected candidate, and did not automatically select Control E20. This is exploratory Validation evidence. No formal final-model freeze or Held-out Test evaluation has occurred. The existing `predict.py` does not establish V3/V4-compatible final inference. See the independent E20 audit (local-only: `research_archive/08_validation_and_independent_audit/COMP3710_P4-04C_audit_20261014/INDEPENDENT_AUDIT.md`), acceptance decision (local-only: `research_archive/10_scientific_documentation/COMP3710_V4_FINAL_DOCS_20261014/V4_ACCEPTANCE_DECISION.md`), and pre-Test inference audit (local-only: `research_archive/12_handover_and_pretest_readiness/COMP3710_P4-05A_20261014/INFERENCE_PROTOCOL_AUDIT.md`).
+
+The design and checks below record the 13 October pre-execution snapshot.
 
 ### Scientific question
 
@@ -443,10 +498,9 @@ real MRI training, full Slurm failure recovery or GPU compatibility.
 
 Validation is already involved in development and parent selection;
 therefore V4 Validation results must be reported as exploratory.
-No independent confirmation, Held-out Test performance or V4 Dice
-improvement has been established.
+The later E20 Validation comparison is documented above. It does not establish independent confirmation, Held-out Test performance, formal model freeze or clinical safety.
 
-### Remaining execution gates
+### Historical execution gates recorded on 13 October
 
 1. Final source and configuration freeze.
 2. Documentation and targeted Git commit.

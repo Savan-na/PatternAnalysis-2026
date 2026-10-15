@@ -1,15 +1,12 @@
 # Class Prediction Collapse Diagnosis
 
-## V4 E20 status update - 13 October 2026
+## V4 E20 status update - 14 October 2026
 
-**Current status: V4 implementation and bounded CPU verification
-completed; GPU training and V4 Validation not yet executed.**
+The frozen paired E20 Validation completed. Treatment reduced pooled Prostate false positives by 32.30%, but failed three mandatory acceptance gates: Prostate patient-macro Dice gain, pooled Recall-loss limit, and other-class patient-macro Dice safeguard. The frozen decision rejected Treatment, retained V3 E12 as the protected candidate and did not automatically select Control E20. No formal freeze or Held-out Test evaluation has occurred. See the independent audit (local-only: `research_archive/08_validation_and_independent_audit/COMP3710_P4-04C_audit_20261014/INDEPENDENT_AUDIT.md`) and decision (local-only: `research_archive/10_scientific_documentation/COMP3710_V4_FINAL_DOCS_20261014/V4_ACCEPTANCE_DECISION.md`).
 
-This update supersedes earlier planning-stage statements that V4
-experimentation was deferred. Historical observations and analyses
-below remain unchanged.
+The experiment motivation and prospective design below are preserved as historical context; they do not establish a causal explanation for the earlier class-collapse observations.
 
-### Evidence motivating the next experiment
+### Original experiment motivation (13 October 2026)
 
 The selected V3 E12 parent still exhibits a Prostate
 false-positive problem in the recorded Validation evidence.
@@ -18,7 +15,7 @@ The next controlled experiment therefore tests whether stronger
 false-positive penalisation can improve Prostate segmentation
 without unacceptable recall loss or regression in other classes.
 
-### Experimental intervention
+### Original predeclared intervention (13 October 2026)
 
 - Control: continue the selected V3 E12 loss unchanged.
 - Treatment: change the Prostate Tversky alpha from 0.5 to 0.7.
@@ -30,35 +27,34 @@ without unacceptable recall loss or regression in other classes.
 Both arms are designed to share the selected parent checkpoint,
 model architecture, data split, sampling and optimisation policy.
 
-### Evidence currently available
+### Evidence available at the 13 October 2026 planning snapshot
 
 CPU numerical, training-loop, paired-integrity, checkpoint,
-journal and synthetic failure-recovery checks have passed
-within their respective test scopes.
-
-These checks establish neither Prostate FP improvement nor
-successful real-MRI training. The experiment remains unexecuted
-on GPU.
+journal and synthetic failure-recovery checks had passed
+within their respective test scopes. At that snapshot, V4 GPU
+execution and full-volume Validation had not yet occurred.
+The completed E20 Validation decision is summarised in the
+14 October status update above.
 
 ### Scientific interpretation boundary
 
-The six Validation patients have already informed development
-and checkpoint selection. Any later V4 Validation improvement
-must be interpreted as exploratory evidence.
+At that planning snapshot, the six Validation patients had already
+informed development and checkpoint selection; any subsequent V4
+Validation comparison would therefore be exploratory. The later
+E20 patient-level comparison is reported in the 14 October update
+above. It is not Held-out Test evidence, and no formal model freeze
+or Held-out Test result has been established.
 
-No V4 Held-out Test result, patient-level failure-case comparison
-or model performance improvement is available at this stage.
-
-See `REPORT_CODE_TRACEABILITY.md` and
+See the [report-to-code traceability register](../evidence/traceability.md) and
 `hipmri_3d_improved_unet_hard/README.md` for the current
 experiment design and verification record.
 
 
-Internal investigation document; no new training result or submission milestone is claimed. Section 5 integration is preserved. The initial diagnosis batch added this report and isolated [diagnostic utility](hipmri_3d_improved_unet_hard/diagnostics/class_collapse.py) / [CPU tests](hipmri_3d_improved_unet_hard/diagnostics/test_class_collapse.py). Existing production files, configurations, figures and checkpoint protections are unchanged.
+Internal investigation document; no new training result or submission milestone is claimed. Section 5 integration is preserved. The initial diagnosis batch added this report and isolated [diagnostic utility](../../hipmri_3d_improved_unet_hard/diagnostics/class_collapse.py) / [CPU tests](../../hipmri_3d_improved_unet_hard/diagnostics/test_class_collapse.py). Existing production files, configurations, figures and checkpoint protections are unchanged.
 
 ## Current optimisation decision - 12 October 2026
 
-The later student-approved V2 weighted-CE experiment supersedes the historical gradient-attribution recommendation below. No attribution utility was implemented or executed. V2 training job 652649 completed ten epochs/1,430 updates and Validation job 652948 completed all 38 volumes. These are student-supplied Rangpur records, preserved with hashes in [ai.md](hipmri_3d_improved_unet_hard/ai.md). The V2 log/checkpoint/per-volume evidence remains remote; the downloaded original E10 logs do not substitute for V2 records. Original sections below retain their historical scope.
+The later student-approved V2 weighted-CE experiment supersedes the historical gradient-attribution recommendation below. No attribution utility was implemented or executed. V2 training job 652649 completed ten epochs/1,430 updates and Validation job 652948 completed all 38 volumes. These are student-supplied Rangpur records, preserved with hashes in [ai.md](../../hipmri_3d_improved_unet_hard/ai.md). The V2 log/checkpoint/per-volume evidence remains remote; the downloaded original E10 logs do not substitute for V2 records. Original sections below retain their historical scope.
 
 | V2 class | Pooled Dice | Precision | Recall | FP | FN |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -75,7 +71,7 @@ Precision/recall/FP/FN are arithmetic from the supplied pooled confusion totals,
 | 2. Weighted-objective class competition / precision-recall trade-off | Minority overlap improved while Body/Background Dice fell. Prostate predicted volume 476,872 exceeds truth 251,012, with precision 0.340148. | Confusion totals do not establish gradient dominance or identify which class should receive a different coefficient. Existing Dice and CE have different absent-class behaviour; the earlier probability probe tested original E10 models, not V2. | Hold the loss fixed while testing duration. Consider one later loss change only after V3 results. |
 | 3. Context, resolution, anatomy or boundary limitations | 64-cube patches and ~1.68/1.68/1.56 mm grid may limit anatomical context/detail; earlier paired E10 panels showed local failures. | No demonstrated alignment defect. Bones exposure was 86.01% with 9.099% sampled voxel share; the sampler already includes prostate-aware crops. Existing panels cannot establish V2 boundary causes, and region Dice does not measure surface error. | Preserve sampling, spacing and aggregation for V3. No automatic augmentation, threshold or architecture change. |
 
-**Implemented first experiment:** [V3 source](hipmri_3d_improved_unet_hard/train_improved_v3.py), [configuration](hipmri_3d_improved_unet_hard/improved_v3_config.json), [CPU tests](hipmri_3d_improved_unet_hard/test_improved_v3.py), and [exact procedure/decision rules](IMPROVED_V3_EXPERIMENT.md). It restores model/AdamW/all RNG state through the protected V2 resume helper, reuses the unchanged weighted-CE/Dice/deep-supervision objective and sampling, and uses full 38-volume Validation at E12. Selection prioritises patient-macro Dice for Bones/Rectum/Prostate with per-class regression guards and all-volume TP coverage. V2 remains the fallback. Validation preserves training RNG, and separate immutable epoch files plus exclusive append/fsync/hash-chain logs protect provenance and recovery.
+**Implemented first experiment:** [V3 source](../../hipmri_3d_improved_unet_hard/train_improved_v3.py), [configuration](../../hipmri_3d_improved_unet_hard/improved_v3_config.json), [CPU tests](../../hipmri_3d_improved_unet_hard/test_improved_v3.py), and [exact procedure/decision rules](../experiments.md). It restores model/AdamW/all RNG state through the protected V2 resume helper, reuses the unchanged weighted-CE/Dice/deep-supervision objective and sampling, and uses full 38-volume Validation at E12. Selection prioritises patient-macro Dice for Bones/Rectum/Prostate with per-class regression guards and all-volume TP coverage. V2 remains the fallback. Validation preserves training RNG, and separate immutable epoch files plus exclusive append/fsync/hash-chain logs protect provenance and recovery.
 
 **Local evidence:** final 19 focused tests passed; 126 combined tests (107 prior + 19 new) passed in 10.655 seconds on WSL CPU/PyTorch 2.12.1+cu130. These include genuine small synthetic updates, serialized optimiser/RNG continuation and mocked remote orchestration; local NiBabel is absent. No real V3 MRI/GPU result, improvement or Test result is claimed. The requested first GPU budget is 19 minutes diagnostic plus 45 minutes for E11-E12/full Validation, pending approval and current resource checks. Further stages and V4/V5 depend on actual results. A failed candidate will be retained as evidence, not relabelled as success.
 
@@ -85,34 +81,34 @@ Precision/recall/FP/FN are arithmetic from the supplied pooled confusion totals,
 
 | Evidence | Finding | Provenance and limits |
 | --- | --- | --- |
-| Standard E10 full Validation, job 649669 | 38 successful volumes; no predicted Bones, Rectum or Prostate; pooled Bladder DSC 0.6220039283221238 | Student-supplied Rangpur records, already reconciled in [Section 5](FINAL-REPORT.md#51-controlled-validation-comparison). Its original downloaded JSONL is now inspected locally, with all 38 per-volume confusion matrices and pooled metrics verified; no inference was rerun. |
+| Standard E10 full Validation, job 649669 | 38 successful volumes; no predicted Bones, Rectum or Prostate; pooled Bladder DSC 0.6220039283221238 | Student-supplied Rangpur records, already reconciled in [Section 5](../../FINAL-REPORT.md#51-controlled-validation-comparison). Its original downloaded JSONL is now inspected locally, with all 38 per-volume confusion matrices and pooled metrics verified; no inference was rerun. |
 | Improved E10 full Validation, job 650393 | 38 successful volumes; only three Bones voxels across two volumes; no Rectum or Prostate; pooled Bladder DSC 0.768230 | Original downloaded JSONL now verifies two Bones TP and one FP in K018_Week1/Week4: pooled DSC=3.943109603265999e-7, not exact zero or useful segmentation. Cancelled job 649912 is not the successful evaluation. |
 | Train exposure reconstruction, job 650736 | 143 volumes / 26 patients / 1,430 patches, PASS; verified distributions below | Original JSONL read locally and independently recomputed; Standard-checkpoint authenticated replay, not proof of unchanged historical image bytes or a new training run. Slurm completion/time supplied by the student. |
 | Checkpoint probability probe, job 650924 | PASS, three fixed patches / six main-head forwards; omitted-class TP zero even on selected Train crops | Original downloaded JSONL authenticated below; probabilities/ranks and source/configuration parity checked locally. No new forward or backward run; scheduler completion/time student-supplied. |
 | E10 training identity | Both models completed 10 epochs / 1,430 updates | Downloaded original training logs verify Standard E4–10 and Improved E2–10, with resume/final counters ending at 10/1,430; all recorded source hashes match local files. Earlier step records and checkpoint binaries remain unavailable. |
-| Paired M030_Week5, S022_Week5, K008_Week0 | Both models predict zero voxels of classes 2, 4 and 5 despite their presence in truth | Six local `results.json` files in `%USERPROFILE%\Downloads\failure_cases_650490`; authenticated paths/hashes are preserved in [the evidence manifest](FAILURE_CASE_EVIDENCE.md). Their metadata records E10 / 1,430 updates. |
+| Paired M030_Week5, S022_Week5, K008_Week0 | Both models predict zero voxels of classes 2, 4 and 5 despite their presence in truth | Six local `results.json` files in `%USERPROFILE%\Downloads\failure_cases_650490`; authenticated paths/hashes are preserved in [the evidence manifest](../evidence/failure-cases.md). Their metadata records E10 / 1,430 updates. |
 | B040_Week0 | Both omit Prostate, Rectum and Bones; 7,105 true Prostate voxels | Original full-validation confusion matrices now verify these counts; external PNGs were previously inspected, but B040 prediction-driver JSONs remain unavailable. Standard assigns 7,093 Prostate voxels to Body and 12 to Bladder; Improved assigns 7,042 to Body and 63 to Bladder. |
 
 The four selected cases show Bladder improvement for B040, M030 and K008, but regression for S022. K008 has 11,114 true Prostate voxels and no Prostate prediction. These purposive Validation cases substantiate failure, not training class frequencies or a causal explanation. They do not establish clinical accuracy or Test performance.
 
 Evidence levels used here: **source-confirmed**, **direct local synthetic test**, **locally inspected experimental artefact**, **student-reported remote result**, and **proposed / unexecuted measurement**. They are not interchangeable.
 
-The local [assessment PDF](../../COMP3710_Report_2026_draft_v2.2.pdf) was inspected through its compressed text content streams, without package installation; conventional local PDF extractors were unavailable. Section 2.2, printed pp. 5-6, calls for patient separation, spatial alignment, normalisation, one-hot multi-channel encoding, a baseline comparison, per-class held-out Test DSC/IoU and failure-case analysis; the Hard model description includes volumetric residual units and deep supervision. Appendix A, p. 17, identifies HipMRI's 38 patients / 211 volumes and directory names. These requirements motivate careful diagnosis but do not prescribe a new loss formula or prove the training distribution. The internal Version 2.0 Draft / filename v2.2 discrepancy and encoding clarification remain existing compliance questions; this batch does not repeat that audit or claim a new requirement is satisfied.
+The local assessment PDF (local-only: `../COMP3710_Report_2026_draft_v2.2.pdf`) was inspected through its compressed text content streams, without package installation; conventional local PDF extractors were unavailable. Section 2.2, printed pp. 5-6, calls for patient separation, spatial alignment, normalisation, one-hot multi-channel encoding, a baseline comparison, per-class held-out Test DSC/IoU and failure-case analysis; the Hard model description includes volumetric residual units and deep supervision. Appendix A, p. 17, identifies HipMRI's 38 patients / 211 volumes and directory names. These requirements motivate careful diagnosis but do not prescribe a new loss formula or prove the training distribution. The internal Version 2.0 Draft / filename v2.2 discrepancy and encoding clarification remain existing compliance questions; this batch does not repeat that audit or claim a new requirement is satisfied.
 
 ## B. Pipeline audit
 
 | Path | Confirmed implementation | Diagnostic interpretation |
 | --- | --- | --- |
-| [dataset.py](hipmri_3d_improved_unet_hard/dataset.py): `discover_dataset()`, `discover_pairs()`, `assign_approved_split()` | Pair by patient/Week; freeze 26/143 Train, 6/38 Validation, 6/30 Test | No split redraw. Diagnostic discovery checks filenames in all partitions, but only training arrays are decoded. |
-| [volume_io.py](hipmri_3d_improved_unet_hard/volume_io.py): `load_volume_pair()` | Validate 3D matching shape, affine, spacing/orientation; integer IDs 0-5; output uint8 mask | No observed label remapping. MRI mm / mask unknown accepted only after geometric checks, with inference provenance. |
-| [resampling.py](hipmri_3d_improved_unet_hard/resampling.py): `resample_volume_pair()` | Shared physical grid; MRI order 1 / nearest boundary; mask order 0 / grid-constant background 0; validate IDs and reject complete foreground disappearance | Discrete label preservation is explicit. Changes in structure voxel counts or partial-volume representation remain possible; survival is not anatomical fidelity. |
-| [intensity_normalization.py](hipmri_3d_improved_unet_hard/intensity_normalization.py): `normalize_volume_pair()` | MRI-only nonzero clipping and Z-score; segmentation preserved | Ground truth does not select intensity statistics. |
-| [patch_dataset.py](hipmri_3d_improved_unet_hard/patch_dataset.py): `__getitem__()`, lines 97-159 | Identical XYZ-to-DHW transpose `(2,1,0)` and crop; mask `torch.long`, MRI float32 | A valid aligned crop can still contain little foreground. Geometry correctness is distinct from adequate exposure. |
-| [train.py](hipmri_3d_improved_unet_hard/train.py): `combined_loss()`, line 46 | CE class-index target, softmax on channel dimension 1; Dice compares channel c with `target == c`, c=1..5 | No off-by-one channel mapping found. Background channel 0 participates in CE. |
-| [train_improved.py](hipmri_3d_improved_unet_hard/train_improved.py): `combined_loss()`, line 29 | Same base objective for main and two auxiliary heads; resize logits only, then normalise weights 1, 0.5, 0.25 by 1.75 | Integer masks are not interpolated. The production training function, rather than an unused helper, was tested. |
-| [modules.py](hipmri_3d_improved_unet_hard/modules.py): `StandardUNet3D.forward()`; [improved_modules.py](hipmri_3d_improved_unet_hard/improved_modules.py): `ImprovedUNet3D.forward()` | Six raw channels; Improved defaults to the main head for inference | No internal argmax or softmax changes training targets. |
-| [validate.py](hipmri_3d_improved_unet_hard/validate.py): `sliding_window_predict()`, `confusion_matrix()`, `metrics_from_confusion()`; [validate_improved.py](hipmri_3d_improved_unet_hard/validate_improved.py) | Uniform mean of overlapping six-channel softmax probabilities, then argmax; aligned XYZ truth; confusion rows=true, columns=prediction | Evaluation uses the same label/channel indexing and resampled truth. Both-absent metrics are null, not inflated to 1. |
-| [predict.py](hipmri_3d_improved_unet_hard/predict.py): `load_model()`, `prepare_volume()`, `process_pair()` | Delegates protected loading, preprocessing, inference and metrics | No separate segmentation algorithm or class permutation was found. |
+| [dataset.py](../../hipmri_3d_improved_unet_hard/dataset.py): `discover_dataset()`, `discover_pairs()`, `assign_approved_split()` | Pair by patient/Week; freeze 26/143 Train, 6/38 Validation, 6/30 Test | No split redraw. Diagnostic discovery checks filenames in all partitions, but only training arrays are decoded. |
+| [volume_io.py](../../hipmri_3d_improved_unet_hard/volume_io.py): `load_volume_pair()` | Validate 3D matching shape, affine, spacing/orientation; integer IDs 0-5; output uint8 mask | No observed label remapping. MRI mm / mask unknown accepted only after geometric checks, with inference provenance. |
+| [resampling.py](../../hipmri_3d_improved_unet_hard/resampling.py): `resample_volume_pair()` | Shared physical grid; MRI order 1 / nearest boundary; mask order 0 / grid-constant background 0; validate IDs and reject complete foreground disappearance | Discrete label preservation is explicit. Changes in structure voxel counts or partial-volume representation remain possible; survival is not anatomical fidelity. |
+| [intensity_normalization.py](../../hipmri_3d_improved_unet_hard/intensity_normalization.py): `normalize_volume_pair()` | MRI-only nonzero clipping and Z-score; segmentation preserved | Ground truth does not select intensity statistics. |
+| [patch_dataset.py](../../hipmri_3d_improved_unet_hard/patch_dataset.py): `__getitem__()`, lines 97-159 | Identical XYZ-to-DHW transpose `(2,1,0)` and crop; mask `torch.long`, MRI float32 | A valid aligned crop can still contain little foreground. Geometry correctness is distinct from adequate exposure. |
+| [train.py](../../hipmri_3d_improved_unet_hard/train.py): `combined_loss()`, line 46 | CE class-index target, softmax on channel dimension 1; Dice compares channel c with `target == c`, c=1..5 | No off-by-one channel mapping found. Background channel 0 participates in CE. |
+| [train_improved.py](../../hipmri_3d_improved_unet_hard/train_improved.py): `combined_loss()`, line 29 | Same base objective for main and two auxiliary heads; resize logits only, then normalise weights 1, 0.5, 0.25 by 1.75 | Integer masks are not interpolated. The production training function, rather than an unused helper, was tested. |
+| [modules.py](../../hipmri_3d_improved_unet_hard/modules.py): `StandardUNet3D.forward()`; [improved_modules.py](../../hipmri_3d_improved_unet_hard/improved_modules.py): `ImprovedUNet3D.forward()` | Six raw channels; Improved defaults to the main head for inference | No internal argmax or softmax changes training targets. |
+| [validate.py](../../hipmri_3d_improved_unet_hard/validate.py): `sliding_window_predict()`, `confusion_matrix()`, `metrics_from_confusion()`; [validate_improved.py](../../hipmri_3d_improved_unet_hard/validate_improved.py) | Uniform mean of overlapping six-channel softmax probabilities, then argmax; aligned XYZ truth; confusion rows=true, columns=prediction | Evaluation uses the same label/channel indexing and resampled truth. Both-absent metrics are null, not inflated to 1. |
+| [predict.py](../../hipmri_3d_improved_unet_hard/predict.py): `load_model()`, `prepare_volume()`, `process_pair()` | Delegates protected loading, preprocessing, inference and metrics | No separate segmentation algorithm or class permutation was found. |
 
 The implemented channel order is **0 Background, 1 Body, 2 Bones, 3 Bladder, 4 Rectum, 5 Prostate**, consistent with the supplied CSIRO mapping and evaluator names. This verifies internal correspondence; the exact authoritative CSIRO citation remains unavailable locally. No new blocking production defect was demonstrated. Existing 181-volume preprocessing acceptance supports executability, not clinical correctness or sufficient training supervision.
 
@@ -308,7 +304,7 @@ Bones' lowest positivity is V027 (**61/80, 76.25%**), still frequent; B038/M023/
 
 Prostate is present in **880/1,430 patches**, including all 754 targeted patches, with **5,379,171 sampled voxels**. However its pooled share is **1.434959%**, positive median **1.903343%**, and 170 positive patches contain <1% patch occupancy. These quantify residual imbalance and partial exposure, not proof that the sampler is the root cause. Rectum similarly has 777 positive patches and 1.232043% pooled share.
 
-Background + Body occupy **84.201301%** of sampled voxels and exceed half of the patch in **1,423/1,430 (99.510490%)** samples; one of those two is the largest class in every patch. This is measured target imbalance, **not measured CE dominance or gradient weakness**: CE contributions also depend on prediction errors, and foreground Dice weights classes equally. Counts do not establish whether the saved models assign low target probabilities, lose argmax competition, learn only training crops, or fail under full-volume aggregation. Probability-level Train/Validation comparison is the next gate; no retraining is recommended.
+Background + Body occupy **84.201301%** of sampled voxels and exceed half of the patch in **1,423/1,430 (99.510490%)** samples; one of those two is the largest class in every patch. This is measured target imbalance, **not measured CE dominance or gradient weakness**: CE contributions also depend on prediction errors, and foreground Dice weights classes equally. Counts alone could not establish target probabilities or argmax competition. The subsequent Job 650924 probe (Section F) measured both on two selected Train crops and one Validation center crop; it does not establish causes or population-wide/full-volume behaviour. Parameter-gradient attribution remains unmeasured, and no retraining is recommended.
 
 ## E. Loss and gradient analysis
 
@@ -350,13 +346,13 @@ Additional tests cover raw/patch counting, distributions/dominance, replay repro
 
 ### Authentic available training-loss trajectory
 
-The four downloaded original E10 logs are now locally authenticated; [file hashes, events, epoch/component/runtime values and loss plot](FAILURE_CASE_EVIDENCE.md#original-e10-log-authentication) preserve the evidence. Standard records **epochs 4–10**, 1,001 new updates, after `resume_completed_epochs=3`; Improved records **epochs 2–10**, 1,287 new updates, after `resume_completed_epochs=1`. Each epoch has 143 sequential step records matching all reported component means; final counters are ten epochs / 1,430 updates. There are no malformed/duplicate/error records or missing required summaries. All seven Standard and nine Improved training source hashes match local files, and both use identical ordered 143 training pairs, shared hyperparameters and preprocessing policies. This strengthens source provenance without loading checkpoint binaries or proving bitwise reproducibility.
+The four downloaded original E10 logs are now locally authenticated; [file hashes, events, epoch/component/runtime values and loss plot](../evidence/failure-cases.md#original-e10-log-authentication) preserve the evidence. Standard records **epochs 4–10**, 1,001 new updates, after `resume_completed_epochs=3`; Improved records **epochs 2–10**, 1,287 new updates, after `resume_completed_epochs=1`. Each epoch has 143 sequential step records matching all reported component means; final counters are ten epochs / 1,430 updates. There are no malformed/duplicate/error records or missing required summaries. All seven Standard and nine Improved training source hashes match local files, and both use identical ordered 143 training pairs, shared hyperparameters and preprocessing policies. This strengthens source provenance without loading checkpoint binaries or proving bitwise reproducibility.
 
 Standard total loss changes from **0.7917109148 (E4) to 0.6992273720 (E10)**; Improved from **0.8104826800 (E2) to 0.6111517446 (E10)**. Both trajectories are non-monotonic. Standard Soft Dice loss rises **0.7609311405 → 0.7699025190** from E9 to E10; Improved rises **0.7058774162 → 0.7147218781**. These observations do not establish a plateau, rare-class learning or that extending training will solve collapse. Improved components include the weighted main/auxiliary objectives; Standard components are main-only. Their absolute magnitudes are not equivalent model-quality measures, and soft training Dice is not hard full-volume DSC.
 
 **Missing:** original Standard E1–3 and Improved E1 stdout segments, including setup, step and completed-epoch events. The existing `summarize_loss_logs()` was run locally on the genuine files and returns `INCOMPLETE` with exactly these missing epochs; its available step/component checks pass. No values are reconstructed. The previously student-reported Standard E1 total **0.9565964858** remains historical conversation evidence, not a plotted original-log event. The **1.92833924** single-step CE/SGD smoke loss is not comparable to epoch CE+Dice/AdamW.
 
-Both original E10 full-validation files are now audited: matching six patients / 38 identities, affine/shape/spacing, 64³ windows, stride 32, mean-softmax aggregation and absent-class policy. Per-volume/patient/pooled/macro arithmetic agrees, and all six true classes occur in every Validation volume. Rectum/Prostate still have exactly zero predicted voxels; Improved's three Bones predictions give two TP and one FP. **Validation truth counts do not measure training-volume or sampled-patch frequencies.** No per-class training components, sampled targets, probability margins or gradient attribution are recorded in these training logs. The Train exposure measurement is now complete as configuration replay: its substantial Bones/Prostate exposure weakens simple absence explanations. Real per-class probabilities and gradient strength remain unmeasured.
+Both original E10 full-validation files are now audited: matching six patients / 38 identities, affine/shape/spacing, 64³ windows, stride 32, mean-softmax aggregation and absent-class policy. Per-volume/patient/pooled/macro arithmetic agrees, and all six true classes occur in every Validation volume. Rectum/Prostate still have exactly zero predicted voxels; Improved's three Bones predictions give two TP and one FP. **Validation truth counts do not measure training-volume or sampled-patch frequencies.** No per-class training components, sampled targets, probability margins or gradient attribution are recorded in these training logs. The Train exposure measurement is complete as configuration replay: its substantial Bones/Prostate exposure weakens simple absence explanations. These original training/Validation logs contain no per-class probability or parameter-gradient records; the later Job 650924 probe supplies selected-patch probabilities in Section F, while parameter-gradient strength remains unmeasured.
 
 Standard full validation names `standard_unet_last.pt`, whereas paired-case/replay references name `standard_unet_epoch10.pt`. Both record E10 / 1,430 updates; identical binary weights are not established by the logs. Do not bypass the protected checkpoint/source checks. Earlier E3 validation aggregation/setup evidence also remains incomplete. These are evidence limitations, not claims that earlier experiments do not exist.
 
@@ -399,7 +395,7 @@ If a second Validation example is needed, use **K008_Week0**, whose original ful
 
 ### Phase 4 implementation and local verification (historical preparation)
 
-The isolated [checkpoint_probabilities.py](hipmri_3d_improved_unet_hard/diagnostics/checkpoint_probabilities.py) and [test_checkpoint_probabilities.py](hipmri_3d_improved_unet_hard/diagnostics/test_checkpoint_probabilities.py) implement this fixed scope. Production Python/configuration files are not edited. The original exposure log is pinned by its SHA-256, parsed and independently summarised again before its fixed records are used. This new reader was executed locally against the actual downloaded log: record counts **1 setup / 143 full volumes / 1,430 patches / 1 summary**, PASS, without image decoding or model inference.
+The isolated [checkpoint_probabilities.py](../../hipmri_3d_improved_unet_hard/diagnostics/checkpoint_probabilities.py) and [test_checkpoint_probabilities.py](../../hipmri_3d_improved_unet_hard/diagnostics/test_checkpoint_probabilities.py) implement this fixed scope. Production Python/configuration files are not edited. The original exposure log is pinned by its SHA-256, parsed and independently summarised again before its fixed records are used. This new reader was executed locally against the actual downloaded log: record counts **1 setup / 143 full volumes / 1,430 patches / 1 summary**, PASS, without image decoding or model inference.
 
 The initial expanded CPU suite passed **33/33 tests** in the existing WSL environment (PyTorch **2.12.1+cu130**). The final suite, also exercising both actual protected loaders with compatible synthetic state dictionaries, passed **34 tests in 4.935s, OK**. NiBabel is unavailable there: the tests explicitly install an **in-memory, test-only import shim**, and mock preprocessing/real checkpoint inputs. They test arithmetic, real Dataset center-crop logic on synthetic arrays, fixed-origin/count/hash rejection, full training-source/configuration protections, strict-loader delegation/rejection, checkpoint tensor comparison, one-forward inference semantics, three-patch/six-call orchestration, no backward/optimizer/save, and zero-forward preflight. These are synthetic results, not acceptance of remote E10 checkpoint files or real MRI replay. CLI `--help` and Python syntax were checked. Windows/WSL quoting errors in two inspection commands were corrected; no experiment was run by those failed commands.
 
