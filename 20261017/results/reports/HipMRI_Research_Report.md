@@ -728,3 +728,16 @@ evaluations. Among the two completed 3D arms, Standard currently leads the
 frozen patient-balanced Validation criterion and is the provisional 3D
 checkpoint choice. Qualitative Validation review and held-out Test remain
 pending.
+
+### Bounded 3D continuation decision — 19 October 2026
+
+At epoch 30, the Standard and Improved patient-balanced Validation scores
+reached 0.8413 and 0.8325. At epoch 40 they were 0.8308 and 0.8267, while
+Train loss continued to fall. This gives no present evidence that a longer
+run will improve Validation. A requested continuation from the durable epoch-40
+states to epoch 50 is therefore a bounded check, using the unchanged frozen
+training config, patient split, sampling, objective and five-epoch Validation
+interval. Both runs retain their previous best checkpoints unless a later
+Validation score exceeds them. The prepared Slurm submission also schedules
+paired high-overlap and failure-case Validation overlays after both continuations
+finish. This continuation and the overlays have not yet run; Test remains sealed.

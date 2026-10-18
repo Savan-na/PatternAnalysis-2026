@@ -31,7 +31,12 @@ from hipmri_rewrite.models import ImprovedUNet3D, UNet3D  # noqa: E402
 from hipmri_rewrite.splits import DEFAULT_SPLIT, discover  # noqa: E402
 
 CONFIG_SHA = "e5bd98a99213f4fe6cf6e3e8c6db3b95d5ef334a143a91444426d8ea019923ce"
-LABELS = {"K018_Week3": (4, "Rectum"), "S022_Week6": (5, "Prostate")}
+LABELS = {
+    "J026_Week1": (4, "Rectum", "high_overlap"),
+    "K018_Week3": (4, "Rectum", "overprediction"),
+    "B040_Week1": (5, "Prostate", "high_overlap"),
+    "S022_Week6": (5, "Prostate", "missed_tissue"),
+}
 MODELS = {
     "Standard 3D": ("standard_3d", UNet3D),
     "Improved 3D": ("improved_3d", ImprovedUNet3D),
@@ -62,26 +67,36 @@ def load_selected(run_dir: Path, model_name: str, constructor):
             raise ValueError(f"{run_dir}: {relative} changed since training")
     checkpoint_path = run_dir / "best.pt"
     checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
+    selected_epoch = checkpoint["epoch"]
     if (checkpoint["model"] != model_name or checkpoint["config_sha256"] != CONFIG_SHA
-            or checkpoint["epoch"] != 30 or checkpoint["best_epoch"] != 30):
-        raise ValueError(f"{checkpoint_path}: not the selected epoch-30 checkpoint")
-    epoch_record = json.loads((run_dir / "epoch_030.json").read_text(encoding="utf-8"))
-    if epoch_record["best_epoch"] != 30 or epoch_record["validation"] is None:
-        raise ValueError(f"{run_dir}: epoch-30 Validation record missing")
+            or checkpoint["best_epoch"] != selected_epoch or selected_epoch < 5
+            or selected_epoch % 5):
+        raise ValueError(f"{checkpoint_path}: not a selected Validation checkpoint")
+    record_path = run_dir / f"epoch_{selected_epoch:03d}.json"
+    epoch_record = json.loads(record_path.read_text(encoding="utf-8"))
+    if (epoch_record["best_epoch"] != selected_epoch or epoch_record["validation"] is None
+            or not np.isclose(epoch_record["best_score"], checkpoint["best_score"])):
+        raise ValueError(f"{run_dir}: selected Validation record differs from checkpoint")
     model = constructor().to("cuda").eval()
     model.load_state_dict(checkpoint["model_state"], strict=True)
-    return model, epoch_record, {"manifest_sha256": sha256(run_dir / "manifest.json"),
+    return model, epoch_record, {"selected_epoch": selected_epoch,
+                                 "manifest_sha256": sha256(run_dir / "manifest.json"),
                                  "checkpoint_sha256": sha256(checkpoint_path),
-                                 "epoch_record_sha256": sha256(run_dir / "epoch_030.json")}
+                                 "epoch_record_sha256": sha256(record_path)}
 
 
-def selected_slice(truth: np.ndarray, predictions: dict[str, np.ndarray], label: int) -> int:
-    if label == 4:
+def selected_slice(truth: np.ndarray, predictions: dict[str, np.ndarray], label: int,
+                   reason: str) -> int:
+    candidates = np.flatnonzero((truth == label).any(axis=(0, 1)))
+    if not len(candidates):
+        raise ValueError("Selected Validation case has no target slice")
+    if reason == "high_overlap":
+        area = (truth == label).sum(axis=(0, 1))
+        return int(candidates[np.argmax(area[candidates])])
+    if reason == "overprediction":
         fp = (predictions["Improved 3D"] == label) & (truth != label)
-        candidates = np.flatnonzero((truth == label).any(axis=(0, 1)))
         return int(candidates[np.argmax(fp.sum(axis=(0, 1))[candidates])])
     fn = (truth == label) & (predictions["Standard 3D"] != label)
-    candidates = np.flatnonzero((truth == label).any(axis=(0, 1)))
     return int(candidates[np.argmax(fn.sum(axis=(0, 1))[candidates])])
 
 
@@ -113,7 +128,7 @@ def render(case_id: str, volume, predictions: dict[str, np.ndarray], label: int,
         ax.set_xlabel("X (downsampled voxels)")
         ax.set_ylabel("Y (downsampled voxels)")
         ax.set_aspect(volume.spacing_mm[1] / volume.spacing_mm[0])
-    fig.suptitle(f"Validation {case_id} · {organ} · axial z={z} · selected epoch 30")
+    fig.suptitle(f"Validation {case_id} · {organ} · axial z={z} · selected checkpoints")
     fig.legend([Line2D([0], [0], color="#00d5e9", lw=2),
                 Line2D([0], [0], color="#ff9d24", lw=2)],
                ["Ground truth", "Prediction"], loc="lower center", ncol=2)
@@ -142,14 +157,15 @@ def main() -> None:
         raise RuntimeError("Run this selected Validation inference on a Slurm GPU node")
     torch.backends.cudnn.benchmark = False
     torch.set_num_threads(2)
-    results = {"kind": "G5_selected_Validation_failure_review", "split": "validation",
-               "selected_epoch": 30, "cases": [],
+    results = {"kind": "G5_selected_Validation_case_review", "split": "validation",
+               "cases": [],
                "sources": {name: loaded[name][2] for name in MODELS}}
     rendered = []
-    for case_id, (label, organ) in LABELS.items():
+    for case_id, (label, organ, reason) in LABELS.items():
         volume = zscore_nonzero(downsample(load_case(validation[case_id])))
         predictions = {}
-        row = {"case": case_id, "organ": organ, "spacing_mm": volume.spacing_mm,
+        row = {"case": case_id, "organ": organ, "selection_reason": reason,
+               "spacing_mm": volume.spacing_mm,
                "models": {}}
         for name, (model, record, _) in loaded.items():
             prediction = predict_volume(model, volume, mode="3d", device="cuda")
@@ -168,7 +184,7 @@ def main() -> None:
                 "boundary": symmetric_surface_distances(volume.mask, prediction,
                                                         volume.spacing_mm, label=label),
             }
-        z = selected_slice(volume.mask, predictions, label)
+        z = selected_slice(volume.mask, predictions, label, reason)
         row["axial_slice"] = z
         row["figure"] = f"g5_validation_{case_id}_{organ.lower()}.png"
         results["cases"].append(row)
