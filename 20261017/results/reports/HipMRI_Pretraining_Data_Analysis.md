@@ -1,10 +1,15 @@
 # HipMRI Raw Train Data: Statistical Review and Improvement Priorities
 
+**Historical analysis:** This document records the pre-G1 evidence and the
+questions it raised. The current audit and decisions are maintained in the
+[formal research report](HipMRI_Research_Report.md); status statements below
+describe the earlier review unless explicitly updated.
+
 **Decision: the dataset is not yet cleared for training.** The available measurements describe an earlier **Train-only record of 143 examinations from 26 patients**. They establish severe small-organ and patient-frequency imbalance. They do **not** establish that the current MRI images are free of blank scans, non-finite values, intensity artifacts, misalignment, or annotation defects. The actions below aim to turn the raw data into reliable model input before changing model architecture.
 
 ## 1. Independent verification of the available record
 
-I re-read the historical JSONL rather than relying only on the prior report. Its SHA-256 is `028a495c41e14bec4855bad5fd55c1dcea51472c890285d7c499f5f4d93b22a1`. It contains 143 full-volume records, 1,430 historical patch records, one setup record, and one summary record. The full-volume records have **143 unique case IDs**, use exactly the **26 Train patients** in the [frozen split](../../code/config/patient_split.json), and contain no duplicate case IDs. For every case, the six raw class counts sum to its recorded image shape; all counts are integers and every class count is positive. The six pooled totals below were independently recomputed and agree with the [structured statistics](historical_train_statistics.json). A new [143-case profile](historical_train_case_profile.csv) preserves the verified per-case counts, physical label volumes, geometry metadata, and historical resampling ratios for targeted review.
+I re-read the historical JSONL rather than relying only on the prior report. Its SHA-256 is `028a495c41e14bec4855bad5fd55c1dcea51472c890285d7c499f5f4d93b22a1`. It contains 143 full-volume records, 1,430 historical patch records, one setup record, and one summary record. The full-volume records have **143 unique case IDs**, use exactly the **26 Train patients** in the [frozen split](../../code/config/patient_split.json), and contain no duplicate case IDs. For every case, the six raw class counts sum to its recorded image shape; all counts are integers and every class count is positive. The six pooled totals below were independently recomputed and agree with the [structured statistics](../data_analysis/historical_train/historical_train_statistics.json). A new [143-case profile](../data_analysis/historical_train/historical_train_case_profile.csv) preserves the verified per-case counts, physical label volumes, geometry metadata, and historical resampling ratios for targeted review.
 
 This verifies **internal consistency of the historical record**, not the current NIfTI file bytes or the present-day preprocessing pipeline. No held-out Test image or mask array was opened.
 
@@ -21,17 +26,17 @@ This verifies **internal consistency of the historical record**, not the current
 
 All six numeric IDs appear in **143/143 examinations and 26/26 patients**. The anatomical names follow the [project mapping](../../code/hipmri_rewrite/__init__.py), which still needs confirmation against actual MRI/mask overlays and dataset documentation. Numeric presence does not prove correct placement or complete contours.
 
-![Historical raw Train class distribution](train_class_distribution.svg)
+![Historical raw Train class distribution](../data_analysis/historical_train/train_class_distribution.svg)
 
 **Background:Prostate = 555.8:1; Body:Prostate = 331.2:1.** Even among non-background voxels, Body accounts for **89.3420%**, while Rectum and Prostate account for **0.3630%** and **0.2697%**. A model could achieve a strong pooled score while neglecting these small structures. Case-level variation is substantial: Prostate occupies **0.0348%–0.2929%** and Rectum **0.0593%–0.4547%** of an examination's voxels.
 
 **Patient exposure is also uneven:** 16 patients have eight examinations each, eight have one, one has two, and one has five. Volume-uniform sampling exposes an eight-visit patient eight times as often as a one-visit patient. Repeated examinations are correlated and must remain grouped by patient.
 
-![Historical Train examinations per patient](train_patient_examinations.svg)
+![Historical Train examinations per patient](../data_analysis/historical_train/train_patient_examinations.svg)
 
 **Small-organ label volumes vary:** Prostate median **34.39 mL**, range **9.49–93.58 mL**; Rectum median **45.47 mL**, range **21.44–153.86 mL**. These are label-derived extents, not validated clinical organ volumes. Extremes may be real or may signal a field-of-view or annotation problem.
 
-![Historical small-organ label volumes](train_rare_organ_volumes.svg)
+![Historical small-organ label volumes](../data_analysis/historical_train/train_rare_organ_volumes.svg)
 
 ## 3. Unusual cases to inspect first
 
@@ -59,7 +64,7 @@ These flags make the first visual review efficient. A complete audit must still 
 | Loss of small-organ detail during preprocessing | Historical nearest-neighbour resampling changed Prostate physical label volume to **92.8%–106.2%** of raw; Rectum to **94.8%–102.2%**. | Repeat measurements for the **actual current transform**, including physical volume, occupied slices, components, and local boundary displacement. Historical ratios do not describe the current factor-two downsampling. |
 | Coverage and representativeness | 26 Train patients with uneven follow-up; site/scanner/sequence and demographic distributions are unavailable in the summary. | Inventory authorised metadata if available, identify acquisition clusters and underrepresented conditions, and avoid assuming that more scans from one patient add the diversity of new patients. |
 
-![Historical physical label-volume change after resampling](historical_resampling_volume_ratio.svg)
+![Historical physical label-volume change after resampling](../data_analysis/historical_train/historical_resampling_volume_ratio.svg)
 
 ## 5. Checks suggested by the three model papers
 
@@ -102,4 +107,4 @@ The data are ready for model experiments only when:
 4. Raw intensity and acquisition variation have been measured; normalization, correction, and augmentation choices have a documented reason and before/after evidence.
 5. The effective patient and class exposure of the chosen sampling/weighting policy is recorded from Train data only.
 
-**Current status: these criteria are not met.** The [structured statistics](historical_train_statistics.json) and [case profile](historical_train_case_profile.csv) are reliable for the historical Train measurements checked here. The new [Train-only raw-data audit tool](../../code/tools/audit_train_raw.py) can measure current MRI/mask integrity without changing inputs, but it has not been run on real arrays: no NIfTI files were found locally, and non-interactive Rangpur authentication was denied. No revised MRI or mask dataset has been created.
+**Status at the time of this historical review:** these criteria were not met. The [structured statistics](../data_analysis/historical_train/historical_train_statistics.json) and [case profile](../data_analysis/historical_train/historical_train_case_profile.csv) remain historical Train evidence. The real-array G1 audit has since run on Rangpur and passed its integrity gate; its findings and the remaining G2/G3 questions are tracked in the [formal research report](HipMRI_Research_Report.md). No revised MRI or mask dataset has been created.

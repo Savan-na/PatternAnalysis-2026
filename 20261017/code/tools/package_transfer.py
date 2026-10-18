@@ -24,7 +24,12 @@ def main() -> None:
                    and not path.name.endswith(".nii.gz"))
     with ZipFile(OUTPUT, "w", ZIP_DEFLATED) as archive:
         shared_folders = ("logs/audits/", "logs/profiles/", "logs/training/",
-                          "logs/validation/", "results/data_analysis/", "results/tables/", "results/figures/",
+                          "logs/validation/", "results/data_analysis/",
+                          "results/data_analysis/historical_train/",
+                          "results/data_analysis/g1_selected_cases/",
+                          "results/data_analysis/g1_bladder_review/",
+                          "results/data_analysis/g1_patient_screen/",
+                          "results/tables/", "results/figures/",
                           "results/case_studies/", "results/reports/")
         arms = ("baseline_2d", "baseline_3d", "improved_3d")
         arm_folders = tuple(f"{category}/{arm}/" for category in

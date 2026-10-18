@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 11:55:23 AEST**
+Updated / 更新时间: **2026-10-18 12:02:56 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **42** · Files / 文件: **92**
+Directories / 目录: **46** · Files / 文件: **98**
 
 ## Directory Tree / 目录树
 
@@ -63,7 +63,8 @@ Directories / 目录: **42** · Files / 文件: **92**
 │   └── requirements.txt
 ├── logs/
 │   ├── audits/
-│   │   └── g1_train_contact_sheets_20261018.json
+│   │   ├── g1_train_contact_sheets_20261018.json
+│   │   └── train_full_20261018_job671208.json
 │   ├── internal/
 │   │   ├── map_watcher_stderr.txt
 │   │   ├── map_watcher_stdout.txt
@@ -85,57 +86,66 @@ Directories / 目录: **42** · Files / 文件: **92**
 │   │   ├── comparisons/
 │   │   └── improved_3d/
 │   ├── data_analysis/
-│   │   ├── g1_bladder_island_D031_Week7.png
-│   │   ├── g1_bladder_island_N010_Week3.png
-│   │   ├── g1_overlay_B038_Week0.png
-│   │   ├── g1_overlay_D031_Week7.png
-│   │   ├── g1_overlay_H017_Week7.png
-│   │   ├── g1_overlay_K019_Week1.png
-│   │   ├── g1_overlay_N010_Week3.png
-│   │   ├── g1_overlay_S033_Week1.png
-│   │   ├── g1_train_patient_B006.png
-│   │   ├── g1_train_patient_B038.png
-│   │   ├── g1_train_patient_C032.png
-│   │   ├── g1_train_patient_D031.png
-│   │   ├── g1_train_patient_G021.png
-│   │   ├── g1_train_patient_H007.png
-│   │   ├── g1_train_patient_H017.png
-│   │   ├── g1_train_patient_J005.png
-│   │   ├── g1_train_patient_K019.png
-│   │   ├── g1_train_patient_K042.png
-│   │   ├── g1_train_patient_M004.png
-│   │   ├── g1_train_patient_M013.png
-│   │   ├── g1_train_patient_M023.png
-│   │   ├── g1_train_patient_M036.png
-│   │   ├── g1_train_patient_N010.png
-│   │   ├── g1_train_patient_O025.png
-│   │   ├── g1_train_patient_R016.png
-│   │   ├── g1_train_patient_R024.png
-│   │   ├── g1_train_patient_R039.png
-│   │   ├── g1_train_patient_S028.png
-│   │   ├── g1_train_patient_S033.png
-│   │   ├── g1_train_patient_S035.png
-│   │   ├── g1_train_patient_T009.png
-│   │   ├── g1_train_patient_T014.png
-│   │   ├── g1_train_patient_V027.png
-│   │   ├── g1_train_patient_W012.png
-│   │   ├── HipMRI_Pretraining_Data_Analysis.md
-│   │   ├── HipMRI_Pretraining_Data_Analysis.previous-41201a5e.bak
-│   │   ├── HipMRI_Pretraining_Data_Analysis.previous-5dc166bd.bak
-│   │   ├── historical_patch_vs_full_volume.svg
-│   │   ├── historical_resampling_volume_ratio.svg
-│   │   ├── historical_train_case_profile.csv
-│   │   ├── historical_train_statistics.json
-│   │   ├── train_class_distribution.svg
-│   │   ├── train_foreground_distribution.svg
-│   │   ├── train_patient_examinations.svg
-│   │   └── train_rare_organ_volumes.svg
+│   │   ├── g1_bladder_review/
+│   │   │   ├── g1_bladder_island_D031_Week7.png
+│   │   │   ├── g1_bladder_island_N010_Week3.png
+│   │   │   └── README.md
+│   │   ├── g1_patient_screen/
+│   │   │   ├── g1_train_patient_B006.png
+│   │   │   ├── g1_train_patient_B038.png
+│   │   │   ├── g1_train_patient_C032.png
+│   │   │   ├── g1_train_patient_D031.png
+│   │   │   ├── g1_train_patient_G021.png
+│   │   │   ├── g1_train_patient_H007.png
+│   │   │   ├── g1_train_patient_H017.png
+│   │   │   ├── g1_train_patient_J005.png
+│   │   │   ├── g1_train_patient_K019.png
+│   │   │   ├── g1_train_patient_K042.png
+│   │   │   ├── g1_train_patient_M004.png
+│   │   │   ├── g1_train_patient_M013.png
+│   │   │   ├── g1_train_patient_M023.png
+│   │   │   ├── g1_train_patient_M036.png
+│   │   │   ├── g1_train_patient_N010.png
+│   │   │   ├── g1_train_patient_O025.png
+│   │   │   ├── g1_train_patient_R016.png
+│   │   │   ├── g1_train_patient_R024.png
+│   │   │   ├── g1_train_patient_R039.png
+│   │   │   ├── g1_train_patient_S028.png
+│   │   │   ├── g1_train_patient_S033.png
+│   │   │   ├── g1_train_patient_S035.png
+│   │   │   ├── g1_train_patient_T009.png
+│   │   │   ├── g1_train_patient_T014.png
+│   │   │   ├── g1_train_patient_V027.png
+│   │   │   ├── g1_train_patient_W012.png
+│   │   │   └── README.md
+│   │   ├── g1_selected_cases/
+│   │   │   ├── g1_overlay_B038_Week0.png
+│   │   │   ├── g1_overlay_D031_Week7.png
+│   │   │   ├── g1_overlay_H017_Week7.png
+│   │   │   ├── g1_overlay_K019_Week1.png
+│   │   │   ├── g1_overlay_N010_Week3.png
+│   │   │   ├── g1_overlay_S033_Week1.png
+│   │   │   └── README.md
+│   │   ├── historical_train/
+│   │   │   ├── HipMRI_Pretraining_Data_Analysis.previous-41201a5e.bak
+│   │   │   ├── HipMRI_Pretraining_Data_Analysis.previous-5dc166bd.bak
+│   │   │   ├── historical_patch_vs_full_volume.svg
+│   │   │   ├── historical_resampling_volume_ratio.svg
+│   │   │   ├── historical_train_case_profile.csv
+│   │   │   ├── historical_train_statistics.json
+│   │   │   ├── README.md
+│   │   │   ├── train_class_distribution.svg
+│   │   │   ├── train_foreground_distribution.svg
+│   │   │   ├── train_patient_examinations.svg
+│   │   │   └── train_rare_organ_volumes.svg
+│   │   └── README.md
 │   ├── figures/
 │   │   ├── baseline_2d/
 │   │   ├── baseline_3d/
 │   │   ├── comparisons/
 │   │   └── improved_3d/
 │   ├── reports/
+│   │   ├── HipMRI_Pretraining_Data_Analysis.md
 │   │   └── HipMRI_Research_Report.md
 │   ├── tables/
 │   │   ├── baseline_2d/
@@ -152,7 +162,7 @@ Directories / 目录: **42** · Files / 文件: **92**
 
 | File / 文件 | English content overview | 中文内容概览 |
 |---|---|---|
-| `.gitignore` | Git rules for local artifacts; UTF-8 text with 22 lines; 457 bytes | 本地运行产物的 Git 规则；UTF-8 文本，22 行；457 字节 |
+| `.gitignore` | Git rules for local artifacts; UTF-8 text with 22 lines; 482 bytes | 本地运行产物的 Git 规则；UTF-8 文本，22 行；482 字节 |
 | `code/config/arms/baseline_2d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/baseline_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/improved_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
@@ -191,58 +201,64 @@ Directories / 目录: **42** · Files / 文件: **92**
 | `code/tools/update_project_map.py` | Generate and watch this bilingual inventory; Definitions: _files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main | 生成并持续更新本双语目录；定义：_files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main |
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |
 | `logs/audits/g1_train_contact_sheets_20261018.json` | JSON fields: scope, screen, patients | JSON 字段：scope, screen, patients |
+| `logs/audits/train_full_20261018_job671208.json` | Binary or large file; 563,622 bytes | 二进制或大文件；563,622 字节 |
 | `logs/internal/map_watcher_stderr.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/map_watcher_stdout.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/project_map_watcher.pid` | UTF-8 text with 1 lines; 7 bytes | UTF-8 文本，1 行；7 字节 |
 | `logs/README.md` | Entry point or directory guide; Sections: Experiment Logs | 项目入口或目录说明；章节标题：Experiment Logs |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
 | `README.md` | Entry point or directory guide; Sections: HipMRI Data-Driven Model Development; Where things belong | 项目入口或目录说明；章节标题：HipMRI Data-Driven Model Development; Where things belong |
-| `results/data_analysis/g1_bladder_island_D031_Week7.png` | Binary or large file; 250,160 bytes | 二进制或大文件；250,160 字节 |
-| `results/data_analysis/g1_bladder_island_N010_Week3.png` | Binary or large file; 254,248 bytes | 二进制或大文件；254,248 字节 |
-| `results/data_analysis/g1_overlay_B038_Week0.png` | Binary or large file; 477,710 bytes | 二进制或大文件；477,710 字节 |
-| `results/data_analysis/g1_overlay_D031_Week7.png` | Binary or large file; 393,632 bytes | 二进制或大文件；393,632 字节 |
-| `results/data_analysis/g1_overlay_H017_Week7.png` | Binary or large file; 365,557 bytes | 二进制或大文件；365,557 字节 |
-| `results/data_analysis/g1_overlay_K019_Week1.png` | Binary or large file; 471,124 bytes | 二进制或大文件；471,124 字节 |
-| `results/data_analysis/g1_overlay_N010_Week3.png` | Binary or large file; 453,764 bytes | 二进制或大文件；453,764 字节 |
-| `results/data_analysis/g1_overlay_S033_Week1.png` | Binary or large file; 443,971 bytes | 二进制或大文件；443,971 字节 |
-| `results/data_analysis/g1_train_patient_B006.png` | Binary or large file; 263,728 bytes | 二进制或大文件；263,728 字节 |
-| `results/data_analysis/g1_train_patient_B038.png` | Binary or large file; 134,754 bytes | 二进制或大文件；134,754 字节 |
-| `results/data_analysis/g1_train_patient_C032.png` | Binary or large file; 1,001,604 bytes | 二进制或大文件；1,001,604 字节 |
-| `results/data_analysis/g1_train_patient_D031.png` | Binary or large file; 979,042 bytes | 二进制或大文件；979,042 字节 |
-| `results/data_analysis/g1_train_patient_G021.png` | Binary or large file; 794,896 bytes | 二进制或大文件；794,896 字节 |
-| `results/data_analysis/g1_train_patient_H007.png` | Binary or large file; 108,239 bytes | 二进制或大文件；108,239 字节 |
-| `results/data_analysis/g1_train_patient_H017.png` | Binary or large file; 895,730 bytes | 二进制或大文件；895,730 字节 |
-| `results/data_analysis/g1_train_patient_J005.png` | Binary or large file; 568,074 bytes | 二进制或大文件；568,074 字节 |
-| `results/data_analysis/g1_train_patient_K019.png` | Binary or large file; 1,185,795 bytes | 二进制或大文件；1,185,795 字节 |
-| `results/data_analysis/g1_train_patient_K042.png` | Binary or large file; 128,697 bytes | 二进制或大文件；128,697 字节 |
-| `results/data_analysis/g1_train_patient_M004.png` | Binary or large file; 1,218,442 bytes | 二进制或大文件；1,218,442 字节 |
-| `results/data_analysis/g1_train_patient_M013.png` | Binary or large file; 989,753 bytes | 二进制或大文件；989,753 字节 |
-| `results/data_analysis/g1_train_patient_M023.png` | Binary or large file; 123,435 bytes | 二进制或大文件；123,435 字节 |
-| `results/data_analysis/g1_train_patient_M036.png` | Binary or large file; 123,922 bytes | 二进制或大文件；123,922 字节 |
-| `results/data_analysis/g1_train_patient_N010.png` | Binary or large file; 1,179,116 bytes | 二进制或大文件；1,179,116 字节 |
-| `results/data_analysis/g1_train_patient_O025.png` | Binary or large file; 1,050,411 bytes | 二进制或大文件；1,050,411 字节 |
-| `results/data_analysis/g1_train_patient_R016.png` | Binary or large file; 1,037,894 bytes | 二进制或大文件；1,037,894 字节 |
-| `results/data_analysis/g1_train_patient_R024.png` | Binary or large file; 1,151,048 bytes | 二进制或大文件；1,151,048 字节 |
-| `results/data_analysis/g1_train_patient_R039.png` | Binary or large file; 1,029,032 bytes | 二进制或大文件；1,029,032 字节 |
-| `results/data_analysis/g1_train_patient_S028.png` | Binary or large file; 135,808 bytes | 二进制或大文件；135,808 字节 |
-| `results/data_analysis/g1_train_patient_S033.png` | Binary or large file; 1,144,701 bytes | 二进制或大文件；1,144,701 字节 |
-| `results/data_analysis/g1_train_patient_S035.png` | Binary or large file; 107,138 bytes | 二进制或大文件；107,138 字节 |
-| `results/data_analysis/g1_train_patient_T009.png` | Binary or large file; 120,824 bytes | 二进制或大文件；120,824 字节 |
-| `results/data_analysis/g1_train_patient_T014.png` | Binary or large file; 996,731 bytes | 二进制或大文件；996,731 字节 |
-| `results/data_analysis/g1_train_patient_V027.png` | Binary or large file; 887,276 bytes | 二进制或大文件；887,276 字节 |
-| `results/data_analysis/g1_train_patient_W012.png` | Binary or large file; 1,046,773 bytes | 二进制或大文件；1,046,773 字节 |
-| `results/data_analysis/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
-| `results/data_analysis/HipMRI_Pretraining_Data_Analysis.previous-41201a5e.bak` | UTF-8 text with 106 lines; 14,485 bytes | UTF-8 文本，106 行；14,485 字节 |
-| `results/data_analysis/HipMRI_Pretraining_Data_Analysis.previous-5dc166bd.bak` | UTF-8 text with 93 lines; 12,305 bytes | UTF-8 文本，93 行；12,305 字节 |
-| `results/data_analysis/historical_patch_vs_full_volume.svg` | UTF-8 text with 49 lines; 4,617 bytes | UTF-8 文本，49 行；4,617 字节 |
-| `results/data_analysis/historical_resampling_volume_ratio.svg` | UTF-8 text with 768 lines; 59,609 bytes | UTF-8 文本，768 行；59,609 字节 |
-| `results/data_analysis/historical_train_case_profile.csv` | Table with 143 data rows; columns: case, patient_id, week, shape_x, shape_y, shape_z, raw_voxel_volume_mm3, mask_header_unit, raw_background_voxels, raw_body_voxels, raw_bones_voxels, raw_bladder_voxels | 表格含 143 条数据行；列：case, patient_id, week, shape_x, shape_y, shape_z, raw_voxel_volume_mm3, mask_header_unit, raw_background_voxels, raw_body_voxels, raw_bones_voxels, raw_bladder_voxels |
-| `results/data_analysis/historical_train_statistics.json` | JSON fields: scope, source_jsonl_sha256, frozen_split_sha256, records, denominators, class_rows, patients, patient_exam_count_quantiles, source_shape_counts, resampled_shape_counts, source_voxel_volume_mm3_quantiles, mask_header_unit_counts | JSON 字段：scope, source_jsonl_sha256, frozen_split_sha256, records, denominators, class_rows, patients, patient_exam_count_quantiles, source_shape_counts, resampled_shape_counts, source_voxel_volume_mm3_quantiles, mask_header_unit_counts |
-| `results/data_analysis/train_class_distribution.svg` | UTF-8 text with 35 lines; 3,679 bytes | UTF-8 文本，35 行；3,679 字节 |
-| `results/data_analysis/train_foreground_distribution.svg` | UTF-8 text with 32 lines; 3,368 bytes | UTF-8 文本，32 行；3,368 字节 |
-| `results/data_analysis/train_patient_examinations.svg` | UTF-8 text with 72 lines; 7,370 bytes | UTF-8 文本，72 行；7,370 字节 |
-| `results/data_analysis/train_rare_organ_volumes.svg` | UTF-8 text with 320 lines; 25,203 bytes | UTF-8 文本，320 行；25,203 字节 |
+| `results/data_analysis/g1_bladder_review/g1_bladder_island_D031_Week7.png` | Binary or large file; 250,160 bytes | 二进制或大文件；250,160 字节 |
+| `results/data_analysis/g1_bladder_review/g1_bladder_island_N010_Week3.png` | Binary or large file; 254,248 bytes | 二进制或大文件；254,248 字节 |
+| `results/data_analysis/g1_bladder_review/README.md` | Entry point or directory guide; Sections: G1 Bladder component review | 项目入口或目录说明；章节标题：G1 Bladder component review |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_B006.png` | Binary or large file; 263,728 bytes | 二进制或大文件；263,728 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_B038.png` | Binary or large file; 134,754 bytes | 二进制或大文件；134,754 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_C032.png` | Binary or large file; 1,001,604 bytes | 二进制或大文件；1,001,604 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_D031.png` | Binary or large file; 979,042 bytes | 二进制或大文件；979,042 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_G021.png` | Binary or large file; 794,896 bytes | 二进制或大文件；794,896 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_H007.png` | Binary or large file; 108,239 bytes | 二进制或大文件；108,239 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_H017.png` | Binary or large file; 895,730 bytes | 二进制或大文件；895,730 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_J005.png` | Binary or large file; 568,074 bytes | 二进制或大文件；568,074 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_K019.png` | Binary or large file; 1,185,795 bytes | 二进制或大文件；1,185,795 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_K042.png` | Binary or large file; 128,697 bytes | 二进制或大文件；128,697 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_M004.png` | Binary or large file; 1,218,442 bytes | 二进制或大文件；1,218,442 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_M013.png` | Binary or large file; 989,753 bytes | 二进制或大文件；989,753 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_M023.png` | Binary or large file; 123,435 bytes | 二进制或大文件；123,435 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_M036.png` | Binary or large file; 123,922 bytes | 二进制或大文件；123,922 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_N010.png` | Binary or large file; 1,179,116 bytes | 二进制或大文件；1,179,116 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_O025.png` | Binary or large file; 1,050,411 bytes | 二进制或大文件；1,050,411 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_R016.png` | Binary or large file; 1,037,894 bytes | 二进制或大文件；1,037,894 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_R024.png` | Binary or large file; 1,151,048 bytes | 二进制或大文件；1,151,048 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_R039.png` | Binary or large file; 1,029,032 bytes | 二进制或大文件；1,029,032 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_S028.png` | Binary or large file; 135,808 bytes | 二进制或大文件；135,808 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_S033.png` | Binary or large file; 1,144,701 bytes | 二进制或大文件；1,144,701 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_S035.png` | Binary or large file; 107,138 bytes | 二进制或大文件；107,138 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_T009.png` | Binary or large file; 120,824 bytes | 二进制或大文件；120,824 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_T014.png` | Binary or large file; 996,731 bytes | 二进制或大文件；996,731 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_V027.png` | Binary or large file; 887,276 bytes | 二进制或大文件；887,276 字节 |
+| `results/data_analysis/g1_patient_screen/g1_train_patient_W012.png` | Binary or large file; 1,046,773 bytes | 二进制或大文件；1,046,773 字节 |
+| `results/data_analysis/g1_patient_screen/README.md` | Entry point or directory guide; Sections: G1 full Train patient screen | 项目入口或目录说明；章节标题：G1 full Train patient screen |
+| `results/data_analysis/g1_selected_cases/g1_overlay_B038_Week0.png` | Binary or large file; 477,710 bytes | 二进制或大文件；477,710 字节 |
+| `results/data_analysis/g1_selected_cases/g1_overlay_D031_Week7.png` | Binary or large file; 393,632 bytes | 二进制或大文件；393,632 字节 |
+| `results/data_analysis/g1_selected_cases/g1_overlay_H017_Week7.png` | Binary or large file; 365,557 bytes | 二进制或大文件；365,557 字节 |
+| `results/data_analysis/g1_selected_cases/g1_overlay_K019_Week1.png` | Binary or large file; 471,124 bytes | 二进制或大文件；471,124 字节 |
+| `results/data_analysis/g1_selected_cases/g1_overlay_N010_Week3.png` | Binary or large file; 453,764 bytes | 二进制或大文件；453,764 字节 |
+| `results/data_analysis/g1_selected_cases/g1_overlay_S033_Week1.png` | Binary or large file; 443,971 bytes | 二进制或大文件；443,971 字节 |
+| `results/data_analysis/g1_selected_cases/README.md` | Entry point or directory guide; Sections: G1 selected raw MRI overlays | 项目入口或目录说明；章节标题：G1 selected raw MRI overlays |
+| `results/data_analysis/historical_train/HipMRI_Pretraining_Data_Analysis.previous-41201a5e.bak` | UTF-8 text with 106 lines; 14,485 bytes | UTF-8 文本，106 行；14,485 字节 |
+| `results/data_analysis/historical_train/HipMRI_Pretraining_Data_Analysis.previous-5dc166bd.bak` | UTF-8 text with 93 lines; 12,305 bytes | UTF-8 文本，93 行；12,305 字节 |
+| `results/data_analysis/historical_train/historical_patch_vs_full_volume.svg` | UTF-8 text with 49 lines; 4,617 bytes | UTF-8 文本，49 行；4,617 字节 |
+| `results/data_analysis/historical_train/historical_resampling_volume_ratio.svg` | UTF-8 text with 768 lines; 59,609 bytes | UTF-8 文本，768 行；59,609 字节 |
+| `results/data_analysis/historical_train/historical_train_case_profile.csv` | Table with 143 data rows; columns: case, patient_id, week, shape_x, shape_y, shape_z, raw_voxel_volume_mm3, mask_header_unit, raw_background_voxels, raw_body_voxels, raw_bones_voxels, raw_bladder_voxels | 表格含 143 条数据行；列：case, patient_id, week, shape_x, shape_y, shape_z, raw_voxel_volume_mm3, mask_header_unit, raw_background_voxels, raw_body_voxels, raw_bones_voxels, raw_bladder_voxels |
+| `results/data_analysis/historical_train/historical_train_statistics.json` | JSON fields: scope, source_jsonl_sha256, frozen_split_sha256, records, denominators, class_rows, patients, patient_exam_count_quantiles, source_shape_counts, resampled_shape_counts, source_voxel_volume_mm3_quantiles, mask_header_unit_counts | JSON 字段：scope, source_jsonl_sha256, frozen_split_sha256, records, denominators, class_rows, patients, patient_exam_count_quantiles, source_shape_counts, resampled_shape_counts, source_voxel_volume_mm3_quantiles, mask_header_unit_counts |
+| `results/data_analysis/historical_train/README.md` | Entry point or directory guide; Sections: Historical Train statistics | 项目入口或目录说明；章节标题：Historical Train statistics |
+| `results/data_analysis/historical_train/train_class_distribution.svg` | UTF-8 text with 35 lines; 3,679 bytes | UTF-8 文本，35 行；3,679 字节 |
+| `results/data_analysis/historical_train/train_foreground_distribution.svg` | UTF-8 text with 32 lines; 3,368 bytes | UTF-8 文本，32 行；3,368 字节 |
+| `results/data_analysis/historical_train/train_patient_examinations.svg` | UTF-8 text with 72 lines; 7,370 bytes | UTF-8 文本，72 行；7,370 字节 |
+| `results/data_analysis/historical_train/train_rare_organ_volumes.svg` | UTF-8 text with 320 lines; 25,203 bytes | UTF-8 文本，320 行；25,203 字节 |
+| `results/data_analysis/README.md` | Entry point or directory guide; Sections: Data analysis image groups | 项目入口或目录说明；章节标题：Data analysis image groups |
 | `results/README.md` | Entry point or directory guide; Sections: Results and Report Artifacts | 项目入口或目录说明；章节标题：Results and Report Artifacts |
+| `results/reports/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
 | `results/reports/HipMRI_Research_Report.md` | Sections: HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results | 章节标题：HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results |
 
 Generated by `code/tools/update_project_map.py`; edit the source files, then regenerate this index. / 由 `code/tools/update_project_map.py` 生成；修改源文件后重新生成本目录。

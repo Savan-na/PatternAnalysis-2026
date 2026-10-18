@@ -19,12 +19,13 @@ results/
 The first three categories each have pre-created `baseline_2d`,
 `baseline_3d`, `improved_3d`, and `comparisons` directories. Put cross-model
 tables and visuals in `comparisons`. The one cumulative formal research report
-is [`reports/HipMRI_Research_Report.md`](reports/HipMRI_Research_Report.md);
-existing `data_analysis/` files remain historical
-Train-only source analysis and are not another current audit report.
+is [`reports/HipMRI_Research_Report.md`](reports/HipMRI_Research_Report.md).
+The earlier mixed-source analysis is archived beside it. The
+[`data_analysis/`](data_analysis/README.md) index separates historical figures
+from three G1 image groups, each with a short README beside its images.
 
 No restarted-model result exists yet. Generated artifacts and
-medical-derived images stay in ignored subdirectories unless course and data
+medical-derived PNGs stay in ignored subdirectories unless course and data
 licence requirements allow inclusion in the final submission. Historical
 Baseline–V4 plots or scores are background evidence, not results of this
 restart.

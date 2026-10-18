@@ -5,10 +5,10 @@ logs/*/
 results/*/
 !results/README.md
 !results/data_analysis/
-results/data_analysis/*.bak
-results/data_analysis/g1_overlay_*.png
-results/data_analysis/g1_bladder_island_*.png
-results/data_analysis/g1_train_patient_*.png
+results/data_analysis/historical_train/*.bak
+results/data_analysis/g1_selected_cases/*.png
+results/data_analysis/g1_bladder_review/*.png
+results/data_analysis/g1_patient_screen/*.png
 !results/reports/
 results/reports/*
 !results/reports/*.md

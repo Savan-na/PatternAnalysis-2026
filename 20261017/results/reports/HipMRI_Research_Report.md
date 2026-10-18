@@ -7,7 +7,7 @@ patients, corresponding to 143, 38, and 30 MRI/mask volumes. The current
 source is `/home/groups/comp3710/HipMRI_Study_open` on Rangpur. G1 inventoried
 filenames for all three partitions and decoded the 143 Train MRI/mask pairs;
 it did not decode Validation or Test arrays. The earlier Train class analysis
-is retained separately in [historical data analysis](../data_analysis/HipMRI_Pretraining_Data_Analysis.md)
+is retained separately in [historical data analysis](HipMRI_Pretraining_Data_Analysis.md)
 and is not treated as this audit's output.
 
 ### G1 raw integrity evidence — 18 October 2026
@@ -72,12 +72,12 @@ qualitative screen, not expert confirmation of every boundary or every slice.
 
 | Case and raw overlay | Reason selected | What the displayed sections show |
 |---|---|---|
-| [B038_Week0](../data_analysis/g1_overlay_B038_Week0.png) | Historical small Prostate label | Small central Prostate outline is visible below the Bladder; no obvious gross displacement. |
-| [K019_Week1](../data_analysis/g1_overlay_K019_Week1.png) | Only 144-slice Train volume | Organ outlines remain within the displayed anatomy despite the longer scan. |
-| [N010_Week3](../data_analysis/g1_overlay_N010_Week3.png) | Tiny second Bladder component | Main Bladder aligns visually; targeted component view below resolves the flag. |
-| [D031_Week7](../data_analysis/g1_overlay_D031_Week7.png) | Tiny second Bladder component | Main Bladder aligns visually; targeted component view below resolves the flag. |
-| [S033_Week1](../data_analysis/g1_overlay_S033_Week1.png) | Highest case MRI maximum | No obvious gross misalignment in the shown planes; these views do not locate or explain the volume maximum. |
-| [H017_Week7](../data_analysis/g1_overlay_H017_Week7.png) | Highest zero-voxel share | Extensive black exterior is visible; the panels do not establish whether every zero voxel is background. |
+| [B038_Week0](../data_analysis/g1_selected_cases/g1_overlay_B038_Week0.png) | Historical small Prostate label | Small central Prostate outline is visible below the Bladder; no obvious gross displacement. |
+| [K019_Week1](../data_analysis/g1_selected_cases/g1_overlay_K019_Week1.png) | Only 144-slice Train volume | Organ outlines remain within the displayed anatomy despite the longer scan. |
+| [N010_Week3](../data_analysis/g1_selected_cases/g1_overlay_N010_Week3.png) | Tiny second Bladder component | Main Bladder aligns visually; targeted component view below resolves the flag. |
+| [D031_Week7](../data_analysis/g1_selected_cases/g1_overlay_D031_Week7.png) | Tiny second Bladder component | Main Bladder aligns visually; targeted component view below resolves the flag. |
+| [S033_Week1](../data_analysis/g1_selected_cases/g1_overlay_S033_Week1.png) | Highest case MRI maximum | No obvious gross misalignment in the shown planes; these views do not locate or explain the volume maximum. |
+| [H017_Week7](../data_analysis/g1_selected_cases/g1_overlay_H017_Week7.png) | Highest zero-voxel share | Extensive black exterior is visible; the panels do not establish whether every zero voxel is background. |
 
 #### Targeted Bladder component check
 
@@ -85,9 +85,9 @@ The follow-up tool used the same 6-neighbour component definition as the full
 audit and plotted each flagged voxel at its actual MRI location. In
 `N010_Week3`, the secondary component contains 2 voxels (8.80 mm³), at
 voxel coordinates x=126, y=129, z=67–68; see the
-[targeted view](../data_analysis/g1_bladder_island_N010_Week3.png). In
+[targeted view](../data_analysis/g1_bladder_review/g1_bladder_island_N010_Week3.png). In
 `D031_Week7`, it contains 1 voxel (4.40 mm³), at x=126, y=136, z=80; see the
-[targeted view](../data_analysis/g1_bladder_island_D031_Week7.png). Each
+[targeted view](../data_analysis/g1_bladder_review/g1_bladder_island_D031_Week7.png). Each
 secondary component touches the main Bladder component diagonally. Thus each
 mask has one connected Bladder region under 26-neighbour connectivity; the
 earlier count of two is specific to 6-neighbour connectivity. The zoomed MRI
@@ -112,13 +112,15 @@ section through the Prostate and one through the Bladder, with all four organ
 contours visible where present. All 26 sheets (286 displayed sections) were
 visually screened. No obvious whole-image/mask displacement or organ contour
 falling wholly outside the imaged anatomy was seen in those sections. Examples
-include [C032](../data_analysis/g1_train_patient_C032.png),
-[M036](../data_analysis/g1_train_patient_M036.png), and
-[W012](../data_analysis/g1_train_patient_W012.png). The other sheets are listed
+include [C032](../data_analysis/g1_patient_screen/g1_train_patient_C032.png),
+[M036](../data_analysis/g1_patient_screen/g1_train_patient_M036.png), and
+[W012](../data_analysis/g1_patient_screen/g1_train_patient_W012.png). The other sheets are listed
 in `PROJECT_MAP.md` and remain local review artifacts.
 
 The contact-sheet index in `logs/audits/g1_train_contact_sheets_20261018.json`
-contains 26 unique patients and 143 unique case IDs, with no missing figure.
+contains 26 unique patients and 143 unique case IDs. Its figure paths record
+the original flat Rangpur output location; the 26 local PNGs are now grouped
+under `results/data_analysis/g1_patient_screen/`.
 Its local SHA-256 is
 `96561d0ee6766305dd2e95369e248cb8a3dba7f06c4a623d4df8532d11fce17f`.
 This screen does not examine every slice, quantify contour accuracy, or replace

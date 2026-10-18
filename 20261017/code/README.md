@@ -34,6 +34,8 @@ weights, NIfTI data, and the generated project map. Regenerate the latter on
 Rangpur after unpacking. The study is an annotation-assistant prototype, not
 a source of clinical contours.
 
-`tools/review_g1_overlays.py` renders a small, prespecified set of raw Train
-MRI/ground-truth panels for anatomical review after the mechanical G1 audit.
-Its figures require human inspection and remain separate from model results.
+The three G1 review tools render selected raw overlays, targeted Bladder
+component views, and all-patient contact sheets. Their local figure groups are
+`results/data_analysis/g1_selected_cases/`, `g1_bladder_review/`, and
+`g1_patient_screen/` respectively. The tools accept an explicit output
+directory and leave the original MRI/Mask files unchanged.
