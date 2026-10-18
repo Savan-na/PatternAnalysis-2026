@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 08:30:32 AEST**
+Updated / 更新时间: **2026-10-19 08:35:26 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **54** · Files / 文件: **271**
+Directories / 目录: **54** · Files / 文件: **315**
 
 ## Directory Tree / 目录树
 
@@ -98,6 +98,7 @@ Directories / 目录: **54** · Files / 文件: **271**
 │   │   ├── summarize_g3_candidate_sampling.py
 │   │   ├── summarize_g3_pipeline.py
 │   │   ├── summarize_g4_patient_sampling.py
+│   │   ├── summarize_g5_2d_validation.py
 │   │   ├── summarize_g5_validation.py
 │   │   ├── tiny_overfit_g5.py
 │   │   ├── train_g5_2d.py
@@ -134,6 +135,47 @@ Directories / 目录: **54** · Files / 文件: **271**
 │   │   └── g5_training_smoke_20261018.json
 │   ├── training/
 │   │   ├── baseline_2d/
+│   │   │   ├── epoch_001.json
+│   │   │   ├── epoch_002.json
+│   │   │   ├── epoch_003.json
+│   │   │   ├── epoch_004.json
+│   │   │   ├── epoch_005.json
+│   │   │   ├── epoch_006.json
+│   │   │   ├── epoch_007.json
+│   │   │   ├── epoch_008.json
+│   │   │   ├── epoch_009.json
+│   │   │   ├── epoch_010.json
+│   │   │   ├── epoch_011.json
+│   │   │   ├── epoch_012.json
+│   │   │   ├── epoch_013.json
+│   │   │   ├── epoch_014.json
+│   │   │   ├── epoch_015.json
+│   │   │   ├── epoch_016.json
+│   │   │   ├── epoch_017.json
+│   │   │   ├── epoch_018.json
+│   │   │   ├── epoch_019.json
+│   │   │   ├── epoch_020.json
+│   │   │   ├── epoch_021.json
+│   │   │   ├── epoch_022.json
+│   │   │   ├── epoch_023.json
+│   │   │   ├── epoch_024.json
+│   │   │   ├── epoch_025.json
+│   │   │   ├── epoch_026.json
+│   │   │   ├── epoch_027.json
+│   │   │   ├── epoch_028.json
+│   │   │   ├── epoch_029.json
+│   │   │   ├── epoch_030.json
+│   │   │   ├── epoch_031.json
+│   │   │   ├── epoch_032.json
+│   │   │   ├── epoch_033.json
+│   │   │   ├── epoch_034.json
+│   │   │   ├── epoch_035.json
+│   │   │   ├── epoch_036.json
+│   │   │   ├── epoch_037.json
+│   │   │   ├── epoch_038.json
+│   │   │   ├── epoch_039.json
+│   │   │   ├── epoch_040.json
+│   │   │   └── manifest.json
 │   │   ├── baseline_3d/
 │   │   │   ├── epoch_001.json
 │   │   │   ├── epoch_002.json
@@ -319,6 +361,8 @@ Directories / 目录: **54** · Files / 文件: **271**
 │   │   └── README.md
 │   ├── figures/
 │   │   ├── baseline_2d/
+│   │   │   ├── g5_2d_validation.svg
+│   │   │   └── README.md
 │   │   ├── baseline_3d/
 │   │   ├── comparisons/
 │   │   │   ├── g5_3d_validation.svg
@@ -419,6 +463,7 @@ Directories / 目录: **54** · Files / 文件: **271**
 | `code/tools/summarize_g3_candidate_sampling.py` | Verify full candidate patch records and summarize exposure; Definitions: sha256_file, write_csv, main | 核验完整候选 Patch 记录并汇总曝光；定义：sha256_file, write_csv, main |
 | `code/tools/summarize_g3_pipeline.py` | Definitions: verified_json, main | 定义：verified_json, main |
 | `code/tools/summarize_g4_patient_sampling.py` | Verify G4 tensor dry run and summarize class/patient exposure; Definitions: sha256_file, write_csv, main | 核验 G4 张量预演并汇总类别及患者曝光；定义：sha256_file, write_csv, main |
+| `code/tools/summarize_g5_2d_validation.py` | Definitions: sha256, main | 定义：sha256, main |
 | `code/tools/summarize_g5_validation.py` | Definitions: sha256, same_metric, load_checked_run, main | 定义：sha256, same_metric, load_checked_run, main |
 | `code/tools/tiny_overfit_g5.py` | Check both 3D models can learn two fixed Train patches on GPU; Definitions: sha256_file, measure, main | 检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch；定义：sha256_file, measure, main |
 | `code/tools/train_g5_2d.py` | Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
@@ -444,6 +489,47 @@ Directories / 目录: **54** · Files / 文件: **271**
 | `logs/profiles/g5_tiny_overfit_20261018.json` | JSON fields: case, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy | JSON 字段：case, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy |
 | `logs/profiles/g5_training_smoke_20261018.json` | JSON fields: cases, config_sha256, data_code_sha256, g1_sha256, gpu, job_id, kind, loss_code_sha256, numpy, patches, results, sampling_code_sha256 | JSON 字段：cases, config_sha256, data_code_sha256, g1_sha256, gpu, job_id, kind, loss_code_sha256, numpy, patches, results, sampling_code_sha256 |
 | `logs/README.md` | Entry point or directory guide; Sections: Experiment Logs | 项目入口或目录说明；章节标题：Experiment Logs |
+| `logs/training/baseline_2d/epoch_001.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_002.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_003.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_004.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_005.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_006.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_007.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_008.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_009.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_010.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_011.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_012.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_013.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_014.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_015.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_016.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_017.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_018.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_019.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_020.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_021.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_022.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_023.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_024.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_025.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_026.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_027.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_028.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_029.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_030.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_031.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_032.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_033.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_034.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_035.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_036.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_037.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_038.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_039.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_040.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model | JSON 字段：config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model |
 | `logs/training/baseline_3d/epoch_001.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/baseline_3d/epoch_002.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/baseline_3d/epoch_003.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
@@ -608,6 +694,8 @@ Directories / 目录: **54** · Files / 文件: **271**
 | `results/data_analysis/historical_train/train_patient_examinations.svg` | UTF-8 text with 72 lines; 7,370 bytes | UTF-8 文本，72 行；7,370 字节 |
 | `results/data_analysis/historical_train/train_rare_organ_volumes.svg` | UTF-8 text with 320 lines; 25,203 bytes | UTF-8 文本，320 行；25,203 字节 |
 | `results/data_analysis/README.md` | Entry point or directory guide; Sections: Data analysis image groups | 项目入口或目录说明；章节标题：Data analysis image groups |
+| `results/figures/baseline_2d/g5_2d_validation.svg` | UTF-8 text with 2113 lines; 65,832 bytes | UTF-8 文本，2113 行；65,832 字节 |
+| `results/figures/baseline_2d/README.md` | Entry point or directory guide; Sections: Supplementary 2D Validation figure | 项目入口或目录说明；章节标题：Supplementary 2D Validation figure |
 | `results/figures/comparisons/g5_3d_validation.svg` | UTF-8 text with 2075 lines; 65,294 bytes | UTF-8 文本，2075 行；65,294 字节 |
 | `results/figures/comparisons/README.md` | Entry point or directory guide; Sections: G5 3D Validation comparison | 项目入口或目录说明；章节标题：G5 3D Validation comparison |
 | `results/README.md` | Entry point or directory guide; Sections: Results and Report Artifacts | 项目入口或目录说明；章节标题：Results and Report Artifacts |

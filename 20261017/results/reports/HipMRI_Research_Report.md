@@ -741,3 +741,24 @@ interval. Both runs retain their previous best checkpoints unless a later
 Validation score exceeds them. The prepared Slurm submission also schedules
 paired high-overlap and failure-case Validation overlays after both continuations
 finish. This continuation and the overlays have not yet run; Test remains sealed.
+
+### Supplementary 2D completion and Validation review — 19 October 2026
+
+Job 673908 completed all 40 epochs (`COMPLETED 0:0`). The 41 local JSON files
+(40 epochs and one manifest) were checked against the frozen 2D config and
+the per-case Validation confusion matrices. Its selected checkpoint is epoch
+40 with a patient-balanced small-organ Validation score of **0.7367**. The
+score rose from 0.7032 at epoch 30, dipped to 0.6414 at epoch 35, then
+reached the highest observed value at epoch 40; the trajectory is noisy.
+
+At the selected epoch, pooled Validation Dice / precision / recall were
+Bladder **0.8813 / 0.8256 / 0.9449**, Rectum **0.7052 / 0.5833 / 0.8915**,
+and Prostate **0.6591 / 0.5164 / 0.9105**. High Prostate recall alongside
+low precision suggests substantial overprediction in this 2D scheme; spatial
+review is needed to locate those false positives. The corresponding Train
+patch Prostate Dice was 0.7303 at epoch 40, which is a different measurement
+from whole-volume Validation Dice. The supplementary 2D arm uses axial crops,
+organ-aware sampling and separate Train-derived class weights, so its quality
+gap from the paired 3D arms cannot be attributed to architecture alone. The
+separate 2D learning figure is in `results/figures/baseline_2d/`; no 2D Test
+result has been generated.
