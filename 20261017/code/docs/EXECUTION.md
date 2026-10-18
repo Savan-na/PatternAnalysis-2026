@@ -70,6 +70,12 @@ exposure, and cannot establish model performance without later Validation.
 
 ## Later gates
 
+- G4: dry-run one scan per Train patient per epoch through the same
+  downsampling, normalization and paired patch conversion that GPU training
+  will use. Compare uniform and organ-aware candidates, record class hits,
+  voxel shares and patient counts from delivered masks. Repeat measurement
+  during real training after any augmentation; a CPU dry run alone is not
+  actual optimization exposure or evidence of improved Validation Dice.
 - Confirm every foreground class present before downsampling remains present
   afterward, and quantify per-class physical-volume and slice-coverage
   changes, or stop and revise the spatial resolution before any model run.

@@ -31,3 +31,32 @@ Initial implementations have 1,942,374 (2D), 1,412,550 (standard 3D), and
 2,366,946 (improved 3D) trainable parameters at their documented default
 widths. These counts are local code measurements, **not** paper claims or
 validated full-volume memory measurements.
+
+## Imbalance methods in the three primary papers
+
+Ronneberger et al. (2015) use a pixel-weighted cross-entropy map to compensate
+class frequency and emphasize the narrow background gaps between touching
+cells; strong elastic augmentation addresses limited annotated images. The
+cell-border formula and constants are specific to their microscopy task.
+
+Çiçek et al. (2016) reduce loss weight for common background and increase it
+for the less common inner tubule. They separately give *unlabelled* voxels
+zero loss weight because their 3D volumes are sparsely annotated. HipMRI's
+labelled Background is not an unlabelled class. Their batch normalization and
+spatial/gray-value augmentation serve optimization and generalization, not
+class-frequency correction.
+
+Isensee et al. (2018) standardize each patient's MRI modality using brain-region
+intensity statistics, then clip and rescale. They explicitly address their
+background-to-enhancing-tumor imbalance with multiclass Dice loss. Random 3D
+patches, instance normalization, augmentation, dropout and L2 regularization
+are also described; the paper does not specify foreground-anchored sampling as
+its own method. Its brain-specific intensity region and clipping thresholds
+require HipMRI Train evidence before adaptation.
+
+Current HipMRI G3 evidence supports keeping the validated nonzero-intensity
+Z-score and measured downsampling as a starting point. G4 implements a
+patient-balanced *candidate* patch mechanism and exact post-transform label
+exposure recorder; a CPU dry run and later training logs must establish what
+the model receives. No Dice/weighted-CE choice or organ-aware training policy
+is established by these papers alone.

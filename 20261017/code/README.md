@@ -66,3 +66,9 @@ it is not wired into model training.
 CSV and manifest against Rangpur SHA-256 values and the G3 case grids before
 producing local exposure tables and a comparison figure under
 `results/data_analysis/g3_pipeline/`.
+
+`hipmri_rewrite/sampling.py` prepares paired Train-only 3D patches with one
+scan per patient per epoch and records label exposure from the model-ready
+Mask. `tools/audit_g4_patient_sampling.py` dry-runs the uniform and organ-aware
+candidate policies on Rangpur CPU, without training; its measured tensor
+stream must be reviewed before selecting a policy for a GPU experiment.

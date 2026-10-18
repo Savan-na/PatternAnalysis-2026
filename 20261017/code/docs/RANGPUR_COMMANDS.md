@@ -176,3 +176,40 @@ After downloading both files into the matching local `logs/audits/` directory,
 run `code/tools/summarize_g3_candidate_sampling.py` in the existing local
 Matplotlib environment with those two hashes. The verifier checks all 2,860
 rows against G3 before writing derived CSVs and a figure.
+
+## G4 patient-balanced tensor dry run
+
+The G4 source uses the already staged G1/G3 full JSON files. Transfer two new
+files from Windows PowerShell at `Final project`, then connect to Rangpur:
+
+```powershell
+scp '.\20261017\code\hipmri_rewrite\sampling.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/hipmri_rewrite/sampling.py'
+scp '.\20261017\code\tools\audit_g4_patient_sampling.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/audit_g4_patient_sampling.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On login0, compare the remote `sha256sum` of both files with local
+`Get-FileHash`. Submit a two-patient smoke run; the script refuses login-node
+computation. Use a new output directory if this name already exists:
+
+```bash
+sbatch --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=00:20:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/audits/g4_patient_smoke_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/audit_g4_patient_sampling.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --limit-patients 2 \
+  --output-dir ../logs/audits/g4_patient_smoke_20261018
+SBATCH
+```
+
+Inspect the job output and `manifest.json`: expect two patients, ten patches
+per policy per patient, and 40 CSV rows. This is a CPU *dry run*, not GPU
+training or evidence of model benefit. A full patient-epoch run follows only
+after reviewing the smoke output.

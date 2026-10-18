@@ -346,6 +346,18 @@ No preprocessing, sampling, loss, or network change has been selected for
 training. G3 compared candidate crop placements without changing source files
 or activating a training sampler.
 
+### G4 patient-balanced sampling preparation — 18 October 2026
+
+The code now provides a Train-only sampler interface that selects one scan per
+patient per epoch, cycles through that patient's visits over successive
+epochs, and prepares paired 64×64×32 XYZ image/Mask patches as model-ready
+`1×32×64×64` image and `32×64×64` label tensors. It supports a uniform arm
+and a four-uniform plus two-per-organ candidate arm. A recorder measures class
+hits and voxel counts on the exact post-transform labels supplied to the
+model. The separate CPU dry-run command is awaiting real-data verification on
+Rangpur; its result will be recorded here after review. No model-training
+sampler policy, loss, or architecture comparison has yet been frozen.
+
 ## Experimental Results
 
 No restarted model has been trained. G1–G3 are data and pipeline measurements,
