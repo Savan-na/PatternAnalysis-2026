@@ -72,3 +72,7 @@ foreground Dice mixture. The follow-up configuration
 frequency relative to Body from the G4 Train-only patient-uniform Patch
 exposure, capped at 10. This bounded weighting is a HipMRI diagnostic choice,
 not a parameter copied from any of the three papers or a final loss decision.
+Its 500-step fixed-Train-patch follow-up recovered small-organ predictions
+under the same provisional CE/Dice mixture. This supports a controlled cohort
+comparison of loss weighting; the two-patch result does not establish
+generalization or optimal weights.

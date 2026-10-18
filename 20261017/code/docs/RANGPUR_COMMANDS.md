@@ -389,3 +389,7 @@ SBATCH
 After completion, report the job ID, final ten output lines and JSON SHA-256.
 Compare the final Bladder, Rectum and Prostate predicted voxel counts with the
 unweighted 500-step JSON before deciding any further experiment.
+
+Job `672730` completed and its returned JSON SHA-256 matched Rangpur:
+`f9f53f6eaaabb922f29e04d4905d5529ad24c668b3b2733620c9de340008b7c7`.
+The comparison and its limits are recorded in the formal research report.

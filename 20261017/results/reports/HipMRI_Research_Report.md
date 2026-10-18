@@ -445,6 +445,38 @@ while keeping the two Train patches and 500-step budget fixed. The weights
 will be derived from Train-only patient-balanced uniform Patch exposure and
 reported as a diagnostic intervention, not a validated final loss.
 
+### G5 Standard weighted-CE diagnostic — 18 October 2026
+
+Rangpur A100 job `672730` completed 500 Standard steps on the same two fixed
+Train patches. The downloaded JSON matched Rangpur SHA-256
+`f9f53f6eaaabb922f29e04d4905d5529ad24c668b3b2733620c9de340008b7c7`.
+Compared with unweighted job `672228`, the case and MRI/Mask hashes, Patch
+origins and labels, model code, seed, Adam settings, 500-step budget, and
+foreground-Dice term match. The changed factor is the CE class-weight vector:
+Background 1.453871, Body 1, Bones 2.617199, Bladder 4.498586, Rectum
+8.893215, and Prostate 9.699950. Its capped square-root inverse-frequency
+rule was calculated from **Train-only G4 patient-uniform Patch exposure**;
+see `code/config/g5_weighted_ce_diagnostic.json` for the source hash. The
+comparison is a two-patch optimization diagnostic, not a cohort experiment.
+
+| Class, step 500 | True voxels | Unweighted predicted / Dice / Recall | Weighted predicted / Dice / Recall |
+|---|---:|---:|---:|
+| Bladder | 2,450 | 0 / 0 / 0 | 2,518 / 0.9843 / 0.9980 |
+| Rectum | 2,723 | 0 / 0 / 0 | 2,710 / 0.9796 / 0.9772 |
+| Prostate | 2,171 | 0 / 0 / 0 | 2,285 / 0.9722 / 0.9977 |
+
+The weighted run's final small-organ precision was 0.9710, 0.9819 and
+0.9479, respectively, on these same patches. Weighting therefore removed
+the observed small-organ prediction collapse under this controlled fixed-batch
+check. Its aggregate loss fell to 0.14638, but weighted and unweighted loss
+values have different definitions and should not be compared as a common
+performance metric. This result supports inadequate *effective training
+signal under the provisional unweighted objective* as a cause of this tiny-run
+failure. It does not show that raw class imbalance alone caused historical
+failures, that the chosen weights are optimal, or that weighted CE improves
+unseen patients. In particular, false positives and generalization require
+Validation evaluation under a frozen cohort training protocol.
+
 ## Failure Analysis
 
 Pending model experiments. G1 raw-data findings and visual-screen limits are
@@ -485,3 +517,8 @@ uniform-crop reference for the first controlled training comparison, with
 organ-aware placement held for a targeted follow-up if actual batch logs and
 Validation failures support it. Validation must establish whether any
 intervention improves segmentation without increasing false positives.
+G5 now shows that the Standard model can fit two fixed Train patches with
+moderate Train-derived CE class weights, whereas it predicted none of the
+three small organs after 500 steps with unweighted CE. This is evidence that
+the loss weighting matters for that narrow learning check, not a Validation
+result or a final choice of class weights.
