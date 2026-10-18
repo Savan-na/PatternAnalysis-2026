@@ -385,8 +385,8 @@ post-augmentation class exposure still needs to be logged during training.
 
 ## Experimental Results
 
-No restarted model has been trained. G1–G4 are data and pipeline measurements,
-not segmentation performance comparisons.
+No formal cohort model has been trained. G1–G4 are data and pipeline
+measurements, not segmentation performance comparisons.
 
 The G5 real-Train-patch GPU probe ran as Rangpur A100 job `672173` on
 `B006_Week0`, batch size two, input `2×1×32×64×64`, with the same provisional
@@ -401,6 +401,32 @@ CUDA/cuDNN initialization, so these are capacity timings, not a fair latency
 comparison. No optimizer step or checkpoint was produced. A fixed Train-patch
 learning test is still needed before full training; the probe loss is not a
 Validation score or a selected training objective.
+
+### G5 two-patch learning check — 18 October 2026
+
+Rangpur A100 job `672194` made 100 temporary Adam steps for each 3D model
+on the same two fixed `B006_Week0` Train patches, anchored on Rectum and
+Prostate. The returned JSON matched Rangpur SHA-256
+`097b047bd9d2a7c7f6c713cbbb98ba42558a2577f661aed744cfc8feba43c5ad`.
+The paired batch had 262,144 labelled voxels, including 2,450 Bladder,
+2,723 Rectum and 2,171 Prostate voxels. Both models used the same provisional
+half unweighted-CE plus half foreground-Dice objective, Adam learning rate
+`1e-3`, seed, inputs and step count. No checkpoint was saved.
+
+| Model at step 100 | Fixed-batch loss | Bladder predicted voxels / Dice | Rectum predicted voxels / Dice | Prostate predicted voxels / Dice |
+|---|---:|---:|---:|---:|
+| Standard 3D U-Net | 0.71108 | 0 / 0 | 0 / 0 | 0 / 0 |
+| Improved 3D U-Net | 0.05524 | 2,417 / 0.9706 | 2,658 / 0.9586 | 2,126 / 0.9393 |
+
+Standard predicted all 262,144 voxels as Body from step 10 through step 100,
+even while its total loss decreased from 0.97062 to 0.71108 over those
+checkpoints. Thus this run directly illustrates aggregate-loss improvement
+without small-organ recognition. Improved fit these exact patches well; its
+final Rectum and Prostate recall were 0.9471 and 0.9295. Neither outcome
+establishes Validation generalization or an isolated architecture effect:
+the networks differ in multiple implementation details. Before full training,
+hold the data, provisional objective, optimizer and seed fixed and extend only
+the Standard model's tiny-run step budget to test delayed learning.
 
 ## Failure Analysis
 

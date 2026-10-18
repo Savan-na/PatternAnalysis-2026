@@ -304,3 +304,35 @@ SBATCH
 Review initial/final fixed-batch loss, Rectum and Prostate Dice/recall and
 predicted voxel counts before planning a full training run. The result shows
 only whether these two patches are learnable under the temporary objective.
+
+Job `672194` completed 100 steps per model. Its JSON SHA-256 is
+`097b047bd9d2a7c7f6c713cbbb98ba42558a2577f661aed744cfc8feba43c5ad`.
+The Standard arm predicted only Body at step 100; Improved fitted all three
+small organs on these fixed patches. To check whether Standard is simply
+slower, transfer the revised `tiny_overfit_g5.py` (SHA-256
+`ae9c851a79773e84045812c0ccebd0eb176469d3342c02eff2207b2066990045`)
+and verify its hash,
+then run only Standard for 500 steps with the same case, patches, seed,
+objective and optimizer. Use a new output path:
+
+```bash
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_standard_500_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/tiny_overfit_g5.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id B006_Week0 --model standard_3d --steps 500 \
+  --output ../logs/profiles/g5_standard_500_20261018.json
+SBATCH
+```
+
+This changes the step budget only and does not replace the original 100-step
+record or create a checkpoint. Its diagnostic purpose is limited to fixed
+Train patches; full training remains gated on reviewing the result.

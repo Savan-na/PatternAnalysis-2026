@@ -1,4 +1,4 @@
-"""Train-only two-patch learning check for both 3D arms; no checkpoint saved."""
+"""Train-only two-patch learning check for the 3D arms; no checkpoint saved."""
 
 from __future__ import annotations
 
@@ -53,6 +53,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset-root", type=Path, required=True)
     parser.add_argument("--case-id", default="B006_Week0")
+    parser.add_argument("--model", choices=("standard_3d", "improved_3d", "both"),
+                        default="both")
     parser.add_argument("--steps", type=int, default=100)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--g1", type=Path, default=PROJECT / "logs/audits/train_full_20261018_job671208.json")
@@ -62,8 +64,8 @@ def main() -> None:
     output = args.output.resolve()
     if not output.is_relative_to(PROJECT) or output.exists():
         parser.error("Output must be a new JSON file inside 20261017")
-    if not 1 <= args.steps <= 200:
-        parser.error("Tiny overfit step count must be 1..200")
+    if not 1 <= args.steps <= 1000:
+        parser.error("Tiny overfit step count must be 1..1000")
     if sha256_file(args.g1) != G1_SHA:
         raise ValueError("G1 Train audit differs from verified source")
 
@@ -104,9 +106,11 @@ def main() -> None:
     image = torch.from_numpy(np.ascontiguousarray(image_array)).to("cuda")
     target = torch.from_numpy(np.ascontiguousarray(mask_array)).to("cuda")
     objective = lambda logits, truth: ce_dice_loss(logits, truth, ce_weight=0.5)
+    constructors = {"standard_3d": UNet3D, "improved_3d": ImprovedUNet3D}
+    selected_models = tuple(constructors) if args.model == "both" else (args.model,)
     records = []
-    for name, constructor in (("standard_3d", UNet3D),
-                              ("improved_3d", ImprovedUNet3D)):
+    for name in selected_models:
+        constructor = constructors[name]
         torch.manual_seed(371017)
         torch.cuda.manual_seed_all(371017)
         model = constructor().to("cuda").train()
@@ -140,6 +144,7 @@ def main() -> None:
               "job_id": os.environ["SLURM_JOB_ID"], "case": case.identifier,
               "mri_sha256": audited["mri_sha256"], "mask_sha256": audited["mask_sha256"],
               "g1_sha256": G1_SHA, "seed": 371017, "patch_shape_xyz": PATCH_XYZ,
+              "requested_models": list(selected_models),
               "input_shape": list(image.shape), "origins_xyz": origins,
               "target_order": ["Rectum", "Prostate"],
               "target_voxels": {name: int(true_counts[index])
