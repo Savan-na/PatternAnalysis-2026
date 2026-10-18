@@ -542,3 +542,22 @@ SBATCH
 
 Check the job log for 130 batches per model and the JSON SHA-256. Its first
 epoch loss cannot be used as a Validation result or an optimal epoch count.
+
+## G5 formal training transition
+
+Job 672837 was still PENDING when the protocol was frozen. Its no-checkpoint
+full-epoch probe has been superseded by a first formal epoch that saves
+`latest.pt`. Cancel job 672837 while it is pending and confirm it has left the
+queue before starting a formal job. The absence of a Slurm `.out` file and
+JSON while PENDING is expected.
+
+The executable protocol is now
+`code/config/g5_controlled_training_frozen.json`. Transfer this file,
+`code/tools/train_g5_cohort.py`, and `code/hipmri_rewrite/training.py` to their
+matching paths under `~/20261018_g1_stage/20261017/`. Verify their SHA-256
+hashes against local files. The first formal command is the trainer with
+`--model standard_3d`, `--stop-after-epoch 1`, and a new directory under
+`logs/training/`. It saves model and optimizer weights plus a Train epoch log.
+Run the Improved arm with the same config and its own new directory; resume
+both with `--resume` to the frozen budget. Validation first occurs at epoch 5,
+and Test remains untouched during training and selection.

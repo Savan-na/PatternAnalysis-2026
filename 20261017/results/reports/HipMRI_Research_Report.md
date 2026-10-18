@@ -585,3 +585,16 @@ moderate Train-derived CE class weights, whereas it predicted none of the
 three small organs after 500 steps with unweighted CE. This is evidence that
 the loss weighting matters for that narrow learning check, not a Validation
 result or a final choice of class weights.
+
+### G5 formal-training transition — 18 October 2026
+
+The two-patient paired GPU optimizer smoke passed, and random-weight
+whole-volume inference fitted on the A100. The first paired cohort protocol
+has been frozen in `code/config/g5_controlled_training_frozen.json` from
+Train-only evidence. Both 3D networks will receive the same patient-balanced
+uniform patches and weighted CE plus foreground Dice objective. Forty epochs
+is a fixed comparison budget, not a demonstrated optimum. The first formal
+epoch will save resumable model and optimizer weights; Validation first runs
+at epoch five. The separate no-checkpoint epoch-budget probe (job 672837)
+was still pending at the decision point and is to be cancelled. No full-cohort
+checkpoint or Validation quality result exists yet.

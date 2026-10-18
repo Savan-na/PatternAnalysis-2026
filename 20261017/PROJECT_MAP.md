@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 22:25:36 AEST**
+Updated / 更新时间: **2026-10-18 22:29:45 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **53** · Files / 文件: **167**
+Directories / 目录: **53** · Files / 文件: **168**
 
 ## Directory Tree / 目录树
 
@@ -23,6 +23,7 @@ Directories / 目录: **53** · Files / 文件: **167**
 │   │   │       └── arm.json
 │   │   ├── g3_patch_audit.json
 │   │   ├── g5_controlled_training_candidate.json
+│   │   ├── g5_controlled_training_frozen.json
 │   │   ├── g5_weighted_ce_diagnostic.json
 │   │   └── patient_split.json
 │   ├── docs/
@@ -243,7 +244,8 @@ Directories / 目录: **53** · Files / 文件: **167**
 | `code/config/arms/baseline_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/improved_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/g3_patch_audit.json` | Frozen candidate-crop audit design, not a training configuration; JSON fields: scope, seed, patch_shape_xyz, draws_per_case_per_arm, arm_schedules | 固定的候选裁剪审计设计，非训练配置；JSON 字段：scope, seed, patch_shape_xyz, draws_per_case_per_arm, arm_schedules |
-| `code/config/g5_controlled_training_candidate.json` | Candidate paired 3D cohort training protocol awaiting a bounded GPU smoke run; JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | 等待有限 GPU 冒烟运行的双模型队列训练候选方案；JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
+| `code/config/g5_controlled_training_candidate.json` | Historical candidate for the paired 3D cohort training protocol; JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | 双模型队列训练方案的历史候选配置；JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
+| `code/config/g5_controlled_training_frozen.json` | Frozen paired 3D cohort training protocol with resumable checkpoint selection; JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | 已冻结的双模型训练方案，含可恢复权重和验证集选择规则；JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
 | `code/config/g5_weighted_ce_diagnostic.json` | Train-only weighted CE configuration for the Standard tiny learning diagnostic; JSON fields: scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights | 仅用训练数据为 Standard 微型学习诊断配置加权交叉熵；JSON 字段：scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights |
 | `code/config/patient_split.json` | Frozen patient groups and expected counts; JSON fields: provenance, train, validation, test, expected_volumes | 固定患者分组与预期数量；JSON 字段：provenance, train, validation, test, expected_volumes |
 | `code/docs/EXECUTION.md` | Evidence and execution gates; Sections: Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: current existing-pipeline diagnosis | 证据与执行关口；章节标题：Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: current existing-pipeline diagnosis |
@@ -282,7 +284,7 @@ Directories / 目录: **53** · Files / 文件: **167**
 | `code/tools/__pycache__/probe_g5_full_volume.cpython-314.pyc` | Binary or large file; 10,724 bytes | 二进制或大文件；10,724 字节 |
 | `code/tools/__pycache__/probe_g5_training_smoke.cpython-314.pyc` | Binary or large file; 18,717 bytes | 二进制或大文件；18,717 字节 |
 | `code/tools/__pycache__/tiny_overfit_g5.cpython-314.pyc` | Binary or large file; 16,475 bytes | 二进制或大文件；16,475 字节 |
-| `code/tools/__pycache__/train_g5_cohort.cpython-314.pyc` | Binary or large file; 27,654 bytes | 二进制或大文件；27,654 字节 |
+| `code/tools/__pycache__/train_g5_cohort.cpython-314.pyc` | Binary or large file; 29,818 bytes | 二进制或大文件；29,818 字节 |
 | `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: sha256_file, write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：sha256_file, write_csv, main |
 | `code/tools/audit_g3_candidate_sampling.py` | Compare fixed Train-only uniform and organ-aware candidate crops; Definitions: sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main | 比较固定的训练集均匀与器官感知候选裁剪；定义：sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main |
 | `code/tools/audit_g3_existing_pipeline.py` | Audit current Train downsampling, normalization and whole-volume arrays; Definitions: sha256_file, class_counts, occupied_z_slices, software_versions, main | 审计当前训练集降采样、归一化与整卷张量；定义：sha256_file, class_counts, occupied_z_slices, software_versions, main |

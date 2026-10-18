@@ -84,6 +84,14 @@ its one-epoch stopping option saves a resumable checkpoint instead of
 discarding the optimization work. The Validation selection score is defined
 in `code/hipmri_rewrite/training.py` and gives each patient equal weight.
 
+The paired GPU smoke and whole-volume inference checks have passed. The
+execution protocol is now `code/config/g5_controlled_training_frozen.json`.
+Run the formal trainer for one complete epoch first, preserving `latest.pt`
+and its epoch log; then resume the same run to the fixed budget. The separate
+full-epoch no-checkpoint probe was submitted as job 672837 but was still
+pending when this decision was made. Cancel that pending job before launching
+the formal epoch; do not interpret its absent log or JSON as a model failure.
+
 - G4: dry-run one scan per Train patient per epoch through the same
   downsampling, normalization and paired patch conversion that GPU training
   will use. Compare uniform and organ-aware candidates, record class hits,
