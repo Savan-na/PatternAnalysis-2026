@@ -93,8 +93,15 @@ def main() -> None:
             geom = r["small_organ_geometry"][organ]
             sr[f"{organ.lower()}_volume_ml"] = r["class_volume_ml"][organ]
             for axis, name in enumerate("xyz"):
+                minimum = geom["bounding_box_min_xyz"][axis]
+                maximum = geom["bounding_box_max_xyz"][axis]
+                sr[f"{organ.lower()}_bbox_min_{name}_voxel"] = minimum
+                sr[f"{organ.lower()}_bbox_max_{name}_voxel"] = maximum
+                sr[f"{organ.lower()}_bbox_center_{name}_fraction"] = (
+                    (minimum + maximum) / 2 / (r["mri_shape"][axis] - 1)
+                )
                 sr[f"{organ.lower()}_bbox_{name}_mm"] = (
-                    geom["bounding_box_max_xyz"][axis] - geom["bounding_box_min_xyz"][axis] + 1
+                    maximum - minimum + 1
                 ) * r["mri_spacing_mm"][axis]
                 sr[f"{organ.lower()}_occupied_{name}_slices"] = geom["occupied_slices_xyz"][axis]
         spatial_rows.append(sr)
@@ -115,11 +122,26 @@ def main() -> None:
     if sum(r["volume_count"] for r in patient_rows) != 143 or len(patient_rows) != 26:
         raise ValueError("Patient totals do not match split")
 
+    spatial_by_patient: dict[str, list[dict]] = defaultdict(list)
+    for row in spatial_rows:
+        spatial_by_patient[row["patient"]].append(row)
+    longitudinal_rows = []
+    for patient in sorted(spatial_by_patient):
+        visits = spatial_by_patient[patient]
+        row = {"patient": patient, "volume_count": len(visits)}
+        for organ in ORGANS:
+            volumes = [entry[f"{organ.lower()}_volume_ml"] for entry in visits]
+            row[f"{organ.lower()}_min_ml"] = min(volumes)
+            row[f"{organ.lower()}_max_ml"] = max(volumes)
+            row[f"{organ.lower()}_max_min_ratio"] = max(volumes) / min(volumes) if len(visits) > 1 else ""
+        longitudinal_rows.append(row)
+
     out = args.output_dir.resolve()
     out.mkdir(parents=True, exist_ok=True)
     for name, rows in (("class_distribution", class_rows), ("per_volume_distribution", volume_rows),
                        ("per_patient_distribution", patient_rows), ("intensity_statistics", intensity_rows),
-                       ("spatial_statistics", spatial_rows)):
+                       ("spatial_statistics", spatial_rows),
+                       ("longitudinal_organ_variation", longitudinal_rows)):
         write_csv(out / f"{name}.csv", rows, list(rows[0]))
 
     import matplotlib
@@ -127,7 +149,8 @@ def main() -> None:
     import matplotlib.pyplot as plt
 
     plt.rcParams.update({"font.size": 10, "axes.spines.top": False,
-                         "axes.spines.right": False, "svg.fonttype": "none"})
+                         "axes.spines.right": False, "svg.fonttype": "none",
+                         "svg.hashsalt": "hipmri-g2-train"})
     fig, ax = plt.subplots(figsize=(8, 4.5), layout="constrained")
     bars = ax.bar(CLASSES, [counts[c] for c in CLASSES], color="#286f8e")
     ax.set_yscale("log")
@@ -135,7 +158,7 @@ def main() -> None:
     ax.set_title("Raw class frequency, 143 Train volumes")
     ax.bar_label(bars, labels=[f"{100 * counts[c] / total:.3f}%" for c in CLASSES], padding=3, fontsize=8)
     ax.set_ylim(1e5, 5e9)
-    fig.savefig(out / "class_frequency_log.svg")
+    fig.savefig(out / "class_frequency_log.svg", metadata={"Date": None})
     plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(12, 5), layout="constrained")
@@ -147,7 +170,7 @@ def main() -> None:
     ax.set_ylabel("Share of raw voxels per patient (%)")
     ax.set_title("Rare organ frequency by Train patient (visits pooled)")
     ax.legend(ncols=3)
-    fig.savefig(out / "patient_rare_organ_share.svg")
+    fig.savefig(out / "patient_rare_organ_share.svg", metadata={"Date": None})
     plt.close(fig)
 
     fig, axes = plt.subplots(1, 2, figsize=(10, 4), layout="constrained")
@@ -157,7 +180,7 @@ def main() -> None:
     axes[1].hist([100 * r["zero_fraction"] for r in intensity_rows], bins=15, color="#a07175")
     axes[1].set(xlabel="Zero voxels per volume (%)", ylabel="Train volumes",
                 title="Zero intensity frequency")
-    fig.savefig(out / "intensity_case_summary.svg")
+    fig.savefig(out / "intensity_case_summary.svg", metadata={"Date": None})
     plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(8, 4.5), layout="constrained")
@@ -165,7 +188,23 @@ def main() -> None:
                [r["spacing_z_mm"] for r in spatial_rows], alpha=0.55, s=24, color="#397b80")
     ax.set(xlabel="In-plane voxel spacing x (mm)", ylabel="Through-plane spacing z (mm)",
            title="Raw Train MRI voxel spacing (143 volumes)")
-    fig.savefig(out / "voxel_spacing.svg")
+    fig.savefig(out / "voxel_spacing.svg", metadata={"Date": None})
+    plt.close(fig)
+
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4.5), layout="constrained")
+    for organ, color in (("Bladder", "#2d7d69"), ("Rectum", "#cc7843"), ("Prostate", "#8e61a9")):
+        key = organ.lower()
+        axes[0].scatter([r[f"{key}_bbox_center_x_fraction"] for r in spatial_rows],
+                        [r[f"{key}_bbox_center_y_fraction"] for r in spatial_rows],
+                        s=14, alpha=0.55, label=organ, color=color)
+        axes[1].hist([r[f"{key}_bbox_center_z_fraction"] for r in spatial_rows],
+                     bins=14, alpha=0.5, label=organ, color=color)
+    axes[0].set(xlabel="Raw grid x fraction", ylabel="Raw grid y fraction",
+                title="Organ box centers in-plane", xlim=(0, 1), ylim=(0, 1))
+    axes[1].set(xlabel="Raw grid z fraction", ylabel="Train volumes",
+                title="Organ box centers through-plane")
+    axes[0].legend()
+    fig.savefig(out / "organ_bbox_centers.svg", metadata={"Date": None})
     plt.close(fig)
 
     # Matplotlib writes spaces after many SVG path line breaks. Keep generated
@@ -178,7 +217,7 @@ def main() -> None:
     print(f"Train cases: {len(cases)}, patients: {len(patient_rows)}, voxels: {total}")
     for row in class_rows:
         print(f"{row['class']}: {row['voxel_count']:,} ({row['share_pct']:.6f}%)")
-    print(f"Saved five CSV tables and four SVG figures to {out}")
+    print(f"Saved six CSV tables and five SVG figures to {out}")
 
 
 if __name__ == "__main__":

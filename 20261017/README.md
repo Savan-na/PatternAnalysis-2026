@@ -1,8 +1,9 @@
 # HipMRI Data-Driven Model Development
 
 This is the COMP3710 research workspace. G1 raw Train integrity passed with
-documented limits. G2 now measures Train-only distributions before changing
-preprocessing, sampling, loss, or architecture. The primary later comparison
+documented limits, and G2 measured Train-only raw distributions. G3 now
+examines preprocessing and actual patch exposure before changing sampling,
+loss, or architecture. The primary later comparison
 is standard versus improved 3D U-Net. The existing 2D implementation is
 background work and does not require
 a new training run.

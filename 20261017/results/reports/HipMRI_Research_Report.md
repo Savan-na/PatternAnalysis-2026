@@ -90,6 +90,20 @@ uses a log axis so that all six nonzero categories remain visible. The
 and [spacing plot](../data_analysis/g2_train_summary/voxel_spacing.svg) are
 case-level summaries, not voxel histograms.
 
+The [longitudinal organ-volume table](../data_analysis/g2_train_summary/longitudinal_organ_variation.csv)
+uses physical volume from the unchanged raw Masks. Eighteen Train patients have
+more than one scan. Among them, the median within-patient maximum/minimum
+volume ratio is 2.90 for Bladder, 2.33 for Rectum, and 1.22 for Prostate.
+These are differences between visits, without image registration or a
+biological/annotation attribution. In particular, a fixed crop or volume
+prior must be checked against the observed range before use.
+The [organ-box center plot](../data_analysis/g2_train_summary/organ_bbox_centers.svg)
+shows positions normalized to each raw voxel grid. Prostate box-center Z
+fractions range from 0.307 to 0.701 across Train volumes. These are positions
+within individual scan grids, not registered anatomical coordinates; the
+per-volume box edges in `spatial_statistics.csv` are the relevant input for
+testing any proposed ROI crop.
+
 This first pass does not include per-slice class exposure, voxel-level MRI
 histograms, longitudinal registration, boundary contrast measurements, or
 actual post-transform patches. Those require a further Train-only Rangpur CPU
@@ -101,6 +115,47 @@ per volume. The transferred script SHA-256 was
 `ee45d5cd146710e67649e98f5f82bb130ae8bfd875a6cba66062f2165f434b05`.
 The script checks the G1 source-file hashes and per-case class totals before
 writing. This is a two-case software check, not a complete G2 distribution.
+
+### G2 full Train axial and intensity audit — 18 October 2026
+
+The same script completed all 143 Train volumes on Rangpur CPU node `vcpu-2`
+(Slurm job `671833`). It produced 18,320 axial-slice rows and 17,160
+per-volume intensity-bin rows. The two CSV SHA-256 values are respectively
+`d8b0966e9965797991f2313858d8088c1e2c32a62bcc483090be1a0dede17e87`
+and `c1b39892873b1b61dca3f03f8abcb0ec69a48154609a017a420f0502523d9930`.
+Local hashes match Rangpur. Every case's slice class totals reconcile exactly
+with G1, and each positive-intensity histogram total matches its G1 zero
+fraction. The [summary CSVs and figures](../data_analysis/g2_train_summary/README.md)
+are derived from these verified inputs.
+
+| Class | Raw axial slices containing class | Share of 18,320 slices | Median slices per Train volume |
+|---|---:|---:|---:|
+| Background | 18,320 | 100.00% | 128 |
+| Body | 18,170 | 99.18% | 127 |
+| Bones | 18,170 | 99.18% | 127 |
+| Bladder | 5,317 | 29.02% | 35 |
+| Rectum | 7,680 | 41.92% | 53 |
+| Prostate | 3,852 | 21.03% | 26 |
+
+Prostate appears on 18–41 axial slices per volume (median 26), Rectum on
+39–77 (median 53), and Bladder on 19–74 (median 35). The
+[slice-coverage chart](../data_analysis/g2_train_summary/raw_axial_slice_hit_rate.svg)
+and [volume-level chart](../data_analysis/g2_train_summary/organ_slices_per_volume.svg)
+show this raw anatomical coverage. These rates describe individual *raw axial
+slices*, not the probability that a training 3D patch contains an organ. Patch
+depth, crop placement, and sampling policy determine that later probability.
+
+The [pooled intensity histogram](../data_analysis/g2_train_summary/pooled_positive_intensity_histogram.svg)
+counts 788,672,496 positive-intensity Train voxels in fixed ten-unit bins;
+411,947,024 voxels have intensity zero (34.31% of all raw Train voxels). Zeros
+are retained as observed values, not treated as missing data. The intensity
+distribution provides a reference for a Train-derived normalization choice,
+but no normalization rule has been selected yet. Raw class, slice, intensity,
+spacing, organ-size, position and visit-level statistics now provide enough
+Train-only evidence to enter G3 pipeline diagnosis. Boundary contrast remains
+unmeasured and will be revisited if later errors are boundary-dominated. G3
+must measure post-transform organ survival and actual training-patch exposure
+before choosing an intervention.
 The original plan also names `recognition/hipmri_paper_reproduction/` as the
 older model-source location. That path is absent from the current checkout;
 the historical Baseline–V4 artifact inventory and final model-source location
@@ -115,6 +170,15 @@ no mechanical case errors. The intensity spread and tiny Bladder components
 were flagged for review, not established corruption. Affine agreement alone
 cannot certify that labels match the anatomy. The visual screens below add
 section-level evidence without claiming expert verification of every boundary.
+
+| Stage 1 hypothesis | Current evidence status |
+|---|---|
+| Gross raw-data corruption or pairing error | Not supported by the 143-case mechanical audit; subtle annotation errors remain possible |
+| Severe global minority-class imbalance | Supported by raw Train voxel counts |
+| Patient and visit-level organ variation | Supported by per-patient shares and physical-volume ranges |
+| Small organs occupy limited axial sections | Supported by the full Train slice audit |
+| Insufficient exposure in actual training patches | Unresolved until G3 samples the current pipeline |
+| Boundary contrast explains segmentation failure | Unresolved; no current model-error or boundary-contrast test isolates it |
 
 ### G1 visual review — 18 October 2026
 
@@ -215,8 +279,9 @@ confirmed annotation errors. The unspecified Mask spatial-unit header is a
 documented non-blocking metadata warning because MRI/Mask affines match exactly
 and spacings passed the matching check. Boundary correctness across every
 slice remains unverified.
-G2 can now measure Train-only class, intensity and spatial distributions; no
-causal conclusion about Prostate or Rectum prediction failure follows from G1.
-The first G2 pass confirms the severe global class imbalance and measures
-patient-level variation. It does not yet measure sampling imbalance or justify
-a preprocessing or model change.
+G2 has now measured Train-only class, patient, volume, slice, intensity,
+spacing, organ-size, normalized position and visit-level variation. These
+results support global class imbalance and limited raw axial coverage for
+Prostate and Rectum. They do not measure actual training-patch exposure or
+establish the cause of model failure. G3 should audit the existing
+preprocessing and sampler before selecting a change.

@@ -44,7 +44,10 @@ directory and leave the original MRI/Mask files unchanged.
 split, then exports Train-only class, volume, patient, intensity and spatial
 statistics plus four SVG plots. It uses the local `comp2011` environment's
 Matplotlib; no raw NIfTI is required for this first G2 summary.
-`tools/audit_g2_train_slices.py` is the next Rangpur CPU step. It decodes only
+`tools/audit_g2_train_slices.py` ran on Rangpur CPU. It decodes only
 Train pairs and checks their class counts against the complete G1 audit before
 exporting axial-slice coverage and nonzero MRI intensity histograms. Use
 `--limit 2` for a smoke run with a separate output directory.
+`tools/summarize_g2_slice_detail.py` verifies the transferred full-run CSV
+hashes and reconciles every case with G1 before generating local slice and
+pooled-intensity figures. It does not interpret slice presence as patch exposure.

@@ -62,6 +62,7 @@ ROLES = {
     "review_g1_train_contact_sheets.py": ("Render two-slice Train patient sheets for G1 alignment screening", "绘制训练集患者双切面图供 G1 对齐筛查"),
     "summarize_g2_train_audit.py": ("Summarize verified raw Train audit into G2 tables and plots", "将已核验的训练集原始审计汇总为 G2 表格与图"),
     "audit_g2_train_slices.py": ("Measure Train axial label coverage and MRI intensity bins on Rangpur CPU", "在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱"),
+    "summarize_g2_slice_detail.py": ("Reconcile G2 slice and intensity CSVs with G1 and draw local plots", "将 G2 切片及强度 CSV 与 G1 核对并绘制本地图"),
     "update_project_map.py": ("Generate and watch this bilingual inventory", "生成并持续更新本双语目录"),
     "20261017_source.zip": ("Generated source-only transfer package", "生成的仅含源码传输包"),
     "PROJECT_MAP.md": ("Generated bilingual tree and file content index", "自动生成的双语文件树与内容索引"),
