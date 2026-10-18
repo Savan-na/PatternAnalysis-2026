@@ -94,6 +94,11 @@ This first pass does not include per-slice class exposure, voxel-level MRI
 histograms, longitudinal registration, boundary contrast measurements, or
 actual post-transform patches. Those require a further Train-only Rangpur CPU
 analysis and the G3 data-pipeline audit. G2 is therefore still in progress.
+The original plan also names `recognition/hipmri_paper_reproduction/` as the
+older model-source location. That path is absent from the current checkout;
+the historical Baseline–V4 artifact inventory and final model-source location
+still need verification before controlled model experiments. This does not
+invalidate the completed raw-data audit.
 
 ## Problems Identified
 

@@ -49,5 +49,7 @@ distances are measured in millimetres on a common physical grid; one-empty
 predictions are explicitly counted. Report both segmentation quality and
 compute cost on the final held-out Test without tuning on its results.
 
-No new full-cohort audit, model training, validation comparison, or Test
-evaluation is claimed complete by this protocol.
+The current evidence status, including the completed G1 audit and ongoing G2
+analysis, is recorded in the single formal research report rather than this
+methods protocol. No restarted model training, Validation comparison, or Test
+evaluation has been completed.

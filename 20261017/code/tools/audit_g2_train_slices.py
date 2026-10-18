@@ -20,6 +20,14 @@ AUDIT_SHA = "6a4c674564a0364f5f56730cbc31e67b3ff9a8ffeae7d9d3dd18b198bbd0e1a1"
 SPLIT_SHA = "81531ec7cb84ef58c41393ff23e1105e7cf03aa97828fb12853ce8624fcb8900"
 
 
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
 def write_csv(path: Path, rows: list[dict], fields: list[str]) -> None:
     with path.open("w", encoding="utf-8-sig", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=fields)
@@ -58,6 +66,9 @@ def main() -> None:
     for index, case in enumerate(subset, 1):
         ident = case.identifier
         prior = checked[ident]
+        if (sha256_file(case.mri) != prior["mri_sha256"]
+                or sha256_file(case.mask) != prior["mask_sha256"]):
+            raise ValueError(f"Source file changed since G1: {ident}")
         mri = nib.load(str(case.mri))
         mask = nib.load(str(case.mask))
         if (list(mri.shape) != prior["mri_shape"] or list(mask.shape) != prior["mask_shape"]
@@ -75,7 +86,9 @@ def main() -> None:
         for z in range(labels.shape[2]):
             slice_counts = np.bincount(labels[:, :, z].ravel(), minlength=6)
             row = {"case": ident, "patient": case.patient, "axial_slice_index_z": z,
-                   "world_superior_mm": float((mri.affine @ [0, 0, z, 1])[2]),
+                   "slice_center_superior_mm": float((mri.affine @ [
+                       (labels.shape[0] - 1) / 2, (labels.shape[1] - 1) / 2, z, 1
+                   ])[2]),
                    "slice_voxels": int(slice_counts.sum())}
             for k, name in enumerate(CLASSES):
                 row[f"{name.lower()}_voxels"] = int(slice_counts[k])

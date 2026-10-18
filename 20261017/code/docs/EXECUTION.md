@@ -4,8 +4,8 @@
 
 Use the Python 3.11 `torch` environment. Record Python, PyTorch, CUDA, NumPy,
 SciPy and NiBabel versions in every run manifest, along with the source ZIP or
-Git revision and the exact patient-split/configuration hashes. The actual
-terminal commands are maintained only in [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.md).
+Git revision and the exact patient-split/configuration hashes. The current
+Rangpur G2 commands are maintained in [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.md).
 
 ## G1: raw integrity gate
 
@@ -15,10 +15,9 @@ terminal commands are maintained only in [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.
 - Inventory all 211 filename pairs and confirm the frozen 143/38/30 volume
   split. This inventory lists Test filenames only; it must not decode Test
   arrays.
-- Complete the Train-only raw audit with the separate-terminal commands in
-  [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.md). The two-case smoke run is not a
-  full-audit pass. Inspect all case errors and warnings before drawing a
-  conclusion.
+- Check the completed full Train audit and its case warnings in the
+  [formal research report](../../results/reports/HipMRI_Research_Report.md).
+  A two-case smoke run alone is not a full-audit pass.
 - Keep Validation labels out of distribution analysis and tuning. Any later
   Validation integrity check must be limited to what is needed to confirm
   file readability and geometry; it must not drive preprocessing or model
@@ -27,6 +26,18 @@ terminal commands are maintained only in [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.
   finiteness, and file hashes on Train data. Record unknown units or
   conflicting header transforms for review rather than silently correcting
   them.
+
+## G2: current Train-only EDA gate
+
+- Reconcile the derived class, patient, volume, intensity and spacing tables
+  with the complete G1 JSON. Keep historical statistics distinct from the
+  current raw-audit result.
+- On Rangpur CPU, smoke-test then measure axial class coverage and nonzero MRI
+  intensity histograms for all Train cases. Verify case identity and source
+  hashes; transfer approved derived statistics only.
+- Review organ-size and longitudinal differences, boundary contrast where
+  measurable, and the limits of selected visual overlays. Record supported,
+  excluded and unresolved hypotheses before entering G3.
 
 ## Later gates
 

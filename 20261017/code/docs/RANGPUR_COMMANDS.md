@@ -1,64 +1,45 @@
-# Rangpur G1 commands and terminal boundaries
+# Rangpur G2 command handoff
 
-The user's initial prompt is Windows PowerShell at `Final project`. Passwords
-belong only in the terminal. On 18 October 2026, read-only checks confirmed
-that `/home/groups/comp3710/HipMRI_Study_open` exists with `semantic_MRs` and
-`semantic_labels_only`. The old `~/20261017_g1_stage` and
-`~/20261017_source.zip` also exist and must remain untouched. Directory
-existence does not yet establish the current file count or data integrity.
+Use Windows PowerShell at `Final project` for `scp` and `ssh`. Use the Rangpur
+login shell only to check files and request a Slurm CPU node. Decode MRI arrays
+only after `hostname` shows an allocated compute node. The active source is
+`/home/groups/comp3710/HipMRI_Study_open`; the existing research stage is
+`~/20261018_g1_stage/20261017`. The G1 record and its evidence are in the
+[research report](../../results/reports/HipMRI_Research_Report.md).
 
-## 1. Read-only location check
+## Transfer the G2 slice audit script
 
 From Windows PowerShell:
 
 ```powershell
+scp '.\20261017\code\tools\audit_g2_train_slices.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/audit_g2_train_slices.py'
 ssh s4906923@login0.compute.eait.uq.edu.au
 ```
 
-After the prompt becomes a Rangpur Linux prompt:
+Compare the local `Get-FileHash -Algorithm SHA256` result with Rangpur
+`sha256sum` before running the transferred file. The script also verifies the
+complete G1 audit and the hash of every Train MRI/Mask file it processes.
+
+## Two-case smoke run on a CPU node
+
+From the Rangpur login shell:
 
 ```bash
-pwd
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/audit_g2_train_slices.py"
+srun --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=00:30:00 --pty bash
 hostname
-ls -ld /home/groups/comp3710 /home/groups/comp3710/HipMRI_Study_open 2>&1
-ls -ld ~/20261017 ~/20261017_g1_stage 2>&1
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/audit_g2_train_slices.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --limit 2 \
+  --output-dir ../logs/audits/g2_slice_smoke_20261018
 ```
 
-These are small metadata checks on the login node. Confirm the active data
-root, available project storage, Python environment, and current COMP3710
-Slurm CPU allocation syntax before transfer or array decoding. Do not run
-full NIfTI decoding on the shared login node.
-
-## 2. Source transfer after checking the new names are unused
-
-On the Rangpur login shell, confirm both new names are absent and inventory
-file counts without opening NIfTI arrays:
-
-```bash
-for p in "$HOME/20261018_g1_source.zip" "$HOME/20261018_g1_stage"; do if [ -e "$p" ]; then echo "EXISTS: $p"; else echo "FREE: $p"; fi; done
-find /home/groups/comp3710/HipMRI_Study_open/semantic_MRs -maxdepth 1 -type f -name '*.nii.gz' | wc -l
-find /home/groups/comp3710/HipMRI_Study_open/semantic_labels_only -maxdepth 1 -type f -name '*.nii.gz' | wc -l
-```
-
-If both names are free, transfer the freshly generated source-only ZIP from
-a separate Windows PowerShell at `Final project`:
-
-```powershell
-scp .\20261017\code\transfer\20261017_source.zip s4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_source.zip
-```
-
-Then, in the Rangpur login shell, extract only into the new stage:
-
-```bash
-mkdir "$HOME/20261018_g1_stage"
-python -m zipfile -e "$HOME/20261018_g1_source.zip" "$HOME/20261018_g1_stage"
-ls -l "$HOME/20261018_g1_stage/20261017/code/tools/audit_train_raw.py"
-```
-
-Do not run full MRI decoding on `login0`. First confirm the course's current
-CPU Slurm allocation syntax and the new source environment. In the allocated
-CPU shell, run synthetic checks, a two-case smoke audit, then the full
-143-case raw Train audit with unique JSON outputs in `logs/audits/`. The audit
-script receives `--dataset-root` explicitly. It inventories all split
-filenames and decodes Train arrays only. G1 does not run preprocessing, GPU
-probes, or model training.
+The `--limit 2` output is a software check, not a full G2 result. Check its
+row counts and per-case voxel totals against the G1 JSON before requesting a
+longer CPU allocation for all 143 Train cases. The full output belongs in the
+existing `results/data_analysis/g2_train_summary/` group; transfer only
+approved derived CSVs to Windows for analysis. G2 makes no preprocessing,
+sampling, loss, architecture, or model-training change.

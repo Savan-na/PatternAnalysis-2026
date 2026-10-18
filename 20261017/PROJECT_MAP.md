@@ -1,6 +1,6 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 12:08:35 AEST**
+Updated / 更新时间: **2026-10-18 15:22:19 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
@@ -180,8 +180,8 @@ Directories / 目录: **47** · Files / 文件: **110**
 | `code/config/arms/baseline_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/improved_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/patient_split.json` | Frozen patient groups and expected counts; JSON fields: provenance, train, validation, test, expected_volumes | 固定患者分组与预期数量；JSON 字段：provenance, train, validation, test, expected_volumes |
-| `code/docs/EXECUTION.md` | Evidence and execution gates; Sections: Execution and evidence checklist; Evidence identity; G1: raw integrity gate; Later gates; Outputs still required | 证据与执行关口；章节标题：Execution and evidence checklist; Evidence identity; G1: raw integrity gate; Later gates; Outputs still required |
-| `code/docs/RANGPUR_COMMANDS.md` | Separate Windows and Rangpur commands; Sections: Rangpur G1 commands and terminal boundaries; 1. Read-only location check; 2. Source transfer after checking the new names are unused | 分开的 Windows 与 Rangpur 命令；章节标题：Rangpur G1 commands and terminal boundaries; 1. Read-only location check; 2. Source transfer after checking the new names are unused |
+| `code/docs/EXECUTION.md` | Evidence and execution gates; Sections: Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: current Train-only EDA gate; Later gates | 证据与执行关口；章节标题：Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: current Train-only EDA gate; Later gates |
+| `code/docs/RANGPUR_COMMANDS.md` | Separate Windows and Rangpur commands; Sections: Rangpur G2 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node | 分开的 Windows 与 Rangpur 命令；章节标题：Rangpur G2 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node |
 | `code/docs/SOURCE_DECISIONS.md` | Paper sources and implementation deviations; Sections: Paper and assignment decision register | 论文来源与实现差异；章节标题：Paper and assignment decision register |
 | `code/docs/STUDY_PROTOCOL.md` | Research hypotheses, endpoints, and freeze rules; Sections: HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints | 研究假设、终点指标与冻结规则；章节标题：HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints |
 | `code/hipmri_rewrite/__init__.py` | Six-class package constants; Definitions: module-level code | 六类别包常量；定义：module-level code |
@@ -206,7 +206,7 @@ Directories / 目录: **47** · Files / 文件: **110**
 | `code/tests/test_models_and_losses.py` | Shape, gradient, supervision and inference tests; Definitions: NetworkTests | 形状、梯度、深监督与推理测试；定义：NetworkTests |
 | `code/tests/test_raw_audit.py` | Train inventory and file-hash audit tests; Definitions: RawAuditInventoryTests | 训练集文件盘点与文件哈希审计测试；定义：RawAuditInventoryTests |
 | `code/tests/test_splits.py` | Patient isolation and file pairing tests; Definitions: PatientSplitTests | 患者隔离与文件配对测试；定义：PatientSplitTests |
-| `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：write_csv, main |
+| `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: sha256_file, write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：sha256_file, write_csv, main |
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/package_transfer.py` | Build and verify a source-only transfer ZIP; Definitions: main | 创建并校验仅含源码的传输包；定义：main |
 | `code/tools/review_g1_bladder_islands.py` | Locate and visualize two flagged Train Bladder components; Definitions: inspect_case, main | 定位并可视化两例训练集膀胱小连通区域；定义：inspect_case, main |
