@@ -1,0 +1,10 @@
+{
+  "scope": "Train-only candidate crop exposure audit; not an active training sampler",
+  "seed": 371017,
+  "patch_shape_xyz": [64, 64, 32],
+  "draws_per_case_per_arm": 10,
+  "arm_schedules": {
+    "uniform": ["uniform", "uniform", "uniform", "uniform", "uniform", "uniform", "uniform", "uniform", "uniform", "uniform"],
+    "organ_aware_candidate": ["uniform", "uniform", "uniform", "uniform", "Bladder", "Bladder", "Rectum", "Rectum", "Prostate", "Prostate"]
+  }
+}
