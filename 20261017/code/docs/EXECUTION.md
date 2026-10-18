@@ -92,6 +92,19 @@ full-epoch no-checkpoint probe was submitted as job 672837 but was still
 pending when this decision was made. Cancel that pending job before launching
 the formal epoch; do not interpret its absent log or JSON as a model failure.
 
+The user then requested one submission targeting all 40 epochs, recovery after
+each optimizer batch, immutable weights and records for every completed epoch,
+and strict resume checks. The two pending one-epoch jobs (672872, 672886)
+were cancelled before allocation. The revised trainer checkpoints `latest.pt`
+atomically after every completed batch, then writes `epoch_NNN.pt` and
+`epoch_NNN.json` on completion. The manifest records the frozen config hash,
+source hashes, software versions and dataset path; resume refuses a mismatch.
+Only the latest batch weight state is retained between epoch snapshots; the
+epoch JSON retains individual batch loss, gradient and delivered-label counts.
+An explicit `--extend-to-epochs` on resume can lengthen the horizon while
+retaining the same data, model and optimizer settings. The earlier one-epoch
+instruction above is historical and no longer the launch procedure.
+
 - G4: dry-run one scan per Train patient per epoch through the same
   downsampling, normalization and paired patch conversion that GPU training
   will use. Compare uniform and organ-aware candidates, record class hits,

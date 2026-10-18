@@ -1,7 +1,7 @@
-"""Train one frozen G5 3D arm with patient-balanced patches and Validation.
+"""Train one frozen G5 3D arm with batch recovery and epoch snapshots.
 
-This entry point refuses candidate configurations. It saves a resumable latest
-checkpoint and a best-Validation checkpoint; Test files are never decoded.
+Every completed optimizer batch atomically updates the resumable state. Each
+completed epoch keeps its own weights and record; Test files are not decoded.
 """
 
 from __future__ import annotations
@@ -10,9 +10,10 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 import socket
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 from time import perf_counter
 
@@ -37,6 +38,34 @@ def atomic_json(path: Path, value: dict) -> None:
     os.replace(temporary, path)
 
 
+def atomic_checkpoint(path: Path, state: dict) -> None:
+    """Replace only after a complete checkpoint has been written."""
+    import torch
+
+    temporary = path.with_name(path.name + ".tmp")
+    torch.save(state, temporary)
+    os.replace(temporary, path)
+
+
+def load_durable_state(run_dir: Path, map_location: str):
+    """Prefer the newest completed epoch if the latest pointer was interrupted."""
+    import torch
+
+    latest = run_dir / "latest.pt"
+    snapshots = sorted((path for path in run_dir.glob("epoch_*.pt")
+                        if path.stem[6:].isdigit()),
+                       key=lambda path: int(path.stem[6:]))
+    if not latest.exists() and not snapshots:
+        raise ValueError("No durable checkpoint exists for resume")
+    checkpoint = (torch.load(latest, map_location=map_location, weights_only=False)
+                  if latest.exists() else None)
+    completed = (torch.load(snapshots[-1], map_location=map_location, weights_only=False)
+                 if snapshots else None)
+    if completed is not None and (checkpoint is None or completed["epoch"] > checkpoint["epoch"]):
+        checkpoint = completed
+    return checkpoint, completed
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset-root", type=Path, required=True)
@@ -46,6 +75,8 @@ def main() -> None:
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--stop-after-epoch", type=int,
                         help="Stop after this completed epoch; resume later with the same config")
+    parser.add_argument("--extend-to-epochs", type=int,
+                        help="On resume only: increase the epoch horizon without changing training settings")
     parser.add_argument("--g1", type=Path,
                         default=PROJECT / "logs/audits/train_full_20261018_job671208.json")
     args = parser.parse_args()
@@ -96,6 +127,8 @@ def main() -> None:
             or config["preprocessing"]["downsample_factor_xyz"] != [2, 2, 2]
             or config["preprocessing"]["normalization"]
             != "per-volume MRI nonzero Z-score; retain zero outside"
+            or config["preprocessing"]["mask_interpolation"] != "nearest-neighbour"
+            or config["preprocessing"]["mri_interpolation"] != "linear"
             or config["preprocessing"]["train_patch_xyz"] != list(PATCH_XYZ)
             or config["objective"]["ce_fraction"] != 0.5
             or config["sampling"]["batch_size"] != 2
@@ -116,13 +149,18 @@ def main() -> None:
             or config["budget"]["total_planned_updates"]
             != config["budget"]["epochs"] * config["budget"]["updates_per_epoch"]):
         raise ValueError("G5 frozen update budget inconsistent")
+    if config["budget"].get("checkpoint_every_batches") != 1:
+        raise ValueError("G5 requires a durable checkpoint after every completed batch")
     if (config["validation"]["frequency_epochs"] < 1
             or config["budget"]["epochs"] < config["validation"]["frequency_epochs"]
             or any(not np.isfinite(weight) or weight <= 0
                    for weight in config["objective"]["ce_class_weights"])):
         raise ValueError("Invalid Validation interval, epoch budget or CE weight")
-    if args.stop_after_epoch is not None and not 1 <= args.stop_after_epoch <= config["budget"]["epochs"]:
-        parser.error("Stop epoch must fall within the frozen budget")
+    if args.stop_after_epoch is not None and args.stop_after_epoch < 1:
+        parser.error("Stop epoch must be positive")
+    if args.extend_to_epochs is not None and (
+            not args.resume or args.extend_to_epochs < config["budget"]["epochs"]):
+        parser.error("Epoch extension requires resume and cannot reduce the frozen budget")
 
     groups = discover(args.dataset_root)
     train_cases, val_cases = groups["train"], groups["validation"]
@@ -156,48 +194,95 @@ def main() -> None:
     weights = torch.tensor(config["objective"]["ce_class_weights"],
                            dtype=torch.float32, device="cuda")
 
+    source_files = {"trainer_sha256": Path(__file__),
+                    "sampling_sha256": PROJECT / "code/hipmri_rewrite/sampling.py",
+                    "data_sha256": PROJECT / "code/hipmri_rewrite/data.py",
+                    "loss_sha256": PROJECT / "code/hipmri_rewrite/losses.py",
+                    "inference_sha256": PROJECT / "code/hipmri_rewrite/inference.py",
+                    "selection_sha256": PROJECT / "code/hipmri_rewrite/training.py",
+                    "metrics_sha256": PROJECT / "code/hipmri_rewrite/metrics.py",
+                    "splits_sha256": PROJECT / "code/hipmri_rewrite/splits.py",
+                    "package_sha256": PROJECT / "code/hipmri_rewrite/__init__.py",
+                    "model_package_sha256": PROJECT / "code/hipmri_rewrite/models/__init__.py",
+                    "model_source_sha256": model_source,
+                    "model_common_sha256": common_source}
+
+    def state_at(epoch: int, next_batch: int, accumulation: dict | None,
+                 summary: dict | None = None) -> dict:
+        return {"epoch": epoch, "next_batch": next_batch,
+                "accumulation": accumulation, "summary": summary,
+                "model": args.model, "config_sha256": config_sha,
+                "model_state": model.state_dict(), "optimizer_state": optimizer.state_dict(),
+                "torch_rng_state": torch.get_rng_state(),
+                "cuda_rng_states": torch.cuda.get_rng_state_all(),
+                "numpy_rng_state": np.random.get_state(),
+                "best_score": best_score, "best_epoch": best_epoch}
+
     if args.resume:
         manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
-        if manifest["config_sha256"] != config_sha or manifest["model"] != args.model:
+        if (manifest["config_sha256"] != config_sha or manifest["model"] != args.model
+                or manifest["dataset_root"] != str(args.dataset_root.resolve())):
             raise ValueError("Resume configuration/model differs from original run")
-        source_files = {"trainer_sha256": Path(__file__),
-                        "sampling_sha256": PROJECT / "code/hipmri_rewrite/sampling.py",
-                        "data_sha256": PROJECT / "code/hipmri_rewrite/data.py",
-                        "loss_sha256": PROJECT / "code/hipmri_rewrite/losses.py",
-                        "inference_sha256": PROJECT / "code/hipmri_rewrite/inference.py",
-                        "selection_sha256": PROJECT / "code/hipmri_rewrite/training.py",
-                        "model_source_sha256": model_source,
-                        "model_common_sha256": common_source}
         if any(manifest[key] != sha256_file(path) for key, path in source_files.items()):
             raise ValueError("Resume code differs from original run")
-        checkpoint = torch.load(run_dir / "latest.pt", map_location="cuda", weights_only=False)
+        if (manifest["torch"] != str(torch.__version__)
+                or manifest["numpy"] != np.__version__
+                or manifest["python"] != sys.version):
+            raise ValueError("Resume Python/PyTorch/NumPy version differs from original run")
+        checkpoint, completed = load_durable_state(run_dir, "cuda")
         if checkpoint["config_sha256"] != config_sha or checkpoint["model"] != args.model:
             raise ValueError("Latest checkpoint configuration/model mismatch")
+        if not 0 <= checkpoint["next_batch"] <= config["budget"]["updates_per_epoch"]:
+            raise ValueError("Resume batch position is invalid")
         model.load_state_dict(checkpoint["model_state"])
         optimizer.load_state_dict(checkpoint["optimizer_state"])
         torch.set_rng_state(checkpoint["torch_rng_state"].cpu())
         torch.cuda.set_rng_state_all([state.cpu() for state in checkpoint["cuda_rng_states"]])
         np.random.set_state(checkpoint["numpy_rng_state"])
-        start_epoch = checkpoint["epoch"] + 1
+        start_epoch = checkpoint["epoch"]
+        start_batch = checkpoint["next_batch"]
+        resume_accumulation = checkpoint["accumulation"]
         best_score = checkpoint["best_score"]
         best_epoch = checkpoint["best_epoch"]
+        planned_epochs = manifest["max_epochs"]
+        if args.extend_to_epochs is not None and args.extend_to_epochs > planned_epochs:
+            manifest["max_epochs"] = args.extend_to_epochs
+            manifest.setdefault("extensions", []).append({
+                "job_id": os.environ["SLURM_JOB_ID"], "from_epoch": start_epoch,
+                "previous_max_epochs": planned_epochs,
+                "new_max_epochs": args.extend_to_epochs,
+                "reason": "explicit continuation with unchanged frozen training parameters"})
+            atomic_json(run_dir / "manifest.json", manifest)
+            planned_epochs = args.extend_to_epochs
+        if completed is not None:
+            summary_path = run_dir / f"epoch_{completed['epoch']:03d}.json"
+            if not summary_path.exists():
+                if completed["summary"] is None:
+                    raise ValueError("Completed epoch snapshot has no summary")
+                atomic_json(summary_path, completed["summary"])
+        best_path = run_dir / "best.pt"
+        best_file_epoch = (torch.load(best_path, map_location="cpu", weights_only=False)["epoch"]
+                           if best_path.exists() else None)
+        if best_epoch is not None and best_file_epoch != best_epoch:
+            source = run_dir / f"epoch_{best_epoch:03d}.pt"
+            if not source.exists():
+                raise ValueError("Best Validation epoch snapshot is missing")
+            shutil.copyfile(source, run_dir / "best.pt.tmp")
+            os.replace(run_dir / "best.pt.tmp", best_path)
     else:
         run_dir.mkdir(parents=True)
-        start_epoch, best_score, best_epoch = 0, -1.0, None
+        start_epoch, start_batch, resume_accumulation = 0, 0, None
+        best_score, best_epoch = -1.0, None
+        planned_epochs = config["budget"]["epochs"]
         atomic_json(run_dir / "manifest.json", {
             "kind": "G5_frozen_Train_Validation_cohort_run", "model": args.model,
+            "max_epochs": planned_epochs,
+            "dataset_root": str(args.dataset_root.resolve()),
             "config_sha256": config_sha, "split_sha256": sha256_file(DEFAULT_SPLIT),
             "g1_sha256": G1_SHA, "seed": seed, "job_id_initial": os.environ["SLURM_JOB_ID"],
             "gpu": torch.cuda.get_device_name(0), "torch": str(torch.__version__),
             "numpy": np.__version__, "python": sys.version,
-            "trainer_sha256": sha256_file(Path(__file__)),
-            "sampling_sha256": sha256_file(PROJECT / "code/hipmri_rewrite/sampling.py"),
-            "data_sha256": sha256_file(PROJECT / "code/hipmri_rewrite/data.py"),
-            "loss_sha256": sha256_file(PROJECT / "code/hipmri_rewrite/losses.py"),
-            "inference_sha256": sha256_file(PROJECT / "code/hipmri_rewrite/inference.py"),
-            "selection_sha256": sha256_file(PROJECT / "code/hipmri_rewrite/training.py"),
-            "model_source_sha256": sha256_file(model_source),
-            "model_common_sha256": sha256_file(common_source)})
+            **{key: sha256_file(path) for key, path in source_files.items()}})
 
     def evaluate() -> dict:
         model.eval()
@@ -222,11 +307,12 @@ def main() -> None:
         model.train()
         return result
 
-    final_epoch = args.stop_after_epoch or config["budget"]["epochs"]
+    final_epoch = args.stop_after_epoch or planned_epochs
+    if final_epoch > planned_epochs:
+        parser.error("Stop epoch exceeds the recorded training horizon")
     if final_epoch <= start_epoch:
         parser.error("Stop epoch must exceed the last completed epoch")
     for epoch in range(start_epoch, final_epoch):
-        started = perf_counter()
         model.train()
         chosen = epoch_cases(train_cases, epoch=epoch, seed=seed)
         descriptors = [(case, draw) for case in chosen
@@ -237,13 +323,34 @@ def main() -> None:
         descriptors = [descriptors[int(index)] for index in order]
         if len(descriptors) != config["budget"]["updates_per_epoch"] * 2:
             raise ValueError("Epoch patch count differs from frozen budget")
+        first_batch = start_batch if epoch == start_epoch else 0
+        prior = resume_accumulation if epoch == start_epoch else None
         recorder = ExposureRecorder()
-        train_matrix = np.zeros((6, 6), dtype=np.int64)
-        losses, gradient_norms = [], []
-        source_load_seconds = 0.0
+        if prior is not None:
+            if len(prior["batch_history"]) != first_batch:
+                raise ValueError("Saved batch history does not match resume position")
+            previous_exposure = prior["exposure"]
+            recorder.patches = previous_exposure["patches"]
+            recorder.hits = Counter({name: row["patch_hits"]
+                                     for name, row in previous_exposure["per_class"].items()})
+            recorder.voxels = Counter({name: row["patch_voxels"]
+                                       for name, row in previous_exposure["per_class"].items()})
+            recorder.by_patient = defaultdict(Counter, {
+                patient: Counter(row) for patient, row in previous_exposure["per_patient"].items()})
+        train_matrix = (np.asarray(prior["train_matrix"], dtype=np.int64)
+                        if prior is not None else np.zeros((6, 6), dtype=np.int64))
+        batch_history = list(prior["batch_history"]) if prior is not None else []
+        source_load_seconds = prior["source_load_seconds"] if prior is not None else 0.0
+        train_seconds = prior["train_seconds"] if prior is not None else 0.0
+        checkpoint_io_seconds = prior["checkpoint_io_seconds"] if prior is not None else 0.0
+        train_peak_allocated = prior["peak_allocated_bytes"] if prior is not None else 0
+        train_peak_reserved = prior["peak_reserved_bytes"] if prior is not None else 0
         torch.cuda.reset_peak_memory_stats()
-        for start in range(0, len(descriptors), 2):
+        for batch_index in range(first_batch, len(descriptors) // 2):
+            started_batch = perf_counter()
+            start = batch_index * 2
             image_arrays, mask_arrays = [], []
+            delivered_counts = Counter()
             for case, draw in descriptors[start:start + 2]:
                 load_start = perf_counter()
                 volume = train_volume(case)
@@ -251,7 +358,7 @@ def main() -> None:
                 origin = crop_origin(volume.mask, PATCH_XYZ, "uniform", seed=seed,
                                      epoch=epoch, case_id=case.identifier, draw=draw)
                 image, mask = crop_for_3d_model(volume, origin)
-                recorder.add(mask, case.patient)
+                delivered_counts.update(recorder.add(mask, case.patient))
                 image_arrays.append(image)
                 mask_arrays.append(mask)
             x = torch.from_numpy(np.ascontiguousarray(np.stack(image_arrays))).to("cuda")
@@ -272,14 +379,36 @@ def main() -> None:
                 encoded = (6 * y + logits.argmax(dim=1)).reshape(-1)
                 matrix = torch.bincount(encoded, minlength=36).reshape(6, 6)
             train_matrix += matrix.cpu().numpy()
-            losses.append(float(loss.item()))
-            gradient_norms.append(float(norm.item()))
-        torch.cuda.synchronize()
-        train_seconds = perf_counter() - started
-        train_peak_allocated = int(torch.cuda.max_memory_allocated())
-        train_peak_reserved = int(torch.cuda.max_memory_reserved())
-        del x, y, logits, loss
+            loss_value, norm_value = float(loss.item()), float(norm.item())
+            torch.cuda.synchronize()
+            train_seconds += perf_counter() - started_batch
+            train_peak_allocated = max(train_peak_allocated, int(torch.cuda.max_memory_allocated()))
+            train_peak_reserved = max(train_peak_reserved, int(torch.cuda.max_memory_reserved()))
+            batch_history.append({"batch": batch_index + 1, "loss": loss_value,
+                                  "gradient_norm_l2": norm_value,
+                                  "delivered_voxels": dict(delivered_counts)})
+            accumulation = {"batch_history": batch_history,
+                            "train_matrix": train_matrix.tolist(),
+                            "exposure": recorder.summary(),
+                            "source_load_seconds": source_load_seconds,
+                            "train_seconds": train_seconds,
+                            "checkpoint_io_seconds": checkpoint_io_seconds,
+                            "peak_allocated_bytes": train_peak_allocated,
+                            "peak_reserved_bytes": train_peak_reserved}
+            save_started = perf_counter()
+            atomic_checkpoint(run_dir / "latest.pt",
+                              state_at(epoch, batch_index + 1, accumulation))
+            checkpoint_io_seconds += perf_counter() - save_started
+            accumulation["checkpoint_io_seconds"] = checkpoint_io_seconds
+            if (batch_index + 1) % 10 == 0 or batch_index + 1 == len(descriptors) // 2:
+                print(f"{args.model} epoch {epoch + 1}: saved batch {batch_index + 1}/"
+                      f"{len(descriptors) // 2}, loss={loss_value:.5f}", flush=True)
+            del x, y, logits, loss
         optimizer.zero_grad(set_to_none=True)
+        if len(batch_history) != config["budget"]["updates_per_epoch"]:
+            raise ValueError("Epoch does not contain all frozen optimizer batches")
+        losses = [row["loss"] for row in batch_history]
+        gradient_norms = [row["gradient_norm_l2"] for row in batch_history]
         exposure = recorder.summary()
         expected_patients = config["train_patients"]
         expected_patches = config["sampling"]["patches_per_patient_epoch"]
@@ -303,6 +432,7 @@ def main() -> None:
                    "selected_cases": [case.identifier for case in chosen],
                    "train": {"mean_loss": float(np.mean(losses)),
                              "loss_last": losses[-1],
+                             "batch_history": batch_history,
                              "mean_gradient_norm_l2": float(np.mean(gradient_norms)),
                              "max_gradient_norm_l2": max(gradient_norms),
                              "confusion": train_matrix.tolist(),
@@ -310,32 +440,31 @@ def main() -> None:
                              "exposure": exposure,
                              "learning_rate": optimizer.param_groups[0]["lr"],
                              "source_load_seconds": source_load_seconds,
-                             "epoch_seconds": train_seconds,
+                             "train_seconds": train_seconds,
+                             "checkpoint_io_seconds": checkpoint_io_seconds,
+                             "epoch_seconds": train_seconds + checkpoint_io_seconds,
                              "peak_allocated_bytes": train_peak_allocated,
                              "peak_reserved_bytes": train_peak_reserved},
                    "validation": validation, "best_score": best_score,
                    "best_epoch": best_epoch}
-        checkpoint = {"epoch": epoch, "model": args.model,
-                      "config_sha256": config_sha, "model_state": model.state_dict(),
-                      "optimizer_state": optimizer.state_dict(),
-                      "torch_rng_state": torch.get_rng_state(),
-                      "cuda_rng_states": torch.cuda.get_rng_state_all(),
-                      "numpy_rng_state": np.random.get_state(),
-                      "best_score": best_score, "best_epoch": best_epoch}
+        epoch_path = run_dir / f"epoch_{epoch + 1:03d}.pt"
+        if epoch_path.exists():
+            raise ValueError(f"Immutable epoch snapshot already exists: {epoch_path}")
+        atomic_checkpoint(epoch_path, state_at(epoch + 1, 0, None, summary))
+        atomic_json(run_dir / f"epoch_{epoch + 1:03d}.json", summary)
         if improved:
             temporary = run_dir / "best.pt.tmp"
-            torch.save(checkpoint, temporary)
+            shutil.copyfile(epoch_path, temporary)
             os.replace(temporary, run_dir / "best.pt")
         temporary = run_dir / "latest.pt.tmp"
-        torch.save(checkpoint, temporary)
+        shutil.copyfile(epoch_path, temporary)
         os.replace(temporary, run_dir / "latest.pt")
-        atomic_json(run_dir / f"epoch_{epoch + 1:03d}.json", summary)
         prostate_dice = train_overlap["dice"][5]
         prostate_text = "NA" if prostate_dice is None else f"{prostate_dice:.4f}"
-        message = (f"{args.model} epoch {epoch + 1}/{config['budget']['epochs']}: "
+        message = (f"{args.model} epoch {epoch + 1}/{planned_epochs}: "
                    f"Train loss={summary['train']['mean_loss']:.5f}, "
                    f"Prostate patch Dice={prostate_text}, "
-                   f"Train seconds={train_seconds:.1f}")
+                   f"Train + checkpoint seconds={train_seconds + checkpoint_io_seconds:.1f}")
         if validation is not None:
             message += f", Validation selection={validation['selection_score']:.4f}"
         print(message, flush=True)

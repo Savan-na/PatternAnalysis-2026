@@ -33,7 +33,8 @@
     "weight_source_scope": "G4 Train-only patient-uniform Patch exposure; tiny-patch diagnostic support"
   },
   "optimizer": {"name": "Adam", "learning_rate": 0.001, "weight_decay": 0.0},
-  "budget": {"epochs": 40, "updates_per_epoch": 130, "total_planned_updates": 5200},
+  "budget": {"epochs": 40, "updates_per_epoch": 130, "total_planned_updates": 5200,
+             "checkpoint_every_batches": 1},
   "validation": {
     "frequency_epochs": 5,
     "grid": "preprocessed XYZ grid with model padding removed",
@@ -45,6 +46,6 @@
   "training_log": ["total_loss", "per_class_patch_dice", "per_class_patch_recall",
                    "per_class_prediction_counts", "actual_patch_class_exposure",
                    "learning_rate", "gradient_norm", "peak_gpu_memory", "epoch_runtime"],
-  "checkpoint_rule": "save best Validation score and latest resumable state; no Test use",
+  "checkpoint_rule": "atomically save resumable model and optimizer state after every completed batch; preserve each completed epoch and best Validation checkpoint; no Test use",
   "freeze_basis": "G1-G4 Train-only audits, G5 two-patient paired GPU smoke and full-volume GPU inference probe; first formal epoch supplies runtime and resumable weights"
 }

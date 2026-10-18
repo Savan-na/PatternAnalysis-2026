@@ -611,3 +611,20 @@ uniform plus two targeted draws for each small organ. The audit must run on
 Rangpur CPU and its measured exposure be reviewed before freezing a 2D
 training policy or spending GPU time. The 2D arm will remain a supplementary
 comparison because its receptive context differs from the 3D arms.
+
+### G5 recovery and storage revision
+
+At the user's request, pending one-epoch Standard/Improved jobs 672872 and
+672886 were cancelled before allocation. No cohort model weights resulted.
+The frozen 40-epoch protocol now requests an atomic recovery checkpoint after
+every completed optimizer batch and keeps separate weights and detailed
+metrics for each completed epoch. It also verifies the config, split, source
+code, software versions and dataset root before resuming; an explicit future
+epoch-horizon extension leaves the other training settings unchanged. The
+per-batch checkpoint frequency increases shared-storage writes and may lengthen
+training. `latest.pt` retains the most recent completed batch and is replaced
+on each update; all completed epochs keep immutable `.pt` snapshots and
+per-batch metrics in their `.json` records. Archiving every one of the 5,200
+batch weight states for both models would exceed the current home-directory
+quota. These are implementation provisions, not yet evidence that a 40-epoch
+job has completed or that Validation quality improved.

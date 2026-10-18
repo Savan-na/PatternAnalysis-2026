@@ -561,3 +561,12 @@ hashes against local files. The first formal command is the trainer with
 Run the Improved arm with the same config and its own new directory; resume
 both with `--resume` to the frozen budget. Validation first occurs at epoch 5,
 and Test remains untouched during training and selection.
+
+The pending one-epoch jobs 672872 and 672886 were subsequently cancelled.
+The revised frozen configuration requires one atomic recovery checkpoint per
+completed optimizer batch and an immutable snapshot for each epoch. For a new
+40-epoch job, omit `--stop-after-epoch`; `--resume` continues from the latest
+saved batch if a Slurm time limit interrupts it. Verify the new script/config
+hashes before submission. Request a walltime allowed by both partition and
+QoS; `MaxTime=UNLIMITED` at the partition does not prove a particular job can
+run forever or start promptly.
