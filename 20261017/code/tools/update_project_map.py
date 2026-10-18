@@ -67,6 +67,7 @@ ROLES = {
     "audit_g3_candidate_sampling.py": ("Compare fixed Train-only uniform and organ-aware candidate crops", "比较固定的训练集均匀与器官感知候选裁剪"),
     "audit_g4_patient_sampling.py": ("Dry-run patient-balanced model-ready Train patches on CPU", "在 CPU 上预演患者均衡的训练模型输入 Patch"),
     "probe_g5_patch_gpu.py": ("Measure both 3D models' real Train patch gradients and A100 memory", "测量两个 3D 模型真实训练 Patch 的梯度和 A100 显存"),
+    "tiny_overfit_g5.py": ("Check both 3D models can learn two fixed Train patches on GPU", "检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch"),
     "summarize_g4_patient_sampling.py": ("Verify G4 tensor dry run and summarize class/patient exposure", "核验 G4 张量预演并汇总类别及患者曝光"),
     "summarize_g3_candidate_sampling.py": ("Verify full candidate patch records and summarize exposure", "核验完整候选 Patch 记录并汇总曝光"),
     "g3_patch_audit.json": ("Frozen candidate-crop audit design, not a training configuration", "固定的候选裁剪审计设计，非训练配置"),

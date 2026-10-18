@@ -86,6 +86,10 @@ exposure, and cannot establish model performance without later Validation.
   forward/backward time and peak allocated/reserved memory with the same
   provisional objective. Its success is a capacity result only; freeze the
   actual objective and training budget after reviewing it.
+- Check learnability on two fixed Train patches including Rectum and Prostate
+  before any full run. Log initial and later loss, each organ's Dice, recall
+  and prediction count. This temporary optimizer run saves no checkpoint;
+  learning on two patches is a correctness gate, not generalization evidence.
 - Check both primary 3D models' forward and backward passes, then a few-case
   Train-only overfit including prostate and rectum.
 

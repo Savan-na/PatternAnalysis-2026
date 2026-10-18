@@ -83,3 +83,7 @@ two primary 3D arms. It builds a real, uniform-crop batch through the verified
 data path, checks the shared provisional CE+Dice forward/backward objective,
 and records gradient and memory results. It makes no optimizer step and saves
 no checkpoint; its outcome informs a later frozen training configuration.
+`tools/tiny_overfit_g5.py` then makes a bounded number of optimizer steps on
+two fixed Train patches containing Rectum and Prostate. It records fixed-batch
+loss, per-class Dice/recall and prediction counts for both 3D arms, and saves
+no model weights. This is a learning-correctness gate, not a Validation result.

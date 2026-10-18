@@ -388,9 +388,19 @@ post-augmentation class exposure still needs to be logged during training.
 No restarted model has been trained. G1–G4 are data and pipeline measurements,
 not segmentation performance comparisons.
 
-The G5 real-Train-patch GPU feasibility script is prepared but has not run on
-an allocated A100. Its provisional shared CE+foreground-Dice objective is a
-probe setting, not a selected training-loss result.
+The G5 real-Train-patch GPU probe ran as Rangpur A100 job `672173` on
+`B006_Week0`, batch size two, input `2×1×32×64×64`, with the same provisional
+half unweighted-CE plus half foreground-Dice objective for both models. The
+returned JSON SHA-256 matched Rangpur:
+`f8d2a059d31f5d50302399dd8e92d1218c6159352775545f5f02b38ceee651eb`.
+Both outputs were `2×6×32×64×64`; all parameter gradients were present,
+finite and nonzero. Standard 3D U-Net used 0.157 GiB peak allocated GPU memory
+and Improved 3D U-Net used 0.255 GiB, against a 40 GiB A100. Their one-off
+forward/backward times were 9.27 and 0.90 seconds. The first run may include
+CUDA/cuDNN initialization, so these are capacity timings, not a fair latency
+comparison. No optimizer step or checkpoint was produced. A fixed Train-patch
+learning test is still needed before full training; the probe loss is not a
+Validation score or a selected training objective.
 
 ## Failure Analysis
 

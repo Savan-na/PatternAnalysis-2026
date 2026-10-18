@@ -267,3 +267,40 @@ SBATCH
 The `.out` file identifies the allocated node and both model measurements.
 The JSON is a capacity record, not a model checkpoint. Do not run the CUDA
 workload directly on login0.
+
+GPU probe job `672173` completed on `a100-a`. The JSON at
+`logs/profiles/g5_patch_probe_20261018.json` has SHA-256
+`f8d2a059d31f5d50302399dd8e92d1218c6159352775545f5f02b38ceee651eb`.
+Both 3D models produced finite losses and gradients at batch size two; see
+the formal research report for interpretation. Their first-run timings are
+not a controlled speed comparison.
+
+## G5 two-patch learning check
+
+Transfer `code/tools/tiny_overfit_g5.py` from Windows PowerShell at
+`Final project` to the existing staged Rangpur code directory, then confirm
+its SHA-256. The check takes optimizer steps on two fixed *Train* patches and
+saves metrics only, not weights. After verifying the output path is unused,
+submit on the same A100 test partition:
+
+```bash
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_tiny_overfit_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/tiny_overfit_g5.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id B006_Week0 --steps 100 \
+  --output ../logs/profiles/g5_tiny_overfit_20261018.json
+SBATCH
+```
+
+Review initial/final fixed-batch loss, Rectum and Prostate Dice/recall and
+predicted voxel counts before planning a full training run. The result shows
+only whether these two patches are learnable under the temporary objective.

@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 17:48:45 AEST**
+Updated / 更新时间: **2026-10-18 17:55:24 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **51** · Files / 文件: **147**
+Directories / 目录: **51** · Files / 文件: **149**
 
 ## Directory Tree / 目录树
 
@@ -70,6 +70,7 @@ Directories / 目录: **51** · Files / 文件: **147**
 │   │   ├── summarize_g3_candidate_sampling.py
 │   │   ├── summarize_g3_pipeline.py
 │   │   ├── summarize_g4_patient_sampling.py
+│   │   ├── tiny_overfit_g5.py
 │   │   └── update_project_map.py
 │   ├── transfer/
 │   │   └── 20261017_source.zip
@@ -91,6 +92,7 @@ Directories / 目录: **51** · Files / 文件: **147**
 │   │   ├── map_watcher_stdout.txt
 │   │   └── project_map_watcher.pid
 │   ├── profiles/
+│   │   └── g5_patch_probe_20261018.json
 │   ├── training/
 │   │   ├── baseline_2d/
 │   │   ├── baseline_3d/
@@ -266,6 +268,7 @@ Directories / 目录: **51** · Files / 文件: **147**
 | `code/tools/summarize_g3_candidate_sampling.py` | Verify full candidate patch records and summarize exposure; Definitions: sha256_file, write_csv, main | 核验完整候选 Patch 记录并汇总曝光；定义：sha256_file, write_csv, main |
 | `code/tools/summarize_g3_pipeline.py` | Definitions: verified_json, main | 定义：verified_json, main |
 | `code/tools/summarize_g4_patient_sampling.py` | Verify G4 tensor dry run and summarize class/patient exposure; Definitions: sha256_file, write_csv, main | 核验 G4 张量预演并汇总类别及患者曝光；定义：sha256_file, write_csv, main |
+| `code/tools/tiny_overfit_g5.py` | Check both 3D models can learn two fixed Train patches on GPU; Definitions: sha256_file, measure, main | 检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch；定义：sha256_file, measure, main |
 | `code/tools/update_project_map.py` | Generate and watch this bilingual inventory; Definitions: _files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main | 生成并持续更新本双语目录；定义：_files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main |
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |
 | `logs/audits/g1_train_contact_sheets_20261018.json` | JSON fields: scope, screen, patients | JSON 字段：scope, screen, patients |
@@ -278,6 +281,7 @@ Directories / 目录: **51** · Files / 文件: **147**
 | `logs/internal/map_watcher_stderr.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/map_watcher_stdout.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/project_map_watcher.pid` | UTF-8 text with 1 lines; 7 bytes | UTF-8 文本，1 行；7 字节 |
+| `logs/profiles/g5_patch_probe_20261018.json` | JSON fields: batch_size, case, cuda_build, data_code_sha256, gpu, gpu_total_bytes, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy | JSON 字段：batch_size, case, cuda_build, data_code_sha256, gpu, gpu_total_bytes, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy |
 | `logs/README.md` | Entry point or directory guide; Sections: Experiment Logs | 项目入口或目录说明；章节标题：Experiment Logs |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
 | `README.md` | Entry point or directory guide; Sections: HipMRI Data-Driven Model Development; Where things belong | 项目入口或目录说明；章节标题：HipMRI Data-Driven Model Development; Where things belong |
