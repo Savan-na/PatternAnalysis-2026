@@ -1,6 +1,6 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 10:37:27 AEST**
+Updated / 更新时间: **2026-10-18 10:39:43 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
@@ -119,7 +119,7 @@ Directories / 目录: **42** · Files / 文件: **53**
 | `code/config/arms/improved_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/patient_split.json` | Frozen patient groups and expected counts; JSON fields: provenance, train, validation, test, expected_volumes | 固定患者分组与预期数量；JSON 字段：provenance, train, validation, test, expected_volumes |
 | `code/docs/EXECUTION.md` | Evidence and execution gates; Sections: Execution and evidence checklist; Evidence identity; G1: raw integrity gate; Later gates; Outputs still required | 证据与执行关口；章节标题：Execution and evidence checklist; Evidence identity; G1: raw integrity gate; Later gates; Outputs still required |
-| `code/docs/RANGPUR_COMMANDS.md` | Separate Windows and Rangpur commands; Sections: Rangpur G1 commands and terminal boundaries; 1. Read-only location check; 2. Pending confirmed paths | 分开的 Windows 与 Rangpur 命令；章节标题：Rangpur G1 commands and terminal boundaries; 1. Read-only location check; 2. Pending confirmed paths |
+| `code/docs/RANGPUR_COMMANDS.md` | Separate Windows and Rangpur commands; Sections: Rangpur G1 commands and terminal boundaries; 1. Read-only location check; 2. Source transfer after checking the new names are unused | 分开的 Windows 与 Rangpur 命令；章节标题：Rangpur G1 commands and terminal boundaries; 1. Read-only location check; 2. Source transfer after checking the new names are unused |
 | `code/docs/SOURCE_DECISIONS.md` | Paper sources and implementation deviations; Sections: Paper and assignment decision register | 论文来源与实现差异；章节标题：Paper and assignment decision register |
 | `code/docs/STUDY_PROTOCOL.md` | Research hypotheses, endpoints, and freeze rules; Sections: HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints | 研究假设、终点指标与冻结规则；章节标题：HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints |
 | `code/hipmri_rewrite/__init__.py` | Six-class package constants; Definitions: module-level code | 六类别包常量；定义：module-level code |
@@ -147,7 +147,7 @@ Directories / 目录: **42** · Files / 文件: **53**
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/package_transfer.py` | Build and verify a source-only transfer ZIP; Definitions: main | 创建并校验仅含源码的传输包；定义：main |
 | `code/tools/update_project_map.py` | Generate and watch this bilingual inventory; Definitions: _files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main | 生成并持续更新本双语目录；定义：_files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main |
-| `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 64 members; 49,355 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 64 个成员；49,355 字节 |
+| `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 64 members; 49,651 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 64 个成员；49,651 字节 |
 | `logs/internal/map_watcher_stderr.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/map_watcher_stdout.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/project_map_watcher.pid` | UTF-8 text with 1 lines; 7 bytes | UTF-8 文本，1 行；7 字节 |
