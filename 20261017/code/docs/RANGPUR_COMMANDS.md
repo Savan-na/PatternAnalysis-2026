@@ -43,3 +43,33 @@ longer CPU allocation for all 143 Train cases. The full output belongs in the
 existing `results/data_analysis/g2_train_summary/` group; transfer only
 approved derived CSVs to Windows for analysis. G2 makes no preprocessing,
 sampling, loss, architecture, or model-training change.
+
+## Full Train run after the smoke check
+
+Starting from the smoke run's compute shell, exit to `login0` and request a
+fresh one-hour CPU allocation:
+
+```bash
+exit
+srun --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=01:00:00 --pty bash
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+out_dir="$HOME/20261018_g1_stage/20261017/results/data_analysis/g2_train_summary"
+if [ -e "$out_dir/per_slice_class_coverage.csv" ] || [ -e "$out_dir/per_volume_intensity_histogram.csv" ]; then
+  echo "Full G2 CSV destination already exists; inspect it before rerunning"
+  exit 1
+fi
+python -B tools/audit_g2_train_slices.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --output-dir "$out_dir"
+wc -l "$out_dir/per_slice_class_coverage.csv" "$out_dir/per_volume_intensity_histogram.csv"
+sha256sum "$out_dir/per_slice_class_coverage.csv" "$out_dir/per_volume_intensity_histogram.csv"
+```
+
+Stop if either destination CSV already exists. A complete run should create
+18,320 slice records and 17,160 intensity-bin records, plus one header row in
+each CSV. Transfer these two derived CSVs to the local folder of the same name
+only after the full run passes; then reconcile class totals with G1 and add
+plots and findings to the formal report.

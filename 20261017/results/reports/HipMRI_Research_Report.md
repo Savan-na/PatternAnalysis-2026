@@ -94,6 +94,13 @@ This first pass does not include per-slice class exposure, voxel-level MRI
 histograms, longitudinal registration, boundary contrast measurements, or
 actual post-transform patches. Those require a further Train-only Rangpur CPU
 analysis and the G3 data-pipeline audit. G2 is therefore still in progress.
+The G2 slice-audit smoke run on Rangpur CPU node `vcpu-2` (Slurm job `671819`)
+processed `B006_Week0` and `B006_Week1`. It emitted 256 axial-slice rows and
+240 ten-unit intensity-bin rows, matching two 128-slice volumes and 120 bins
+per volume. The transferred script SHA-256 was
+`ee45d5cd146710e67649e98f5f82bb130ae8bfd875a6cba66062f2165f434b05`.
+The script checks the G1 source-file hashes and per-case class totals before
+writing. This is a two-case software check, not a complete G2 distribution.
 The original plan also names `recognition/hipmri_paper_reproduction/` as the
 older model-source location. That path is absent from the current checkout;
 the historical Baseline–V4 artifact inventory and final model-source location
