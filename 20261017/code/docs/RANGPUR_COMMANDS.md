@@ -604,3 +604,10 @@ submission script verifies hashes, runs a CPU config/recovery check, then
 queues the optional 40-epoch A100 job on success. It does not modify the
 completed 3D runs. The 2D run's Validation score is separate from the
 architecture-controlled 3D comparison.
+
+The first 2D CPU check (673901) failed because the staged checkout lacked
+`tests/test_sampling_2d.py`; its dependent GPU job 673902 never started and
+was cancelled. After transferring the missing test, CPU check 673907 passed
+and formal A100 job 673908 started. The first epoch completed with durable
+batch and epoch records. This is an ongoing training run, not a completed
+Validation or Test result.

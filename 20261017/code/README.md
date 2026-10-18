@@ -103,3 +103,8 @@ separate checkpointed runner; its Validation uses whole-volume slice-wise
 inference, and it never reads Test arrays during training.
 `tools/submit_g5_2d.sh` verifies transferred files and gates the A100 job on
 a CPU recovery and frozen-config check.
+
+`tools/summarize_g5_validation.py` reads the two completed 3D runs' local
+epoch JSON records, independently checks each Train and Validation summary,
+and draws the comparison figure in `results/figures/comparisons/`. It uses
+derived run records only and does not open held-out Test data.

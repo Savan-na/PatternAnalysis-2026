@@ -25,7 +25,10 @@ The earlier mixed-source analysis is archived beside it. The
 three G1 image groups, a G2 Train summary and a G3 preprocessing group, each
 with a short README beside its figures.
 
-No restarted-model result exists yet. Generated artifacts and
+The restarted Standard and Improved 3D arms have completed their 40-epoch
+Train runs, and their Validation comparison figure is under
+[`figures/comparisons/`](figures/comparisons/README.md). The supplementary
+2D arm is training; Test results are pending. Generated artifacts and
 medical-derived PNGs stay in ignored subdirectories unless course and data
 licence requirements allow inclusion in the final submission. Historical
 Baseline–V4 plots or scores are background evidence, not results of this

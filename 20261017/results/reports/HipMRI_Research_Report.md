@@ -540,10 +540,65 @@ candidate configuration, and its first epoch will save a resumable checkpoint
 once the protocol is frozen; the one-epoch budget probe remains the final
 disposable run in this sequence.
 
+### G5 controlled 3D Validation results — 19 October 2026
+
+The Standard run (`672954`) and Improved run (`672955`) each contain 40
+complete epoch JSON records. Every epoch records 130 optimizer batches and
+260 delivered patches across 26 Train patients. Both manifests cite the
+same frozen config SHA-256
+`e5bd98a99213f4fe6cf6e3e8c6db3b95d5ef334a143a91444426d8ea019923ce`.
+The local review independently recomputed every saved Validation confusion
+matrix, per-class overlap, patient score, eight five-epoch selection points,
+and the selected epoch. Both `best.pt` files exist on Rangpur; checkpoint
+bytes have not been copied to the local repository.
+
+| Validation measure at selected epoch 30 | Standard 3D | Improved 3D |
+| --- | ---: | ---: |
+| Patient-balanced small-organ selection score | **0.8413** | 0.8325 |
+| Pooled Background Dice | 0.9961 | 0.9638 |
+| Pooled Body Dice | 0.9720 | 0.9266 |
+| Pooled Bones Dice | 0.8268 | **0.8490** |
+| Pooled Bladder Dice | 0.9297 | **0.9379** |
+| Pooled Rectum Dice | **0.7865** | 0.7404 |
+| Pooled Prostate Dice | **0.8321** | 0.8146 |
+
+The selection score weights six Validation patients equally and averages
+their Bladder, Rectum and Prostate Dice. The pooled Dice rows instead combine
+all 38 Validation volume confusion matrices before calculating overlap;
+they are different aggregation rules. Standard leads the predeclared 3D
+selection criterion by 0.0089. This is a modest difference on six patients,
+not evidence of a statistically established architecture benefit. The
+[Train and Validation figure](../figures/comparisons/g5_3d_validation.svg)
+shows all 40 Train epochs and the eight Validation observations.
+
+| Organ, pooled Validation | Standard precision / recall | Improved precision / recall |
+| --- | ---: | ---: |
+| Bladder | 0.8973 / 0.9646 | 0.9187 / 0.9580 |
+| Rectum | 0.7192 / 0.8677 | 0.6151 / 0.9296 |
+| Prostate | 0.7921 / 0.8763 | 0.7310 / 0.9198 |
+
+Improved has greater pooled Rectum and Prostate recall, with lower precision.
+Its predicted-to-GT voxel ratio is 1.511 for Rectum and 1.258 for Prostate,
+compared with 1.207 and 1.106 for Standard. These counts suggest more
+over-segmentation; spatial overlays are needed to locate the extra voxels.
+No Test metrics were consulted.
+
 ## Failure Analysis
 
-Pending model experiments. G1 raw-data findings and visual-screen limits are
-recorded under Problems Identified above.
+At selected epoch 30, neither 3D model entirely omitted Rectum or Prostate
+in any of the 38 Validation volumes. That narrows the old missing-organ
+hypothesis under the current combined preprocessing, patient sampling and
+weighted objective; it does not isolate which change caused the improvement.
+
+Improved Rectum Dice was 0.331 on `K018_Week3` and 0.334 on `K018_Week2`.
+For `K018_Week3`, it predicted 3,850 Rectum voxels against 1,134 GT voxels;
+2,820 predicted Rectum voxels belonged to GT Background. The patient's
+visit-pooled Rectum Dice was 0.538 for Improved versus 0.746 for Standard.
+These are candidates for Validation MRI/GT/prediction overlays and spatial
+boundary review. Standard's lowest Prostate case Dice was 0.643 on
+`S022_Week6`, followed by 0.693 on `S022_Week2`. The confusion summaries
+cannot distinguish displacement from boundary errors or yield HD95; those
+require full-resolution predictions and physical-grid evaluation.
 
 ## Conclusions
 
@@ -665,4 +720,11 @@ organ-aware 2D sampling policy, but it does not prove improved Validation
 quality; oversampling could raise false positives. The separate frozen 2D
 config derives its weighted CE coefficients from these Train-only delivered
 voxel shares and retains whole-volume patient-balanced Validation selection.
-No 2D model has yet been trained.
+Supplementary 2D training job 673908 later started on A100 after its CPU
+check passed. Its first epoch completed, and it entered epoch two. The
+initial Prostate Train patch Dice of 0.0016 is an early optimization signal,
+not a Validation outcome; model selection waits for the planned five-epoch
+evaluations. Among the two completed 3D arms, Standard currently leads the
+frozen patient-balanced Validation criterion and is the provisional 3D
+checkpoint choice. Qualitative Validation review and held-out Test remain
+pending.
