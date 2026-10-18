@@ -552,6 +552,16 @@ matrix, per-class overlap, patient score, eight five-epoch selection points,
 and the selected epoch. Both `best.pt` files exist on Rangpur; checkpoint
 bytes have not been copied to the local repository.
 
+Across the 40 completed epochs, the two 3D arms received exactly the same
+selected Train visits and the same recorded class exposure in every epoch:
+10,400 patches per arm. Bladder, Rectum and Prostate appeared in 8,962
+(86.2%), 9,557 (91.9%) and 9,987 (96.0%) patches, respectively. Their
+delivered voxel shares were 2.582%, 0.756% and 0.646%. This directly checks
+the actual optimizer input and makes frequent complete absence of Prostate
+from 3D patches an unlikely explanation for remaining errors. Its small voxel
+share and imperfect spatial context remain relevant; exposure alone cannot
+prove why a model succeeds or fails.
+
 | Validation measure at selected epoch 30 | Standard 3D | Improved 3D |
 | --- | ---: | ---: |
 | Patient-balanced small-organ selection score | **0.8413** | 0.8325 |
@@ -762,6 +772,13 @@ organ-aware sampling and separate Train-derived class weights, so its quality
 gap from the paired 3D arms cannot be attributed to architecture alone. The
 separate 2D learning figure is in `results/figures/baseline_2d/`; no 2D Test
 result has been generated.
+
+The actual 2D optimizer input across 40 epochs contained 10,400 crops.
+Bladder, Rectum and Prostate appeared in 5,144 (49.5%), 6,830 (65.7%) and
+4,374 (42.1%) crops; their delivered voxel shares were 3.514%, 1.095% and
+0.895%. This confirms substantial Prostate exposure beyond the original raw
+slice prevalence, but also shows that most 2D crops did not contain it. The
+2D crop and 3D patch voxel shares use different spatial units and contexts.
 
 ### G6 Test evaluation gate
 
