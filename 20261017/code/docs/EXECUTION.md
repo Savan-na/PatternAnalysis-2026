@@ -27,7 +27,7 @@ Rangpur G2 commands are maintained in [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.md)
   conflicting header transforms for review rather than silently correcting
   them.
 
-## G2: current Train-only EDA gate
+## G2: completed Train-only raw EDA gate
 
 - Reconcile the derived class, patient, volume, intensity and spacing tables
   with the complete G1 JSON. Keep historical statistics distinct from the
@@ -38,6 +38,19 @@ Rangpur G2 commands are maintained in [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.md)
 - Review organ-size and longitudinal differences, boundary contrast where
   measurable, and the limits of selected visual overlays. Record supported,
   excluded and unresolved hypotheses before entering G3.
+
+## G3: current existing-pipeline diagnosis
+
+- Audit the actual implemented Train path: `load_case`, factor-two
+  `downsample`, `zscore_nonzero`, and whole-volume `to_3d_model_arrays`.
+  Record label counts, physical organ volumes, axial-slice coverage, image
+  finiteness, normalized nonzero mean/std and padded-background voxels.
+- Use a two-case Rangpur CPU smoke run before the full 143-case audit. Preserve
+  the G1 source hashes and frozen patient split; do not process Validation/Test
+  label distributions for these decisions.
+- The restart currently has no ROI crop, augmentation, Patch Sampler or formal
+  training loop. Specify and freeze a candidate sampler before measuring its
+  patch exposure. Do not present raw-slice presence as a patch-hit rate.
 
 ## Later gates
 

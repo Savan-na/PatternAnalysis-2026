@@ -154,8 +154,8 @@ but no normalization rule has been selected yet. Raw class, slice, intensity,
 spacing, organ-size, position and visit-level statistics now provide enough
 Train-only evidence to enter G3 pipeline diagnosis. Boundary contrast remains
 unmeasured and will be revisited if later errors are boundary-dominated. G3
-must measure post-transform organ survival and actual training-patch exposure
-before choosing an intervention.
+must measure post-transform organ survival. Actual training-patch exposure
+cannot be measured until the restart's sampler is identified or specified.
 The original plan also names `recognition/hipmri_paper_reproduction/` as the
 older model-source location. That path is absent from the current checkout;
 the historical Baseline–V4 artifact inventory and final model-source location
@@ -177,7 +177,7 @@ section-level evidence without claiming expert verification of every boundary.
 | Severe global minority-class imbalance | Supported by raw Train voxel counts |
 | Patient and visit-level organ variation | Supported by per-patient shares and physical-volume ranges |
 | Small organs occupy limited axial sections | Supported by the full Train slice audit |
-| Insufficient exposure in actual training patches | Unresolved until G3 samples the current pipeline |
+| Insufficient exposure in actual training patches | Unresolved; the current restart code has no Patch Sampler |
 | Boundary contrast explains segmentation failure | Unresolved; no current model-error or boundary-contrast test isolates it |
 
 ### G1 visual review — 18 October 2026
@@ -284,4 +284,8 @@ spacing, organ-size, normalized position and visit-level variation. These
 results support global class imbalance and limited raw axial coverage for
 Prostate and Rectum. They do not measure actual training-patch exposure or
 establish the cause of model failure. G3 should audit the existing
-preprocessing and sampler before selecting a change.
+preprocessing before selecting a change. The current `20261017` code provides
+paired loading, factor-two downsampling, nonzero-voxel Z-score and whole-volume
+tensor conversion, but no implemented ROI crop, augmentation, Patch Sampler or
+formal training loop. The old project's sampling design must be recovered or
+a new strategy specified and frozen before its exposure can be audited.

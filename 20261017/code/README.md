@@ -51,3 +51,7 @@ exporting axial-slice coverage and nonzero MRI intensity histograms. Use
 `tools/summarize_g2_slice_detail.py` verifies the transferred full-run CSV
 hashes and reconciles every case with G1 before generating local slice and
 pooled-intensity figures. It does not interpret slice presence as patch exposure.
+`tools/audit_g3_existing_pipeline.py` audits the existing Train-only path from
+raw volumes through factor-two downsampling, nonzero Z-score and whole-volume
+model arrays. It checks class, physical-volume and axial-slice preservation,
+normalization and padding without defining a new sampler.
