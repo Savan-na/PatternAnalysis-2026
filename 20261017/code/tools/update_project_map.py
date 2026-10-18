@@ -84,6 +84,7 @@ ROLES = {
     "audit_g5_2d_sampling.py": ("CPU audit of patient-balanced uniform and organ-aware 2D slice exposure", "在 CPU 审计按患者均衡的 2D 均匀及器官感知切片曝光"),
     "test_sampling_2d.py": ("2D crop target, bounds and MRI/mask alignment checks", "核验 2D 裁剪目标、边界和影像标签对齐"),
     "test_training_recovery.py": ("Check atomic batch checkpoints and recovery after an interrupted epoch pointer", "核验原子批次权重及轮次指针中断后的恢复"),
+    "submit_g5_40.sh": ("Submit CPU recovery check and dependency-gated Standard/Improved 40-epoch A100 jobs", "提交 CPU 恢复测试及依赖测试通过的双模型 40 轮 A100 作业"),
     "test_sampling_audit.py": ("Candidate crop bounds and repeatability checks", "候选裁剪边界与可重复性检查"),
     "test_sampling.py": ("Patient cycle, paired crop and exposure-record tests", "患者轮换、配对裁剪及曝光记录测试"),
     "summarize_g2_slice_detail.py": ("Reconcile G2 slice and intensity CSVs with G1 and draw local plots", "将 G2 切片及强度 CSV 与 G1 核对并绘制本地图"),

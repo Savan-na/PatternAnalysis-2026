@@ -570,3 +570,11 @@ saved batch if a Slurm time limit interrupts it. Verify the new script/config
 hashes before submission. Request a walltime allowed by both partition and
 QoS; `MaxTime=UNLIMITED` at the partition does not prove a particular job can
 run forever or start promptly.
+
+The reviewed submission entry point is `code/tools/submit_g5_40.sh`. Run it
+only on the Rangpur login node after transferring the revised config,
+trainer, recovery test and the script itself. It verifies the source hashes
+and unused output directories, submits a short CPU checkpoint recovery test,
+then submits both six-hour, 40-epoch A100 jobs with `afterok` dependencies on
+that test. If the test fails, the GPU jobs do not start. The script prints all
+three job IDs. It does not submit the optional 2D arm.

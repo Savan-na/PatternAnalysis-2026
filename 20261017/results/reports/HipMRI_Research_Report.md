@@ -628,3 +628,8 @@ per-batch metrics in their `.json` records. Archiving every one of the 5,200
 batch weight states for both models would exceed the current home-directory
 quota. These are implementation provisions, not yet evidence that a 40-epoch
 job has completed or that Validation quality improved.
+
+The prepared submission script `code/tools/submit_g5_40.sh` checks transferred
+file hashes and empty run paths, queues a short CPU recovery test, and makes
+both six-hour A100 training jobs depend on that test passing. This is a
+submission design; job IDs and runtime evidence are pending Rangpur execution.
