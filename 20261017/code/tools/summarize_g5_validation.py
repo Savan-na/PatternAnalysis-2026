@@ -24,8 +24,8 @@ from hipmri_rewrite.metrics import overlap  # noqa: E402
 from hipmri_rewrite.training import patient_small_organ_score  # noqa: E402
 
 
-RUNS = {"Standard 3D": ("baseline_3d", "standard_3d", "672954"),
-        "Improved 3D": ("improved_3d", "improved_3d", "672955")}
+RUNS = {"Standard 3D": ("baseline_3d", "standard_3d", "672954", "674102"),
+        "Improved 3D": ("improved_3d", "improved_3d", "672955", "674103")}
 CONFIG_SHA = "e5bd98a99213f4fe6cf6e3e8c6db3b95d5ef334a143a91444426d8ea019923ce"
 CLASS_NAMES = ("Background", "Body", "Bones", "Bladder", "Rectum", "Prostate")
 
@@ -40,14 +40,16 @@ def same_metric(left: float | None, right: float | None) -> bool:
     return math.isclose(left, right, abs_tol=1e-12)
 
 
-def load_checked_run(folder: str, model: str, job_id: str) -> dict:
+def load_checked_run(folder: str, model: str, job_id: str,
+                     extension_job_id: str) -> dict:
     run = PROJECT / "logs/training" / folder
     manifest = json.loads((run / "manifest.json").read_text(encoding="utf-8"))
+    max_epochs = manifest["max_epochs"]
     if (manifest["model"] != model or manifest["job_id_initial"] != job_id
-            or manifest["config_sha256"] != CONFIG_SHA or manifest["max_epochs"] != 40):
+            or manifest["config_sha256"] != CONFIG_SHA or max_epochs not in (40, 50)):
         raise ValueError(f"{folder}: unexpected run identity")
     paths = sorted(run.glob("epoch_*.json"))
-    if [p.name for p in paths] != [f"epoch_{epoch:03d}.json" for epoch in range(1, 41)]:
+    if [p.name for p in paths] != [f"epoch_{epoch:03d}.json" for epoch in range(1, max_epochs + 1)]:
         raise ValueError(f"{folder}: incomplete or extra epoch records")
     records = [json.loads(path.read_text(encoding="utf-8")) for path in paths]
     validation = []
@@ -56,7 +58,8 @@ def load_checked_run(folder: str, model: str, job_id: str) -> dict:
     for epoch, record in enumerate(records, 1):
         train = record["train"]
         exposure = train["exposure"]
-        if (record["epoch"] != epoch or record["job_id"] != job_id
+        expected_job = job_id if epoch <= 40 else extension_job_id
+        if (record["epoch"] != epoch or record["job_id"] != expected_job
                 or len(record["selected_cases"]) != 26
                 or len(train["batch_history"]) != 130
                 or exposure["patches"] != 260
@@ -99,10 +102,11 @@ def load_checked_run(folder: str, model: str, job_id: str) -> dict:
         if record["best_epoch"] != running_epoch or not math.isclose(
                 record["best_score"], running_best, abs_tol=1e-12):
             raise ValueError(f"{folder}: saved best-score history differs")
-    if running_epoch != 30:
-        raise ValueError(f"{folder}: unexpected best epoch")
+    if running_epoch is None:
+        raise ValueError(f"{folder}: no selected Validation checkpoint")
     best = records[running_epoch - 1]
     return {"records": records, "validation": validation, "best": best,
+            "max_epochs": max_epochs,
             "case_ids": case_ids, "manifest_sha256": sha256(run / "manifest.json"),
             "best_record_sha256": sha256(run / f"epoch_{running_epoch:03d}.json")}
 
@@ -118,7 +122,8 @@ def main() -> None:
         records = result["records"]
         val_epochs = [epoch for epoch, _ in result["validation"]]
         val_scores = [row["selection_score"] for _, row in result["validation"]]
-        axes[0].plot(range(1, 41), [row["train"]["mean_loss"] for row in records],
+        axes[0].plot(range(1, result["max_epochs"] + 1),
+                     [row["train"]["mean_loss"] for row in records],
                      label=label, color=color, linewidth=2)
         axes[1].plot(val_epochs, val_scores, marker="o", label=label,
                      color=color, linewidth=2)
@@ -139,7 +144,7 @@ def main() -> None:
                     width=0.35, color=colors[label], label=label)
     axes[0].set(title="Train patch loss", xlabel="Epoch", ylabel="Mean objective")
     axes[1].set(title="Validation patient score", xlabel="Epoch", ylabel="Mean small-organ Dice")
-    axes[2].set(title="Validation pooled Dice at epoch 30", ylabel="Dice")
+    axes[2].set(title="Validation pooled Dice at each selected epoch", ylabel="Dice")
     axes[2].set_xticks(x, names)
     axes[2].set_ylim(0, 1)
     for ax in axes:
