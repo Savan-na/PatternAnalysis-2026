@@ -1,6 +1,6 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 23:02:04 AEST**
+Updated / 更新时间: **2026-10-18 23:09:21 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 

@@ -578,3 +578,23 @@ and unused output directories, submits a short CPU checkpoint recovery test,
 then submits both six-hour, 40-epoch A100 jobs with `afterok` dependencies on
 that test. If the test fails, the GPU jobs do not start. The script prints all
 three job IDs. It does not submit the optional 2D arm.
+
+On 18 October, recovery test 672953 cleared the dependency for A100 jobs
+672954 (Standard) and 672955 (Improved). Both remained PENDING for priority
+at the last observation. `squeue --start -j 672954,672955` gave provisional
+19 October starts of 00:45:37 and 00:58:00. Verify `RUNNING` and inspect the
+job logs before treating either as an executed training run.
+
+## Optional 2D arm: Train-only exposure gate
+
+The two 2D source files have been transferred to Rangpur. Their local
+SHA-256 values are `b98fbb0db5936a6260bc1d1f74b1446411e4ba8e1a9584ca715fb48d6a1624f3`
+for `code/tools/audit_g5_2d_sampling.py` and
+`99054855ecd2869796af9a4ce5decbdb2522d5402dac0fa7b4782676aa3d9f08`
+for `code/hipmri_rewrite/sampling_2d.py`. Run the audit in a separate CPU
+Slurm job while the 3D jobs queue or train. It compares the two candidate
+policies across one visit from each of the 26 Train patients, yielding 260
+crops per policy. It must produce `manifest.json` and `patches.csv` in a new
+`logs/audits/g5_2d_sampling_full_20261018/` directory. Review those outputs
+before freezing a 2D sampler, loss, budget or GPU run. Its results cannot
+serve as 2D or 3D segmentation quality scores.

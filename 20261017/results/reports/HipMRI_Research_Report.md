@@ -629,7 +629,17 @@ batch weight states for both models would exceed the current home-directory
 quota. These are implementation provisions, not yet evidence that a 40-epoch
 job has completed or that Validation quality improved.
 
-The prepared submission script `code/tools/submit_g5_40.sh` checks transferred
-file hashes and empty run paths, queues a short CPU recovery test, and makes
-both six-hour A100 training jobs depend on that test passing. This is a
-submission design; job IDs and runtime evidence are pending Rangpur execution.
+The submission script `code/tools/submit_g5_40.sh` passed SHA-256 and Bash
+syntax checks on Rangpur and submitted recovery test 672953, Standard job
+672954, and Improved job 672955 on 18 October 2026. The recovery dependency
+cleared; both A100 jobs were still PENDING for priority when last checked.
+Slurm predicted starts of 19 October 00:45:37 and 00:58:00, respectively;
+these are queue estimates, not observed training starts. No new full-cohort
+checkpoint, Validation result, or 40-epoch completion is claimed here.
+
+The optional 2D arm remains at its Train-only exposure gate. Its CPU audit
+compares patient-balanced uniform and organ-aware axial crops before choosing
+one training policy. It can run while the 3D jobs wait for A100 resources;
+the 2D model must receive its own frozen configuration, GPU correctness check,
+and checkpointed run after the audit is reviewed. Its different slice context
+prevents a simple architecture-only interpretation against the 3D arms.

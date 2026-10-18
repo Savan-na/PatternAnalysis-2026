@@ -11,8 +11,9 @@ The available model implementations live in
 `improved_3d.py`. Their provisional identity records are in
 `config/arms/<arm_id>/arm.json`. These records reserve separate experiment
 spaces; they do not prescribe training settings before the real-data audit.
-The 3D arms are the primary future comparison; the 2D arm is retained as
-background work.
+The 3D arms are the primary controlled comparison. A supplementary 2D run
+has been requested; it has a separate Train-only sampling audit and will use
+its own frozen training protocol after that audit is reviewed.
 
 Run from this `code` directory in the existing Python 3.11 `torch` environment:
 
@@ -87,3 +88,11 @@ no checkpoint; its outcome informs a later frozen training configuration.
 two fixed Train patches containing Rectum and Prostate. It records fixed-batch
 loss, per-class Dice/recall and prediction counts for both 3D arms, and saves
 no model weights. This is a learning-correctness gate, not a Validation result.
+
+`tools/submit_g5_40.sh` submitted the two frozen 3D training arms as Slurm
+jobs 672954 and 672955 after recovery test 672953. The trainer records an
+atomic latest-batch checkpoint and one durable checkpoint plus detailed JSON
+per completed epoch. Submission and queue estimates are not training results.
+`tools/audit_g5_2d_sampling.py` compares uniform and target-aware 2D crops
+on one Train visit per patient on a CPU node. Its exposure results must be
+reviewed before selecting the supplementary 2D training policy.
