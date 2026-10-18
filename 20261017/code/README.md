@@ -55,3 +55,6 @@ pooled-intensity figures. It does not interpret slice presence as patch exposure
 raw volumes through factor-two downsampling, nonzero Z-score and whole-volume
 model arrays. It checks class, physical-volume and axial-slice preservation,
 normalization and padding without defining a new sampler.
+`tools/summarize_g3_pipeline.py` verifies the complete G1 and G3 JSON hashes,
+reconciles all 143 raw case counts, and exports a Train-only organ-preservation
+table and figure into `results/data_analysis/g3_pipeline/`.

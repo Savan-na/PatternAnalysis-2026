@@ -21,9 +21,9 @@ The first three categories each have pre-created `baseline_2d`,
 tables and visuals in `comparisons`. The one cumulative formal research report
 is [`reports/HipMRI_Research_Report.md`](reports/HipMRI_Research_Report.md).
 The earlier mixed-source analysis is archived beside it. The
-[`data_analysis/`](data_analysis/README.md) index separates historical figures
-from three G1 image groups and a G2 Train summary group, each with a short
-README beside its figures.
+[`data_analysis/`](data_analysis/README.md) index separates historical figures,
+three G1 image groups, a G2 Train summary and a G3 preprocessing group, each
+with a short README beside its figures.
 
 No restarted-model result exists yet. Generated artifacts and
 medical-derived PNGs stay in ignored subdirectories unless course and data

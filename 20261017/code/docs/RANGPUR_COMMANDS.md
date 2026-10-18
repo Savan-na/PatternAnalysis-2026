@@ -105,3 +105,23 @@ The script refuses to overwrite an existing output and verifies the hashes of
 the frozen split, G1 audit, reviewed preprocessing code and every source pair
 it processes. A smoke result has `pipeline_pass=false` by design; check
 `case_error_count` and per-case measurements before scheduling the full cohort.
+
+## G3 full Train run and local analysis
+
+The two-case smoke run passed. On a Rangpur CPU node with `torch` active and
+the working directory at `20261017/code`, run the full cohort without
+`--limit`:
+
+```bash
+python -B tools/audit_g3_existing_pipeline.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --output ../logs/audits/g3_existing_pipeline_full_20261018_job671892.json
+```
+
+The completed job `671892` reported 143 audited cases, zero case errors and
+`pipeline_pass=true`. Its JSON SHA-256 is
+`319973a8759265521870f831e7b17eb7249f4130b6a9e9634fe993f22bf687e9`.
+After downloading that JSON into local `logs/audits/`, regenerate the derived
+table and figure with `python -B code/tools/summarize_g3_pipeline.py` from an
+existing Matplotlib environment. The tool reconciles raw counts with G1 and
+rejects unexpected input hashes.

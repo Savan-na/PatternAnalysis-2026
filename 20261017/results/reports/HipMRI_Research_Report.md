@@ -162,6 +162,47 @@ the historical Baseline–V4 artifact inventory and final model-source location
 still need verification before controlled model experiments. This does not
 invalidate the completed raw-data audit.
 
+### G3 existing Train pipeline audit — 18 October 2026
+
+The implemented `load_case` → factor-two `downsample` → `zscore_nonzero` →
+whole-volume `to_3d_model_arrays` path was audited on Rangpur CPU node
+`vcpu-2`, Slurm job `671892`. The two-case smoke run found no case errors;
+its `pipeline_pass=false` reflected the deliberately incomplete `--limit 2`
+scope. The full run covered all 143 Train volumes, found zero case errors,
+and returned `pipeline_pass=true`. The verified full JSON is in
+`logs/audits/g3_existing_pipeline_full_20261018_job671892.json` with SHA-256
+`319973a8759265521870f831e7b17eb7249f4130b6a9e9634fe993f22bf687e9`.
+Its raw label counts match G1 for every case and class. The
+[per-volume table and figure](../data_analysis/g3_pipeline/README.md) are
+reproducible Train-only summaries of that JSON.
+
+| Organ | Raw voxels | Downsampled voxels | Raw share | Downsampled share | Median physical-volume ratio | Ratio range | Volumes retaining organ |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Bladder | 7,253,501 | 906,818 | 0.60415% | 0.60423% | 0.9997 | 0.9760–1.0173 | 143/143 |
+| Rectum | 1,743,644 | 218,236 | 0.14523% | 0.14542% | 1.0021 | 0.9721–1.0280 | 143/143 |
+| Prostate | 1,295,814 | 161,722 | 0.10793% | 0.10776% | 0.9981 | 0.9383–1.0423 | 143/143 |
+
+Physical-volume ratio uses labelled voxel count multiplied by the respective
+voxel volume; downsampled voxel counts are expected to be near one eighth of
+raw counts after halving all three axes. No small organ vanished in this
+cohort. The largest Prostate volume reduction was 6.17% in `D031_Week0`;
+142/143 Prostate volumes were within ±5% of raw labelled physical volume.
+These aggregate measurements do not establish preservation of thin structures
+or contour accuracy. Raw axial Prostate coverage was 3,852/18,320 slices
+(21.03%); after downsampling it was 1,919/9,160 (20.95%). The corresponding
+Rectum rates were 41.92% and 42.01%, and Bladder rates 29.02% and 28.98%.
+These are anatomical slice frequencies, not training-patch hit rates.
+
+The model adapter added 131,072 Background voxels only to the 144-slice
+`K019_Week1` case, padding its downsampled depth from 72 to 80. It added no
+foreground labels. All model inputs were finite, all labels stayed legal,
+and per-case nonzero-intensity normalized means and standard deviations were
+within 8.1×10⁻⁹ of 0 and 5.9×10⁻⁹ of 1, respectively. This verifies the
+implemented numerical path, not that the normalization is optimal for model
+learning. The current restart still lacks ROI cropping, augmentation, a
+Patch Sampler and a formal training loop; actual class exposure in model
+training remains unmeasured.
+
 ## Problems Identified
 
 Every Train mask has an unspecified spatial unit in its NIfTI header. This is
@@ -177,6 +218,7 @@ section-level evidence without claiming expert verification of every boundary.
 | Severe global minority-class imbalance | Supported by raw Train voxel counts |
 | Patient and visit-level organ variation | Supported by per-patient shares and physical-volume ranges |
 | Small organs occupy limited axial sections | Supported by the full Train slice audit |
+| Existing downsampling deletes a small organ | Excluded for these 143 Train volumes; all three organs survive, although physical-volume and boundary changes remain |
 | Insufficient exposure in actual training patches | Unresolved; the current restart code has no Patch Sampler |
 | Boundary contrast explains segmentation failure | Unresolved; no current model-error or boundary-contrast test isolates it |
 
@@ -279,13 +321,16 @@ confirmed annotation errors. The unspecified Mask spatial-unit header is a
 documented non-blocking metadata warning because MRI/Mask affines match exactly
 and spacings passed the matching check. Boundary correctness across every
 slice remains unverified.
-G2 has now measured Train-only class, patient, volume, slice, intensity,
-spacing, organ-size, normalized position and visit-level variation. These
-results support global class imbalance and limited raw axial coverage for
-Prostate and Rectum. They do not measure actual training-patch exposure or
-establish the cause of model failure. G3 should audit the existing
-preprocessing before selecting a change. The current `20261017` code provides
-paired loading, factor-two downsampling, nonzero-voxel Z-score and whole-volume
-tensor conversion, but no implemented ROI crop, augmentation, Patch Sampler or
-formal training loop. The old project's sampling design must be recovered or
-a new strategy specified and frozen before its exposure can be audited.
+G2 measured Train-only class, patient, volume, slice, intensity, spacing,
+organ-size, normalized position and visit-level variation. These results
+support global class imbalance and limited raw axial coverage for Prostate and
+Rectum. G3 then verified that the implemented factor-two downsampling and
+normalization path processes all 143 Train cases without case errors or
+eliminating a small organ. The lowest Prostate labelled physical-volume ratio
+is 0.9383, so spatial-detail and boundary effects still warrant review.
+Neither G2 nor G3 measures actual training-patch exposure or establishes the
+cause of old model failures. The current restart has no implemented ROI crop,
+augmentation, Patch Sampler or formal training loop. The old project's
+sampling design must be recovered or a new strategy specified and frozen
+before exposure can be audited; no new model training is justified by this
+audit alone.
