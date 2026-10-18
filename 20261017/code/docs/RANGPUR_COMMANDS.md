@@ -336,3 +336,56 @@ SBATCH
 This changes the step budget only and does not replace the original 100-step
 record or create a checkpoint. Its diagnostic purpose is limited to fixed
 Train patches; full training remains gated on reviewing the result.
+
+Job `672228` completed. The returned JSON SHA-256 is
+`d10c454a24f1bdb1876fec034784a53fbb4d0a5c0da6fcfdcdc0dee75a72c53f`.
+At step 500, Standard still predicted zero Bladder, Rectum and Prostate voxels
+on the fixed batch. See the research report for the class counts and limits.
+
+## G5 controlled weighted-CE diagnostic
+
+The next check keeps the Standard model, two Train patches, seed, optimizer,
+500 steps and the 0.5 CE / 0.5 foreground Dice mixture fixed. Only the CE
+class weights change. `code/config/g5_weighted_ce_diagnostic.json` records the
+weights and their Train-only G4 patient-uniform exposure source. This is a
+learning diagnostic, not an approved full-training objective.
+
+From **Windows PowerShell** in `Final project`, transfer the updated script
+(SHA-256 `393dff3896fc8949ffd0feb9433163fbe8d9bc3d70401e7d9d87bbfce05a404c`)
+and new config (SHA-256
+`4daa7f5b202e6446a31a5780247ff2e93c3e79390c61137621ecdb097c4e85f`):
+
+```powershell
+scp '.\20261017\code\tools\tiny_overfit_g5.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/tiny_overfit_g5.py'
+scp '.\20261017\code\config\g5_weighted_ce_diagnostic.json' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/config/g5_weighted_ce_diagnostic.json'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On the **Rangpur login node**, verify the two transferred hashes, check the
+result path is free, then submit the small GPU job:
+
+```bash
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/tiny_overfit_g5.py" \
+  "$HOME/20261018_g1_stage/20261017/code/config/g5_weighted_ce_diagnostic.json"
+test ! -e "$HOME/20261018_g1_stage/20261017/logs/profiles/g5_standard_weighted_500_20261018.json" && echo 'Weighted diagnostic output path is free'
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_standard_weighted_500_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/tiny_overfit_g5.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id B006_Week0 --model standard_3d --steps 500 \
+  --class-weights-config config/g5_weighted_ce_diagnostic.json \
+  --output ../logs/profiles/g5_standard_weighted_500_20261018.json
+SBATCH
+```
+
+After completion, report the job ID, final ten output lines and JSON SHA-256.
+Compare the final Bladder, Rectum and Prostate predicted voxel counts with the
+unweighted 500-step JSON before deciding any further experiment.

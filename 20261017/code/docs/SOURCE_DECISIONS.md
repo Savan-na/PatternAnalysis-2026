@@ -64,3 +64,11 @@ candidate because its pooled exposure gain was modest and patient-level gains
 were mixed. This selection is based on HipMRI Train evidence, not prescribed
 by the three papers. Actual training exposure and Validation performance must
 still be measured. No Dice/weighted-CE choice has been established.
+
+The G5 two-patch Standard diagnostic still predicted no Bladder, Rectum or
+Prostate at 500 optimizer steps under the provisional unweighted CE plus
+foreground Dice mixture. The follow-up configuration
+`code/config/g5_weighted_ce_diagnostic.json` uses square-root inverse class
+frequency relative to Body from the G4 Train-only patient-uniform Patch
+exposure, capped at 10. This bounded weighting is a HipMRI diagnostic choice,
+not a parameter copied from any of the three papers or a final loss decision.

@@ -56,6 +56,7 @@ def main() -> None:
     parser.add_argument("--model", choices=("standard_3d", "improved_3d", "both"),
                         default="both")
     parser.add_argument("--steps", type=int, default=100)
+    parser.add_argument("--class-weights-config", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--g1", type=Path, default=PROJECT / "logs/audits/train_full_20261018_job671208.json")
     args = parser.parse_args()
@@ -105,7 +106,22 @@ def main() -> None:
         raise ValueError("Tiny overfit batch must contain Rectum and Prostate")
     image = torch.from_numpy(np.ascontiguousarray(image_array)).to("cuda")
     target = torch.from_numpy(np.ascontiguousarray(mask_array)).to("cuda")
-    objective = lambda logits, truth: ce_dice_loss(logits, truth, ce_weight=0.5)
+    weight_config = None
+    class_weights = None
+    if args.class_weights_config is not None:
+        if args.model != "standard_3d":
+            parser.error("Class-weight diagnostic is restricted to the Standard 3D arm")
+        weight_config = json.loads(args.class_weights_config.read_text(encoding="utf-8"))
+        if (weight_config["scope"] != "Train-only two-patch Standard learning diagnostic; not a final training loss"
+                or weight_config["ce_weight_in_combined_loss"] != 0.5
+                or set(weight_config["class_weights"]) != set(CLASS_NAMES)):
+            raise ValueError("Unexpected class-weight diagnostic configuration")
+        weights = [weight_config["class_weights"][name] for name in CLASS_NAMES]
+        if any(not np.isfinite(value) or value <= 0 for value in weights):
+            raise ValueError("Class weights must be finite and positive")
+        class_weights = torch.tensor(weights, dtype=torch.float32, device="cuda")
+    objective = lambda logits, truth: ce_dice_loss(logits, truth, ce_weight=0.5,
+                                                   class_weights=class_weights)
     constructors = {"standard_3d": UNet3D, "improved_3d": ImprovedUNet3D}
     selected_models = tuple(constructors) if args.model == "both" else (args.model,)
     records = []
@@ -149,7 +165,11 @@ def main() -> None:
               "target_order": ["Rectum", "Prostate"],
               "target_voxels": {name: int(true_counts[index])
                                 for index, name in enumerate(CLASS_NAMES)},
-              "objective": "0.5*unweighted_CE + 0.5*foreground_soft_Dice; check only",
+              "objective": "0.5*" + ("weighted_CE" if class_weights is not None else "unweighted_CE")
+              + " + 0.5*foreground_soft_Dice; check only",
+              "class_weights": weight_config["class_weights"] if weight_config else None,
+              "class_weights_config_sha256": sha256_file(args.class_weights_config)
+              if args.class_weights_config else None,
               "optimizer": "Adam(lr=1e-3,weight_decay=0); check only",
               "gpu": torch.cuda.get_device_name(0), "torch": str(torch.__version__),
               "cuda_build": torch.version.cuda, "numpy": np.__version__,

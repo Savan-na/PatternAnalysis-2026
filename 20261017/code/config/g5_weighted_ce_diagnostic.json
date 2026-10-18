@@ -1,0 +1,16 @@
+{
+  "scope": "Train-only two-patch Standard learning diagnostic; not a final training loss",
+  "source_table": "results/data_analysis/g4_patient_sampling/class_exposure.csv",
+  "source_table_sha256": "015275489f0086e2ca060de8683a5fef51af850415fa640ac01f682f53b6f21e",
+  "source_policy": "patient_uniform",
+  "formula": "min(10, sqrt(Body voxel_share / class voxel_share)); rounded to 6 decimals",
+  "ce_weight_in_combined_loss": 0.5,
+  "class_weights": {
+    "Background": 1.453871,
+    "Body": 1.0,
+    "Bones": 2.617199,
+    "Bladder": 4.498586,
+    "Rectum": 8.893215,
+    "Prostate": 9.69995
+  }
+}

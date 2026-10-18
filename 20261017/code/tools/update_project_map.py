@@ -71,6 +71,7 @@ ROLES = {
     "summarize_g4_patient_sampling.py": ("Verify G4 tensor dry run and summarize class/patient exposure", "核验 G4 张量预演并汇总类别及患者曝光"),
     "summarize_g3_candidate_sampling.py": ("Verify full candidate patch records and summarize exposure", "核验完整候选 Patch 记录并汇总曝光"),
     "g3_patch_audit.json": ("Frozen candidate-crop audit design, not a training configuration", "固定的候选裁剪审计设计，非训练配置"),
+    "g5_weighted_ce_diagnostic.json": ("Train-only weighted CE configuration for the Standard tiny learning diagnostic", "仅用训练数据为 Standard 微型学习诊断配置加权交叉熵"),
     "test_sampling_audit.py": ("Candidate crop bounds and repeatability checks", "候选裁剪边界与可重复性检查"),
     "test_sampling.py": ("Patient cycle, paired crop and exposure-record tests", "患者轮换、配对裁剪及曝光记录测试"),
     "summarize_g2_slice_detail.py": ("Reconcile G2 slice and intensity CSVs with G1 and draw local plots", "将 G2 切片及强度 CSV 与 G1 核对并绘制本地图"),

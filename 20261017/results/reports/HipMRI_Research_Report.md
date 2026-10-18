@@ -428,6 +428,23 @@ the networks differ in multiple implementation details. Before full training,
 hold the data, provisional objective, optimizer and seed fixed and extend only
 the Standard model's tiny-run step budget to test delayed learning.
 
+### G5 Standard step-budget follow-up — 18 October 2026
+
+Rangpur A100 job `672228` repeated the Standard two-patch learning check for
+500 steps without changing the case, crop origins, labels, seed, optimizer,
+learning rate, objective or model implementation. Its returned JSON SHA-256
+matched Rangpur:
+`d10c454a24f1bdb1876fec034784a53fbb4d0a5c0da6fcfdcdc0dee75a72c53f`.
+At step 100 it again predicted all 262,144 voxels as Body. At step 500 its
+loss fell to 0.53212 and it predicted 7,864 Background, 210,257 Body and
+44,023 Bones voxels, but **zero Bladder, Rectum and Prostate voxels**. Thus
+longer training restored some large classes without resolving the small-organ
+collapse on this fixed batch. The result does not prove a specific cause; the
+next controlled diagnostic will change only the cross-entropy class weights
+while keeping the two Train patches and 500-step budget fixed. The weights
+will be derived from Train-only patient-balanced uniform Patch exposure and
+reported as a diagnostic intervention, not a validated final loss.
+
 ## Failure Analysis
 
 Pending model experiments. G1 raw-data findings and visual-screen limits are
