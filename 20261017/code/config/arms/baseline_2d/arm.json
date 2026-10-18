@@ -1,0 +1,7 @@
+{
+  "arm_id": "baseline_2d",
+  "role": "slice-wise 2D U-Net baseline",
+  "model_import": "hipmri_rewrite.models.UNet2D",
+  "training_status": "not_started",
+  "training_config_status": "pending_real_data_audit_and_gpu_probe"
+}

@@ -1,0 +1,19 @@
+# Local medical-derived audits, weights, predictions, and run artefacts.
+!logs/
+logs/*/
+!logs/README.md
+results/*/
+!results/README.md
+!results/data_analysis/
+results/data_analysis/*.bak
+!results/reports/
+results/reports/*
+!results/reports/*.md
+code/transfer/*.zip
+artifacts/
+checkpoints/
+predictions/
+*.nii
+*.nii.gz
+*.pt
+*.pth

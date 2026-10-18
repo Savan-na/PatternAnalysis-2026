@@ -1,0 +1,7 @@
+{
+  "arm_id": "improved_3d",
+  "role": "residual improved 3D U-Net comparison model",
+  "model_import": "hipmri_rewrite.models.ImprovedUNet3D",
+  "training_status": "not_started",
+  "training_config_status": "pending_real_data_audit_and_gpu_probe"
+}
