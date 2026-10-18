@@ -238,8 +238,32 @@ scp '.\20261017\code\tools\probe_g5_patch_gpu.py' 's4906923@login0.compute.eait.
 ssh s4906923@login0.compute.eait.uq.edu.au
 ```
 
-Check the transferred SHA-256 before submitting. On login0, inspect
-`scontrol show partition a100-test` and `sinfo -N -p a100-test` to confirm
-the available GPU resource syntax. Then submit the probe to an allocated GPU
-compute node. Do not run the CUDA workload on login0. The exact Slurm command
-will be recorded here after checking that partition's configuration.
+Check the transferred SHA-256 before submitting. On 18 October 2026,
+`scontrol show partition a100-test` reported nodes `a100-a,a100-b`, and
+`sinfo -N -p a100-test -o '%N %G %m %t'` showed one `gpu:a100:1` GRES on each
+idle node. The partition's default test time is ten minutes. Submit this
+single-GPU, ten-minute probe from login0 after confirming the output path is
+unused:
+
+```bash
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_patch_probe_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/probe_g5_patch_gpu.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id B006_Week0 --batch-size 2 \
+  --output ../logs/profiles/g5_patch_probe_20261018.json
+SBATCH
+```
+
+The `.out` file identifies the allocated node and both model measurements.
+The JSON is a capacity record, not a model checkpoint. Do not run the CUDA
+workload directly on login0.
