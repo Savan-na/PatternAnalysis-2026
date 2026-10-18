@@ -71,4 +71,9 @@ producing local exposure tables and a comparison figure under
 scan per patient per epoch and records label exposure from the model-ready
 Mask. `tools/audit_g4_patient_sampling.py` dry-runs the uniform and organ-aware
 candidate policies on Rangpur CPU, without training; its measured tensor
-stream must be reviewed before selecting a policy for a GPU experiment.
+stream was verified across 26 Train patients. The local
+`tools/summarize_g4_patient_sampling.py` checks each returned record and
+produces a patient-balanced exposure table and figure under
+`results/data_analysis/g4_patient_sampling/`. Uniform crops are the reference
+for the first controlled comparison; organ-aware crops remain a targeted
+follow-up candidate until actual batch logs and Validation justify them.

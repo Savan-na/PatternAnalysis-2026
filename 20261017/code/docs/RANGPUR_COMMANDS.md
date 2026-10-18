@@ -213,3 +213,14 @@ Inspect the job output and `manifest.json`: expect two patients, ten patches
 per policy per patient, and 40 CSV rows. This is a CPU *dry run*, not GPU
 training or evidence of model benefit. A full patient-epoch run follows only
 after reviewing the smoke output.
+
+The two-patient smoke job `672082` passed. The full 26-patient CPU job
+`672092` saved 520 model-ready patch records under
+`logs/audits/g4_patient_full_20261018/`, 260 per policy. Its manifest and CSV
+SHA-256 values are respectively
+`cafd3593efa5880a4a61b6281bac5d177f58cd713e734cf8dad422d191f0b90c`
+and `04a6822f15940b658f0c3eb062528aa4fa17721552030dc5dc6d45ce5c441968`.
+The files were downloaded and verified locally. Run
+`code/tools/summarize_g4_patient_sampling.py` from a local environment with
+NumPy and Matplotlib to reproduce the G4 tables and SVG. This is still a
+one-epoch dry run without optimizer steps.

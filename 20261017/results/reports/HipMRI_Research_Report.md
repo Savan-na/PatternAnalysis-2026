@@ -342,9 +342,13 @@ presentation: "Data were provided in part by HipMRI Study."
 
 ## Interventions
 
-No preprocessing, sampling, loss, or network change has been selected for
-training. G3 compared candidate crop placements without changing source files
-or activating a training sampler.
+The verified factor-two downsampling and nonzero-intensity Z-score remain the
+current preprocessing starting point. G3 compared candidate crop placements
+without changing source files. For the next controlled 3D experiments, the
+provisional sampling reference is one scan per Train patient per epoch plus
+uniform 64×64×32 crops for both model arms. Organ-aware placement remains a
+targeted alternative pending actual training exposure and Validation errors.
+No loss or architecture change has been selected in G4.
 
 ### G4 patient-balanced sampling preparation — 18 October 2026
 
@@ -354,13 +358,34 @@ epochs, and prepares paired 64×64×32 XYZ image/Mask patches as model-ready
 `1×32×64×64` image and `32×64×64` label tensors. It supports a uniform arm
 and a four-uniform plus two-per-organ candidate arm. A recorder measures class
 hits and voxel counts on the exact post-transform labels supplied to the
-model. The separate CPU dry-run command is awaiting real-data verification on
-Rangpur; its result will be recorded here after review. No model-training
-sampler policy, loss, or architecture comparison has yet been frozen.
+model. The full Rangpur CPU dry run in job `672092` produced 520 patch records:
+260 per policy, ten per patient, one selected visit from each of 26 Train
+patients. The Rangpur and local copies of the manifest and CSV have matching
+SHA-256 values `cafd3593efa5880a4a61b6281bac5d177f58cd713e734cf8dad422d191f0b90c`
+and `04a6822f15940b658f0c3eb062528aa4fa17721552030dc5dc6d45ce5c441968`.
+The [G4 class, patient and figure summary](../data_analysis/g4_patient_sampling/README.md)
+reconciles all 520 rows to the manifest, patient visit selection and G3
+processed grid bounds. Eight successive scheduled epochs cover all 143 Train
+visits while preserving 26 equal patient selections per epoch; this schedule
+check used G3 metadata and did not train a model.
+
+| Small organ | Patient-uniform patch hits | Patient-organ-aware patch hits | Uniform sampled-voxel share | Organ-aware sampled-voxel share |
+|---|---:|---:|---:|---:|
+| Bladder | 232/260 (89.23%) | 245/260 (94.23%) | 2.921% | 3.144% |
+| Rectum | 238/260 (91.54%) | 248/260 (95.38%) | 0.747% | 0.843% |
+| Prostate | 247/260 (95.00%) | 252/260 (96.92%) | 0.628% | 0.679% |
+
+The organ-aware policy raises pooled exposure modestly in this one fixed
+patient-balanced epoch. Patient-level voxel share nevertheless falls in 10/26
+Bladder, 4/26 Rectum and 7/26 Prostate cases; one patient's Rectum patch-hit
+count also falls. These paired candidate streams do not establish a Dice or
+recall gain. The crop and recorder are ready for a training loop, but no
+training loop, spatial augmentation or GPU run has used them yet. Exact
+post-augmentation class exposure still needs to be logged during training.
 
 ## Experimental Results
 
-No restarted model has been trained. G1–G3 are data and pipeline measurements,
+No restarted model has been trained. G1–G4 are data and pipeline measurements,
 not segmentation performance comparisons.
 
 ## Failure Analysis
@@ -385,12 +410,10 @@ Rectum. G3 then verified that the implemented factor-two downsampling and
 normalization path processes all 143 Train cases without case errors or
 eliminating a small organ. The lowest Prostate labelled physical-volume ratio
 is 0.9383, so spatial-detail and boundary effects still warrant review.
-Neither G2 nor G3 measures actual training-patch exposure or establishes the
-cause of old model failures. The current restart has no implemented ROI crop,
-augmentation, Patch Sampler or formal training loop. The old project's
-sampling design must be recovered or a new strategy specified and frozen
-before exposure can be audited; no new model training is justified by this
-audit alone.
+Neither G2 nor G3 establishes the cause of old model failures. G4 now supplies
+a patient-balanced Train patch interface and verified one-epoch CPU tensor
+dry run; it is still not actual exposure during optimization. The current
+restart has no formal training loop or spatial augmentation.
 For one fixed 64×64×32 candidate policy and seed, uniform random crops already
 contained Prostate in 96.29% of patches, but Prostate filled only 0.643% of
 their voxels and was fully contained in 38.18%. Organ-aware candidate crops
@@ -398,6 +421,10 @@ raised these measures modestly. These findings narrow the sampling hypothesis:
 mere absence from patches is not prominent under this simulated crop size,
 while weak voxel exposure and incomplete organ context remain plausible
 training concerns. Patient exposure is also unequal under per-volume draws.
-The next decision is to define a trainable sampling policy and record its
-actual batches; Validation must establish whether any exposure change improves
-segmentation without increasing false positives.
+G4 equalized patient draw counts in a new candidate stream; it measured 95.00%
+uniform Prostate patch hits and 0.628% Prostate voxel share. Its organ-aware
+alternative raised these to 96.92% and 0.679%. The limited gain favors a
+uniform-crop reference for the first controlled training comparison, with
+organ-aware placement held for a targeted follow-up if actual batch logs and
+Validation failures support it. Validation must establish whether any
+intervention improves segmentation without increasing false positives.

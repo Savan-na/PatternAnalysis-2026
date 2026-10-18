@@ -1,0 +1,5 @@
+# G4 patient-balanced patch exposure
+
+The [class table](class_exposure.csv), [patient table](patient_exposure.csv), and [figure](patient_balanced_exposure.svg) describe one CPU dry-run epoch: one Train scan per patient, ten model-ready patches per policy and patient. They show whether patient balancing and crop placement change small-organ exposure before training. The uniform and organ-aware policies share their first four crops per patient.
+
+The source files are `logs/audits/g4_patient_full_20261018/manifest.json` (SHA-256 `cafd3593efa5880a4a61b6281bac5d177f58cd713e734cf8dad422d191f0b90c`) and `patches.csv` (SHA-256 `04a6822f15940b658f0c3eb062528aa4fa17721552030dc5dc6d45ce5c441968`). The verification script checked each patch against the frozen G3 case grids and reconciled every class and patient total with the manifest. This is one deterministic epoch, without spatial augmentation or model optimization; Validation performance and actual training exposure remain unmeasured. Interpretation is in the [research report](../../reports/HipMRI_Research_Report.md).

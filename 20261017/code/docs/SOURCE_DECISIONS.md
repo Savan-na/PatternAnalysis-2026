@@ -55,8 +55,12 @@ its own method. Its brain-specific intensity region and clipping thresholds
 require HipMRI Train evidence before adaptation.
 
 Current HipMRI G3 evidence supports keeping the validated nonzero-intensity
-Z-score and measured downsampling as a starting point. G4 implements a
-patient-balanced *candidate* patch mechanism and exact post-transform label
-exposure recorder; a CPU dry run and later training logs must establish what
-the model receives. No Dice/weighted-CE choice or organ-aware training policy
-is established by these papers alone.
+Z-score and measured downsampling as a starting point. G4 verified a
+patient-balanced patch mechanism and exact post-transform label exposure
+recorder on all 26 Train patients in one CPU dry-run epoch. The reference
+sampling design for the first controlled Standard/Improved comparison is equal
+patient selection and uniform crops; organ-aware placement remains a targeted
+candidate because its pooled exposure gain was modest and patient-level gains
+were mixed. This selection is based on HipMRI Train evidence, not prescribed
+by the three papers. Actual training exposure and Validation performance must
+still be measured. No Dice/weighted-CE choice has been established.

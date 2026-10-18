@@ -8,6 +8,7 @@ Each folder keeps one kind of visual evidence together with a short explanation:
 - [G1 patient screen](g1_patient_screen/README.md): 26 contact sheets covering all 143 Train scans.
 - [G2 raw Train summary](g2_train_summary/README.md): eleven Train-only tables and eight distribution figures derived from verified G1 and G2 audits.
 - [G3 pipeline and candidate crops](g3_pipeline/README.md): organ preservation after downsampling plus Train-only candidate Patch exposure tables and figures.
+- [G4 patient-balanced dry run](g4_patient_sampling/README.md): model-ready Train patch exposure with one selected scan per patient.
 
 The cumulative conclusion that combines the figures with audit records is in
 the [formal research report](../reports/HipMRI_Research_Report.md).
