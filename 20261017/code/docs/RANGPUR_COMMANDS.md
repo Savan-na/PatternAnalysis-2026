@@ -125,3 +125,32 @@ After downloading that JSON into local `logs/audits/`, regenerate the derived
 table and figure with `python -B code/tools/summarize_g3_pipeline.py` from an
 existing Matplotlib environment. The tool reconciles raw counts with G1 and
 rejects unexpected input hashes.
+
+## G3 candidate-crop smoke run
+
+From Windows PowerShell at `Final project`, transfer only the two new audit
+sources to the existing staged project, then reconnect:
+
+```powershell
+scp '.\20261017\code\tools\audit_g3_candidate_sampling.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/audit_g3_candidate_sampling.py'
+scp '.\20261017\code\config\g3_patch_audit.json' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/config/g3_patch_audit.json'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On `login0`, verify both remote `sha256sum` values against local
+`Get-FileHash`, then request an allocated CPU shell. After allocation:
+
+```bash
+srun --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=00:30:00 --pty bash
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/audit_g3_candidate_sampling.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --limit 2 \
+  --output-dir ../logs/audits/g3_patch_candidate_smoke_20261018
+```
+
+Check the smoke manifest and patch CSV before allocating time for all 143
+cases. Keep the full run in a separate new output directory.

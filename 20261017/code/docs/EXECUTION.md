@@ -52,6 +52,22 @@ Rangpur G2 commands are maintained in [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.md)
   training loop. Specify and freeze a candidate sampler before measuring its
   patch exposure. Do not present raw-slice presence as a patch-hit rate.
 
+### G3 candidate crop comparison
+
+The current model adapter supplies complete downsampled volumes; no existing
+training sampler is available in this checkout. Before selecting a new policy,
+audit two *candidate* patch streams on the same 143 Train cases with the
+frozen `config/g3_patch_audit.json`: ten 64×64×32 XYZ crops per volume per
+arm, using seed 371017. The uniform arm places all crops randomly. The
+organ-aware candidate uses four identical uniform crops plus two crops each
+anchored on a randomly selected Bladder, Rectum, and Prostate voxel. Case
+frequency is held equal between arms to isolate crop-placement effects; this
+design still weights patients with more visits more heavily. Record class
+patch-hit rate, pooled voxel share, and the fraction of patches containing an
+entire organ. Run a two-case smoke audit before the full CPU cohort. These
+are hypothetical exposure measurements, not historical or actual training
+exposure, and cannot establish model performance without later Validation.
+
 ## Later gates
 
 - Confirm every foreground class present before downsampling remains present

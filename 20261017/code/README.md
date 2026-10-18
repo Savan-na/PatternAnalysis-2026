@@ -58,3 +58,7 @@ normalization and padding without defining a new sampler.
 `tools/summarize_g3_pipeline.py` verifies the complete G1 and G3 JSON hashes,
 reconciles all 143 raw case counts, and exports a Train-only organ-preservation
 table and figure into `results/data_analysis/g3_pipeline/`.
+`tools/audit_g3_candidate_sampling.py` uses the frozen
+`config/g3_patch_audit.json` to simulate uniform and organ-aware crops on the
+verified Train grid. This is an exposure audit for a possible future policy;
+it is not wired into model training.
