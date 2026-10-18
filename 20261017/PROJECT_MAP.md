@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 22:05:23 AEST**
+Updated / 更新时间: **2026-10-18 22:18:47 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **52** · Files / 文件: **161**
+Directories / 目录: **52** · Files / 文件: **162**
 
 ## Directory Tree / 目录树
 
@@ -105,7 +105,8 @@ Directories / 目录: **52** · Files / 文件: **161**
 │   │   ├── g5_patch_probe_20261018.json
 │   │   ├── g5_standard_500_20261018.json
 │   │   ├── g5_standard_weighted_500_20261018.json
-│   │   └── g5_tiny_overfit_20261018.json
+│   │   ├── g5_tiny_overfit_20261018.json
+│   │   └── g5_training_smoke_20261018.json
 │   ├── training/
 │   │   ├── baseline_2d/
 │   │   ├── baseline_3d/
@@ -270,7 +271,7 @@ Directories / 目录: **52** · Files / 文件: **161**
 | `code/tests/test_sampling_audit.py` | Candidate crop bounds and repeatability checks; Definitions: CandidateCropTests | 候选裁剪边界与可重复性检查；定义：CandidateCropTests |
 | `code/tests/test_splits.py` | Patient isolation and file pairing tests; Definitions: PatientSplitTests | 患者隔离与文件配对测试；定义：PatientSplitTests |
 | `code/tools/__pycache__/probe_g5_full_volume.cpython-314.pyc` | Binary or large file; 10,724 bytes | 二进制或大文件；10,724 字节 |
-| `code/tools/__pycache__/probe_g5_training_smoke.cpython-314.pyc` | Binary or large file; 16,910 bytes | 二进制或大文件；16,910 字节 |
+| `code/tools/__pycache__/probe_g5_training_smoke.cpython-314.pyc` | Binary or large file; 18,717 bytes | 二进制或大文件；18,717 字节 |
 | `code/tools/__pycache__/tiny_overfit_g5.cpython-314.pyc` | Binary or large file; 16,475 bytes | 二进制或大文件；16,475 字节 |
 | `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: sha256_file, write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：sha256_file, write_csv, main |
 | `code/tools/audit_g3_candidate_sampling.py` | Compare fixed Train-only uniform and organ-aware candidate crops; Definitions: sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main | 比较固定的训练集均匀与器官感知候选裁剪；定义：sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main |
@@ -307,6 +308,7 @@ Directories / 目录: **52** · Files / 文件: **161**
 | `logs/profiles/g5_standard_500_20261018.json` | JSON fields: case, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy | JSON 字段：case, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy |
 | `logs/profiles/g5_standard_weighted_500_20261018.json` | JSON fields: case, class_weights, class_weights_config_sha256, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256 | JSON 字段：case, class_weights, class_weights_config_sha256, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256 |
 | `logs/profiles/g5_tiny_overfit_20261018.json` | JSON fields: case, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy | JSON 字段：case, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy |
+| `logs/profiles/g5_training_smoke_20261018.json` | JSON fields: cases, config_sha256, data_code_sha256, g1_sha256, gpu, job_id, kind, loss_code_sha256, numpy, patches, results, sampling_code_sha256 | JSON 字段：cases, config_sha256, data_code_sha256, g1_sha256, gpu, job_id, kind, loss_code_sha256, numpy, patches, results, sampling_code_sha256 |
 | `logs/README.md` | Entry point or directory guide; Sections: Experiment Logs | 项目入口或目录说明；章节标题：Experiment Logs |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
 | `README.md` | Entry point or directory guide; Sections: HipMRI Data-Driven Model Development; Where things belong | 项目入口或目录说明；章节标题：HipMRI Data-Driven Model Development; Where things belong |

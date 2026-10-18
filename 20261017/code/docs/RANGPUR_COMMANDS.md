@@ -492,3 +492,53 @@ SBATCH
 
 The job should print two successful model rows and a JSON path. Transfer only
 the JSON after SHA-256 verification; do not copy source MRI or masks.
+
+Job `672807` completed. The returned JSON matched Rangpur SHA-256
+`4161b30138243dbf3f52ba44cb097aead6046e50d60e37b60d64329bf6a336d5`.
+Two mixed-patient batches per model passed; the formal report records the
+exposure and interpretation. Full-epoch I/O, Validation and checkpoints
+remain unchecked.
+
+## G5 one-epoch budget and exposure probe
+
+The revised `probe_g5_training_smoke.py` adds `--full-epoch`. It runs epoch
+zero of the candidate Train sampler across all 26 patients, 10 uniform
+patches per patient, batch size two, for 130 temporary optimizer updates
+per model. It measures NIfTI/hash/preprocessing/patch preparation separately
+from each model loop and records every delivered mask. It saves **no** model
+checkpoint and does not inspect Validation or Test. This is the remaining
+runtime/exposure check before freezing the cohort training protocol.
+
+From **Windows PowerShell** in `Final project`, transfer the revised script
+(SHA-256 `6d89a7055afad98cc1288db212b8c9dd12fd5d65deb6968264ca441160d5a4fb`):
+
+```powershell
+scp '.\20261017\code\tools\probe_g5_training_smoke.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/probe_g5_training_smoke.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On the **Rangpur login node**, verify the hash, confirm the regular A100
+partition is available, and check the fresh JSON path before submitting:
+
+```bash
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/probe_g5_training_smoke.py"
+scontrol show partition a100 | head -n 5
+test ! -e "$HOME/20261018_g1_stage/20261017/logs/profiles/g5_epoch_budget_20261018.json" && echo 'Epoch probe output path is free'
+sbatch --partition=a100 --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:30:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_epoch_budget_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/probe_g5_training_smoke.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --full-epoch --output ../logs/profiles/g5_epoch_budget_20261018.json
+SBATCH
+```
+
+Check the job log for 130 batches per model and the JSON SHA-256. Its first
+epoch loss cannot be used as a Validation result or an optimal epoch count.

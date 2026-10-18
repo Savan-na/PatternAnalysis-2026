@@ -1,7 +1,8 @@
-"""Bounded two-patient Train optimizer smoke for the paired G5 candidate.
+"""Bounded Train optimizer smoke for the paired G5 candidate.
 
-Two batches per model test patient selection, uniform crops, weighted loss,
-gradient updates and exact delivered-mask exposure. No checkpoint is saved.
+Default: two batches per model. --full-epoch: all 26 Train patients and 130
+batches per model to measure one-epoch runtime and exact class exposure.
+Neither mode saves a checkpoint or evaluates Validation/Test data.
 """
 
 from __future__ import annotations
@@ -55,6 +56,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--full-epoch", action="store_true")
     parser.add_argument("--config", type=Path,
                         default=PROJECT / "code/config/g5_controlled_training_candidate.json")
     parser.add_argument("--g1", type=Path,
@@ -90,19 +92,22 @@ def main() -> None:
     if (len(cases["train"]) != config["train_cases"]
             or len(cases["validation"]) != config["validation_cases"]):
         raise ValueError("Frozen cohort size changed")
-    selected = epoch_cases(cases["train"], epoch=0, seed=config["seed"])[:2]
-    if len({case.patient for case in selected}) != 2:
-        raise ValueError("Smoke must select two distinct Train patients")
+    selected = epoch_cases(cases["train"], epoch=0, seed=config["seed"])
+    selected = selected if args.full_epoch else selected[:2]
+    draws = config["sampling"]["patches_per_patient_epoch"] if args.full_epoch else 2
+    if len({case.patient for case in selected}) != len(selected):
+        raise ValueError("Smoke must select distinct Train patients")
     g1_cases = {row["case"]: row for row in json.loads(args.g1.read_text(encoding="utf-8"))["cases"]}
     batch_arrays = []
     records = []
+    preparation_start = perf_counter()
     for case in selected:
         audited = g1_cases[case.identifier]
         if (sha256_file(case.mri) != audited["mri_sha256"]
                 or sha256_file(case.mask) != audited["mask_sha256"]):
             raise ValueError(f"{case.identifier}: source changed since G1")
         volume = zscore_nonzero(downsample(load_case(case)))
-        for draw in range(2):
+        for draw in range(draws):
             origin = crop_origin(volume.mask, PATCH_XYZ, "uniform", seed=config["seed"],
                                  epoch=0, case_id=case.identifier, draw=draw)
             image, mask = crop_for_3d_model(volume, origin)
@@ -110,10 +115,15 @@ def main() -> None:
             records.append({"case": case.identifier, "patient": case.patient,
                             "draw": draw, "origin_xyz": origin,
                             "mask_counts": np.bincount(mask.ravel(), minlength=6).tolist()})
-    # Each smoke batch contains one patch from each selected patient.
-    mixed_order = (0, 2, 1, 3)
+    # Interleave patients before batching so consecutive draws are not adjacent.
+    mixed_order = tuple(patient_index * draws + draw
+                        for draw in range(draws)
+                        for patient_index in range(len(selected)))
     batch_arrays = [batch_arrays[index] for index in mixed_order]
     records = [records[index] for index in mixed_order]
+    preparation_seconds = perf_counter() - preparation_start
+    if len(batch_arrays) % config["sampling"]["batch_size"]:
+        raise ValueError("Patch count does not form complete batches")
     weights = torch.tensor(config["objective"]["ce_class_weights"],
                            dtype=torch.float32, device="cuda")
     outcomes = []
@@ -127,7 +137,7 @@ def main() -> None:
         torch.cuda.reset_peak_memory_stats()
         steps = []
         started = perf_counter()
-        for batch_start in (0, 2):
+        for batch_start in range(0, len(batch_arrays), 2):
             current = batch_arrays[batch_start:batch_start + 2]
             x = torch.from_numpy(np.ascontiguousarray(np.stack([item[0] for item in current]))).to("cuda")
             y = torch.from_numpy(np.ascontiguousarray(np.stack([item[1] for item in current]))).to("cuda")
@@ -151,23 +161,29 @@ def main() -> None:
             steps.append({"step": len(steps) + 1, "loss": float(loss.item()),
                           "gradient_norm_l2": gradient_l2,
                           "prediction_counts": prediction_counts.cpu().tolist()})
+            if args.full_epoch and len(steps) % 25 == 0:
+                print(f"{name}: {len(steps)}/{len(batch_arrays) // 2} batches", flush=True)
         torch.cuda.synchronize()
         result = {"model": name, "steps": steps, "exposure": recorder.summary(),
                   "elapsed_seconds": perf_counter() - started,
                   "peak_allocated_bytes": int(torch.cuda.max_memory_allocated()),
                   "peak_reserved_bytes": int(torch.cuda.max_memory_reserved())}
-        if result["exposure"]["patches"] != 4:
+        if result["exposure"]["patches"] != len(batch_arrays):
             raise ValueError("Smoke exposure recorder missed model inputs")
         outcomes.append(result)
-        print(f"{name}: 2 batches, final_loss={steps[-1]['loss']:.5f}, "
+        print(f"{name}: {len(steps)} batches, final_loss={steps[-1]['loss']:.5f}, "
+              f"model_loop_seconds={result['elapsed_seconds']:.1f}, "
               f"peak_allocated_GiB={result['peak_allocated_bytes'] / 2**30:.3f}", flush=True)
         del model, optimizer, x, y, logits, loss
         torch.cuda.empty_cache()
 
     if outcomes[0]["exposure"] != outcomes[1]["exposure"]:
         raise ValueError("Paired models saw different delivered-mask exposure")
-    result = {"kind": "G5_two_patient_paired_training_smoke_no_checkpoint",
+    result = {"kind": "G5_full_Train_epoch_budget_probe_no_checkpoint" if args.full_epoch
+              else "G5_two_patient_paired_training_smoke_no_checkpoint",
               "job_id": os.environ["SLURM_JOB_ID"], "seed": config["seed"],
+              "full_epoch": args.full_epoch, "preparation_seconds": preparation_seconds,
+              "patches_per_patient": draws,
               "cases": [case.identifier for case in selected], "patches": records,
               "config_sha256": sha256_file(args.config), "g1_sha256": G1_SHA,
               "split_sha256": sha256_file(DEFAULT_SPLIT),

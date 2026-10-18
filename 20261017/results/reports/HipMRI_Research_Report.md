@@ -515,6 +515,27 @@ weight and focuses on Bladder, Rectum and Prostate Dice. Test remains sealed.
 This is a *candidate protocol pending a bounded training smoke run and runtime
 check*, not a claim that 40 epochs or the current weights are optimal.
 
+### G5 paired training-candidate smoke — 18 October 2026
+
+Rangpur A100 job `672807` used the candidate configuration SHA-256
+`aafdcc4e695de24fec9c6748db3448287b9e5040d036bd7eb4422776521f0ee7`.
+Its returned JSON matched Rangpur SHA-256
+`4161b30138243dbf3f52ba44cb097aead6046e50d60e37b60d64329bf6a336d5`.
+The G4 patient selector chose `O025_Week6` and `R039_Week2`, with one patch
+from each patient in each of two batches. Each Patch contained 131,072
+labelled voxels. Both networks received identical four-Patch label exposure:
+Bladder appeared in four patches, Rectum and Prostate in three each. Their
+respective pooled voxel shares were 2.136%, 0.665% and 0.369%.
+
+Both networks completed two weighted-CE plus foreground-Dice optimizer
+updates with finite positive gradient norms. Standard's two recorded losses
+were 1.42226 and 1.36789 (peak allocated 0.169 GiB); Improved's were
+1.49115 and 1.30671 (0.274 GiB). The measured model-loop times were 0.74
+and 0.17 seconds, excluding NIfTI loading and preprocessing. These two
+updates verify basic wiring and recording only. Their losses, predictions
+and times do not establish relative model quality, full-epoch runtime or
+Validation performance. The proposed 40-epoch budget remains a candidate.
+
 ## Failure Analysis
 
 Pending model experiments. G1 raw-data findings and visual-screen limits are
