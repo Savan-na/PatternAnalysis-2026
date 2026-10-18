@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 21:42:36 AEST**
+Updated / 更新时间: **2026-10-18 21:55:25 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **52** · Files / 文件: **154**
+Directories / 目录: **52** · Files / 文件: **156**
 
 ## Directory Tree / 目录树
 
@@ -57,6 +57,7 @@ Directories / 目录: **52** · Files / 文件: **154**
 │   │   └── test_splits.py
 │   ├── tools/
 │   │   ├── __pycache__/
+│   │   │   ├── probe_g5_full_volume.cpython-314.pyc
 │   │   │   └── tiny_overfit_g5.cpython-314.pyc
 │   │   ├── audit_g2_train_slices.py
 │   │   ├── audit_g3_candidate_sampling.py
@@ -64,6 +65,7 @@ Directories / 目录: **52** · Files / 文件: **154**
 │   │   ├── audit_g4_patient_sampling.py
 │   │   ├── audit_train_raw.py
 │   │   ├── package_transfer.py
+│   │   ├── probe_g5_full_volume.py
 │   │   ├── probe_g5_patch_gpu.py
 │   │   ├── review_g1_bladder_islands.py
 │   │   ├── review_g1_overlays.py
@@ -260,6 +262,7 @@ Directories / 目录: **52** · Files / 文件: **154**
 | `code/tests/test_sampling.py` | Patient cycle, paired crop and exposure-record tests; Definitions: case, PatientBalancedSamplingTests | 患者轮换、配对裁剪及曝光记录测试；定义：case, PatientBalancedSamplingTests |
 | `code/tests/test_sampling_audit.py` | Candidate crop bounds and repeatability checks; Definitions: CandidateCropTests | 候选裁剪边界与可重复性检查；定义：CandidateCropTests |
 | `code/tests/test_splits.py` | Patient isolation and file pairing tests; Definitions: PatientSplitTests | 患者隔离与文件配对测试；定义：PatientSplitTests |
+| `code/tools/__pycache__/probe_g5_full_volume.cpython-314.pyc` | Binary or large file; 10,724 bytes | 二进制或大文件；10,724 字节 |
 | `code/tools/__pycache__/tiny_overfit_g5.cpython-314.pyc` | Binary or large file; 16,475 bytes | 二进制或大文件；16,475 字节 |
 | `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: sha256_file, write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：sha256_file, write_csv, main |
 | `code/tools/audit_g3_candidate_sampling.py` | Compare fixed Train-only uniform and organ-aware candidate crops; Definitions: sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main | 比较固定的训练集均匀与器官感知候选裁剪；定义：sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main |
@@ -267,6 +270,7 @@ Directories / 目录: **52** · Files / 文件: **154**
 | `code/tools/audit_g4_patient_sampling.py` | Dry-run patient-balanced model-ready Train patches on CPU; Definitions: sha256_file, main | 在 CPU 上预演患者均衡的训练模型输入 Patch；定义：sha256_file, main |
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/package_transfer.py` | Build and verify a source-only transfer ZIP; Definitions: main | 创建并校验仅含源码的传输包；定义：main |
+| `code/tools/probe_g5_full_volume.py` | Measure full-volume Train inference geometry, time and A100 memory with random weights; Definitions: sha256_file, main | 用随机权重测量完整训练体积推理的几何、时间及 A100 显存；定义：sha256_file, main |
 | `code/tools/probe_g5_patch_gpu.py` | Measure both 3D models' real Train patch gradients and A100 memory; Definitions: sha256_file, main | 测量两个 3D 模型真实训练 Patch 的梯度和 A100 显存；定义：sha256_file, main |
 | `code/tools/review_g1_bladder_islands.py` | Locate and visualize two flagged Train Bladder components; Definitions: inspect_case, main | 定位并可视化两例训练集膀胱小连通区域；定义：inspect_case, main |
 | `code/tools/review_g1_overlays.py` | Render raw Train MRI and ground-truth overlays for G1 review; Definitions: render_case, main | 绘制训练集原始 MRI 与真实标签叠加图供 G1 审查；定义：render_case, main |

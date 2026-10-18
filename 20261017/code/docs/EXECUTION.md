@@ -81,6 +81,9 @@ exposure, and cannot establish model performance without later Validation.
   changes, or stop and revise the spatial resolution before any model run.
 - Benchmark a complete downsampled volume on allocated GPU. Fix the final
   shape, padding, batch size and training budget in a hashed run config.
+- Use the largest-Z Train volume for this inference capacity check before
+  deciding how frequently whole-volume Validation can run. Its random-weight
+  outputs are not evaluation scores.
 - Before formal G5 training, run the dedicated real-Train-patch A100 probe for
   both primary 3D models at batch size 2. Check every parameter gradient,
   forward/backward time and peak allocated/reserved memory with the same

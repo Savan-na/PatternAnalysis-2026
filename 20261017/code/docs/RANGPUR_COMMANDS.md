@@ -393,3 +393,49 @@ unweighted 500-step JSON before deciding any further experiment.
 Job `672730` completed and its returned JSON SHA-256 matched Rangpur:
 `f9f53f6eaaabb922f29e04d4905d5529ad24c668b3b2733620c9de340008b7c7`.
 The comparison and its limits are recorded in the formal research report.
+
+## G5 full-volume inference capacity gate
+
+Before freezing cohort training and Validation schedules, check that both
+current 3D networks can infer an entire preprocessed volume on one allocated
+A100. The Train case `K019_Week1` is the sole 256×256×144 raw Train MRI in the
+G1 inventory, so it covers the largest observed Z extent. The script uses
+random weights and measures geometry, execution time and peak memory only;
+its predictions are not segmentation evidence. It reads the frozen G1 hash
+and refuses changed source files.
+
+From **Windows PowerShell** in `Final project`, transfer the source (SHA-256
+`d47d4a4508f4ee7236927444696384bb25b8cbdc5a7bb6b55b939b4ac71e7040`):
+
+```powershell
+scp '.\20261017\code\tools\probe_g5_full_volume.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/probe_g5_full_volume.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On the **Rangpur login node**, verify the hash and empty destination before
+submitting the short GPU job:
+
+```bash
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/probe_g5_full_volume.py"
+test ! -e "$HOME/20261018_g1_stage/20261017/logs/profiles/g5_full_volume_probe_20261018.json" && echo 'Full-volume probe output path is free'
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_full_volume_probe_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/probe_g5_full_volume.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id K019_Week1 --repeats 2 \
+  --output ../logs/profiles/g5_full_volume_probe_20261018.json
+SBATCH
+```
+
+Use the job ID printed by `sbatch` to inspect the `.out` file. Once the JSON
+exists, send its SHA-256 and the two model rows. A pass supports selecting a
+whole-volume Validation inference strategy; it does not approve a training
+budget or show model accuracy.
