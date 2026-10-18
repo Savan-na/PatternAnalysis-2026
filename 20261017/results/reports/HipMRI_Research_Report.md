@@ -58,15 +58,39 @@ Every Train mask has an unspecified spatial unit in its NIfTI header. This is
 a metadata warning, not proof of image–mask misalignment. The audit reported
 no mechanical case errors. The intensity spread and two tiny Bladder islands
 are review flags, not established corruption. Affine agreement alone cannot
-certify that labels match the anatomy. Representative and flagged MRI/mask
-overlays remain required before G1 can be closed.
+certify that labels match the anatomy. The selected overlays below provide an
+initial visual screen; the flagged components need further review.
 
-The visual review set is prespecified from the current audit and historical
-flags: `B038_Week0` (small Prostate label), `K019_Week1` (unusual shape),
-`N010_Week3` and `D031_Week7` (tiny Bladder islands), `S033_Week1`
-(highest case MRI maximum), and `H017_Week7` (highest zero-voxel share).
-These are review targets, not confirmed data defects. The raw-image overlay
-tool is `code/tools/review_g1_overlays.py`; no overlay has yet been judged.
+### G1 visual review — 18 October 2026
+
+Six prespecified Train cases were rendered directly from the source NIfTI
+files, without preprocessing. Each figure shows axial sections through the
+Prostate and Bladder plus coronal and sagittal sections through the Prostate.
+On these displayed sections, the organ outlines appear broadly consistent
+with visible anatomy; no gross whole-image/mask shift is apparent. This is a
+qualitative screen, not expert confirmation of every boundary or every slice.
+
+| Case and raw overlay | Reason selected | What the displayed sections show |
+|---|---|---|
+| [B038_Week0](../data_analysis/g1_overlay_B038_Week0.png) | Historical small Prostate label | Small central Prostate outline is visible below the Bladder; no obvious gross displacement. |
+| [K019_Week1](../data_analysis/g1_overlay_K019_Week1.png) | Only 144-slice Train volume | Organ outlines remain within the displayed anatomy despite the longer scan. |
+| [N010_Week3](../data_analysis/g1_overlay_N010_Week3.png) | Tiny second Bladder component | Main Bladder aligns visually; the tiny component is not resolved by the selected panels. |
+| [D031_Week7](../data_analysis/g1_overlay_D031_Week7.png) | Tiny second Bladder component | Main Bladder aligns visually; the tiny component is not resolved by the selected panels. |
+| [S033_Week1](../data_analysis/g1_overlay_S033_Week1.png) | Highest case MRI maximum | No obvious gross misalignment in the shown planes; these views do not locate or explain the volume maximum. |
+| [H017_Week7](../data_analysis/g1_overlay_H017_Week7.png) | Highest zero-voxel share | Extensive black exterior is visible; the panels do not establish whether every zero voxel is background. |
+
+The two Bladder islands still need targeted slice or component-location review
+before they can be accepted or called annotation errors. The unspecified Mask
+spatial-unit header also remains a metadata caveat despite exact affine
+agreement. Six selected cases cannot establish anatomical correctness for all
+143 Train volumes, so G1 anatomical review remains open.
+
+The PNGs are medical-image-derived local review artifacts. HipMRI Study data
+use terms prohibit re-identification and commercial use and require an
+acknowledgment and citation when presenting derived results publicly. For this
+segmentation study, cite the HipMRI Study MRI-alone treatment-planning paper:
+https://doi.org/10.1016/j.ijrobp.2015.08.045. Acknowledgment for any public
+presentation: "Data were provided in part by HipMRI Study."
 
 ## Interventions
 
@@ -80,12 +104,12 @@ not a segmentation performance comparison.
 
 ## Failure Analysis
 
-Pending model experiments. Raw-data review flags will be recorded here after
-the full audit summary and visual checks are assessed.
+Pending model experiments. The G1 raw-data findings and remaining visual
+checks are recorded under Problems Identified above.
 
 ## Conclusions
 
 The current Train cohort passed the scripted mechanical integrity checks.
-G1 remains open for metadata interpretation and anatomical alignment review.
+G1 remains open for targeted Bladder-island and broader anatomical review.
 No causal conclusion about Prostate or Rectum prediction failure follows from
 this integrity pass alone.

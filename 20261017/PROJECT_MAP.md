@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 11:14:47 AEST**
+Updated / 更新时间: **2026-10-18 11:40:42 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **42** · Files / 文件: **55**
+Directories / 目录: **42** · Files / 文件: **61**
 
 ## Directory Tree / 目录树
 
@@ -82,6 +82,12 @@ Directories / 目录: **42** · Files / 文件: **55**
 │   │   ├── comparisons/
 │   │   └── improved_3d/
 │   ├── data_analysis/
+│   │   ├── g1_overlay_B038_Week0.png
+│   │   ├── g1_overlay_D031_Week7.png
+│   │   ├── g1_overlay_H017_Week7.png
+│   │   ├── g1_overlay_K019_Week1.png
+│   │   ├── g1_overlay_N010_Week3.png
+│   │   ├── g1_overlay_S033_Week1.png
 │   │   ├── HipMRI_Pretraining_Data_Analysis.md
 │   │   ├── HipMRI_Pretraining_Data_Analysis.previous-41201a5e.bak
 │   │   ├── HipMRI_Pretraining_Data_Analysis.previous-5dc166bd.bak
@@ -115,7 +121,7 @@ Directories / 目录: **42** · Files / 文件: **55**
 
 | File / 文件 | English content overview | 中文内容概览 |
 |---|---|---|
-| `.gitignore` | Git rules for local artifacts; UTF-8 text with 19 lines; 327 bytes | 本地运行产物的 Git 规则；UTF-8 文本，19 行；327 字节 |
+| `.gitignore` | Git rules for local artifacts; UTF-8 text with 20 lines; 366 bytes | 本地运行产物的 Git 规则；UTF-8 文本，20 行；366 字节 |
 | `code/config/arms/baseline_2d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/baseline_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/improved_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
@@ -157,6 +163,12 @@ Directories / 目录: **42** · Files / 文件: **55**
 | `logs/README.md` | Entry point or directory guide; Sections: Experiment Logs | 项目入口或目录说明；章节标题：Experiment Logs |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
 | `README.md` | Entry point or directory guide; Sections: HipMRI Data-Driven Model Development; Where things belong | 项目入口或目录说明；章节标题：HipMRI Data-Driven Model Development; Where things belong |
+| `results/data_analysis/g1_overlay_B038_Week0.png` | Binary or large file; 477,710 bytes | 二进制或大文件；477,710 字节 |
+| `results/data_analysis/g1_overlay_D031_Week7.png` | Binary or large file; 393,632 bytes | 二进制或大文件；393,632 字节 |
+| `results/data_analysis/g1_overlay_H017_Week7.png` | Binary or large file; 365,557 bytes | 二进制或大文件；365,557 字节 |
+| `results/data_analysis/g1_overlay_K019_Week1.png` | Binary or large file; 471,124 bytes | 二进制或大文件；471,124 字节 |
+| `results/data_analysis/g1_overlay_N010_Week3.png` | Binary or large file; 453,764 bytes | 二进制或大文件；453,764 字节 |
+| `results/data_analysis/g1_overlay_S033_Week1.png` | Binary or large file; 443,971 bytes | 二进制或大文件；443,971 字节 |
 | `results/data_analysis/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
 | `results/data_analysis/HipMRI_Pretraining_Data_Analysis.previous-41201a5e.bak` | UTF-8 text with 106 lines; 14,485 bytes | UTF-8 文本，106 行；14,485 字节 |
 | `results/data_analysis/HipMRI_Pretraining_Data_Analysis.previous-5dc166bd.bak` | UTF-8 text with 93 lines; 12,305 bytes | UTF-8 文本，93 行；12,305 字节 |
