@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 07:04:17 AEST**
+Updated / 更新时间: **2026-10-19 07:07:23 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **54** · Files / 文件: **266**
+Directories / 目录: **54** · Files / 文件: **268**
 
 ## Directory Tree / 目录树
 
@@ -88,6 +88,7 @@ Directories / 目录: **54** · Files / 文件: **266**
 │   │   ├── review_g1_bladder_islands.py
 │   │   ├── review_g1_overlays.py
 │   │   ├── review_g1_train_contact_sheets.py
+│   │   ├── review_g5_validation_failures.py
 │   │   ├── submit_g5_2d.sh
 │   │   ├── submit_g5_40.sh
 │   │   ├── summarize_g2_slice_detail.py
@@ -225,6 +226,7 @@ Directories / 目录: **54** · Files / 文件: **266**
 │   │   ├── baseline_2d/
 │   │   ├── baseline_3d/
 │   │   ├── comparisons/
+│   │   │   └── README.md
 │   │   └── improved_3d/
 │   ├── data_analysis/
 │   │   ├── g1_bladder_review/
@@ -404,6 +406,7 @@ Directories / 目录: **54** · Files / 文件: **266**
 | `code/tools/review_g1_bladder_islands.py` | Locate and visualize two flagged Train Bladder components; Definitions: inspect_case, main | 定位并可视化两例训练集膀胱小连通区域；定义：inspect_case, main |
 | `code/tools/review_g1_overlays.py` | Render raw Train MRI and ground-truth overlays for G1 review; Definitions: render_case, main | 绘制训练集原始 MRI 与真实标签叠加图供 G1 审查；定义：render_case, main |
 | `code/tools/review_g1_train_contact_sheets.py` | Render two-slice Train patient sheets for G1 alignment screening; Definitions: render_patient, main | 绘制训练集患者双切面图供 G1 对齐筛查；定义：render_patient, main |
+| `code/tools/review_g5_validation_failures.py` | Definitions: sha256, load_selected, selected_slice, render, main | 定义：sha256, load_selected, selected_slice, render, main |
 | `code/tools/submit_g5_2d.sh` | UTF-8 text with 77 lines; 3,122 bytes | UTF-8 文本，77 行；3,122 字节 |
 | `code/tools/submit_g5_40.sh` | Submit CPU recovery check and dependency-gated Standard/Improved 40-epoch A100 jobs; UTF-8 text with 95 lines; 3,818 bytes | 提交 CPU 恢复测试及依赖测试通过的双模型 40 轮 A100 作业；UTF-8 文本，95 行；3,818 字节 |
 | `code/tools/summarize_g2_slice_detail.py` | Reconcile G2 slice and intensity CSVs with G1 and draw local plots; Definitions: read_csv, write_csv, check_hash, main | 将 G2 切片及强度 CSV 与 G1 核对并绘制本地图；定义：read_csv, write_csv, check_hash, main |
@@ -520,6 +523,7 @@ Directories / 目录: **54** · Files / 文件: **266**
 | `logs/training/improved_3d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model | JSON 字段：config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
 | `README.md` | Entry point or directory guide; Sections: HipMRI Data-Driven Model Development; Where things belong | 项目入口或目录说明；章节标题：HipMRI Data-Driven Model Development; Where things belong |
+| `results/case_studies/comparisons/README.md` | Entry point or directory guide; Sections: G5 Validation failure overlays | 项目入口或目录说明；章节标题：G5 Validation failure overlays |
 | `results/data_analysis/g1_bladder_review/g1_bladder_island_D031_Week7.png` | Binary or large file; 250,160 bytes | 二进制或大文件；250,160 字节 |
 | `results/data_analysis/g1_bladder_review/g1_bladder_island_N010_Week3.png` | Binary or large file; 254,248 bytes | 二进制或大文件；254,248 字节 |
 | `results/data_analysis/g1_bladder_review/README.md` | Entry point or directory guide; Sections: G1 Bladder component review | 项目入口或目录说明；章节标题：G1 Bladder component review |
