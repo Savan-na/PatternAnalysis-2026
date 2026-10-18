@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 08:35:26 AEST**
+Updated / 更新时间: **2026-10-19 08:36:59 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **54** · Files / 文件: **315**
+Directories / 目录: **54** · Files / 文件: **316**
 
 ## Directory Tree / 目录树
 
@@ -93,6 +93,7 @@ Directories / 目录: **54** · Files / 文件: **315**
 │   │   ├── submit_g5_2d.sh
 │   │   ├── submit_g5_40.sh
 │   │   ├── submit_g5_extend_50.sh
+│   │   ├── submit_g6_test.sh
 │   │   ├── summarize_g2_slice_detail.py
 │   │   ├── summarize_g2_train_audit.py
 │   │   ├── summarize_g3_candidate_sampling.py
@@ -458,6 +459,7 @@ Directories / 目录: **54** · Files / 文件: **315**
 | `code/tools/submit_g5_2d.sh` | UTF-8 text with 77 lines; 3,122 bytes | UTF-8 文本，77 行；3,122 字节 |
 | `code/tools/submit_g5_40.sh` | Submit CPU recovery check and dependency-gated Standard/Improved 40-epoch A100 jobs; UTF-8 text with 95 lines; 3,818 bytes | 提交 CPU 恢复测试及依赖测试通过的双模型 40 轮 A100 作业；UTF-8 文本，95 行；3,818 字节 |
 | `code/tools/submit_g5_extend_50.sh` | UTF-8 text with 109 lines; 4,866 bytes | UTF-8 文本，109 行；4,866 字节 |
+| `code/tools/submit_g6_test.sh` | UTF-8 text with 35 lines; 1,550 bytes | UTF-8 文本，35 行；1,550 字节 |
 | `code/tools/summarize_g2_slice_detail.py` | Reconcile G2 slice and intensity CSVs with G1 and draw local plots; Definitions: read_csv, write_csv, check_hash, main | 将 G2 切片及强度 CSV 与 G1 核对并绘制本地图；定义：read_csv, write_csv, check_hash, main |
 | `code/tools/summarize_g2_train_audit.py` | Summarize verified raw Train audit into G2 tables and plots; Definitions: write_csv, main | 将已核验的训练集原始审计汇总为 G2 表格与图；定义：write_csv, main |
 | `code/tools/summarize_g3_candidate_sampling.py` | Verify full candidate patch records and summarize exposure; Definitions: sha256_file, write_csv, main | 核验完整候选 Patch 记录并汇总曝光；定义：sha256_file, write_csv, main |

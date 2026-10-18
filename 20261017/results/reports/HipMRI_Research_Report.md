@@ -762,3 +762,14 @@ organ-aware sampling and separate Train-derived class weights, so its quality
 gap from the paired 3D arms cannot be attributed to architecture alone. The
 separate 2D learning figure is in `results/figures/baseline_2d/`; no 2D Test
 result has been generated.
+
+### G6 Test evaluation gate
+
+The prepared one-time Test evaluator requires both 3D continuations to finish
+epoch 50 before it reads any Test MRI or label. It checks each run's frozen
+config, source hashes, final Validation record and immutable selected-epoch
+checkpoint. The existing patient-balanced Validation rule chooses `best.pt`;
+Test values do not choose or alter the weights. The planned output is a single
+derived JSON with per-case and pooled overlap, patient-level small-organ
+scores, physical HD95, prostate apex/base measurements and inference cost.
+The output and Test findings do not yet exist.
