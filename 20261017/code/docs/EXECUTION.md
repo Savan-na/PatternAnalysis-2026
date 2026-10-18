@@ -70,6 +70,13 @@ exposure, and cannot establish model performance without later Validation.
 
 ## Later gates
 
+The paired cohort training candidate is recorded in
+`code/config/g5_controlled_training_candidate.json`. Check its Train-only
+weight provenance, split hash, patient-epoch update count, and equal model
+settings before a bounded GPU training smoke run. Freeze the configuration
+only after the smoke run demonstrates correct batches, gradients, actual
+class-exposure recording, Validation geometry and feasible runtime.
+
 - G4: dry-run one scan per Train patient per epoch through the same
   downsampling, normalization and paired patch conversion that GPU training
   will use. Compare uniform and organ-aware candidates, record class hits,

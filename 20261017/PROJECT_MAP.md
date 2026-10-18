@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 21:55:25 AEST**
+Updated / 更新时间: **2026-10-18 22:05:23 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **52** · Files / 文件: **156**
+Directories / 目录: **52** · Files / 文件: **161**
 
 ## Directory Tree / 目录树
 
@@ -22,6 +22,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 │   │   │   └── improved_3d/
 │   │   │       └── arm.json
 │   │   ├── g3_patch_audit.json
+│   │   ├── g5_controlled_training_candidate.json
 │   │   ├── g5_weighted_ce_diagnostic.json
 │   │   └── patient_split.json
 │   ├── docs/
@@ -49,6 +50,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 │   ├── tests/
 │   │   ├── test_boundaries.py
 │   │   ├── test_data.py
+│   │   ├── test_g5_candidate.py
 │   │   ├── test_metrics.py
 │   │   ├── test_models_and_losses.py
 │   │   ├── test_raw_audit.py
@@ -58,6 +60,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 │   ├── tools/
 │   │   ├── __pycache__/
 │   │   │   ├── probe_g5_full_volume.cpython-314.pyc
+│   │   │   ├── probe_g5_training_smoke.cpython-314.pyc
 │   │   │   └── tiny_overfit_g5.cpython-314.pyc
 │   │   ├── audit_g2_train_slices.py
 │   │   ├── audit_g3_candidate_sampling.py
@@ -67,6 +70,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 │   │   ├── package_transfer.py
 │   │   ├── probe_g5_full_volume.py
 │   │   ├── probe_g5_patch_gpu.py
+│   │   ├── probe_g5_training_smoke.py
 │   │   ├── review_g1_bladder_islands.py
 │   │   ├── review_g1_overlays.py
 │   │   ├── review_g1_train_contact_sheets.py
@@ -97,6 +101,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 │   │   ├── map_watcher_stdout.txt
 │   │   └── project_map_watcher.pid
 │   ├── profiles/
+│   │   ├── g5_full_volume_probe_20261018.json
 │   │   ├── g5_patch_probe_20261018.json
 │   │   ├── g5_standard_500_20261018.json
 │   │   ├── g5_standard_weighted_500_20261018.json
@@ -231,6 +236,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 | `code/config/arms/baseline_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/improved_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/g3_patch_audit.json` | Frozen candidate-crop audit design, not a training configuration; JSON fields: scope, seed, patch_shape_xyz, draws_per_case_per_arm, arm_schedules | 固定的候选裁剪审计设计，非训练配置；JSON 字段：scope, seed, patch_shape_xyz, draws_per_case_per_arm, arm_schedules |
+| `code/config/g5_controlled_training_candidate.json` | Candidate paired 3D cohort training protocol awaiting a bounded GPU smoke run; JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | 等待有限 GPU 冒烟运行的双模型队列训练候选方案；JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
 | `code/config/g5_weighted_ce_diagnostic.json` | Train-only weighted CE configuration for the Standard tiny learning diagnostic; JSON fields: scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights | 仅用训练数据为 Standard 微型学习诊断配置加权交叉熵；JSON 字段：scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights |
 | `code/config/patient_split.json` | Frozen patient groups and expected counts; JSON fields: provenance, train, validation, test, expected_volumes | 固定患者分组与预期数量；JSON 字段：provenance, train, validation, test, expected_volumes |
 | `code/docs/EXECUTION.md` | Evidence and execution gates; Sections: Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: current existing-pipeline diagnosis | 证据与执行关口；章节标题：Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: current existing-pipeline diagnosis |
@@ -256,6 +262,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 | `code/requirements.txt` | Python dependency ranges; UTF-8 text with 5 lines; 79 bytes | Python 依赖版本范围；UTF-8 文本，5 行；79 字节 |
 | `code/tests/test_boundaries.py` | Physical direction and empty-surface tests; Definitions: BoundaryTests, SurfaceTests | 物理方向及空表面测试；定义：BoundaryTests, SurfaceTests |
 | `code/tests/test_data.py` | NIfTI alignment, downsampling and label tests; Definitions: DataContractTests, DownsamplingGeometryTests, NiftiPairTests | NIfTI 对齐、降采样与标签测试；定义：DataContractTests, DownsamplingGeometryTests, NiftiPairTests |
+| `code/tests/test_g5_candidate.py` | Check paired G5 candidate budget and Train-only weight provenance; Definitions: G5CandidateTests | 核验 G5 双模型候选预算及仅训练集权重来源；定义：G5CandidateTests |
 | `code/tests/test_metrics.py` | Class-confusion and overlap metric tests; Definitions: OverlapTests | 类别混淆与重叠指标测试；定义：OverlapTests |
 | `code/tests/test_models_and_losses.py` | Shape, gradient, supervision and inference tests; Definitions: NetworkTests | 形状、梯度、深监督与推理测试；定义：NetworkTests |
 | `code/tests/test_raw_audit.py` | Train inventory and file-hash audit tests; Definitions: RawAuditInventoryTests | 训练集文件盘点与文件哈希审计测试；定义：RawAuditInventoryTests |
@@ -263,6 +270,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 | `code/tests/test_sampling_audit.py` | Candidate crop bounds and repeatability checks; Definitions: CandidateCropTests | 候选裁剪边界与可重复性检查；定义：CandidateCropTests |
 | `code/tests/test_splits.py` | Patient isolation and file pairing tests; Definitions: PatientSplitTests | 患者隔离与文件配对测试；定义：PatientSplitTests |
 | `code/tools/__pycache__/probe_g5_full_volume.cpython-314.pyc` | Binary or large file; 10,724 bytes | 二进制或大文件；10,724 字节 |
+| `code/tools/__pycache__/probe_g5_training_smoke.cpython-314.pyc` | Binary or large file; 16,910 bytes | 二进制或大文件；16,910 字节 |
 | `code/tools/__pycache__/tiny_overfit_g5.cpython-314.pyc` | Binary or large file; 16,475 bytes | 二进制或大文件；16,475 字节 |
 | `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: sha256_file, write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：sha256_file, write_csv, main |
 | `code/tools/audit_g3_candidate_sampling.py` | Compare fixed Train-only uniform and organ-aware candidate crops; Definitions: sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main | 比较固定的训练集均匀与器官感知候选裁剪；定义：sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main |
@@ -272,6 +280,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 | `code/tools/package_transfer.py` | Build and verify a source-only transfer ZIP; Definitions: main | 创建并校验仅含源码的传输包；定义：main |
 | `code/tools/probe_g5_full_volume.py` | Measure full-volume Train inference geometry, time and A100 memory with random weights; Definitions: sha256_file, main | 用随机权重测量完整训练体积推理的几何、时间及 A100 显存；定义：sha256_file, main |
 | `code/tools/probe_g5_patch_gpu.py` | Measure both 3D models' real Train patch gradients and A100 memory; Definitions: sha256_file, main | 测量两个 3D 模型真实训练 Patch 的梯度和 A100 显存；定义：sha256_file, main |
+| `code/tools/probe_g5_training_smoke.py` | Check paired two-patient weighted Train batches, gradients and actual exposure without a checkpoint; Definitions: sha256_file, check_config, main | 不保存权重，检查双模型两患者加权训练批次、梯度和实际曝光；定义：sha256_file, check_config, main |
 | `code/tools/review_g1_bladder_islands.py` | Locate and visualize two flagged Train Bladder components; Definitions: inspect_case, main | 定位并可视化两例训练集膀胱小连通区域；定义：inspect_case, main |
 | `code/tools/review_g1_overlays.py` | Render raw Train MRI and ground-truth overlays for G1 review; Definitions: render_case, main | 绘制训练集原始 MRI 与真实标签叠加图供 G1 审查；定义：render_case, main |
 | `code/tools/review_g1_train_contact_sheets.py` | Render two-slice Train patient sheets for G1 alignment screening; Definitions: render_patient, main | 绘制训练集患者双切面图供 G1 对齐筛查；定义：render_patient, main |
@@ -293,6 +302,7 @@ Directories / 目录: **52** · Files / 文件: **156**
 | `logs/internal/map_watcher_stderr.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/map_watcher_stdout.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/project_map_watcher.pid` | UTF-8 text with 1 lines; 7 bytes | UTF-8 文本，1 行；7 字节 |
+| `logs/profiles/g5_full_volume_probe_20261018.json` | JSON fields: case, data_code_sha256, g1_sha256, gpu, gpu_total_bytes, inference_code_sha256, job_id, kind, mask_sha256, mri_sha256, numpy, padded_input_shape_dhw | JSON 字段：case, data_code_sha256, g1_sha256, gpu, gpu_total_bytes, inference_code_sha256, job_id, kind, mask_sha256, mri_sha256, numpy, padded_input_shape_dhw |
 | `logs/profiles/g5_patch_probe_20261018.json` | JSON fields: batch_size, case, cuda_build, data_code_sha256, gpu, gpu_total_bytes, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy | JSON 字段：batch_size, case, cuda_build, data_code_sha256, gpu, gpu_total_bytes, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy |
 | `logs/profiles/g5_standard_500_20261018.json` | JSON fields: case, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy | JSON 字段：case, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256, mri_sha256, numpy |
 | `logs/profiles/g5_standard_weighted_500_20261018.json` | JSON fields: case, class_weights, class_weights_config_sha256, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256 | JSON 字段：case, class_weights, class_weights_config_sha256, cuda_build, data_code_sha256, g1_sha256, gpu, input_shape, job_id, kind, loss_code_sha256, mask_sha256 |

@@ -439,3 +439,56 @@ Use the job ID printed by `sbatch` to inspect the `.out` file. Once the JSON
 exists, send its SHA-256 and the two model rows. A pass supports selecting a
 whole-volume Validation inference strategy; it does not approve a training
 budget or show model accuracy.
+
+Job `672782` completed; its JSON SHA-256 matched Rangpur:
+`263c2309e00d21666e69418a8c82d436585e3037285c0e02f17f959488b21c53`.
+Both model outputs had the expected XYZ shape. See the formal report for
+measured capacity and interpretation.
+
+## G5 paired training-candidate smoke
+
+The candidate protocol is `code/config/g5_controlled_training_candidate.json`.
+Before a 40-epoch cohort run, use `code/tools/probe_g5_training_smoke.py` to
+take exactly two weighted optimizer steps per model. It selects two distinct
+Train patients under the G4 visit rule, draws two uniform patches per patient,
+mixes both patients in each batch, and records delivered-mask class exposure,
+loss, gradient norm, prediction counts, time and CUDA memory. No checkpoint
+or Validation metric is produced. It verifies the wiring and initial runtime,
+not learnability or generalization.
+
+From **Windows PowerShell** in `Final project`, upload the two new files:
+
+```powershell
+scp '.\20261017\code\tools\probe_g5_training_smoke.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/probe_g5_training_smoke.py'
+scp '.\20261017\code\config\g5_controlled_training_candidate.json' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/config/g5_controlled_training_candidate.json'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On the **Rangpur login node**, verify the script SHA-256
+`8ee48773309e8240557fbd860ab9cec69def4776a4d9e16c3f40fe168aaf9a2a`
+and configuration SHA-256
+`aafdcc4e695de24fec9c6748db3448287b9e5040d036bd7eb4422776521f0ee7`.
+If the result path is free, submit the bounded A100 test job:
+
+```bash
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/probe_g5_training_smoke.py" \
+  "$HOME/20261018_g1_stage/20261017/code/config/g5_controlled_training_candidate.json"
+test ! -e "$HOME/20261018_g1_stage/20261017/logs/profiles/g5_training_smoke_20261018.json" && echo 'Training smoke output path is free'
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_training_smoke_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/probe_g5_training_smoke.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --output ../logs/profiles/g5_training_smoke_20261018.json
+SBATCH
+```
+
+The job should print two successful model rows and a JSON path. Transfer only
+the JSON after SHA-256 verification; do not copy source MRI or masks.

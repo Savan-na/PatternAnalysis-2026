@@ -477,6 +477,44 @@ failures, that the chosen weights are optimal, or that weighted CE improves
 unseen patients. In particular, false positives and generalization require
 Validation evaluation under a frozen cohort training protocol.
 
+### G5 complete-volume inference capacity — 18 October 2026
+
+Rangpur A100 job `672782` used the largest-Z Train case in the G1 inventory,
+`K019_Week1` (raw 256×256×144). After factor-two preprocessing, the MRI was
+128×128×72 XYZ; the model adapter padded its depth to 80. Both random-weight
+3D models returned legal six-class predictions on the exact 128×128×72
+processed grid. The downloaded JSON matched Rangpur SHA-256
+`263c2309e00d21666e69418a8c82d436585e3037285c0e02f17f959488b21c53`.
+
+| Random-weight model | Peak allocated / reserved GiB | Median measured inference, two repeats |
+|---|---:|---:|
+| Standard 3D U-Net | 0.306 / 0.434 | 0.100 s |
+| Improved 3D U-Net | 0.430 / 0.582 | 0.028 s |
+
+The measured call includes tensor transfer and output conversion, but excludes
+NIfTI loading, downsampling and normalization. One warmup preceded two timed
+repeats per model; this is a capacity and shape check, not a robust speed
+comparison. Random weights make its class predictions clinically meaningless.
+It supports whole-volume Validation inference on this A100 without resolving
+training duration, model quality, or original-resolution reconstruction.
+
+### G5 paired cohort training candidate
+
+The next controlled Standard/Improved comparison is specified in
+`code/config/g5_controlled_training_candidate.json`. It keeps the G3 geometry
+and normalization, G4 patient-balanced uniform crops, and the same bounded
+Train-derived weighted CE plus foreground Dice objective for both networks.
+The candidate budget is 40 epochs: one selected visit from each of 26 Train
+patients, ten 64×64×32 crops per visit, batch size two, or 130 updates per
+epoch. No augmentation is introduced in this first paired comparison, so
+actual delivered-label exposure remains directly measurable. Every epoch
+will record loss, class predictions/recall, exposure, gradients, runtime and
+memory. Validation on complete processed volumes is planned every five
+epochs; checkpoint selection gives each of the six Validation patients equal
+weight and focuses on Bladder, Rectum and Prostate Dice. Test remains sealed.
+This is a *candidate protocol pending a bounded training smoke run and runtime
+check*, not a claim that 40 epochs or the current weights are optimal.
+
 ## Failure Analysis
 
 Pending model experiments. G1 raw-data findings and visual-screen limits are
