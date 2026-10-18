@@ -16,10 +16,10 @@ retraining. The historical Baseline–V4 outcomes remain historical evidence,
 not results of the restarted study.
 
 The user subsequently requested a supplementary 2D training arm. Its axial
-slice and crop exposure must first be measured on Train only, then its own
-training and checkpoint protocol frozen. This optional arm does not change
-the frozen Standard/Improved 3D comparison. A 2D-versus-3D result cannot
-isolate architecture when their input context and sampling differ.
+slice and crop exposure was measured on Train only before freezing a separate
+organ-aware sampling and checkpoint protocol. This optional arm does not
+change the frozen Standard/Improved 3D comparison. A 2D-versus-3D result
+cannot isolate architecture when their input context and sampling differ.
 
 ## Cohort and information boundaries
 
@@ -55,7 +55,8 @@ distances are measured in millimetres on a common physical grid; one-empty
 predictions are explicitly counted. Report both segmentation quality and
 compute cost on the final held-out Test without tuning on its results.
 
-The current evidence status, including the completed G1 audit and ongoing G2
-analysis, is recorded in the single formal research report rather than this
-methods protocol. No restarted model training, Validation comparison, or Test
-evaluation has been completed.
+The current evidence status is recorded in the single formal research report
+rather than this methods protocol. Both 3D arms have now completed their
+first 40-epoch runs; their per-class Validation analysis and all held-out
+Test evaluation remain to be completed. The supplementary 2D model has not
+yet been trained.

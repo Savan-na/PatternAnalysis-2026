@@ -95,4 +95,11 @@ atomic latest-batch checkpoint and one durable checkpoint plus detailed JSON
 per completed epoch. Submission and queue estimates are not training results.
 `tools/audit_g5_2d_sampling.py` compares uniform and target-aware 2D crops
 on one Train visit per patient on a CPU node. Its exposure results must be
-reviewed before selecting the supplementary 2D training policy.
+reviewed before selecting the supplementary 2D training policy. That audit
+completed on 26 Train patients and supported `patient_organ_aware_2d`.
+`config/g5_2d_training_frozen.json` records its own Train-derived class weights,
+40-epoch budget, and Validation selection rule. `tools/train_g5_2d.py` is the
+separate checkpointed runner; its Validation uses whole-volume slice-wise
+inference, and it never reads Test arrays during training.
+`tools/submit_g5_2d.sh` verifies transferred files and gates the A100 job on
+a CPU recovery and frozen-config check.

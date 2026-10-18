@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 23:09:21 AEST**
+Updated / 更新时间: **2026-10-19 06:45:12 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **53** · Files / 文件: **175**
+Directories / 目录: **54** · Files / 文件: **181**
 
 ## Directory Tree / 目录树
 
@@ -22,6 +22,7 @@ Directories / 目录: **53** · Files / 文件: **175**
 │   │   │   └── improved_3d/
 │   │   │       └── arm.json
 │   │   ├── g3_patch_audit.json
+│   │   ├── g5_2d_training_frozen.json
 │   │   ├── g5_controlled_training_candidate.json
 │   │   ├── g5_controlled_training_frozen.json
 │   │   ├── g5_weighted_ce_diagnostic.json
@@ -72,6 +73,7 @@ Directories / 目录: **53** · Files / 文件: **175**
 │   │   │   ├── probe_g5_full_volume.cpython-314.pyc
 │   │   │   ├── probe_g5_training_smoke.cpython-314.pyc
 │   │   │   ├── tiny_overfit_g5.cpython-314.pyc
+│   │   │   ├── train_g5_2d.cpython-314.pyc
 │   │   │   └── train_g5_cohort.cpython-314.pyc
 │   │   ├── audit_g2_train_slices.py
 │   │   ├── audit_g3_candidate_sampling.py
@@ -86,6 +88,7 @@ Directories / 目录: **53** · Files / 文件: **175**
 │   │   ├── review_g1_bladder_islands.py
 │   │   ├── review_g1_overlays.py
 │   │   ├── review_g1_train_contact_sheets.py
+│   │   ├── submit_g5_2d.sh
 │   │   ├── submit_g5_40.sh
 │   │   ├── summarize_g2_slice_detail.py
 │   │   ├── summarize_g2_train_audit.py
@@ -93,6 +96,7 @@ Directories / 目录: **53** · Files / 文件: **175**
 │   │   ├── summarize_g3_pipeline.py
 │   │   ├── summarize_g4_patient_sampling.py
 │   │   ├── tiny_overfit_g5.py
+│   │   ├── train_g5_2d.py
 │   │   ├── train_g5_cohort.py
 │   │   └── update_project_map.py
 │   ├── transfer/
@@ -105,6 +109,9 @@ Directories / 目录: **53** · Files / 文件: **175**
 │   │   │   ├── manifest.json
 │   │   │   └── patches.csv
 │   │   ├── g4_patient_full_20261018/
+│   │   │   ├── manifest.json
+│   │   │   └── patches.csv
+│   │   ├── g5_2d_sampling_full_20261018/
 │   │   │   ├── manifest.json
 │   │   │   └── patches.csv
 │   │   ├── g1_train_contact_sheets_20261018.json
@@ -251,6 +258,7 @@ Directories / 目录: **53** · Files / 文件: **175**
 | `code/config/arms/baseline_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/improved_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/g3_patch_audit.json` | Frozen candidate-crop audit design, not a training configuration; JSON fields: scope, seed, patch_shape_xyz, draws_per_case_per_arm, arm_schedules | 固定的候选裁剪审计设计，非训练配置；JSON 字段：scope, seed, patch_shape_xyz, draws_per_case_per_arm, arm_schedules |
+| `code/config/g5_2d_training_frozen.json` | JSON fields: status, purpose, model, model_defaults, split_sha256, train_cases, train_patients, validation_cases, validation_patients, seed, preprocessing, sampling | JSON 字段：status, purpose, model, model_defaults, split_sha256, train_cases, train_patients, validation_cases, validation_patients, seed, preprocessing, sampling |
 | `code/config/g5_controlled_training_candidate.json` | Historical candidate for the paired 3D cohort training protocol; JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | 双模型队列训练方案的历史候选配置；JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
 | `code/config/g5_controlled_training_frozen.json` | Frozen paired 3D cohort training protocol with resumable checkpoint selection; JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | 已冻结的双模型训练方案，含可恢复权重和验证集选择规则；JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
 | `code/config/g5_weighted_ce_diagnostic.json` | Train-only weighted CE configuration for the Standard tiny learning diagnostic; JSON fields: scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights | 仅用训练数据为 Standard 微型学习诊断配置加权交叉熵；JSON 字段：scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights |
@@ -296,6 +304,7 @@ Directories / 目录: **53** · Files / 文件: **175**
 | `code/tools/__pycache__/probe_g5_full_volume.cpython-314.pyc` | Binary or large file; 10,724 bytes | 二进制或大文件；10,724 字节 |
 | `code/tools/__pycache__/probe_g5_training_smoke.cpython-314.pyc` | Binary or large file; 18,717 bytes | 二进制或大文件；18,717 字节 |
 | `code/tools/__pycache__/tiny_overfit_g5.cpython-314.pyc` | Binary or large file; 16,475 bytes | 二进制或大文件；16,475 字节 |
+| `code/tools/__pycache__/train_g5_2d.cpython-314.pyc` | Binary or large file; 41,774 bytes | 二进制或大文件；41,774 字节 |
 | `code/tools/__pycache__/train_g5_cohort.cpython-314.pyc` | Binary or large file; 39,564 bytes | 二进制或大文件；39,564 字节 |
 | `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: sha256_file, write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：sha256_file, write_csv, main |
 | `code/tools/audit_g3_candidate_sampling.py` | Compare fixed Train-only uniform and organ-aware candidate crops; Definitions: sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main | 比较固定的训练集均匀与器官感知候选裁剪；定义：sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main |
@@ -310,6 +319,7 @@ Directories / 目录: **53** · Files / 文件: **175**
 | `code/tools/review_g1_bladder_islands.py` | Locate and visualize two flagged Train Bladder components; Definitions: inspect_case, main | 定位并可视化两例训练集膀胱小连通区域；定义：inspect_case, main |
 | `code/tools/review_g1_overlays.py` | Render raw Train MRI and ground-truth overlays for G1 review; Definitions: render_case, main | 绘制训练集原始 MRI 与真实标签叠加图供 G1 审查；定义：render_case, main |
 | `code/tools/review_g1_train_contact_sheets.py` | Render two-slice Train patient sheets for G1 alignment screening; Definitions: render_patient, main | 绘制训练集患者双切面图供 G1 对齐筛查；定义：render_patient, main |
+| `code/tools/submit_g5_2d.sh` | UTF-8 text with 77 lines; 3,122 bytes | UTF-8 文本，77 行；3,122 字节 |
 | `code/tools/submit_g5_40.sh` | Submit CPU recovery check and dependency-gated Standard/Improved 40-epoch A100 jobs; UTF-8 text with 95 lines; 3,818 bytes | 提交 CPU 恢复测试及依赖测试通过的双模型 40 轮 A100 作业；UTF-8 文本，95 行；3,818 字节 |
 | `code/tools/summarize_g2_slice_detail.py` | Reconcile G2 slice and intensity CSVs with G1 and draw local plots; Definitions: read_csv, write_csv, check_hash, main | 将 G2 切片及强度 CSV 与 G1 核对并绘制本地图；定义：read_csv, write_csv, check_hash, main |
 | `code/tools/summarize_g2_train_audit.py` | Summarize verified raw Train audit into G2 tables and plots; Definitions: write_csv, main | 将已核验的训练集原始审计汇总为 G2 表格与图；定义：write_csv, main |
@@ -317,6 +327,7 @@ Directories / 目录: **53** · Files / 文件: **175**
 | `code/tools/summarize_g3_pipeline.py` | Definitions: verified_json, main | 定义：verified_json, main |
 | `code/tools/summarize_g4_patient_sampling.py` | Verify G4 tensor dry run and summarize class/patient exposure; Definitions: sha256_file, write_csv, main | 核验 G4 张量预演并汇总类别及患者曝光；定义：sha256_file, write_csv, main |
 | `code/tools/tiny_overfit_g5.py` | Check both 3D models can learn two fixed Train patches on GPU; Definitions: sha256_file, measure, main | 检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch；定义：sha256_file, measure, main |
+| `code/tools/train_g5_2d.py` | Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
 | `code/tools/train_g5_cohort.py` | Train a frozen 3D arm with patient-balanced exposure, Validation selection and resumable checkpoints; Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 按固定方案训练 3D 模型，记录患者均衡曝光、验证集选择及可恢复权重；定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
 | `code/tools/update_project_map.py` | Generate and watch this bilingual inventory; Definitions: _files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main | 生成并持续更新本双语目录；定义：_files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main |
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |
@@ -326,6 +337,8 @@ Directories / 目录: **53** · Files / 文件: **175**
 | `logs/audits/g3_patch_candidate_full_20261018/patches.csv` | Binary or large file; 248,893 bytes | 二进制或大文件；248,893 字节 |
 | `logs/audits/g4_patient_full_20261018/manifest.json` | JSON fields: complete_patient_epoch, data_code_sha256, epoch, g1_sha256, g3_sha256, patch_shape_xyz, patches_per_policy, patients, policies, sampling_code_sha256, scope, script_sha256 | JSON 字段：complete_patient_epoch, data_code_sha256, epoch, g1_sha256, g3_sha256, patch_shape_xyz, patches_per_policy, patients, policies, sampling_code_sha256, scope, script_sha256 |
 | `logs/audits/g4_patient_full_20261018/patches.csv` | Table with 520 data rows; columns: ﻿epoch, policy, patient, case, draw, target, origin_x, origin_y, origin_z, background_voxels, body_voxels, bones_voxels | 表格含 520 条数据行；列：﻿epoch, policy, patient, case, draw, target, origin_x, origin_y, origin_z, background_voxels, body_voxels, bones_voxels |
+| `logs/audits/g5_2d_sampling_full_20261018/manifest.json` | JSON fields: complete_patient_epoch, data_sha256, epoch, g1_sha256, g3_sha256, patch_xy, patches_per_policy, patients, policies, sampling_2d_sha256, scope, script_sha256 | JSON 字段：complete_patient_epoch, data_sha256, epoch, g1_sha256, g3_sha256, patch_xy, patches_per_policy, patients, policies, sampling_2d_sha256, scope, script_sha256 |
+| `logs/audits/g5_2d_sampling_full_20261018/patches.csv` | Table with 520 data rows; columns: ﻿epoch, policy, patient, case, draw, target, origin_x, origin_y, slice_z, background_voxels, body_voxels, bones_voxels | 表格含 520 条数据行；列：﻿epoch, policy, patient, case, draw, target, origin_x, origin_y, slice_z, background_voxels, body_voxels, bones_voxels |
 | `logs/audits/train_full_20261018_job671208.json` | Binary or large file; 563,622 bytes | 二进制或大文件；563,622 字节 |
 | `logs/internal/map_watcher_stderr.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/map_watcher_stdout.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |

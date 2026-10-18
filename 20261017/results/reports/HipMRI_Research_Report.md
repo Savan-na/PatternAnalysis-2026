@@ -637,9 +637,32 @@ Slurm predicted starts of 19 October 00:45:37 and 00:58:00, respectively;
 these are queue estimates, not observed training starts. No new full-cohort
 checkpoint, Validation result, or 40-epoch completion is claimed here.
 
-The optional 2D arm remains at its Train-only exposure gate. Its CPU audit
-compares patient-balanced uniform and organ-aware axial crops before choosing
-one training policy. It can run while the 3D jobs wait for A100 resources;
-the 2D model must receive its own frozen configuration, GPU correctness check,
-and checkpointed run after the audit is reviewed. Its different slice context
-prevents a simple architecture-only interpretation against the 3D arms.
+The optional 2D arm proceeded through its Train-only exposure gate while the
+3D jobs ran. Its different slice context prevents a simple architecture-only
+interpretation against the 3D arms.
+
+### G5 completed 3D runs and 2D sampling decision — 19 October 2026
+
+Rangpur Slurm reports `COMPLETED 0:0` for Standard job 672954 (01:15:52)
+and Improved job 672955 (01:42:19). Both logs reached epoch 40/40. Their
+printed best patient-balanced small-organ Validation selection scores were
+0.8413 and 0.8325, both at epoch 30. These are selection scores, not a
+per-class final comparison or held-out Test result. The job logs name their
+checkpoint directories, but checkpoint contents and per-class Validation
+records still require inspection before final model selection is recorded.
+
+The optional 2D Train-only CPU audit completed as job 673872 (`COMPLETED 0:0`)
+across 26 patients. Both candidate policies delivered ten 64×64 axial crops
+per patient, 260 crops each. The uniform policy contained Prostate in 45/260
+crops (17.3%), Rectum in 84/260 (32.3%), and Bladder in 75/260 (28.8%).
+The organ-aware policy contained them in 100/260 (38.5%), 165/260 (63.5%),
+and 122/260 (46.9%), respectively. Prostate voxel share increased from
+0.337% to 0.765%; Rectum from 0.411% to 1.051%; Bladder from 2.171% to
+3.496%. The returned CSV has 520 records, ten crops per policy and patient,
+4096 labelled voxels per crop, and no targeted crop missing its class.
+The remote and local SHA-256 values match for both files. This supports an
+organ-aware 2D sampling policy, but it does not prove improved Validation
+quality; oversampling could raise false positives. The separate frozen 2D
+config derives its weighted CE coefficients from these Train-only delivered
+voxel shares and retains whole-volume patient-balanced Validation selection.
+No 2D model has yet been trained.

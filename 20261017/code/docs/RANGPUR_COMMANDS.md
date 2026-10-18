@@ -581,9 +581,9 @@ three job IDs. It does not submit the optional 2D arm.
 
 On 18 October, recovery test 672953 cleared the dependency for A100 jobs
 672954 (Standard) and 672955 (Improved). Both remained PENDING for priority
-at the last observation. `squeue --start -j 672954,672955` gave provisional
-19 October starts of 00:45:37 and 00:58:00. Verify `RUNNING` and inspect the
-job logs before treating either as an executed training run.
+at the queue observation. Both later completed 40 epochs with exit code 0;
+their logs and checkpoints must be reviewed before comparing per-class
+Validation or opening held-out Test data.
 
 ## Optional 2D arm: Train-only exposure gate
 
@@ -594,7 +594,13 @@ for `code/tools/audit_g5_2d_sampling.py` and
 for `code/hipmri_rewrite/sampling_2d.py`. Run the audit in a separate CPU
 Slurm job while the 3D jobs queue or train. It compares the two candidate
 policies across one visit from each of the 26 Train patients, yielding 260
-crops per policy. It must produce `manifest.json` and `patches.csv` in a new
-`logs/audits/g5_2d_sampling_full_20261018/` directory. Review those outputs
-before freezing a 2D sampler, loss, budget or GPU run. Its results cannot
-serve as 2D or 3D segmentation quality scores.
+crops per policy. Job 673872 completed and its `manifest.json` and
+`patches.csv` passed local hash and row-count checks. Organ-aware sampling
+raised small-organ patch coverage, so the separate 2D protocol is frozen in
+`code/config/g5_2d_training_frozen.json`; it cannot serve as a segmentation
+quality score. Transfer that config, `code/tools/train_g5_2d.py` and
+`code/tools/submit_g5_2d.sh` to their matching Rangpur staging paths. The
+submission script verifies hashes, runs a CPU config/recovery check, then
+queues the optional 40-epoch A100 job on success. It does not modify the
+completed 3D runs. The 2D run's Validation score is separate from the
+architecture-controlled 3D comparison.
