@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 17:25:38 AEST**
+Updated / 更新时间: **2026-10-18 17:42:32 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **51** · Files / 文件: **146**
+Directories / 目录: **51** · Files / 文件: **147**
 
 ## Directory Tree / 目录树
 
@@ -61,6 +61,7 @@ Directories / 目录: **51** · Files / 文件: **146**
 │   │   ├── audit_g4_patient_sampling.py
 │   │   ├── audit_train_raw.py
 │   │   ├── package_transfer.py
+│   │   ├── probe_g5_patch_gpu.py
 │   │   ├── review_g1_bladder_islands.py
 │   │   ├── review_g1_overlays.py
 │   │   ├── review_g1_train_contact_sheets.py
@@ -256,6 +257,7 @@ Directories / 目录: **51** · Files / 文件: **146**
 | `code/tools/audit_g4_patient_sampling.py` | Dry-run patient-balanced model-ready Train patches on CPU; Definitions: sha256_file, main | 在 CPU 上预演患者均衡的训练模型输入 Patch；定义：sha256_file, main |
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/package_transfer.py` | Build and verify a source-only transfer ZIP; Definitions: main | 创建并校验仅含源码的传输包；定义：main |
+| `code/tools/probe_g5_patch_gpu.py` | Measure both 3D models' real Train patch gradients and A100 memory; Definitions: sha256_file, main | 测量两个 3D 模型真实训练 Patch 的梯度和 A100 显存；定义：sha256_file, main |
 | `code/tools/review_g1_bladder_islands.py` | Locate and visualize two flagged Train Bladder components; Definitions: inspect_case, main | 定位并可视化两例训练集膀胱小连通区域；定义：inspect_case, main |
 | `code/tools/review_g1_overlays.py` | Render raw Train MRI and ground-truth overlays for G1 review; Definitions: render_case, main | 绘制训练集原始 MRI 与真实标签叠加图供 G1 审查；定义：render_case, main |
 | `code/tools/review_g1_train_contact_sheets.py` | Render two-slice Train patient sheets for G1 alignment screening; Definitions: render_patient, main | 绘制训练集患者双切面图供 G1 对齐筛查；定义：render_patient, main |

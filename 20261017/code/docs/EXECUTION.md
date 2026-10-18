@@ -81,6 +81,11 @@ exposure, and cannot establish model performance without later Validation.
   changes, or stop and revise the spatial resolution before any model run.
 - Benchmark a complete downsampled volume on allocated GPU. Fix the final
   shape, padding, batch size and training budget in a hashed run config.
+- Before formal G5 training, run the dedicated real-Train-patch A100 probe for
+  both primary 3D models at batch size 2. Check every parameter gradient,
+  forward/backward time and peak allocated/reserved memory with the same
+  provisional objective. Its success is a capacity result only; freeze the
+  actual objective and training budget after reviewing it.
 - Check both primary 3D models' forward and backward passes, then a few-case
   Train-only overfit including prostate and rectum.
 

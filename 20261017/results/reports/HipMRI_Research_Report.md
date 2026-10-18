@@ -388,6 +388,10 @@ post-augmentation class exposure still needs to be logged during training.
 No restarted model has been trained. G1–G4 are data and pipeline measurements,
 not segmentation performance comparisons.
 
+The G5 real-Train-patch GPU feasibility script is prepared but has not run on
+an allocated A100. Its provisional shared CE+foreground-Dice objective is a
+probe setting, not a selected training-loss result.
+
 ## Failure Analysis
 
 Pending model experiments. G1 raw-data findings and visual-screen limits are

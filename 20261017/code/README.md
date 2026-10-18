@@ -77,3 +77,9 @@ produces a patient-balanced exposure table and figure under
 `results/data_analysis/g4_patient_sampling/`. Uniform crops are the reference
 for the first controlled comparison; organ-aware crops remain a targeted
 follow-up candidate until actual batch logs and Validation justify them.
+
+`tools/probe_g5_patch_gpu.py` is a Train-only CUDA feasibility gate for the
+two primary 3D arms. It builds a real, uniform-crop batch through the verified
+data path, checks the shared provisional CE+Dice forward/backward objective,
+and records gradient and memory results. It makes no optimizer step and saves
+no checkpoint; its outcome informs a later frozen training configuration.

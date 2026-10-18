@@ -224,3 +224,22 @@ The files were downloaded and verified locally. Run
 `code/tools/summarize_g4_patient_sampling.py` from a local environment with
 NumPy and Matplotlib to reproduce the G4 tables and SVG. This is still a
 one-epoch dry run without optimizer steps.
+
+## G5 patch GPU preflight
+
+The Train-only probe source is `code/tools/probe_g5_patch_gpu.py`. It uses the
+already transferred G4 sampler, one approved Train case, two 64×64×32 patches,
+and the same provisional CE+foreground-Dice objective for both 3D models.
+It records shape, loss, every parameter gradient, runtime and CUDA peak memory
+without taking an optimizer step. From Windows PowerShell at `Final project`:
+
+```powershell
+scp '.\20261017\code\tools\probe_g5_patch_gpu.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/probe_g5_patch_gpu.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+Check the transferred SHA-256 before submitting. On login0, inspect
+`scontrol show partition a100-test` and `sinfo -N -p a100-test` to confirm
+the available GPU resource syntax. Then submit the probe to an allocated GPU
+compute node. Do not run the CUDA workload on login0. The exact Slurm command
+will be recorded here after checking that partition's configuration.
