@@ -1,6 +1,6 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 12:07:10 AEST**
+Updated / 更新时间: **2026-10-18 12:07:28 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
@@ -259,15 +259,15 @@ Directories / 目录: **47** · Files / 文件: **109**
 | `results/data_analysis/g1_selected_cases/g1_overlay_S033_Week1.png` | Binary or large file; 443,971 bytes | 二进制或大文件；443,971 字节 |
 | `results/data_analysis/g1_selected_cases/README.md` | Entry point or directory guide; Sections: G1 selected raw MRI overlays | 项目入口或目录说明；章节标题：G1 selected raw MRI overlays |
 | `results/data_analysis/g2_train_summary/class_distribution.csv` | Table with 6 data rows; columns: ﻿class, voxel_count, share_pct, denominator_voxels, train_volumes | 表格含 6 条数据行；列：﻿class, voxel_count, share_pct, denominator_voxels, train_volumes |
-| `results/data_analysis/g2_train_summary/class_frequency_log.svg` | UTF-8 text with 545 lines; 20,517 bytes | UTF-8 文本，545 行；20,517 字节 |
-| `results/data_analysis/g2_train_summary/intensity_case_summary.svg` | UTF-8 text with 676 lines; 29,187 bytes | UTF-8 文本，676 行；29,187 字节 |
+| `results/data_analysis/g2_train_summary/class_frequency_log.svg` | UTF-8 text with 545 lines; 20,475 bytes | UTF-8 文本，545 行；20,475 字节 |
+| `results/data_analysis/g2_train_summary/intensity_case_summary.svg` | UTF-8 text with 676 lines; 29,043 bytes | UTF-8 文本，676 行；29,043 字节 |
 | `results/data_analysis/g2_train_summary/intensity_statistics.csv` | Table with 143 data rows; columns: ﻿case, patient, finite_min, finite_median, finite_max, zero_fraction, nonzero_mean, nonzero_std, nonzero_p0_5, nonzero_p1, nonzero_p50, nonzero_p99 | 表格含 143 条数据行；列：﻿case, patient, finite_min, finite_median, finite_max, zero_fraction, nonzero_mean, nonzero_std, nonzero_p0_5, nonzero_p1, nonzero_p50, nonzero_p99 |
-| `results/data_analysis/g2_train_summary/patient_rare_organ_share.svg` | UTF-8 text with 658 lines; 34,719 bytes | UTF-8 文本，658 行；34,719 字节 |
+| `results/data_analysis/g2_train_summary/patient_rare_organ_share.svg` | UTF-8 text with 658 lines; 34,580 bytes | UTF-8 文本，658 行；34,580 字节 |
 | `results/data_analysis/g2_train_summary/per_patient_distribution.csv` | Table with 26 data rows; columns: ﻿patient, volume_count, total_voxels, background_voxels, background_share_pct, body_voxels, body_share_pct, bones_voxels, bones_share_pct, bladder_voxels, bladder_share_pct, rectum_voxels | 表格含 26 条数据行；列：﻿patient, volume_count, total_voxels, background_voxels, background_share_pct, body_voxels, body_share_pct, bones_voxels, bones_share_pct, bladder_voxels, bladder_share_pct, rectum_voxels |
 | `results/data_analysis/g2_train_summary/per_volume_distribution.csv` | Table with 143 data rows; columns: ﻿case, patient, visit, total_voxels, background_voxels, background_share_pct, body_voxels, body_share_pct, bones_voxels, bones_share_pct, bladder_voxels, bladder_share_pct | 表格含 143 条数据行；列：﻿case, patient, visit, total_voxels, background_voxels, background_share_pct, body_voxels, body_share_pct, bones_voxels, bones_share_pct, bladder_voxels, bladder_share_pct |
 | `results/data_analysis/g2_train_summary/README.md` | Entry point or directory guide; Sections: G2 raw Train summary | 项目入口或目录说明；章节标题：G2 raw Train summary |
 | `results/data_analysis/g2_train_summary/spatial_statistics.csv` | Table with 143 data rows; columns: ﻿case, patient, shape_x, shape_y, shape_z, spacing_x_mm, spacing_y_mm, spacing_z_mm, voxel_volume_mm3, orientation, bladder_volume_ml, bladder_bbox_x_mm | 表格含 143 条数据行；列：﻿case, patient, shape_x, shape_y, shape_z, spacing_x_mm, spacing_y_mm, spacing_z_mm, voxel_volume_mm3, orientation, bladder_volume_ml, bladder_bbox_x_mm |
-| `results/data_analysis/g2_train_summary/voxel_spacing.svg` | UTF-8 text with 373 lines; 32,952 bytes | UTF-8 文本，373 行；32,952 字节 |
+| `results/data_analysis/g2_train_summary/voxel_spacing.svg` | UTF-8 text with 373 lines; 32,927 bytes | UTF-8 文本，373 行；32,927 字节 |
 | `results/data_analysis/historical_train/HipMRI_Pretraining_Data_Analysis.previous-41201a5e.bak` | UTF-8 text with 106 lines; 14,485 bytes | UTF-8 文本，106 行；14,485 字节 |
 | `results/data_analysis/historical_train/HipMRI_Pretraining_Data_Analysis.previous-5dc166bd.bak` | UTF-8 text with 93 lines; 12,305 bytes | UTF-8 文本，93 行；12,305 字节 |
 | `results/data_analysis/historical_train/historical_patch_vs_full_volume.svg` | UTF-8 text with 49 lines; 4,617 bytes | UTF-8 文本，49 行；4,617 字节 |

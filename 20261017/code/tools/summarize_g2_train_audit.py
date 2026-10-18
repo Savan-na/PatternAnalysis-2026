@@ -168,6 +168,12 @@ def main() -> None:
     fig.savefig(out / "voxel_spacing.svg")
     plt.close(fig)
 
+    # Matplotlib writes spaces after many SVG path line breaks. Keep generated
+    # figures stable under Git's whitespace check without changing path data.
+    for svg in out.glob("*.svg"):
+        cleaned = "\n".join(line.rstrip() for line in svg.read_text(encoding="utf-8").splitlines()) + "\n"
+        svg.write_text(cleaned, encoding="utf-8")
+
     print(f"Source SHA-256: {digest}")
     print(f"Train cases: {len(cases)}, patients: {len(patient_rows)}, voxels: {total}")
     for row in class_rows:
