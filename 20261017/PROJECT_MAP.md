@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 22:18:47 AEST**
+Updated / 更新时间: **2026-10-18 22:25:36 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **52** · Files / 文件: **162**
+Directories / 目录: **53** · Files / 文件: **167**
 
 ## Directory Tree / 目录树
 
@@ -31,6 +31,8 @@ Directories / 目录: **52** · Files / 文件: **162**
 │   │   ├── SOURCE_DECISIONS.md
 │   │   └── STUDY_PROTOCOL.md
 │   ├── hipmri_rewrite/
+│   │   ├── __pycache__/
+│   │   │   └── training.cpython-314.pyc
 │   │   ├── models/
 │   │   │   ├── __init__.py
 │   │   │   ├── baseline_2d.py
@@ -46,7 +48,8 @@ Directories / 目录: **52** · Files / 文件: **162**
 │   │   ├── metrics.py
 │   │   ├── profile.py
 │   │   ├── sampling.py
-│   │   └── splits.py
+│   │   ├── splits.py
+│   │   └── training.py
 │   ├── tests/
 │   │   ├── test_boundaries.py
 │   │   ├── test_data.py
@@ -56,12 +59,14 @@ Directories / 目录: **52** · Files / 文件: **162**
 │   │   ├── test_raw_audit.py
 │   │   ├── test_sampling.py
 │   │   ├── test_sampling_audit.py
-│   │   └── test_splits.py
+│   │   ├── test_splits.py
+│   │   └── test_training_selection.py
 │   ├── tools/
 │   │   ├── __pycache__/
 │   │   │   ├── probe_g5_full_volume.cpython-314.pyc
 │   │   │   ├── probe_g5_training_smoke.cpython-314.pyc
-│   │   │   └── tiny_overfit_g5.cpython-314.pyc
+│   │   │   ├── tiny_overfit_g5.cpython-314.pyc
+│   │   │   └── train_g5_cohort.cpython-314.pyc
 │   │   ├── audit_g2_train_slices.py
 │   │   ├── audit_g3_candidate_sampling.py
 │   │   ├── audit_g3_existing_pipeline.py
@@ -80,6 +85,7 @@ Directories / 目录: **52** · Files / 文件: **162**
 │   │   ├── summarize_g3_pipeline.py
 │   │   ├── summarize_g4_patient_sampling.py
 │   │   ├── tiny_overfit_g5.py
+│   │   ├── train_g5_cohort.py
 │   │   └── update_project_map.py
 │   ├── transfer/
 │   │   └── 20261017_source.zip
@@ -245,6 +251,7 @@ Directories / 目录: **52** · Files / 文件: **162**
 | `code/docs/SOURCE_DECISIONS.md` | Paper sources and implementation deviations; Sections: Paper and assignment decision register; Imbalance methods in the three primary papers | 论文来源与实现差异；章节标题：Paper and assignment decision register; Imbalance methods in the three primary papers |
 | `code/docs/STUDY_PROTOCOL.md` | Research hypotheses, endpoints, and freeze rules; Sections: HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints | 研究假设、终点指标与冻结规则；章节标题：HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints |
 | `code/hipmri_rewrite/__init__.py` | Six-class package constants; Definitions: module-level code | 六类别包常量；定义：module-level code |
+| `code/hipmri_rewrite/__pycache__/training.cpython-314.pyc` | Binary or large file; 2,180 bytes | 二进制或大文件；2,180 字节 |
 | `code/hipmri_rewrite/audit.py` | Train/Validation-only real NIfTI preflight; Definitions: audit, main | 仅针对训练与验证数据的真实 NIfTI 预检；定义：audit, main |
 | `code/hipmri_rewrite/boundaries.py` | Physical base/apex, slice and surface error analysis; Definitions: prostate_axial_regions, slice_dice, symmetric_surface_distances, prostate_organ_confusion | 物理位置的基底/尖端、切片和表面误差分析；定义：prostate_axial_regions, slice_dice, symmetric_surface_distances, prostate_organ_confusion |
 | `code/hipmri_rewrite/data.py` | Paired loading, common-grid downsampling and mask encoding; Definitions: Volume, load_case, downsample, zscore_nonzero, one_hot, to_3d_model_arrays, from_3d_model_prediction | 配对读取、共用网格降采样及标签编码；定义：Volume, load_case, downsample, zscore_nonzero, one_hot, to_3d_model_arrays, from_3d_model_prediction |
@@ -259,6 +266,7 @@ Directories / 目录: **52** · Files / 文件: **162**
 | `code/hipmri_rewrite/profile.py` | Train-only GPU forward/backward capacity probe; Definitions: profile, main | 仅使用训练数据的 GPU 前反向容量检查；定义：profile, main |
 | `code/hipmri_rewrite/sampling.py` | Patient-balanced Train patch selection and exact label exposure; Definitions: _rng, epoch_cases, crop_origin, crop_for_3d_model, ExposureRecorder | 按患者均衡抽取训练 Patch 并记录实际标签曝光；定义：_rng, epoch_cases, crop_origin, crop_for_3d_model, ExposureRecorder |
 | `code/hipmri_rewrite/splits.py` | Frozen patient identity and MRI/mask file pairing; Definitions: Case, read_split, discover | 固定患者身份及 MRI/mask 文件配对；定义：Case, read_split, discover |
+| `code/hipmri_rewrite/training.py` | Predeclared equal-patient Validation selection score; Definitions: patient_small_organ_score | 预先定义患者等权的验证集模型选择指标；定义：patient_small_organ_score |
 | `code/README.md` | Entry point or directory guide; Sections: Code and Methods | 项目入口或目录说明；章节标题：Code and Methods |
 | `code/requirements.txt` | Python dependency ranges; UTF-8 text with 5 lines; 79 bytes | Python 依赖版本范围；UTF-8 文本，5 行；79 字节 |
 | `code/tests/test_boundaries.py` | Physical direction and empty-surface tests; Definitions: BoundaryTests, SurfaceTests | 物理方向及空表面测试；定义：BoundaryTests, SurfaceTests |
@@ -270,9 +278,11 @@ Directories / 目录: **52** · Files / 文件: **162**
 | `code/tests/test_sampling.py` | Patient cycle, paired crop and exposure-record tests; Definitions: case, PatientBalancedSamplingTests | 患者轮换、配对裁剪及曝光记录测试；定义：case, PatientBalancedSamplingTests |
 | `code/tests/test_sampling_audit.py` | Candidate crop bounds and repeatability checks; Definitions: CandidateCropTests | 候选裁剪边界与可重复性检查；定义：CandidateCropTests |
 | `code/tests/test_splits.py` | Patient isolation and file pairing tests; Definitions: PatientSplitTests | 患者隔离与文件配对测试；定义：PatientSplitTests |
+| `code/tests/test_training_selection.py` | Check patient-balanced small-organ checkpoint selection; Definitions: PatientSelectionTests | 核验患者等权的小器官权重选择规则；定义：PatientSelectionTests |
 | `code/tools/__pycache__/probe_g5_full_volume.cpython-314.pyc` | Binary or large file; 10,724 bytes | 二进制或大文件；10,724 字节 |
 | `code/tools/__pycache__/probe_g5_training_smoke.cpython-314.pyc` | Binary or large file; 18,717 bytes | 二进制或大文件；18,717 字节 |
 | `code/tools/__pycache__/tiny_overfit_g5.cpython-314.pyc` | Binary or large file; 16,475 bytes | 二进制或大文件；16,475 字节 |
+| `code/tools/__pycache__/train_g5_cohort.cpython-314.pyc` | Binary or large file; 27,654 bytes | 二进制或大文件；27,654 字节 |
 | `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: sha256_file, write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：sha256_file, write_csv, main |
 | `code/tools/audit_g3_candidate_sampling.py` | Compare fixed Train-only uniform and organ-aware candidate crops; Definitions: sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main | 比较固定的训练集均匀与器官感知候选裁剪；定义：sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main |
 | `code/tools/audit_g3_existing_pipeline.py` | Audit current Train downsampling, normalization and whole-volume arrays; Definitions: sha256_file, class_counts, occupied_z_slices, software_versions, main | 审计当前训练集降采样、归一化与整卷张量；定义：sha256_file, class_counts, occupied_z_slices, software_versions, main |
@@ -291,6 +301,7 @@ Directories / 目录: **52** · Files / 文件: **162**
 | `code/tools/summarize_g3_pipeline.py` | Definitions: verified_json, main | 定义：verified_json, main |
 | `code/tools/summarize_g4_patient_sampling.py` | Verify G4 tensor dry run and summarize class/patient exposure; Definitions: sha256_file, write_csv, main | 核验 G4 张量预演并汇总类别及患者曝光；定义：sha256_file, write_csv, main |
 | `code/tools/tiny_overfit_g5.py` | Check both 3D models can learn two fixed Train patches on GPU; Definitions: sha256_file, measure, main | 检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch；定义：sha256_file, measure, main |
+| `code/tools/train_g5_cohort.py` | Train a frozen 3D arm with patient-balanced exposure, Validation selection and resumable checkpoints; Definitions: sha256_file, atomic_json, main | 按固定方案训练 3D 模型，记录患者均衡曝光、验证集选择及可恢复权重；定义：sha256_file, atomic_json, main |
 | `code/tools/update_project_map.py` | Generate and watch this bilingual inventory; Definitions: _files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main | 生成并持续更新本双语目录；定义：_files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main |
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |
 | `logs/audits/g1_train_contact_sheets_20261018.json` | JSON fields: scope, screen, patients | JSON 字段：scope, screen, patients |

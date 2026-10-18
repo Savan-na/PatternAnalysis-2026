@@ -74,8 +74,15 @@ The paired cohort training candidate is recorded in
 `code/config/g5_controlled_training_candidate.json`. Check its Train-only
 weight provenance, split hash, patient-epoch update count, and equal model
 settings before a bounded GPU training smoke run. Freeze the configuration
-only after the smoke run demonstrates correct batches, gradients, actual
-class-exposure recording, Validation geometry and feasible runtime.
+only after the GPU probes demonstrate correct batches, gradients, actual
+class-exposure recording, full-volume inference geometry and feasible
+one-epoch runtime. The first formal Validation evaluation then occurs at
+the predeclared epoch; it must not silently change the frozen setup.
+`code/tools/train_g5_cohort.py` is staged for the subsequent formal run. It
+refuses the current candidate status and requires an explicitly frozen config;
+its one-epoch stopping option saves a resumable checkpoint instead of
+discarding the optimization work. The Validation selection score is defined
+in `code/hipmri_rewrite/training.py` and gives each patient equal weight.
 
 - G4: dry-run one scan per Train patient per epoch through the same
   downsampling, normalization and paired patch conversion that GPU training

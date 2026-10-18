@@ -535,6 +535,10 @@ and 0.17 seconds, excluding NIfTI loading and preprocessing. These two
 updates verify basic wiring and recording only. Their losses, predictions
 and times do not establish relative model quality, full-epoch runtime or
 Validation performance. The proposed 40-epoch budget remains a candidate.
+The formal runner has been staged separately. It cannot start with the
+candidate configuration, and its first epoch will save a resumable checkpoint
+once the protocol is frozen; the one-epoch budget probe remains the final
+disposable run in this sequence.
 
 ## Failure Analysis
 
