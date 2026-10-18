@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 11:42:04 AEST**
+Updated / 更新时间: **2026-10-18 11:47:31 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **42** · Files / 文件: **62**
+Directories / 目录: **42** · Files / 文件: **64**
 
 ## Directory Tree / 目录树
 
@@ -83,6 +83,8 @@ Directories / 目录: **42** · Files / 文件: **62**
 │   │   ├── comparisons/
 │   │   └── improved_3d/
 │   ├── data_analysis/
+│   │   ├── g1_bladder_island_D031_Week7.png
+│   │   ├── g1_bladder_island_N010_Week3.png
 │   │   ├── g1_overlay_B038_Week0.png
 │   │   ├── g1_overlay_D031_Week7.png
 │   │   ├── g1_overlay_H017_Week7.png
@@ -165,6 +167,8 @@ Directories / 目录: **42** · Files / 文件: **62**
 | `logs/README.md` | Entry point or directory guide; Sections: Experiment Logs | 项目入口或目录说明；章节标题：Experiment Logs |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
 | `README.md` | Entry point or directory guide; Sections: HipMRI Data-Driven Model Development; Where things belong | 项目入口或目录说明；章节标题：HipMRI Data-Driven Model Development; Where things belong |
+| `results/data_analysis/g1_bladder_island_D031_Week7.png` | Binary or large file; 250,160 bytes | 二进制或大文件；250,160 字节 |
+| `results/data_analysis/g1_bladder_island_N010_Week3.png` | Binary or large file; 254,248 bytes | 二进制或大文件；254,248 字节 |
 | `results/data_analysis/g1_overlay_B038_Week0.png` | Binary or large file; 477,710 bytes | 二进制或大文件；477,710 字节 |
 | `results/data_analysis/g1_overlay_D031_Week7.png` | Binary or large file; 393,632 bytes | 二进制或大文件；393,632 字节 |
 | `results/data_analysis/g1_overlay_H017_Week7.png` | Binary or large file; 365,557 bytes | 二进制或大文件；365,557 字节 |

@@ -35,8 +35,8 @@ nonzero-voxel standard deviation from 52.21 to 144.76, and zero-voxel share
 from 14.09% to 52.64%. These are case-level ranges, not diagnosed artifacts;
 zero intensity can be legitimate background. Rectum and Prostate masks are
 single connected components with no gaps in occupied Z slices. Two Bladder
-masks have a second, very small component (`N010_Week3` and `D031_Week7`);
-both require image review before being classified as annotation defects.
+masks have a second, very small 6-neighbour component (`N010_Week3` and
+`D031_Week7`); the targeted review below explains this finding.
 
 The audit ran on Rangpur CPU node `vcpu-2`, Slurm job `671208`, using the
 existing `torch` environment. All 20 synthetic source tests passed before the
@@ -56,9 +56,9 @@ This report records derived findings without copying raw MRI arrays into Git.
 
 Every Train mask has an unspecified spatial unit in its NIfTI header. This is
 a metadata warning, not proof of image–mask misalignment. The audit reported
-no mechanical case errors. The intensity spread and two tiny Bladder islands
-are review flags, not established corruption. Affine agreement alone cannot
-certify that labels match the anatomy. The selected overlays below provide an
+no mechanical case errors. The intensity spread and tiny Bladder components
+were flagged for review, not established corruption. Affine agreement alone
+cannot certify that labels match the anatomy. The selected overlays below provide an
 initial visual screen; the flagged components need further review.
 
 ### G1 visual review — 18 October 2026
@@ -74,16 +74,36 @@ qualitative screen, not expert confirmation of every boundary or every slice.
 |---|---|---|
 | [B038_Week0](../data_analysis/g1_overlay_B038_Week0.png) | Historical small Prostate label | Small central Prostate outline is visible below the Bladder; no obvious gross displacement. |
 | [K019_Week1](../data_analysis/g1_overlay_K019_Week1.png) | Only 144-slice Train volume | Organ outlines remain within the displayed anatomy despite the longer scan. |
-| [N010_Week3](../data_analysis/g1_overlay_N010_Week3.png) | Tiny second Bladder component | Main Bladder aligns visually; the tiny component is not resolved by the selected panels. |
-| [D031_Week7](../data_analysis/g1_overlay_D031_Week7.png) | Tiny second Bladder component | Main Bladder aligns visually; the tiny component is not resolved by the selected panels. |
+| [N010_Week3](../data_analysis/g1_overlay_N010_Week3.png) | Tiny second Bladder component | Main Bladder aligns visually; targeted component view below resolves the flag. |
+| [D031_Week7](../data_analysis/g1_overlay_D031_Week7.png) | Tiny second Bladder component | Main Bladder aligns visually; targeted component view below resolves the flag. |
 | [S033_Week1](../data_analysis/g1_overlay_S033_Week1.png) | Highest case MRI maximum | No obvious gross misalignment in the shown planes; these views do not locate or explain the volume maximum. |
 | [H017_Week7](../data_analysis/g1_overlay_H017_Week7.png) | Highest zero-voxel share | Extensive black exterior is visible; the panels do not establish whether every zero voxel is background. |
 
-The two Bladder islands still need targeted slice or component-location review
-before they can be accepted or called annotation errors. The unspecified Mask
-spatial-unit header also remains a metadata caveat despite exact affine
-agreement. Six selected cases cannot establish anatomical correctness for all
-143 Train volumes, so G1 anatomical review remains open.
+#### Targeted Bladder component check
+
+The follow-up tool used the same 6-neighbour component definition as the full
+audit and plotted each flagged voxel at its actual MRI location. In
+`N010_Week3`, the secondary component contains 2 voxels (8.80 mm³), at
+voxel coordinates x=126, y=129, z=67–68; see the
+[targeted view](../data_analysis/g1_bladder_island_N010_Week3.png). In
+`D031_Week7`, it contains 1 voxel (4.40 mm³), at x=126, y=136, z=80; see the
+[targeted view](../data_analysis/g1_bladder_island_D031_Week7.png). Each
+secondary component touches the main Bladder component diagonally. Thus each
+mask has one connected Bladder region under 26-neighbour connectivity; the
+earlier count of two is specific to 6-neighbour connectivity. The zoomed MRI
+views place these voxels beside the main Bladder outline, without showing a
+grossly misplaced region. Pixel-level boundary correctness remains uncertain,
+so neither component is classified as an annotation defect and no mask is
+changed.
+
+The component output is on Rangpur at
+`20261018_g1_stage/20261017/logs/audits/g1_bladder_islands_20261018.json`.
+The follow-up script SHA-256 is
+`b2eb4be2c428bf2f4db37c443fcc1dfcb81061e98da8554e7453ec9aad70c29b`.
+The unspecified Mask spatial-unit header remains a metadata caveat despite
+exact affine agreement. Six selected cases cannot establish anatomical
+correctness for all 143 Train volumes, so broader anatomical review remains
+open.
 
 The PNGs are medical-image-derived local review artifacts. HipMRI Study data
 use terms prohibit re-identification and commercial use and require an
@@ -110,6 +130,8 @@ checks are recorded under Problems Identified above.
 ## Conclusions
 
 The current Train cohort passed the scripted mechanical integrity checks.
-G1 remains open for targeted Bladder-island and broader anatomical review.
+The two apparent Bladder islands are a 6-neighbour connectivity effect, not
+evidence of separated organs or confirmed annotation errors. G1 remains open
+for broader anatomical review and interpretation of the Mask unit header.
 No causal conclusion about Prostate or Rectum prediction failure follows from
 this integrity pass alone.
