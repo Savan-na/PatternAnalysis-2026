@@ -62,3 +62,6 @@ table and figure into `results/data_analysis/g3_pipeline/`.
 `config/g3_patch_audit.json` to simulate uniform and organ-aware crops on the
 verified Train grid. This is an exposure audit for a possible future policy;
 it is not wired into model training.
+`tools/summarize_g3_candidate_sampling.py` verifies the returned full-cohort
+CSV and manifest against Rangpur SHA-256 values and the G3 case grids before
+producing local exposure tables and a comparison figure.

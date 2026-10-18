@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 16:28:32 AEST**
+Updated / 更新时间: **2026-10-18 16:39:35 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **48** · Files / 文件: **130**
+Directories / 目录: **48** · Files / 文件: **131**
 
 ## Directory Tree / 目录树
 
@@ -63,6 +63,7 @@ Directories / 目录: **48** · Files / 文件: **130**
 │   │   ├── review_g1_train_contact_sheets.py
 │   │   ├── summarize_g2_slice_detail.py
 │   │   ├── summarize_g2_train_audit.py
+│   │   ├── summarize_g3_candidate_sampling.py
 │   │   ├── summarize_g3_pipeline.py
 │   │   └── update_project_map.py
 │   ├── transfer/
@@ -239,6 +240,7 @@ Directories / 目录: **48** · Files / 文件: **130**
 | `code/tools/review_g1_train_contact_sheets.py` | Render two-slice Train patient sheets for G1 alignment screening; Definitions: render_patient, main | 绘制训练集患者双切面图供 G1 对齐筛查；定义：render_patient, main |
 | `code/tools/summarize_g2_slice_detail.py` | Reconcile G2 slice and intensity CSVs with G1 and draw local plots; Definitions: read_csv, write_csv, check_hash, main | 将 G2 切片及强度 CSV 与 G1 核对并绘制本地图；定义：read_csv, write_csv, check_hash, main |
 | `code/tools/summarize_g2_train_audit.py` | Summarize verified raw Train audit into G2 tables and plots; Definitions: write_csv, main | 将已核验的训练集原始审计汇总为 G2 表格与图；定义：write_csv, main |
+| `code/tools/summarize_g3_candidate_sampling.py` | Verify full candidate patch records and summarize exposure; Definitions: sha256_file, write_csv, main | 核验完整候选 Patch 记录并汇总曝光；定义：sha256_file, write_csv, main |
 | `code/tools/summarize_g3_pipeline.py` | Definitions: verified_json, main | 定义：verified_json, main |
 | `code/tools/update_project_map.py` | Generate and watch this bilingual inventory; Definitions: _files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main | 生成并持续更新本双语目录；定义：_files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main |
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |

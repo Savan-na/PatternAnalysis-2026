@@ -64,6 +64,7 @@ ROLES = {
     "audit_g2_train_slices.py": ("Measure Train axial label coverage and MRI intensity bins on Rangpur CPU", "在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱"),
     "audit_g3_existing_pipeline.py": ("Audit current Train downsampling, normalization and whole-volume arrays", "审计当前训练集降采样、归一化与整卷张量"),
     "audit_g3_candidate_sampling.py": ("Compare fixed Train-only uniform and organ-aware candidate crops", "比较固定的训练集均匀与器官感知候选裁剪"),
+    "summarize_g3_candidate_sampling.py": ("Verify full candidate patch records and summarize exposure", "核验完整候选 Patch 记录并汇总曝光"),
     "g3_patch_audit.json": ("Frozen candidate-crop audit design, not a training configuration", "固定的候选裁剪审计设计，非训练配置"),
     "test_sampling_audit.py": ("Candidate crop bounds and repeatability checks", "候选裁剪边界与可重复性检查"),
     "summarize_g2_slice_detail.py": ("Reconcile G2 slice and intensity CSVs with G1 and draw local plots", "将 G2 切片及强度 CSV 与 G1 核对并绘制本地图"),
