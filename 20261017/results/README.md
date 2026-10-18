@@ -19,7 +19,8 @@ results/
 The first three categories each have pre-created `baseline_2d`,
 `baseline_3d`, `improved_3d`, and `comparisons` directories. Put cross-model
 tables and visuals in `comparisons`. The one cumulative formal research report
-belongs in `reports/`; existing `data_analysis/` files remain historical
+is [`reports/HipMRI_Research_Report.md`](reports/HipMRI_Research_Report.md);
+existing `data_analysis/` files remain historical
 Train-only source analysis and are not another current audit report.
 
 No restarted-model result exists yet. Generated artifacts and
