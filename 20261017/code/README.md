@@ -33,3 +33,7 @@ and stored under `transfer/`. It excludes raw logs, medical-derived results,
 weights, NIfTI data, and the generated project map. Regenerate the latter on
 Rangpur after unpacking. The study is an annotation-assistant prototype, not
 a source of clinical contours.
+
+`tools/review_g1_overlays.py` renders a small, prespecified set of raw Train
+MRI/ground-truth panels for anatomical review after the mechanical G1 audit.
+Its figures require human inspection and remain separate from model results.

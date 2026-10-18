@@ -57,6 +57,7 @@ ROLES = {
     "test_models_and_losses.py": ("Shape, gradient, supervision and inference tests", "形状、梯度、深监督与推理测试"),
     "test_splits.py": ("Patient isolation and file pairing tests", "患者隔离与文件配对测试"),
     "package_transfer.py": ("Build and verify a source-only transfer ZIP", "创建并校验仅含源码的传输包"),
+    "review_g1_overlays.py": ("Render raw Train MRI and ground-truth overlays for G1 review", "绘制训练集原始 MRI 与真实标签叠加图供 G1 审查"),
     "update_project_map.py": ("Generate and watch this bilingual inventory", "生成并持续更新本双语目录"),
     "20261017_source.zip": ("Generated source-only transfer package", "生成的仅含源码传输包"),
     "PROJECT_MAP.md": ("Generated bilingual tree and file content index", "自动生成的双语文件树与内容索引"),
