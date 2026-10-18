@@ -20,7 +20,7 @@ and is not treated as this audit's output.
 | Identical file-hash groups among Train cases | 0 |
 | Warnings | 143, all reporting an unspecified Mask spatial unit |
 | Mechanical audit status | Passed |
-| Anatomical review status | Incomplete |
+| Gross alignment screen | 143/143 Train volumes, two axial sections each; no obvious whole-image/mask displacement |
 
 The complete Train JSON also reports zero non-finite MRI voxels, zero
 non-finite Mask voxels, zero illegal Masks, and all six class IDs present in
@@ -58,8 +58,8 @@ Every Train mask has an unspecified spatial unit in its NIfTI header. This is
 a metadata warning, not proof of image–mask misalignment. The audit reported
 no mechanical case errors. The intensity spread and tiny Bladder components
 were flagged for review, not established corruption. Affine agreement alone
-cannot certify that labels match the anatomy. The selected overlays below provide an
-initial visual screen; the flagged components need further review.
+cannot certify that labels match the anatomy. The visual screens below add
+section-level evidence without claiming expert verification of every boundary.
 
 ### G1 visual review — 18 October 2026
 
@@ -101,9 +101,30 @@ The component output is on Rangpur at
 The follow-up script SHA-256 is
 `b2eb4be2c428bf2f4db37c443fcc1dfcb81061e98da8554e7453ec9aad70c29b`.
 The unspecified Mask spatial-unit header remains a metadata caveat despite
-exact affine agreement. Six selected cases cannot establish anatomical
-correctness for all 143 Train volumes, so broader anatomical review remains
-open.
+exact affine agreement. The header warning does not, by itself, establish a
+spatial error or justify changing source Masks.
+
+#### Full Train gross-alignment screen
+
+One patient contact sheet was generated for each of the 26 Train patients,
+covering all 143 Train volumes. For each volume, the sheet shows one axial
+section through the Prostate and one through the Bladder, with all four organ
+contours visible where present. All 26 sheets (286 displayed sections) were
+visually screened. No obvious whole-image/mask displacement or organ contour
+falling wholly outside the imaged anatomy was seen in those sections. Examples
+include [C032](../data_analysis/g1_train_patient_C032.png),
+[M036](../data_analysis/g1_train_patient_M036.png), and
+[W012](../data_analysis/g1_train_patient_W012.png). The other sheets are listed
+in `PROJECT_MAP.md` and remain local review artifacts.
+
+The contact-sheet index in `logs/audits/g1_train_contact_sheets_20261018.json`
+contains 26 unique patients and 143 unique case IDs, with no missing figure.
+Its local SHA-256 is
+`96561d0ee6766305dd2e95369e248cb8a3dba7f06c4a623d4df8532d11fce17f`.
+This screen does not examine every slice, quantify contour accuracy, or replace
+expert annotation review. Bladder size and appearance vary visibly across
+scans; G2 will quantify Train-only distributions before any data-pipeline
+decision.
 
 The PNGs are medical-image-derived local review artifacts. HipMRI Study data
 use terms prohibit re-identification and commercial use and require an
@@ -124,14 +145,18 @@ not a segmentation performance comparison.
 
 ## Failure Analysis
 
-Pending model experiments. The G1 raw-data findings and remaining visual
-checks are recorded under Problems Identified above.
+Pending model experiments. G1 raw-data findings and visual-screen limits are
+recorded under Problems Identified above.
 
 ## Conclusions
 
-The current Train cohort passed the scripted mechanical integrity checks.
-The two apparent Bladder islands are a 6-neighbour connectivity effect, not
-evidence of separated organs or confirmed annotation errors. G1 remains open
-for broader anatomical review and interpretation of the Mask unit header.
-No causal conclusion about Prostate or Rectum prediction failure follows from
-this integrity pass alone.
+G1 passed its raw-data integrity gate: all 143 Train pairs passed mechanical
+checks, and the two-section-per-volume gross-alignment screen found no obvious
+whole-image/mask displacement. The two apparent Bladder islands are a
+6-neighbour connectivity effect, not evidence of separated organs or
+confirmed annotation errors. The unspecified Mask spatial-unit header is a
+documented non-blocking metadata warning because MRI/Mask affines match exactly
+and spacings passed the matching check. Boundary correctness across every
+slice remains unverified.
+G2 can now measure Train-only class, intensity and spatial distributions; no
+causal conclusion about Prostate or Rectum prediction failure follows from G1.
