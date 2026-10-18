@@ -15,6 +15,12 @@ comparison. The existing 2D U-Net is background research and does not require
 retraining. The historical Baseline–V4 outcomes remain historical evidence,
 not results of the restarted study.
 
+The user subsequently requested a supplementary 2D training arm. Its axial
+slice and crop exposure must first be measured on Train only, then its own
+training and checkpoint protocol frozen. This optional arm does not change
+the frozen Standard/Improved 3D comparison. A 2D-versus-3D result cannot
+isolate architecture when their input context and sampling differ.
+
 ## Cohort and information boundaries
 
 The frozen split has 26/6/6 patients and 143/38/30 Train/Validation/Test

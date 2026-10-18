@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 22:29:45 AEST**
+Updated / 更新时间: **2026-10-18 22:46:41 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **53** · Files / 文件: **168**
+Directories / 目录: **53** · Files / 文件: **171**
 
 ## Directory Tree / 目录树
 
@@ -49,6 +49,7 @@ Directories / 目录: **53** · Files / 文件: **168**
 │   │   ├── metrics.py
 │   │   ├── profile.py
 │   │   ├── sampling.py
+│   │   ├── sampling_2d.py
 │   │   ├── splits.py
 │   │   └── training.py
 │   ├── tests/
@@ -59,6 +60,7 @@ Directories / 目录: **53** · Files / 文件: **168**
 │   │   ├── test_models_and_losses.py
 │   │   ├── test_raw_audit.py
 │   │   ├── test_sampling.py
+│   │   ├── test_sampling_2d.py
 │   │   ├── test_sampling_audit.py
 │   │   ├── test_splits.py
 │   │   └── test_training_selection.py
@@ -72,6 +74,7 @@ Directories / 目录: **53** · Files / 文件: **168**
 │   │   ├── audit_g3_candidate_sampling.py
 │   │   ├── audit_g3_existing_pipeline.py
 │   │   ├── audit_g4_patient_sampling.py
+│   │   ├── audit_g5_2d_sampling.py
 │   │   ├── audit_train_raw.py
 │   │   ├── package_transfer.py
 │   │   ├── probe_g5_full_volume.py
@@ -267,6 +270,7 @@ Directories / 目录: **53** · Files / 文件: **168**
 | `code/hipmri_rewrite/models/improved_3d.py` | Residual 3D U-Net with deep supervision; Definitions: _ContextResidual, _Localization, ImprovedUNet3D | 含残差结构及深监督的 3D U-Net；定义：_ContextResidual, _Localization, ImprovedUNet3D |
 | `code/hipmri_rewrite/profile.py` | Train-only GPU forward/backward capacity probe; Definitions: profile, main | 仅使用训练数据的 GPU 前反向容量检查；定义：profile, main |
 | `code/hipmri_rewrite/sampling.py` | Patient-balanced Train patch selection and exact label exposure; Definitions: _rng, epoch_cases, crop_origin, crop_for_3d_model, ExposureRecorder | 按患者均衡抽取训练 Patch 并记录实际标签曝光；定义：_rng, epoch_cases, crop_origin, crop_for_3d_model, ExposureRecorder |
+| `code/hipmri_rewrite/sampling_2d.py` | Deterministic Train-only axial crop selection for the optional 2D arm; Definitions: slice_crop_origin, crop_for_2d_model | 可选 2D 模型使用的确定性训练集轴向切片裁剪；定义：slice_crop_origin, crop_for_2d_model |
 | `code/hipmri_rewrite/splits.py` | Frozen patient identity and MRI/mask file pairing; Definitions: Case, read_split, discover | 固定患者身份及 MRI/mask 文件配对；定义：Case, read_split, discover |
 | `code/hipmri_rewrite/training.py` | Predeclared equal-patient Validation selection score; Definitions: patient_small_organ_score | 预先定义患者等权的验证集模型选择指标；定义：patient_small_organ_score |
 | `code/README.md` | Entry point or directory guide; Sections: Code and Methods | 项目入口或目录说明；章节标题：Code and Methods |
@@ -278,6 +282,7 @@ Directories / 目录: **53** · Files / 文件: **168**
 | `code/tests/test_models_and_losses.py` | Shape, gradient, supervision and inference tests; Definitions: NetworkTests | 形状、梯度、深监督与推理测试；定义：NetworkTests |
 | `code/tests/test_raw_audit.py` | Train inventory and file-hash audit tests; Definitions: RawAuditInventoryTests | 训练集文件盘点与文件哈希审计测试；定义：RawAuditInventoryTests |
 | `code/tests/test_sampling.py` | Patient cycle, paired crop and exposure-record tests; Definitions: case, PatientBalancedSamplingTests | 患者轮换、配对裁剪及曝光记录测试；定义：case, PatientBalancedSamplingTests |
+| `code/tests/test_sampling_2d.py` | 2D crop target, bounds and MRI/mask alignment checks; Definitions: TwoDSamplingTests | 核验 2D 裁剪目标、边界和影像标签对齐；定义：TwoDSamplingTests |
 | `code/tests/test_sampling_audit.py` | Candidate crop bounds and repeatability checks; Definitions: CandidateCropTests | 候选裁剪边界与可重复性检查；定义：CandidateCropTests |
 | `code/tests/test_splits.py` | Patient isolation and file pairing tests; Definitions: PatientSplitTests | 患者隔离与文件配对测试；定义：PatientSplitTests |
 | `code/tests/test_training_selection.py` | Check patient-balanced small-organ checkpoint selection; Definitions: PatientSelectionTests | 核验患者等权的小器官权重选择规则；定义：PatientSelectionTests |
@@ -289,6 +294,7 @@ Directories / 目录: **53** · Files / 文件: **168**
 | `code/tools/audit_g3_candidate_sampling.py` | Compare fixed Train-only uniform and organ-aware candidate crops; Definitions: sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main | 比较固定的训练集均匀与器官感知候选裁剪；定义：sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main |
 | `code/tools/audit_g3_existing_pipeline.py` | Audit current Train downsampling, normalization and whole-volume arrays; Definitions: sha256_file, class_counts, occupied_z_slices, software_versions, main | 审计当前训练集降采样、归一化与整卷张量；定义：sha256_file, class_counts, occupied_z_slices, software_versions, main |
 | `code/tools/audit_g4_patient_sampling.py` | Dry-run patient-balanced model-ready Train patches on CPU; Definitions: sha256_file, main | 在 CPU 上预演患者均衡的训练模型输入 Patch；定义：sha256_file, main |
+| `code/tools/audit_g5_2d_sampling.py` | CPU audit of patient-balanced uniform and organ-aware 2D slice exposure; Definitions: sha256_file, main | 在 CPU 审计按患者均衡的 2D 均匀及器官感知切片曝光；定义：sha256_file, main |
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/package_transfer.py` | Build and verify a source-only transfer ZIP; Definitions: main | 创建并校验仅含源码的传输包；定义：main |
 | `code/tools/probe_g5_full_volume.py` | Measure full-volume Train inference geometry, time and A100 memory with random weights; Definitions: sha256_file, main | 用随机权重测量完整训练体积推理的几何、时间及 A100 显存；定义：sha256_file, main |

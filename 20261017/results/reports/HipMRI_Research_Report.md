@@ -598,3 +598,16 @@ epoch will save resumable model and optimizer weights; Validation first runs
 at epoch five. The separate no-checkpoint epoch-budget probe (job 672837)
 was still pending at the decision point and is to be cancelled. No full-cohort
 checkpoint or Validation quality result exists yet.
+
+### Optional 2D arm: sampling prerequisite
+
+The user requested a supplementary 2D U-Net run in parallel with the primary
+3D comparison. G2 raw Train coverage shows Prostate on 3,852 of 18,320 axial
+slices (21.0%), Bladder on 5,317 (29.0%) and Rectum on 7,680 (41.9%). These
+raw percentages do not measure delivered 2D training crops. A Train-only CPU
+audit has been staged in `code/tools/audit_g5_2d_sampling.py`: one visit per
+patient, ten 64×64 axial crops, comparing uniform slice/crop draws with four
+uniform plus two targeted draws for each small organ. The audit must run on
+Rangpur CPU and its measured exposure be reviewed before freezing a 2D
+training policy or spending GPU time. The 2D arm will remain a supplementary
+comparison because its receptive context differs from the 3D arms.
