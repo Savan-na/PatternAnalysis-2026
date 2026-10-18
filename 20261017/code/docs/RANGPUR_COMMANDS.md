@@ -165,3 +165,14 @@ shows the job has finished. The audit script itself rejects execution without
 an allocated Slurm job or on a login host. Check the smoke manifest and patch
 CSV before allocating time for all 143 cases. Keep the full run in a separate
 new output directory.
+
+The successful smoke job `671975` saved 40 patch rows across two Train cases.
+Full CPU job `671984` saved 2,860 rows across all 143 Train cases under
+`logs/audits/g3_patch_candidate_full_20261018/`. The manifest and patch CSV
+SHA-256 values are respectively
+`e142be157e692572a7fd96084ec80c241edc6f165498dec25ea13919abb1889b`
+and `96ac1118b0109a21e3bc943df71094026dcf1852535d79124f200383d790dce2`.
+After downloading both files into the matching local `logs/audits/` directory,
+run `code/tools/summarize_g3_candidate_sampling.py` in the existing local
+Matplotlib environment with those two hashes. The verifier checks all 2,860
+rows against G3 before writing derived CSVs and a figure.

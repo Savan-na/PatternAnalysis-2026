@@ -64,4 +64,5 @@ verified Train grid. This is an exposure audit for a possible future policy;
 it is not wired into model training.
 `tools/summarize_g3_candidate_sampling.py` verifies the returned full-cohort
 CSV and manifest against Rangpur SHA-256 values and the G3 case grids before
-producing local exposure tables and a comparison figure.
+producing local exposure tables and a comparison figure under
+`results/data_analysis/g3_pipeline/`.

@@ -203,6 +203,49 @@ learning. The current restart still lacks ROI cropping, augmentation, a
 Patch Sampler and a formal training loop; actual class exposure in model
 training remains unmeasured.
 
+### G3 candidate Patch exposure — 18 October 2026
+
+Because the current restart has no training Patch Sampler, a separate,
+Train-only *candidate simulation* compared two crop policies on the verified
+downsampled masks. The frozen design used ten 64×64×32 XYZ patches per volume
+per policy, seed 371017, across all 143 Train volumes and 26 patients. The
+uniform policy placed all ten crops randomly. The organ-aware candidate
+shared the first four uniform crops, then anchored two crops each on a
+Bladder, Rectum, and Prostate voxel. This holds case frequency fixed while
+changing crop placement; it is not a record of historical training or an
+active sampler in the current model code.
+
+The two-case smoke check passed on CPU job `671975`. The full CPU job
+`671984` saved 2,860 patch records (1,430 per policy). The returned manifest
+and CSV have SHA-256 values
+`e142be157e692572a7fd96084ec80c241edc6f165498dec25ea13919abb1889b`
+and `96ac1118b0109a21e3bc943df71094026dcf1852535d79124f200383d790dce2`.
+Local verification matched these hashes, checked every case/arm/draw key and
+crop bound, reconciled every patch count with its source Mask, and reproduced
+the manifest totals. The [class and patient tables with a comparison figure](../data_analysis/g3_pipeline/README.md)
+hold the derived results.
+
+| Organ | Uniform patches containing organ | Organ-aware patches containing organ | Uniform sampled-voxel share | Organ-aware sampled-voxel share | Uniform patches containing entire organ | Organ-aware patches containing entire organ |
+|---|---:|---:|---:|---:|---:|---:|
+| Bladder | 1,211/1,430 (84.69%) | 1,300/1,430 (90.91%) | 2.198% | 2.584% | 190/1,430 (13.29%) | 249/1,430 (17.41%) |
+| Rectum | 1,307/1,430 (91.40%) | 1,344/1,430 (93.99%) | 0.637% | 0.750% | 172/1,430 (12.03%) | 193/1,430 (13.50%) |
+| Prostate | 1,377/1,430 (96.29%) | 1,405/1,430 (98.25%) | 0.643% | 0.697% | 546/1,430 (38.18%) | 649/1,430 (45.38%) |
+
+For these fixed crops and one deterministic seed, uniformly placed patches
+rarely missed Prostate altogether. Yet Prostate still occupied under 0.7%
+of sampled voxels, and fewer than half of patches contained its entire
+label. Its 0.643% uniform-crop share is about six times its 0.10776%
+downsampled full-volume share, showing that the crop already concentrates
+central anatomy while leaving Prostate numerically rare. Thus Patch Hit Rate
+alone overstates how much complete small-organ
+context a crop supplies. The organ-aware candidate increased cohort-wide
+hits and voxel share modestly; per-case hits did not improve uniformly
+(Prostate hits fell in 2 of 143 cases). This simulation does not prove that
+organ-aware sampling improves Dice or recall. Ten patches per volume produce
+10–80 patches per patient because patients contribute 1–8 scans; the study
+still needs a patient-aware exposure decision. Actual training exposure
+remains unknown until a sampler and training loop are implemented and logged.
+
 ## Problems Identified
 
 Every Train mask has an unspecified spatial unit in its NIfTI header. This is
@@ -219,6 +262,7 @@ section-level evidence without claiming expert verification of every boundary.
 | Patient and visit-level organ variation | Supported by per-patient shares and physical-volume ranges |
 | Small organs occupy limited axial sections | Supported by the full Train slice audit |
 | Existing downsampling deletes a small organ | Excluded for these 143 Train volumes; all three organs survive, although physical-volume and boundary changes remain |
+| Uniform candidate crops frequently miss Prostate entirely | Not supported for the audited 64×64×32 crops and seed: 96.29% hit rate; complete-organ inclusion and voxel share remain limited |
 | Insufficient exposure in actual training patches | Unresolved; the current restart code has no Patch Sampler |
 | Boundary contrast explains segmentation failure | Unresolved; no current model-error or boundary-contrast test isolates it |
 
@@ -298,13 +342,14 @@ presentation: "Data were provided in part by HipMRI Study."
 
 ## Interventions
 
-None has been selected. G1 does not change source files, preprocessing,
-sampling, loss, or network architecture.
+No preprocessing, sampling, loss, or network change has been selected for
+training. G3 compared candidate crop placements without changing source files
+or activating a training sampler.
 
 ## Experimental Results
 
-No restarted model has been trained. The G1 audit is a data-quality result,
-not a segmentation performance comparison.
+No restarted model has been trained. G1–G3 are data and pipeline measurements,
+not segmentation performance comparisons.
 
 ## Failure Analysis
 
@@ -334,3 +379,13 @@ augmentation, Patch Sampler or formal training loop. The old project's
 sampling design must be recovered or a new strategy specified and frozen
 before exposure can be audited; no new model training is justified by this
 audit alone.
+For one fixed 64×64×32 candidate policy and seed, uniform random crops already
+contained Prostate in 96.29% of patches, but Prostate filled only 0.643% of
+their voxels and was fully contained in 38.18%. Organ-aware candidate crops
+raised these measures modestly. These findings narrow the sampling hypothesis:
+mere absence from patches is not prominent under this simulated crop size,
+while weak voxel exposure and incomplete organ context remain plausible
+training concerns. Patient exposure is also unequal under per-volume draws.
+The next decision is to define a trainable sampling policy and record its
+actual batches; Validation must establish whether any exposure change improves
+segmentation without increasing false positives.

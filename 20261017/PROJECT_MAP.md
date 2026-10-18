@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-18 16:39:35 AEST**
+Updated / 更新时间: **2026-10-18 16:54:35 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **48** · Files / 文件: **131**
+Directories / 目录: **49** · Files / 文件: **136**
 
 ## Directory Tree / 目录树
 
@@ -72,6 +72,9 @@ Directories / 目录: **48** · Files / 文件: **131**
 │   └── requirements.txt
 ├── logs/
 │   ├── audits/
+│   │   ├── g3_patch_candidate_full_20261018/
+│   │   │   ├── manifest.json
+│   │   │   └── patches.csv
 │   │   ├── g1_train_contact_sheets_20261018.json
 │   │   ├── g3_existing_pipeline_full_20261018_job671892.json
 │   │   └── train_full_20261018_job671208.json
@@ -158,6 +161,9 @@ Directories / 目录: **48** · Files / 文件: **131**
 │   │   │   ├── spatial_statistics.csv
 │   │   │   └── voxel_spacing.svg
 │   │   ├── g3_pipeline/
+│   │   │   ├── candidate_patch_class_exposure.csv
+│   │   │   ├── candidate_patch_exposure.svg
+│   │   │   ├── candidate_patch_patient_exposure.csv
 │   │   │   ├── organ_physical_volume_ratio.svg
 │   │   │   ├── organ_preservation_by_volume.csv
 │   │   │   └── README.md
@@ -246,6 +252,8 @@ Directories / 目录: **48** · Files / 文件: **131**
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |
 | `logs/audits/g1_train_contact_sheets_20261018.json` | JSON fields: scope, screen, patients | JSON 字段：scope, screen, patients |
 | `logs/audits/g3_existing_pipeline_full_20261018_job671892.json` | Binary or large file; 299,809 bytes | 二进制或大文件；299,809 字节 |
+| `logs/audits/g3_patch_candidate_full_20261018/manifest.json` | JSON fields: audit_script_sha256, config, config_sha256, data_code_sha256, full_train, g1_sha256, g3_sha256, patients, scope, split_code_sha256, summary, train_cases | JSON 字段：audit_script_sha256, config, config_sha256, data_code_sha256, full_train, g1_sha256, g3_sha256, patients, scope, split_code_sha256, summary, train_cases |
+| `logs/audits/g3_patch_candidate_full_20261018/patches.csv` | Binary or large file; 248,893 bytes | 二进制或大文件；248,893 字节 |
 | `logs/audits/train_full_20261018_job671208.json` | Binary or large file; 563,622 bytes | 二进制或大文件；563,622 字节 |
 | `logs/internal/map_watcher_stderr.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/map_watcher_stdout.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
@@ -310,6 +318,9 @@ Directories / 目录: **48** · Files / 文件: **131**
 | `results/data_analysis/g2_train_summary/slice_presence_summary.csv` | Table with 6 data rows; columns: ﻿class, present_slices, total_slices, slice_hit_pct, median_present_slices_per_volume, min_present_slices_per_volume, max_present_slices_per_volume | 表格含 6 条数据行；列：﻿class, present_slices, total_slices, slice_hit_pct, median_present_slices_per_volume, min_present_slices_per_volume, max_present_slices_per_volume |
 | `results/data_analysis/g2_train_summary/spatial_statistics.csv` | Table with 143 data rows; columns: ﻿case, patient, shape_x, shape_y, shape_z, spacing_x_mm, spacing_y_mm, spacing_z_mm, voxel_volume_mm3, orientation, bladder_volume_ml, bladder_bbox_min_x_voxel | 表格含 143 条数据行；列：﻿case, patient, shape_x, shape_y, shape_z, spacing_x_mm, spacing_y_mm, spacing_z_mm, voxel_volume_mm3, orientation, bladder_volume_ml, bladder_bbox_min_x_voxel |
 | `results/data_analysis/g2_train_summary/voxel_spacing.svg` | UTF-8 text with 372 lines; 32,876 bytes | UTF-8 文本，372 行；32,876 字节 |
+| `results/data_analysis/g3_pipeline/candidate_patch_class_exposure.csv` | Table with 12 data rows; columns: ﻿arm, class, patches, patch_hits, patch_hit_pct, patch_voxels, voxel_share_pct, complete_organ_patches | 表格含 12 条数据行；列：﻿arm, class, patches, patch_hits, patch_hit_pct, patch_voxels, voxel_share_pct, complete_organ_patches |
+| `results/data_analysis/g3_pipeline/candidate_patch_exposure.svg` | UTF-8 text with 1709 lines; 53,196 bytes | UTF-8 文本，1709 行；53,196 字节 |
+| `results/data_analysis/g3_pipeline/candidate_patch_patient_exposure.csv` | Table with 52 data rows; columns: ﻿patient, arm, volumes, patches, bladder_hit_pct, rectum_hit_pct, prostate_hit_pct | 表格含 52 条数据行；列：﻿patient, arm, volumes, patches, bladder_hit_pct, rectum_hit_pct, prostate_hit_pct |
 | `results/data_analysis/g3_pipeline/organ_physical_volume_ratio.svg` | UTF-8 text with 1439 lines; 44,212 bytes | UTF-8 文本，1439 行；44,212 字节 |
 | `results/data_analysis/g3_pipeline/organ_preservation_by_volume.csv` | Table with 429 data rows; columns: ﻿case, patient, organ, raw_voxels, downsampled_voxels, raw_axial_slices, downsampled_axial_slices, raw_physical_volume_mm3, downsampled_physical_volume_mm3, physical_volume_ratio | 表格含 429 条数据行；列：﻿case, patient, organ, raw_voxels, downsampled_voxels, raw_axial_slices, downsampled_axial_slices, raw_physical_volume_mm3, downsampled_physical_volume_mm3, physical_volume_ratio |
 | `results/data_analysis/g3_pipeline/README.md` | Entry point or directory guide; Sections: G3 existing-pipeline organ preservation | 项目入口或目录说明；章节标题：G3 existing-pipeline organ preservation |
