@@ -40,11 +40,18 @@ def class_counts(mask) -> dict[str, int]:
 
 
 def occupied_z_slices(mask, label: int) -> int:
+    import numpy as np
+
+    return int(np.count_nonzero(np.any(mask == label, axis=(0, 1))))
+
+
+def software_versions() -> dict[str, str]:
     import nibabel as nib
     import numpy as np
     import scipy
 
-    return int(np.count_nonzero(np.any(mask == label, axis=(0, 1))))
+    return {"python": platform.python_version(), "numpy": np.__version__,
+            "scipy": scipy.__version__, "nibabel": nib.__version__}
 
 
 def main() -> None:
@@ -153,8 +160,7 @@ def main() -> None:
         "split_file_sha256": SPLIT_SHA,
         "preprocessing_code_sha256": DATA_SHA,
         "split_code_sha256": SPLITS_CODE_SHA,
-        "software": {"python": platform.python_version(), "numpy": np.__version__,
-                     "scipy": scipy.__version__, "nibabel": nib.__version__},
+        "software": software_versions(),
         "complete_train_audit": args.limit is None,
         "audited_cases": len(rows),
         "case_error_count": sum(bool(row["errors"]) for row in rows),
