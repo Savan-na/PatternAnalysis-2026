@@ -9,7 +9,9 @@ import argparse
 import csv
 import hashlib
 import json
-from collections import Counter, defaultdict
+import os
+import socket
+from collections import Counter
 from pathlib import Path
 
 
@@ -17,8 +19,6 @@ PROJECT = Path(__file__).resolve().parents[2]
 import sys
 
 sys.path.insert(0, str(PROJECT / "code"))
-from hipmri_rewrite.data import downsample, load_case  # noqa: E402
-from hipmri_rewrite.splits import discover  # noqa: E402
 
 
 CLASSES = ("Background", "Body", "Bones", "Bladder", "Rectum", "Prostate")
@@ -72,8 +72,6 @@ def patch_counts(mask, origin: tuple[int, int, int], patch: tuple[int, int, int]
 
 
 def main() -> None:
-    import numpy as np
-
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset-root", type=Path, required=True)
     parser.add_argument("--config", type=Path, default=PROJECT / "code/config/g3_patch_audit.json")
@@ -82,6 +80,14 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--limit", type=int, default=None)
     args = parser.parse_args()
+
+    if not os.environ.get("SLURM_JOB_ID") or socket.gethostname().startswith("login"):
+        parser.error("Run this MRI audit inside an allocated Slurm CPU job, never on login0")
+
+    import numpy as np
+
+    from hipmri_rewrite.data import downsample, load_case
+    from hipmri_rewrite.splits import discover
 
     output = args.output_dir.resolve()
     if not output.is_relative_to(PROJECT) or output.exists():

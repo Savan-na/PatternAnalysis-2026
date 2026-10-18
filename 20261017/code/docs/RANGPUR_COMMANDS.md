@@ -138,10 +138,17 @@ ssh s4906923@login0.compute.eait.uq.edu.au
 ```
 
 On `login0`, verify both remote `sha256sum` values against local
-`Get-FileHash`, then request an allocated CPU shell. After allocation:
+`Get-FileHash`. The first interactive attempt (job `671962`) failed while
+creating the `srun` job step, leaving the shell on `login0`; the subsequent
+Python process was interrupted during OpenBLAS thread creation and produced
+no valid smoke result. Submit the smoke audit as a CPU batch job instead:
 
 ```bash
-srun --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=00:30:00 --pty bash
+sbatch --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=00:30:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/audits/g3_patch_candidate_smoke_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
 hostname
 source "$HOME/miniconda3/etc/profile.d/conda.sh"
 conda activate torch
@@ -150,7 +157,11 @@ python -B tools/audit_g3_candidate_sampling.py \
   --dataset-root /home/groups/comp3710/HipMRI_Study_open \
   --limit 2 \
   --output-dir ../logs/audits/g3_patch_candidate_smoke_20261018
+SBATCH
 ```
 
-Check the smoke manifest and patch CSV before allocating time for all 143
-cases. Keep the full run in a separate new output directory.
+Read the returned job ID and inspect its `.out` file after `squeue -j ID`
+shows the job has finished. The audit script itself rejects execution without
+an allocated Slurm job or on a login host. Check the smoke manifest and patch
+CSV before allocating time for all 143 cases. Keep the full run in a separate
+new output directory.
