@@ -39,3 +39,8 @@ component views, and all-patient contact sheets. Their local figure groups are
 `results/data_analysis/g1_selected_cases/`, `g1_bladder_review/`, and
 `g1_patient_screen/` respectively. The tools accept an explicit output
 directory and leave the original MRI/Mask files unchanged.
+
+`tools/summarize_g2_train_audit.py` checks the full G1 audit hash and frozen
+split, then exports Train-only class, volume, patient, intensity and spatial
+statistics plus four SVG plots. It uses the local `comp2011` environment's
+Matplotlib; no raw NIfTI is required for this first G2 summary.

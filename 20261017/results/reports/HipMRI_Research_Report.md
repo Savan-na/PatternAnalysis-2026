@@ -51,6 +51,49 @@ The frozen split JSON SHA-256 is
 the G1 audit script SHA-256 is
 `98ccab2d8e71eae477914192cd3d5751b9ba4b8601f366f6d734774abff1494f`.
 This report records derived findings without copying raw MRI arrays into Git.
+The user downloaded the complete audit JSON to the local `logs/audits/` folder;
+its local SHA-256 matches the Rangpur value above.
+
+### G2 raw Train statistics — first pass, 18 October 2026
+
+The [G2 tables and figures](../data_analysis/g2_train_summary/README.md) were
+recomputed from the verified complete G1 JSON, without reusing the historical
+summary or reading Validation/Test label distributions. All shares below use
+the 1,200,619,520 raw Train voxels across 143 volumes as their denominator.
+
+| Class | Voxels | Raw Train share |
+|---|---:|---:|
+| Background | 720,230,975 | 59.988278% |
+| Body | 429,188,773 | 35.747276% |
+| Bones | 40,906,813 | 3.407142% |
+| Bladder | 7,253,501 | 0.604147% |
+| Rectum | 1,743,644 | 0.145229% |
+| Prostate | 1,295,814 | 0.107929% |
+
+These values reproduce the earlier Train-only class percentages to their
+reported precision. This confirms the historical calculation against the
+current raw audit; it does not measure what the model receives after
+preprocessing and patch sampling. The global Background/Prostate voxel-count
+ratio is about 556:1.
+
+Across the 26 Train patients, pooled-visit Prostate share ranges from 0.03667%
+to 0.24809%, and Rectum share from 0.08296% to 0.45474%. Patients contribute
+1–8 scans each, so the pooled global share weights patients by their scan
+counts and image sizes. Per-volume Prostate share ranges from 0.03484% to
+0.29290%. These are observed label-size differences, not an explanation of
+model failure by themselves. The per-volume nonzero MRI median ranges from
+7 to 47 in source intensity units; the zero-voxel share and spacing plots show
+additional between-scan variation. The [class-frequency chart](../data_analysis/g2_train_summary/class_frequency_log.svg)
+uses a log axis so that all six nonzero categories remain visible. The
+[patient plot](../data_analysis/g2_train_summary/patient_rare_organ_share.svg),
+[intensity plot](../data_analysis/g2_train_summary/intensity_case_summary.svg),
+and [spacing plot](../data_analysis/g2_train_summary/voxel_spacing.svg) are
+case-level summaries, not voxel histograms.
+
+This first pass does not include per-slice class exposure, voxel-level MRI
+histograms, longitudinal registration, boundary contrast measurements, or
+actual post-transform patches. Those require a further Train-only Rangpur CPU
+analysis and the G3 data-pipeline audit. G2 is therefore still in progress.
 
 ## Problems Identified
 
@@ -162,3 +205,6 @@ and spacings passed the matching check. Boundary correctness across every
 slice remains unverified.
 G2 can now measure Train-only class, intensity and spatial distributions; no
 causal conclusion about Prostate or Rectum prediction failure follows from G1.
+The first G2 pass confirms the severe global class imbalance and measures
+patient-level variation. It does not yet measure sampling imbalance or justify
+a preprocessing or model change.

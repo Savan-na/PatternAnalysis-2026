@@ -60,6 +60,7 @@ ROLES = {
     "review_g1_overlays.py": ("Render raw Train MRI and ground-truth overlays for G1 review", "绘制训练集原始 MRI 与真实标签叠加图供 G1 审查"),
     "review_g1_bladder_islands.py": ("Locate and visualize two flagged Train Bladder components", "定位并可视化两例训练集膀胱小连通区域"),
     "review_g1_train_contact_sheets.py": ("Render two-slice Train patient sheets for G1 alignment screening", "绘制训练集患者双切面图供 G1 对齐筛查"),
+    "summarize_g2_train_audit.py": ("Summarize verified raw Train audit into G2 tables and plots", "将已核验的训练集原始审计汇总为 G2 表格与图"),
     "update_project_map.py": ("Generate and watch this bilingual inventory", "生成并持续更新本双语目录"),
     "20261017_source.zip": ("Generated source-only transfer package", "生成的仅含源码传输包"),
     "PROJECT_MAP.md": ("Generated bilingual tree and file content index", "自动生成的双语文件树与内容索引"),
