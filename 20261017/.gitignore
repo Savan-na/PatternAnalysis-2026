@@ -7,6 +7,7 @@ results/*/
 !results/data_analysis/
 results/data_analysis/*.bak
 results/data_analysis/g1_overlay_*.png
+results/data_analysis/g1_bladder_island_*.png
 !results/reports/
 results/reports/*
 !results/reports/*.md
