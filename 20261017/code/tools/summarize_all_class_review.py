@@ -28,6 +28,7 @@ CLASSES = ("Background", "Body", "Bones", "Bladder", "Rectum", "Prostate")
 ARMS = ("standard_3d", "improved_3d")
 LABELS = ("Standard 3D", "Improved 3D")
 COLORS = ("#246391", "#c36b29")
+THREE_ARM_COLORS = ("#5891b5", "#246391", "#c36b29")
 
 
 def save(fig, path: Path) -> None:
@@ -222,8 +223,71 @@ def test_figures_and_table() -> None:
     print("Saved", len(rows), "case-class rows and all-class/failure figures")
 
 
+def three_arm_validation_figures() -> None:
+    """Compare the current selected Validation records without mixing in Test."""
+    names = ("Supplementary 2D", "Standard 3D", "Improved 3D")
+    run_names = ("baseline_2d", "baseline_3d", "improved_3d")
+    records = []
+    selected = []
+    for folder in run_names:
+        run = ROOT / "logs/training" / folder
+        manifest = json.loads((run / "manifest.json").read_text(encoding="utf-8"))
+        if manifest["max_epochs"] != 50:
+            raise ValueError(f"{folder}: expected completed 50-epoch run")
+        paths = sorted(run.glob("epoch_*.json"))
+        if [p.name for p in paths] != [f"epoch_{i:03d}.json" for i in range(1, 51)]:
+            raise ValueError(f"{folder}: incomplete epoch records")
+        history = [json.loads(p.read_text(encoding="utf-8")) for p in paths]
+        final = history[-1]
+        if final["epoch"] != 50:
+            raise ValueError(f"{folder}: wrong final epoch")
+        chosen = history[final["best_epoch"] - 1]
+        if (chosen["validation"] is None
+                or chosen["validation"]["selection_score"] != final["best_score"]):
+            raise ValueError(f"{folder}: selected record does not match final receipt")
+        records.append(history)
+        selected.append(chosen["validation"])
+    case_sets = [{row["case"] for row in val["cases"]} for val in selected]
+    if any(cases != case_sets[0] or len(cases) != 38 for cases in case_sets):
+        raise ValueError("The three Validation cohorts differ")
+
+    fig, ax = plt.subplots(figsize=(10.6, 5.8), layout="constrained")
+    y = np.arange(6)
+    for offset, name, color, val in zip((-0.25, 0, 0.25), names,
+                                        THREE_ARM_COLORS, selected):
+        ax.barh(y + offset, val["pooled_overlap"]["dice"], height=0.24,
+                label=name, color=color)
+    ax.set_yticks(y, CLASSES)
+    ax.invert_yaxis()
+    ax.set(xlim=(0, 1.02), xlabel="Pooled Dice",
+           title="Validation · all six classes · selected epoch 50")
+    ax.grid(axis="x", alpha=0.2)
+    ax.set_axisbelow(True)
+    ax.legend(frameon=False, loc="lower right")
+    ax.spines[["top", "right"]].set_visible(False)
+    save(fig, FIGURES / "g5_three_arm_validation_all_classes")
+
+    fig, axes = plt.subplots(1, 2, figsize=(12.8, 4.8), layout="constrained")
+    for name, color, history in zip(names, THREE_ARM_COLORS, records):
+        axes[0].plot(range(1, 51), [r["train"]["mean_loss"] for r in history],
+                     label=name, color=color)
+        points = [(r["epoch"], r["validation"]["selection_score"])
+                  for r in history if r["validation"] is not None]
+        axes[1].plot(*zip(*points), marker="o", label=name, color=color)
+    axes[0].set(title="Train objective · compare trends within each arm",
+                xlabel="Epoch", ylabel="Mean loss")
+    axes[1].set(title="Patient-balanced small-organ Validation score",
+                xlabel="Epoch", ylabel="Mean Dice", ylim=(0, 1))
+    for ax in axes:
+        ax.grid(alpha=0.2)
+        ax.spines[["top", "right"]].set_visible(False)
+    axes[1].legend(frameon=False)
+    save(fig, FIGURES / "g5_three_arm_training_trajectories")
+
+
 def main() -> None:
     validation_figures()
+    three_arm_validation_figures()
     test_figures_and_table()
 
 

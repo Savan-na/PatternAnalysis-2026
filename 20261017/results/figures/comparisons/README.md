@@ -1,14 +1,13 @@
-# 3D model comparison figures
+# Model comparison figures
 
-`g5_3d_validation.svg` uses all 50 epoch records for each frozen 3D run. It
-shows Train patch loss, the predeclared patient-balanced Validation score every
-five epochs, and pooled Validation Dice at each selected epoch 50.
-
-`g6_test_3d.svg` and `.png` use the one-time held-out Test JSON. The left panel
-shows pooled Dice for Bladder, Rectum and Prostate; the right panel gives each
-of the six Test patients equal visual weight. Pooled Dice and the patient score
-have different aggregation rules. These figures describe the fixed Test result;
-they were not used to choose checkpoints or tune training.
+`g5_three_arm_training_trajectories.svg`/`.png` shows Train objective trends
+and the predeclared patient-balanced Validation score every five epochs for
+the two 3D models and supplementary 2D model. Compare each loss trend within
+its own arm because the 2D input and class weights differ.
+`g5_three_arm_validation_all_classes.svg`/`.png` compares pooled Validation
+Dice for all six classes at each arm's selected epoch 50. The 2D versus 3D
+comparison combines architecture, spatial context, sampling and class-weight
+differences, so it does not isolate one cause.
 
 `g5_3d_validation_all_classes.svg`/`.png` and
 `g6_test_all_classes.svg`/`.png` show pooled Dice for all six classes,
@@ -17,6 +16,9 @@ selection figures; pooled Dice is not the patient-balanced selection score.
 `g5_validation_patient_class_dice.svg`/`.png` shows each Validation patient's
 six class Dice after pooling that patient's visits, separately for both 3D
 models. It supports later Train/Validation failure analysis.
+`g5_validation_body_boundaries.svg`/`.png` shows per-patient median Body HD95
+and distant Background-to-Body errors across all 38 selected Validation
+volumes; its source is `results/tables/comparisons/g5_validation_body_audit.json`.
 `g6_test_hd95_all_foreground.svg`/`.png` compares median per-volume physical
 HD95 for the five foreground classes. `g6_test_failure_patterns.svg`/`.png`
 shows M015 Bladder Dice by week and each Test volume's Body HD95. All G6
