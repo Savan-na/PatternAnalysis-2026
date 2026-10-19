@@ -3,7 +3,7 @@
 The current six-class figure comes from 50 completed epoch JSON records: the
 original 40-epoch Rangpur job 673908 and unchanged-configuration continuation
 job 674592. Train loss and the frozen patient-balanced Validation score every
-five epochs are shown in the [shared trajectory figure](../comparisons/g5_three_arm_training_trajectories.png).
+five epochs are shown in the [shared trajectory figure](../comparisons/training/g5_three_arm_training_trajectories.png).
 
 The selected score rose from 0.7367 at epoch 40 to 0.7757 at epoch 50.
 Pooled metrics aggregate voxels rather than patients, so they answer a

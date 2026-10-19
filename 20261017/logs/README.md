@@ -18,7 +18,7 @@ logs/
 ```
 
 Use `baseline_2d`, `baseline_3d`, or `improved_3d` as `<arm_id>`.
-The directories for all three arms are pre-created. Keep audit/profile
+Existing training arm directories contain completed G5 records. See validation/README.md for future diagnostics. Keep audit/profile
 records shared because they assess the common dataset or capacity gate.
 
 The root `.gitignore` excludes generated log subdirectories. The historical

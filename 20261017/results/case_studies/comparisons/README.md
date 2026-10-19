@@ -1,3 +1,10 @@
+# 分割案例索引
+
+- Validation：[小器官](validation/small_organs/README.md)、[Body](validation/body/README.md)。
+- Test：[小器官](test/small_organs/README.md)、[Body](test/body/README.md)。
+
+JSON 中原服务器输出路径保持不变，本地按文件名在对应子目录查找。
+
 # Selected segmentation overlays
 
 The four `g5_validation_*.png` panels compare the two selected epoch-50

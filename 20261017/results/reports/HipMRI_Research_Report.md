@@ -578,7 +578,7 @@ all 38 Validation volume confusion matrices before calculating overlap;
 they are different aggregation rules. Standard leads the predeclared 3D
 selection criterion by 0.0089. This is a modest difference on six patients,
 not evidence of a statistically established architecture benefit. The
-[current Train and Validation trajectories](../figures/comparisons/g5_three_arm_training_trajectories.png)
+[current Train and Validation trajectories](../figures/comparisons/training/g5_three_arm_training_trajectories.png)
 show all 50 completed epochs. The values in this paragraph describe the
 earlier 40-epoch checkpoint review.
 
@@ -774,7 +774,7 @@ from whole-volume Validation Dice. The supplementary 2D arm uses axial crops,
 organ-aware sampling and separate Train-derived class weights, so its quality
 gap from the paired 3D arms cannot be attributed to architecture alone. The
 current 50-epoch learning curves are in the
-[three-arm trajectory figure](../figures/comparisons/g5_three_arm_training_trajectories.png);
+[three-arm trajectory figure](../figures/comparisons/training/g5_three_arm_training_trajectories.png);
 no 2D Test result has been generated. The figures above describe the earlier
 epoch-40 checkpoint and are retained here as a historical step.
 
@@ -812,8 +812,8 @@ its Prostate recall (0.7990) is lower than both 3D values (0.9383 and
 0.9467). Its Rectum recall (0.9207) exceeds Standard's 0.8807 but remains
 below Improved's 0.9330; its Rectum precision is only 0.5513. These are
 precision–recall tradeoffs, not a general 2D performance win. The
-[six-class figure](../figures/comparisons/g5_three_arm_validation_all_classes.png)
-and [shared learning curves](../figures/comparisons/g5_three_arm_training_trajectories.png)
+[six-class figure](../figures/comparisons/validation/g5_three_arm_validation_all_classes.png)
+and [shared learning curves](../figures/comparisons/training/g5_three_arm_training_trajectories.png)
 show the current data rather than the retired three-organ plots.
 
 The 2D organ-aware rule demonstrably increased Train crop hits relative to
@@ -856,7 +856,7 @@ selection score; it does not establish that still more epochs would help.
 | Prostate Dice | 0.8180 | 0.7878 |
 
 The patient-balanced selection score and pooled organ Dice aggregate the
-same cases differently. The updated [G5 trajectories](../figures/comparisons/g5_three_arm_training_trajectories.png)
+same cases differently. The updated [G5 trajectories](../figures/comparisons/training/g5_three_arm_training_trajectories.png)
 show all 50 epochs. Job 674104 reproduced the selected Validation case
 confusion matrices before generating [four paired MRI/GT/prediction panels](../case_studies/comparisons/README.md).
 `J026_Week1` Rectum and `B040_Week1` Prostate show high overlap; `K018_Week3`
@@ -932,7 +932,7 @@ The median per-volume prostate axial-region Dice was lower at the base than
 in the centre (Standard 0.3924 vs 0.7852; Improved 0.6202 vs 0.8323).
 Boundary summaries come from factor-two downsampled masks at approximately
 3.36 × 3.36 × 3.12 mm; fine edges below that resolution cannot be assessed.
-The [six-class Test comparison](../figures/comparisons/g6_test_all_classes.png)
+The [six-class Test comparison](../figures/comparisons/test/g6_test_all_classes.png)
 shows pooled Dice; the [case-class table](../tables/comparisons/g6_test_case_class_metrics.csv)
 supports per-patient review. Only six independent Test patients are
 available, and the case breakdown should accompany any aggregate claim.
@@ -1011,7 +1011,7 @@ selection or tuning criterion.
 ### Train/Validation analysis sequence
 
 1. The [G5 Validation case/class table](../tables/comparisons/g5_validation_case_class_metrics.csv)
-   and [patient heatmap](../figures/comparisons/g5_validation_patient_class_dice.png)
+   and [patient heatmap](../figures/comparisons/validation/g5_validation_patient_class_dice.png)
    now expose every class's Dice, precision, recall, prediction volume and
    GT-to-prediction confusion. Rank patients and visits from these records,
    keeping patient weighting explicit.
@@ -1033,7 +1033,7 @@ Rangpur job 675319 evaluated both unchanged, Validation-selected epoch-50 3D
 checkpoints on **all 38 Validation volumes**. Each new prediction reproduced
 its saved G5 confusion matrix before surface distances were calculated. The
 [complete derived record](../tables/comparisons/g5_validation_body_audit.json)
-and [patient comparison](../figures/comparisons/g5_validation_body_boundaries.png)
+and [patient comparison](../figures/comparisons/validation/g5_validation_body_boundaries.png)
 show that the large Improved Body boundary error is not confined to the Test
 examples or a single Validation patient.
 
@@ -1159,7 +1159,7 @@ final model; main-only inference on the existing summed-output weights is
 unsupported. Directly importing the 2D sampler or increasing class weights
 is not justified by the present exposure and failure evidence.
 
-The focused [Chinese model review and next-experiment decision](HipMRI_模型复盘与下一轮实验_ZH.md)
+The focused [Chinese model review and next-experiment decision](HipMRI_Research_Report.md)
 sets explicit success criteria for that proposal and separates demonstrated
 results from mechanisms that still require a controlled test.
 

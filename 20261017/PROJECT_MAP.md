@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-20 01:11:29 AEST**
+Updated / 更新时间: **2026-10-20 08:54:39 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **47** · Files / 文件: **404**
+Directories / 目录: **55** · Files / 文件: **414**
 
 ## Directory Tree / 目录树
 
@@ -80,6 +80,7 @@ Directories / 目录: **47** · Files / 文件: **404**
 │   │   ├── audit_g7_edge_sampling.py
 │   │   ├── audit_train_raw.py
 │   │   ├── evaluate_g6_test.py
+│   │   ├── organize_result_artifacts.py
 │   │   ├── package_transfer.py
 │   │   ├── probe_g5_full_volume.py
 │   │   ├── probe_g5_patch_gpu.py
@@ -302,29 +303,37 @@ Directories / 目录: **47** · Files / 文件: **404**
 │   │       ├── epoch_050.json
 │   │       └── manifest.json
 │   ├── validation/
-│   │   ├── baseline_2d/
-│   │   ├── baseline_3d/
-│   │   └── improved_3d/
+│   │   └── README.md
 │   └── README.md
 ├── results/
 │   ├── case_studies/
 │   │   └── comparisons/
-│   │       ├── g5_body_validation_B040_Week4.png
-│   │       ├── g5_body_validation_J026_Week4.png
-│   │       ├── g5_body_validation_K018_Week4.png
-│   │       ├── g5_validation_B040_Week1_prostate.png
-│   │       ├── g5_validation_J026_Week1_rectum.png
-│   │       ├── g5_validation_K018_Week3_rectum.png
-│   │       ├── g5_validation_S022_Week6_prostate.png
-│   │       ├── g5_validation_selected_cases.json
-│   │       ├── g6_body_L011_Week5.png
-│   │       ├── g6_body_M015_Week3.png
-│   │       ├── g6_body_selected_cases.json
-│   │       ├── g6_body_W041_Week0.png
-│   │       ├── g6_test_M015_Week7_bladder.png
-│   │       ├── g6_test_M020_Week1_prostate.png
-│   │       ├── g6_test_selected_cases.json
-│   │       ├── g6_test_W029_Week6_prostate.png
+│   │       ├── test/
+│   │       │   ├── body/
+│   │       │   │   ├── g6_body_L011_Week5.png
+│   │       │   │   ├── g6_body_M015_Week3.png
+│   │       │   │   ├── g6_body_selected_cases.json
+│   │       │   │   ├── g6_body_W041_Week0.png
+│   │       │   │   └── README.md
+│   │       │   └── small_organs/
+│   │       │       ├── g6_test_M015_Week7_bladder.png
+│   │       │       ├── g6_test_M020_Week1_prostate.png
+│   │       │       ├── g6_test_selected_cases.json
+│   │       │       ├── g6_test_W029_Week6_prostate.png
+│   │       │       └── README.md
+│   │       ├── validation/
+│   │       │   ├── body/
+│   │       │   │   ├── g5_body_validation_B040_Week4.png
+│   │       │   │   ├── g5_body_validation_J026_Week4.png
+│   │       │   │   ├── g5_body_validation_K018_Week4.png
+│   │       │   │   └── README.md
+│   │       │   └── small_organs/
+│   │       │       ├── g5_validation_B040_Week1_prostate.png
+│   │       │       ├── g5_validation_J026_Week1_rectum.png
+│   │       │       ├── g5_validation_K018_Week3_rectum.png
+│   │       │       ├── g5_validation_S022_Week6_prostate.png
+│   │       │       ├── g5_validation_selected_cases.json
+│   │       │       └── README.md
 │   │       └── README.md
 │   ├── data_analysis/
 │   │   ├── g1_bladder_review/
@@ -423,34 +432,42 @@ Directories / 目录: **47** · Files / 文件: **404**
 │   │   │   ├── train_patient_examinations.svg
 │   │   │   └── train_rare_organ_volumes.svg
 │   │   └── README.md
+│   ├── diagnostics/
+│   │   └── inference_context/
+│   │       └── README.md
 │   ├── figures/
 │   │   ├── baseline_2d/
 │   │   │   ├── g5_2d_validation_all_classes.png
 │   │   │   ├── g5_2d_validation_all_classes.svg
 │   │   │   └── README.md
 │   │   └── comparisons/
-│   │       ├── g5_3d_validation_all_classes.png
-│   │       ├── g5_3d_validation_all_classes.svg
-│   │       ├── g5_three_arm_training_trajectories.png
-│   │       ├── g5_three_arm_training_trajectories.svg
-│   │       ├── g5_three_arm_validation_all_classes.png
-│   │       ├── g5_three_arm_validation_all_classes.svg
-│   │       ├── g5_validation_body_boundaries.png
-│   │       ├── g5_validation_body_boundaries.svg
-│   │       ├── g5_validation_patient_class_dice.png
-│   │       ├── g5_validation_patient_class_dice.svg
-│   │       ├── g6_test_all_classes.png
-│   │       ├── g6_test_all_classes.svg
-│   │       ├── g6_test_failure_patterns.png
-│   │       ├── g6_test_failure_patterns.svg
-│   │       ├── g6_test_hd95_all_foreground.png
-│   │       ├── g6_test_hd95_all_foreground.svg
+│   │       ├── test/
+│   │       │   ├── g6_test_all_classes.png
+│   │       │   ├── g6_test_all_classes.svg
+│   │       │   ├── g6_test_failure_patterns.png
+│   │       │   ├── g6_test_failure_patterns.svg
+│   │       │   ├── g6_test_hd95_all_foreground.png
+│   │       │   ├── g6_test_hd95_all_foreground.svg
+│   │       │   └── README.md
+│   │       ├── training/
+│   │       │   ├── g5_three_arm_training_trajectories.png
+│   │       │   ├── g5_three_arm_training_trajectories.svg
+│   │       │   └── README.md
+│   │       ├── validation/
+│   │       │   ├── g5_3d_validation_all_classes.png
+│   │       │   ├── g5_3d_validation_all_classes.svg
+│   │       │   ├── g5_three_arm_validation_all_classes.png
+│   │       │   ├── g5_three_arm_validation_all_classes.svg
+│   │       │   ├── g5_validation_body_boundaries.png
+│   │       │   ├── g5_validation_body_boundaries.svg
+│   │       │   ├── g5_validation_patient_class_dice.png
+│   │       │   ├── g5_validation_patient_class_dice.svg
+│   │       │   └── README.md
 │   │       └── README.md
 │   ├── reports/
 │   │   ├── HipMRI_P1_独立研究审查_ZH.md
 │   │   ├── HipMRI_Pretraining_Data_Analysis.md
-│   │   ├── HipMRI_Research_Report.md
-│   │   └── HipMRI_模型复盘与下一轮实验_ZH.md
+│   │   └── HipMRI_Research_Report.md
 │   ├── tables/
 │   │   └── comparisons/
 │   │       ├── g5_validation_aux_logits.json
@@ -459,7 +476,8 @@ Directories / 目录: **47** · Files / 文件: **404**
 │   │       ├── g6_test_3d.json
 │   │       ├── g6_test_case_class_metrics.csv
 │   │       └── README.md
-│   └── README.md
+│   ├── README.md
+│   └── STORAGE_GUIDE.md
 ├── .gitignore
 ├── PROJECT_MAP.md
 └── README.md
@@ -528,6 +546,7 @@ Directories / 目录: **47** · Files / 文件: **404**
 | `code/tools/audit_g7_edge_sampling.py` | Replay frozen Train epochs and compare 9+1 edge sampling exposure on CPU; Definitions: sha, main | 在 CPU 重放固定训练轮次并比较 9+1 边缘采样曝光；定义：sha, main |
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/evaluate_g6_test.py` | Definitions: sha256, selected_model, boundary_summary, main | 定义：sha256, selected_model, boundary_summary, main |
+| `code/tools/organize_result_artifacts.py` | Definitions: destination, main | 定义：destination, main |
 | `code/tools/package_transfer.py` | Build and verify a source-only transfer ZIP; Definitions: main | 创建并校验仅含源码的传输包；定义：main |
 | `code/tools/probe_g5_full_volume.py` | Measure full-volume Train inference geometry, time and A100 memory with random weights; Definitions: sha256_file, main | 用随机权重测量完整训练体积推理的几何、时间及 A100 显存；定义：sha256_file, main |
 | `code/tools/probe_g5_patch_gpu.py` | Measure both 3D models' real Train patch gradients and A100 memory; Definitions: sha256_file, main | 测量两个 3D 模型真实训练 Patch 的梯度和 A100 显存；定义：sha256_file, main |
@@ -735,25 +754,30 @@ Directories / 目录: **47** · Files / 文件: **404**
 | `logs/training/improved_3d/epoch_049.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/improved_3d/epoch_050.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/improved_3d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 | JSON 字段：config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 |
+| `logs/validation/README.md` | Entry point or directory guide; Sections: Validation 诊断原始记录 | 项目入口或目录说明；章节标题：Validation 诊断原始记录 |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
 | `README.md` | Entry point or directory guide; Sections: HipMRI Data-Driven Model Development; Where things belong | 项目入口或目录说明；章节标题：HipMRI Data-Driven Model Development; Where things belong |
-| `results/case_studies/comparisons/g5_body_validation_B040_Week4.png` | Binary or large file; 268,835 bytes | 二进制或大文件；268,835 字节 |
-| `results/case_studies/comparisons/g5_body_validation_J026_Week4.png` | Binary or large file; 222,090 bytes | 二进制或大文件；222,090 字节 |
-| `results/case_studies/comparisons/g5_body_validation_K018_Week4.png` | Binary or large file; 249,121 bytes | 二进制或大文件；249,121 字节 |
-| `results/case_studies/comparisons/g5_validation_B040_Week1_prostate.png` | Binary or large file; 99,219 bytes | 二进制或大文件；99,219 字节 |
-| `results/case_studies/comparisons/g5_validation_J026_Week1_rectum.png` | Binary or large file; 100,764 bytes | 二进制或大文件；100,764 字节 |
-| `results/case_studies/comparisons/g5_validation_K018_Week3_rectum.png` | Binary or large file; 89,639 bytes | 二进制或大文件；89,639 字节 |
-| `results/case_studies/comparisons/g5_validation_S022_Week6_prostate.png` | Binary or large file; 89,736 bytes | 二进制或大文件；89,736 字节 |
-| `results/case_studies/comparisons/g5_validation_selected_cases.json` | JSON fields: kind, split, cases, sources | JSON 字段：kind, split, cases, sources |
-| `results/case_studies/comparisons/g6_body_L011_Week5.png` | Binary or large file; 218,157 bytes | 二进制或大文件；218,157 字节 |
-| `results/case_studies/comparisons/g6_body_M015_Week3.png` | Binary or large file; 266,760 bytes | 二进制或大文件；266,760 字节 |
-| `results/case_studies/comparisons/g6_body_selected_cases.json` | JSON fields: kind, split, test_result_sha256, cases | JSON 字段：kind, split, test_result_sha256, cases |
-| `results/case_studies/comparisons/g6_body_W041_Week0.png` | Binary or large file; 244,148 bytes | 二进制或大文件；244,148 字节 |
-| `results/case_studies/comparisons/g6_test_M015_Week7_bladder.png` | Binary or large file; 130,570 bytes | 二进制或大文件；130,570 字节 |
-| `results/case_studies/comparisons/g6_test_M020_Week1_prostate.png` | Binary or large file; 94,741 bytes | 二进制或大文件；94,741 字节 |
-| `results/case_studies/comparisons/g6_test_selected_cases.json` | JSON fields: kind, split, test_result_sha256, cases | JSON 字段：kind, split, test_result_sha256, cases |
-| `results/case_studies/comparisons/g6_test_W029_Week6_prostate.png` | Binary or large file; 83,023 bytes | 二进制或大文件；83,023 字节 |
-| `results/case_studies/comparisons/README.md` | Entry point or directory guide; Sections: Selected segmentation overlays | 项目入口或目录说明；章节标题：Selected segmentation overlays |
+| `results/case_studies/comparisons/README.md` | Entry point or directory guide; Sections: 分割案例索引; Selected segmentation overlays | 项目入口或目录说明；章节标题：分割案例索引; Selected segmentation overlays |
+| `results/case_studies/comparisons/test/body/g6_body_L011_Week5.png` | Binary or large file; 218,157 bytes | 二进制或大文件；218,157 字节 |
+| `results/case_studies/comparisons/test/body/g6_body_M015_Week3.png` | Binary or large file; 266,760 bytes | 二进制或大文件；266,760 字节 |
+| `results/case_studies/comparisons/test/body/g6_body_selected_cases.json` | JSON fields: kind, split, test_result_sha256, cases | JSON 字段：kind, split, test_result_sha256, cases |
+| `results/case_studies/comparisons/test/body/g6_body_W041_Week0.png` | Binary or large file; 244,148 bytes | 二进制或大文件；244,148 字节 |
+| `results/case_studies/comparisons/test/body/README.md` | Entry point or directory guide; Sections: Test Body 边界 | 项目入口或目录说明；章节标题：Test Body 边界 |
+| `results/case_studies/comparisons/test/small_organs/g6_test_M015_Week7_bladder.png` | Binary or large file; 130,570 bytes | 二进制或大文件；130,570 字节 |
+| `results/case_studies/comparisons/test/small_organs/g6_test_M020_Week1_prostate.png` | Binary or large file; 94,741 bytes | 二进制或大文件；94,741 字节 |
+| `results/case_studies/comparisons/test/small_organs/g6_test_selected_cases.json` | JSON fields: kind, split, test_result_sha256, cases | JSON 字段：kind, split, test_result_sha256, cases |
+| `results/case_studies/comparisons/test/small_organs/g6_test_W029_Week6_prostate.png` | Binary or large file; 83,023 bytes | 二进制或大文件；83,023 字节 |
+| `results/case_studies/comparisons/test/small_organs/README.md` | Entry point or directory guide; Sections: Test 小器官案例 | 项目入口或目录说明；章节标题：Test 小器官案例 |
+| `results/case_studies/comparisons/validation/body/g5_body_validation_B040_Week4.png` | Binary or large file; 268,835 bytes | 二进制或大文件；268,835 字节 |
+| `results/case_studies/comparisons/validation/body/g5_body_validation_J026_Week4.png` | Binary or large file; 222,090 bytes | 二进制或大文件；222,090 字节 |
+| `results/case_studies/comparisons/validation/body/g5_body_validation_K018_Week4.png` | Binary or large file; 249,121 bytes | 二进制或大文件；249,121 字节 |
+| `results/case_studies/comparisons/validation/body/README.md` | Entry point or directory guide; Sections: Validation Body 边界 | 项目入口或目录说明；章节标题：Validation Body 边界 |
+| `results/case_studies/comparisons/validation/small_organs/g5_validation_B040_Week1_prostate.png` | Binary or large file; 99,219 bytes | 二进制或大文件；99,219 字节 |
+| `results/case_studies/comparisons/validation/small_organs/g5_validation_J026_Week1_rectum.png` | Binary or large file; 100,764 bytes | 二进制或大文件；100,764 字节 |
+| `results/case_studies/comparisons/validation/small_organs/g5_validation_K018_Week3_rectum.png` | Binary or large file; 89,639 bytes | 二进制或大文件；89,639 字节 |
+| `results/case_studies/comparisons/validation/small_organs/g5_validation_S022_Week6_prostate.png` | Binary or large file; 89,736 bytes | 二进制或大文件；89,736 字节 |
+| `results/case_studies/comparisons/validation/small_organs/g5_validation_selected_cases.json` | JSON fields: kind, split, cases, sources | JSON 字段：kind, split, cases, sources |
+| `results/case_studies/comparisons/validation/small_organs/README.md` | Entry point or directory guide; Sections: Validation 小器官案例 | 项目入口或目录说明；章节标题：Validation 小器官案例 |
 | `results/data_analysis/g1_bladder_review/g1_bladder_island_D031_Week7.png` | Binary or large file; 250,160 bytes | 二进制或大文件；250,160 字节 |
 | `results/data_analysis/g1_bladder_review/g1_bladder_island_N010_Week3.png` | Binary or large file; 254,248 bytes | 二进制或大文件；254,248 字节 |
 | `results/data_analysis/g1_bladder_review/README.md` | Entry point or directory guide; Sections: G1 Bladder component review | 项目入口或目录说明；章节标题：G1 Bladder component review |
@@ -842,31 +866,35 @@ Directories / 目录: **47** · Files / 文件: **404**
 | `results/data_analysis/historical_train/train_patient_examinations.svg` | UTF-8 text with 72 lines; 7,370 bytes | UTF-8 文本，72 行；7,370 字节 |
 | `results/data_analysis/historical_train/train_rare_organ_volumes.svg` | UTF-8 text with 320 lines; 25,203 bytes | UTF-8 文本，320 行；25,203 字节 |
 | `results/data_analysis/README.md` | Entry point or directory guide; Sections: Data analysis image groups | 项目入口或目录说明；章节标题：Data analysis image groups |
+| `results/diagnostics/inference_context/README.md` | Entry point or directory guide; Sections: 推理上下文诊断（预留，未执行） | 项目入口或目录说明；章节标题：推理上下文诊断（预留，未执行） |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.png` | Binary or large file; 58,445 bytes | 二进制或大文件；58,445 字节 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.svg` | UTF-8 text with 1331 lines; 38,132 bytes | UTF-8 文本，1331 行；38,132 字节 |
 | `results/figures/baseline_2d/README.md` | Entry point or directory guide; Sections: Supplementary 2D Validation figure | 项目入口或目录说明；章节标题：Supplementary 2D Validation figure |
-| `results/figures/comparisons/g5_3d_validation_all_classes.png` | Binary or large file; 68,380 bytes | 二进制或大文件；68,380 字节 |
-| `results/figures/comparisons/g5_3d_validation_all_classes.svg` | UTF-8 text with 1503 lines; 44,330 bytes | UTF-8 文本，1503 行；44,330 字节 |
-| `results/figures/comparisons/g5_three_arm_training_trajectories.png` | Binary or large file; 182,705 bytes | 二进制或大文件；182,705 字节 |
-| `results/figures/comparisons/g5_three_arm_training_trajectories.svg` | UTF-8 text with 1875 lines; 60,281 bytes | UTF-8 文本，1875 行；60,281 字节 |
-| `results/figures/comparisons/g5_three_arm_validation_all_classes.png` | Binary or large file; 56,788 bytes | 二进制或大文件；56,788 字节 |
-| `results/figures/comparisons/g5_three_arm_validation_all_classes.svg` | UTF-8 text with 1415 lines; 40,455 bytes | UTF-8 文本，1415 行；40,455 字节 |
-| `results/figures/comparisons/g5_validation_body_boundaries.png` | Binary or large file; 100,677 bytes | 二进制或大文件；100,677 字节 |
-| `results/figures/comparisons/g5_validation_body_boundaries.svg` | UTF-8 text with 1975 lines; 61,632 bytes | UTF-8 文本，1975 行；61,632 字节 |
-| `results/figures/comparisons/g5_validation_patient_class_dice.png` | Binary or large file; 172,263 bytes | 二进制或大文件；172,263 字节 |
-| `results/figures/comparisons/g5_validation_patient_class_dice.svg` | UTF-8 text with 2229 lines; 83,604 bytes | UTF-8 文本，2229 行；83,604 字节 |
-| `results/figures/comparisons/g6_test_all_classes.png` | Binary or large file; 70,228 bytes | 二进制或大文件；70,228 字节 |
-| `results/figures/comparisons/g6_test_all_classes.svg` | UTF-8 text with 1505 lines; 44,031 bytes | UTF-8 文本，1505 行；44,031 字节 |
-| `results/figures/comparisons/g6_test_failure_patterns.png` | Binary or large file; 128,918 bytes | 二进制或大文件；128,918 字节 |
-| `results/figures/comparisons/g6_test_failure_patterns.svg` | UTF-8 text with 2063 lines; 69,179 bytes | UTF-8 文本，2063 行；69,179 字节 |
-| `results/figures/comparisons/g6_test_hd95_all_foreground.png` | Binary or large file; 64,275 bytes | 二进制或大文件；64,275 字节 |
-| `results/figures/comparisons/g6_test_hd95_all_foreground.svg` | UTF-8 text with 1507 lines; 42,799 bytes | UTF-8 文本，1507 行；42,799 字节 |
-| `results/figures/comparisons/README.md` | Entry point or directory guide; Sections: Model comparison figures | 项目入口或目录说明；章节标题：Model comparison figures |
+| `results/figures/comparisons/README.md` | Entry point or directory guide; Sections: 模型对比图索引 | 项目入口或目录说明；章节标题：模型对比图索引 |
+| `results/figures/comparisons/test/g6_test_all_classes.png` | Binary or large file; 70,228 bytes | 二进制或大文件；70,228 字节 |
+| `results/figures/comparisons/test/g6_test_all_classes.svg` | UTF-8 text with 1505 lines; 44,031 bytes | UTF-8 文本，1505 行；44,031 字节 |
+| `results/figures/comparisons/test/g6_test_failure_patterns.png` | Binary or large file; 128,918 bytes | 二进制或大文件；128,918 字节 |
+| `results/figures/comparisons/test/g6_test_failure_patterns.svg` | UTF-8 text with 2063 lines; 69,179 bytes | UTF-8 文本，2063 行；69,179 字节 |
+| `results/figures/comparisons/test/g6_test_hd95_all_foreground.png` | Binary or large file; 64,275 bytes | 二进制或大文件；64,275 字节 |
+| `results/figures/comparisons/test/g6_test_hd95_all_foreground.svg` | UTF-8 text with 1507 lines; 42,799 bytes | UTF-8 文本，1507 行；42,799 字节 |
+| `results/figures/comparisons/test/README.md` | Entry point or directory guide; Sections: 固定 Test 结果 | 项目入口或目录说明；章节标题：固定 Test 结果 |
+| `results/figures/comparisons/training/g5_three_arm_training_trajectories.png` | Binary or large file; 182,705 bytes | 二进制或大文件；182,705 字节 |
+| `results/figures/comparisons/training/g5_three_arm_training_trajectories.svg` | UTF-8 text with 1875 lines; 60,281 bytes | UTF-8 文本，1875 行；60,281 字节 |
+| `results/figures/comparisons/training/README.md` | Entry point or directory guide; Sections: 三模型训练过程 | 项目入口或目录说明；章节标题：三模型训练过程 |
+| `results/figures/comparisons/validation/g5_3d_validation_all_classes.png` | Binary or large file; 68,380 bytes | 二进制或大文件；68,380 字节 |
+| `results/figures/comparisons/validation/g5_3d_validation_all_classes.svg` | UTF-8 text with 1503 lines; 44,330 bytes | UTF-8 文本，1503 行；44,330 字节 |
+| `results/figures/comparisons/validation/g5_three_arm_validation_all_classes.png` | Binary or large file; 56,788 bytes | 二进制或大文件；56,788 字节 |
+| `results/figures/comparisons/validation/g5_three_arm_validation_all_classes.svg` | UTF-8 text with 1415 lines; 40,455 bytes | UTF-8 文本，1415 行；40,455 字节 |
+| `results/figures/comparisons/validation/g5_validation_body_boundaries.png` | Binary or large file; 100,677 bytes | 二进制或大文件；100,677 字节 |
+| `results/figures/comparisons/validation/g5_validation_body_boundaries.svg` | UTF-8 text with 1975 lines; 61,632 bytes | UTF-8 文本，1975 行；61,632 字节 |
+| `results/figures/comparisons/validation/g5_validation_patient_class_dice.png` | Binary or large file; 172,263 bytes | 二进制或大文件；172,263 字节 |
+| `results/figures/comparisons/validation/g5_validation_patient_class_dice.svg` | UTF-8 text with 2229 lines; 83,604 bytes | UTF-8 文本，2229 行；83,604 字节 |
+| `results/figures/comparisons/validation/README.md` | Entry point or directory guide; Sections: Validation 六类指标与边界诊断 | 项目入口或目录说明；章节标题：Validation 六类指标与边界诊断 |
 | `results/README.md` | Entry point or directory guide; Sections: Results and Report Artifacts | 项目入口或目录说明；章节标题：Results and Report Artifacts |
 | `results/reports/HipMRI_P1_独立研究审查_ZH.md` | Sections: P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 | 章节标题：P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 |
 | `results/reports/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
 | `results/reports/HipMRI_Research_Report.md` | Sections: HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results | 章节标题：HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results |
-| `results/reports/HipMRI_模型复盘与下一轮实验_ZH.md` | Sections: HipMRI 模型复盘与下一轮实验决策; 1. 结论先明确; 2. 六类别与边界：它究竟赢在哪里、输在哪里; 3. 为什么没有达到预期：证据、解释与尚未证明之处; 4. 下一轮：先验证采样假设，再谈新模型胜利 | 章节标题：HipMRI 模型复盘与下一轮实验决策; 1. 结论先明确; 2. 六类别与边界：它究竟赢在哪里、输在哪里; 3. 为什么没有达到预期：证据、解释与尚未证明之处; 4. 下一轮：先验证采样假设，再谈新模型胜利 |
+| `results/STORAGE_GUIDE.md` | Sections: 文件归档与后续分析位置; 后续预留：不是已有结果 | 章节标题：文件归档与后续分析位置; 后续预留：不是已有结果 |
 | `results/tables/comparisons/g5_validation_aux_logits.json` | JSON fields: kind, split, interpretation, checkpoint, body_audit_sha256, cases, summary | JSON 字段：kind, split, interpretation, checkpoint, body_audit_sha256, cases, summary |
 | `results/tables/comparisons/g5_validation_body_audit.json` | JSON fields: kind, split, selection, cases, sources, pictured_cases | JSON 字段：kind, split, selection, cases, sources, pictured_cases |
 | `results/tables/comparisons/g5_validation_case_class_metrics.csv` | Table with 456 data rows; columns: split, model, patient, case, class, gt_voxels, predicted_voxels, tp, fp, fn, dice, iou | 表格含 456 条数据行；列：split, model, patient, case, class, gt_voxels, predicted_voxels, tp, fp, fn, dice, iou |

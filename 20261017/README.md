@@ -6,9 +6,7 @@ a supplementary 2D U-Net for 50 epochs. G6 evaluated the two
 Validation-selected 3D checkpoints once on the held-out Test set. The
 [formal research report](results/reports/HipMRI_Research_Report.md) contains
 the evidence, results, limits and conclusions.
-The [Chinese model review and next-experiment memo](results/reports/HipMRI_模型复盘与下一轮实验_ZH.md)
-assesses whether Improved clearly exceeds Standard and states the next
-controlled development gate.
+See the [storage guide](results/STORAGE_GUIDE.md) for artifact groups and planned diagnostic outputs.
 The G7 full Train-only CPU audit passed and its paired crop records were
 verified locally. The [P1 independent review](results/reports/HipMRI_P1_独立研究审查_ZH.md)
 now prioritizes a fixed-checkpoint inference-context diagnostic before deciding

@@ -18,13 +18,10 @@ results/
   reports/
 ```
 
-Only populated analysis groups are retained. Cross-model tables and visuals
+Current groups and explicitly planned diagnostics are indexed in [STORAGE_GUIDE.md](STORAGE_GUIDE.md). Cross-model tables and visuals
 are in `comparisons`; the supplementary 2D figure has its own folder. The one
 cumulative formal research report
 is [`reports/HipMRI_Research_Report.md`](reports/HipMRI_Research_Report.md).
-The [Chinese model review](reports/HipMRI_模型复盘与下一轮实验_ZH.md) is a focused
-decision memo for the next controlled experiment, rather than a second
-cumulative report.
 The earlier mixed-source analysis is archived beside it. The
 [P1 independent review](reports/HipMRI_P1_独立研究审查_ZH.md) maps the local assessment
 draft to current evidence and revises the next diagnostic priority.
