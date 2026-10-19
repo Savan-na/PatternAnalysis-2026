@@ -36,3 +36,14 @@ The matching `g6_body_selected_cases.json` records exact Body Dice, HD95 and
 false-positive counts; it is tied to the unchanged Test JSON SHA-256
 `21ce5e2eb53e3bf758478fd7c9fd95b887d82031b7a66ed77c7ef3168adc3e2f`.
 This is descriptive Test review, not model tuning.
+
+The three `g5_body_validation_*.png` panels show the highest Improved 3D Body
+HD95 cases from different Validation patients (`K018_Week4`, `B040_Week4`,
+`J026_Week4`). Rows compare Standard and Improved on the same MRI; columns
+show axial, coronal and sagittal cuts through a distant Improved false
+positive. Cyan is GT Body and orange is predicted Body. All 38 paired
+Validation predictions were checked against the frozen epoch-50 confusion
+matrices before selection. Full-volume metrics are in
+`results/tables/comparisons/g5_validation_body_audit.json`; blank-looking
+cuts can occur because the selected distant error lies outside the main
+anatomy in that plane.

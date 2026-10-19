@@ -105,9 +105,9 @@ inference, and it never reads Test arrays during training.
 a CPU recovery and frozen-config check.
 
 `tools/summarize_g5_validation.py` reads the two completed 3D runs' local
-epoch JSON records, independently checks each Train and Validation summary,
-and draws the comparison figure in `results/figures/comparisons/`. It uses
-derived run records only and does not open held-out Test data.
+epoch JSON records and independently checks each Train and Validation summary.
+The current six-class figures and training trajectories are produced by
+`tools/summarize_all_class_review.py`. The legacy three-organ plots are retired.
 
 `tools/submit_g5_extend_50.sh` continued both 3D runs with strict resume
 checks. `tools/review_g5_validation_failures.py` generated selected Validation
@@ -117,11 +117,25 @@ selected case confusion matrices before rendering descriptive Test overlays.
 Local summaries and interpretation are in the formal research report.
 
 `tools/summarize_all_class_review.py` verifies the selected G5 records and
-one-time G6 result, then draws six-class comparisons, a foreground HD95
+one-time G6 result, then draws six-class comparisons, three-arm trajectories, a foreground HD95
 comparison and a descriptive Test failure review. It also exports per-case,
 per-class Test metrics to the existing comparison table folder. The bounded
 2D continuation helper is `tools/submit_g5_2d_extend_50.sh`; it resumes the
 same frozen run without changing data, weights or optimizer settings.
 `tools/review_g6_body_boundaries.py` is a staged descriptive GPU review of
 three high-HD95 Test cases. It verifies the original Test confusion matrices
-before drawing Body boundaries; its output is pending a Rangpur run.
+before drawing Body boundaries; its output has been reviewed locally.
+`tools/audit_g5_validation_body.py` applies the same fixed checkpoints to all
+38 Validation volumes, reproduces their saved confusion matrices, measures
+Body surface distances and draws the worst cases by patient. Its result will
+inform a Train/Validation-only intervention decision.
+`tools/audit_g5_train_patch_geometry.py` reconstructs the exact frozen 3D
+uniform crop origins from Train shapes, config and both arms' epoch schedules.
+It records how often outer volume faces and corners entered training crops,
+without reading MRI data or using Validation/Test labels.
+`tools/audit_g5_aux_logits_validation.py` compares the selected Improved 3D
+summed logits with its main head alone on the same Validation volumes. This
+read-only diagnostic checks whether the auxiliary outputs contribute to the
+Body false positives; the main head was not trained as a separate model.
+`tools/summarize_g5_body_review.py` verifies the transferred Validation
+audit against the selected epoch records and draws patient-level Body errors.

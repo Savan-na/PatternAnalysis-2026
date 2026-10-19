@@ -1,0 +1,163 @@
+{
+  "kind": "G5_uniform_3D_Train_patch_spatial_coverage",
+  "scope": "Train only; deterministic origin reconstruction, not label exposure",
+  "g1_sha256": "6a4c674564a0364f5f56730cbc31e67b3ff9a8ffeae7d9d3dd18b198bbd0e1a1",
+  "config_sha256": "e5bd98a99213f4fe6cf6e3e8c6db3b95d5ef334a143a91444426d8ea019923ce",
+  "run_manifest_sha256": {
+    "baseline_3d": "c819e7548821f0f43289cab3b5022f200cf0c0c78fed04f36eae3735359b9126",
+    "improved_3d": "2b281ef9789f04d7880e9e2e8b1bc9ddfefaa36fb3be69848fb6134c2cb2d04b"
+  },
+  "definition": "A patch hits an outer-width face if any sampled voxel lies in that face's width-voxel slab; a corner requires all three axes to hit an outer slab simultaneously.",
+  "patch_xyz": [
+    64,
+    64,
+    32
+  ],
+  "epochs": 50,
+  "counts": {
+    "patches": 13000,
+    "outer_8_y_high": 1602,
+    "outer_8_z_high": 3117,
+    "outer_8_any_face": 9177,
+    "outer_2_y_low": 454,
+    "outer_2_any_face": 2936,
+    "outer_8_y_low": 1665,
+    "outer_8_z_low": 3170,
+    "outer_2_z_low": 784,
+    "outer_8_x_low": 1561,
+    "outer_2_x_low": 382,
+    "outer_8_any_corner": 423,
+    "outer_2_z_high": 768,
+    "outer_2_y_high": 404,
+    "outer_8_x_high": 1601,
+    "outer_2_x_high": 371,
+    "outer_2_any_corner": 6
+  },
+  "rates": {
+    "outer_8_y_high": 0.12323076923076923,
+    "outer_8_z_high": 0.23976923076923076,
+    "outer_8_any_face": 0.7059230769230769,
+    "outer_2_y_low": 0.034923076923076925,
+    "outer_2_any_face": 0.22584615384615384,
+    "outer_8_y_low": 0.1280769230769231,
+    "outer_8_z_low": 0.24384615384615385,
+    "outer_2_z_low": 0.060307692307692305,
+    "outer_8_x_low": 0.12007692307692308,
+    "outer_2_x_low": 0.029384615384615384,
+    "outer_8_any_corner": 0.03253846153846154,
+    "outer_2_z_high": 0.059076923076923075,
+    "outer_2_y_high": 0.03107692307692308,
+    "outer_8_x_high": 0.12315384615384616,
+    "outer_2_x_high": 0.028538461538461537,
+    "outer_2_any_corner": 0.00046153846153846153
+  },
+  "by_patient": {
+    "B006": {
+      "patches": 500,
+      "outer_8_any_corner": 19
+    },
+    "B038": {
+      "patches": 500,
+      "outer_8_any_corner": 17
+    },
+    "C032": {
+      "patches": 500,
+      "outer_8_any_corner": 16
+    },
+    "D031": {
+      "patches": 500,
+      "outer_8_any_corner": 21,
+      "outer_2_any_corner": 2
+    },
+    "G021": {
+      "patches": 500,
+      "outer_8_any_corner": 18
+    },
+    "H007": {
+      "patches": 500,
+      "outer_8_any_corner": 14
+    },
+    "H017": {
+      "patches": 500,
+      "outer_8_any_corner": 17
+    },
+    "J005": {
+      "patches": 500,
+      "outer_8_any_corner": 13
+    },
+    "K019": {
+      "patches": 500,
+      "outer_8_any_corner": 8
+    },
+    "K042": {
+      "patches": 500,
+      "outer_8_any_corner": 13
+    },
+    "M004": {
+      "patches": 500,
+      "outer_8_any_corner": 15
+    },
+    "M013": {
+      "patches": 500,
+      "outer_8_any_corner": 16
+    },
+    "M023": {
+      "patches": 500,
+      "outer_8_any_corner": 18
+    },
+    "M036": {
+      "patches": 500,
+      "outer_8_any_corner": 18
+    },
+    "N010": {
+      "patches": 500,
+      "outer_8_any_corner": 17
+    },
+    "O025": {
+      "patches": 500,
+      "outer_8_any_corner": 11
+    },
+    "R016": {
+      "patches": 500,
+      "outer_8_any_corner": 12
+    },
+    "R024": {
+      "patches": 500,
+      "outer_8_any_corner": 17
+    },
+    "R039": {
+      "patches": 500,
+      "outer_8_any_corner": 17
+    },
+    "S028": {
+      "patches": 500,
+      "outer_8_any_corner": 14
+    },
+    "S033": {
+      "patches": 500,
+      "outer_8_any_corner": 22
+    },
+    "S035": {
+      "patches": 500,
+      "outer_8_any_corner": 12
+    },
+    "T009": {
+      "patches": 500,
+      "outer_8_any_corner": 17
+    },
+    "T014": {
+      "patches": 500,
+      "outer_8_any_corner": 17
+    },
+    "V027": {
+      "patches": 500,
+      "outer_8_any_corner": 25,
+      "outer_2_any_corner": 2
+    },
+    "W012": {
+      "patches": 500,
+      "outer_2_any_corner": 2,
+      "outer_8_any_corner": 19
+    }
+  }
+}

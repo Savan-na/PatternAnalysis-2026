@@ -578,8 +578,9 @@ all 38 Validation volume confusion matrices before calculating overlap;
 they are different aggregation rules. Standard leads the predeclared 3D
 selection criterion by 0.0089. This is a modest difference on six patients,
 not evidence of a statistically established architecture benefit. The
-[Train and Validation figure](../figures/comparisons/g5_3d_validation.svg)
-shows all 40 Train epochs and the eight Validation observations.
+[current Train and Validation trajectories](../figures/comparisons/g5_three_arm_training_trajectories.png)
+show all 50 completed epochs. The values in this paragraph describe the
+earlier 40-epoch checkpoint review.
 
 | Organ, pooled Validation | Standard precision / recall | Improved precision / recall |
 | --- | ---: | ---: |
@@ -772,8 +773,10 @@ patch Prostate Dice was 0.7303 at epoch 40, which is a different measurement
 from whole-volume Validation Dice. The supplementary 2D arm uses axial crops,
 organ-aware sampling and separate Train-derived class weights, so its quality
 gap from the paired 3D arms cannot be attributed to architecture alone. The
-separate 2D learning figure is in `results/figures/baseline_2d/`; no 2D Test
-result has been generated.
+current 50-epoch learning curves are in the
+[three-arm trajectory figure](../figures/comparisons/g5_three_arm_training_trajectories.png);
+no 2D Test result has been generated. The figures above describe the earlier
+epoch-40 checkpoint and are retained here as a historical step.
 
 The actual 2D optimizer input across 40 epochs contained 10,400 crops.
 Bladder, Rectum and Prostate appeared in 5,144 (49.5%), 6,830 (65.7%) and
@@ -781,6 +784,48 @@ Bladder, Rectum and Prostate appeared in 5,144 (49.5%), 6,830 (65.7%) and
 0.895%. This confirms substantial Prostate exposure beyond the original raw
 slice prevalence, but also shows that most 2D crops did not contain it. The
 2D crop and 3D patch voxel shares use different spatial units and contexts.
+
+### Three-arm Validation comparison and 2D lessons — 19 October 2026
+
+After all three arms finished 50 epochs, their selected checkpoints were
+compared on the same 38 Validation volumes. This is a comparison of complete
+training recipes: the 2D arm also has slice-wise context, organ-aware crops,
+16 base channels and its own Train-derived class weights, while both 3D arms
+use uniform 3D patches and 8 base channels. It cannot measure an isolated
+architecture or sampling effect.
+
+| Selected Validation measure | 2D | Standard 3D | Improved 3D |
+| --- | ---: | ---: | ---: |
+| Patient-balanced mean small-organ Dice | 0.7757 | 0.8502 | 0.8420 |
+| Pooled Background Dice | 0.9950 | 0.9969 | 0.9636 |
+| Pooled Body Dice | 0.9718 | 0.9769 | 0.9274 |
+| Pooled Bones Dice | 0.8367 | 0.8596 | 0.8800 |
+| Pooled Bladder Dice | 0.8983 | 0.9436 | 0.9509 |
+| Pooled Rectum Dice | 0.6897 | 0.8038 | 0.7835 |
+| Pooled Prostate Dice | 0.7672 | 0.8179 | 0.7878 |
+
+2D has no pooled Dice advantage over both 3D models, and its small-organ
+patient score is lower for each of the six Validation patients. It does have
+higher pooled Body and Background Dice than Improved 3D, and its Prostate
+precision (0.7377) exceeds Standard (0.7250) and Improved (0.6745), while
+its Prostate recall (0.7990) is lower than both 3D values (0.9383 and
+0.9467). Its Rectum recall (0.9207) exceeds Standard's 0.8807 but remains
+below Improved's 0.9330; its Rectum precision is only 0.5513. These are
+precision–recall tradeoffs, not a general 2D performance win. The
+[six-class figure](../figures/comparisons/g5_three_arm_validation_all_classes.png)
+and [shared learning curves](../figures/comparisons/g5_three_arm_training_trajectories.png)
+show the current data rather than the retired three-organ plots.
+
+The 2D organ-aware rule demonstrably increased Train crop hits relative to
+uniform 2D sampling, but the current 3D uniform patches already exposed
+Prostate in 96.0% of the first 40 epochs' patches. Transferring the 2D
+sampler directly to 3D is therefore not the first supported intervention.
+The potentially transferable observation is **specificity control**:
+Improved 3D's lower Body/Background Dice and lower Prostate precision warrant
+checking distant foreground predictions and organ false positives on
+Validation. Any threshold, postprocessing or loss change must be proposed
+and assessed in a new Train/Validation controlled experiment. No Test result
+was used to select this direction.
 
 ### G6 Test evaluation gate
 
@@ -811,8 +856,8 @@ selection score; it does not establish that still more epochs would help.
 | Prostate Dice | 0.8180 | 0.7878 |
 
 The patient-balanced selection score and pooled organ Dice aggregate the
-same cases differently. The updated [G5 figure](../figures/comparisons/g5_3d_validation.svg)
-shows all 50 epochs. Job 674104 reproduced the selected Validation case
+same cases differently. The updated [G5 trajectories](../figures/comparisons/g5_three_arm_training_trajectories.png)
+show all 50 epochs. Job 674104 reproduced the selected Validation case
 confusion matrices before generating [four paired MRI/GT/prediction panels](../case_studies/comparisons/README.md).
 `J026_Week1` Rectum and `B040_Week1` Prostate show high overlap; `K018_Week3`
 shows extra Rectum prediction. `S022_Week6` was originally chosen for missed
@@ -887,8 +932,9 @@ The median per-volume prostate axial-region Dice was lower at the base than
 in the centre (Standard 0.3924 vs 0.7852; Improved 0.6202 vs 0.8323).
 Boundary summaries come from factor-two downsampled masks at approximately
 3.36 × 3.36 × 3.12 mm; fine edges below that resolution cannot be assessed.
-The [Test comparison figure](../figures/comparisons/g6_test_3d.png) shows
-pooled organ and per-patient scores. Only six independent Test patients are
+The [six-class Test comparison](../figures/comparisons/g6_test_all_classes.png)
+shows pooled Dice; the [case-class table](../tables/comparisons/g6_test_case_class_metrics.csv)
+supports per-patient review. Only six independent Test patients are
 available, and the case breakdown should accompany any aggregate claim.
 
 ## Failure Analysis
@@ -962,25 +1008,93 @@ one intervention only after that review and assess it on Validation. These
 held-out Test findings describe the frozen models and must not become a
 selection or tuning criterion.
 
-### Next Train/Validation analysis gate
+### Train/Validation analysis sequence
 
 1. The [G5 Validation case/class table](../tables/comparisons/g5_validation_case_class_metrics.csv)
    and [patient heatmap](../figures/comparisons/g5_validation_patient_class_dice.png)
    now expose every class's Dice, precision, recall, prediction volume and
    GT-to-prediction confusion. Rank patients and visits from these records,
    keeping patient weighting explicit.
-2. Measure Body HD95 and inspect complete-volume overlays on the **Validation**
-   cases with the largest boundary errors. The current G5 records contain
-   overlap matrices but no per-case Body surface distances, so this requires
-   a separate frozen-checkpoint Validation analysis job.
-3. Cross-reference the problematic Validation patients with Train-only
-   spacing, intensity, organ-size and delivered-patch exposure. Distinguish a
-   sampling gap, class confusion, geometric loss and boundary outlier before
-   proposing an intervention.
+2. Measure Body HD95 and inspect complete-volume overlays on **Validation**.
+   The completed fixed-checkpoint audit and selected images are documented
+   below.
+3. Cross-reference those patients with Train-only spacing, intensity,
+   organ size and actual patch exposure. Class exposure and spatial coverage
+   are now measured; the mechanism behind the architecture gap still needs
+   the auxiliary-output diagnostic below.
 4. Predeclare one intervention and compare it with the frozen baseline using
    the same Train/Validation split and metrics. Report both gains and new false
    positives. A changed model would require a fresh independent Test cohort
    for an unbiased final estimate; the present Test cohort is already known.
+
+### Completed Validation Body and Train spatial-coverage audit — 19 October 2026
+
+Rangpur job 675319 evaluated both unchanged, Validation-selected epoch-50 3D
+checkpoints on **all 38 Validation volumes**. Each new prediction reproduced
+its saved G5 confusion matrix before surface distances were calculated. The
+[complete derived record](../tables/comparisons/g5_validation_body_audit.json)
+and [patient comparison](../figures/comparisons/g5_validation_body_boundaries.png)
+show that the large Improved Body boundary error is not confined to the Test
+examples or a single Validation patient.
+
+| Validation Body measure, 38 volumes | Standard 3D | Improved 3D |
+| --- | ---: | ---: |
+| Median per-volume HD95 | 4.75 mm | 76.61 mm |
+| Highest per-volume HD95 | 7.09 mm | 125.63 mm |
+| Background → Body false-positive voxels | 59,766 | 1,675,691 |
+| Of those, ≥20 mm from true Body | 1,007 | 1,358,516 |
+
+Improved HD95 exceeds Standard in **all 38** Validation volumes. The three
+selected [three-plane overlays](../case_studies/comparisons/README.md) show
+Improved predictions far outside the anatomical Body outline in K018 Week4,
+B040 Week4 and J026 Week4. They are selected illustrations; the table above
+uses all Validation volumes. `K008` has a milder patient median Improved HD95
+of 11.7 mm, so severity still varies by patient.
+
+The paired 3D arms received identical case schedules and recorded label
+exposure. A separate [Train-only geometry reconstruction](../data_analysis/g4_patient_sampling/g5_train_patch_geometry.json)
+replayed all **13,000 uniform crop origins** from the frozen seed, raw shapes
+and 50 epoch records. Background occurred in 12,988 patches, but only 2,936
+(22.6%) crops touched any outer 2-voxel volume face and only **6 (0.046%)**
+touched an outer 2-voxel corner. For outer 8-voxel slabs, 9,177 (70.6%)
+touched any face and 423 (3.25%) touched a corner. Thus frequent Background
+*class presence* does not imply broad sampling of remote image margins.
+Every patch still has convolutional padding at its own boundary; this count
+specifically measures coverage of the *volume's* outer anatomy/background.
+That geometry gap is a plausible contributor, but **cannot alone explain the
+architecture-specific difference**:
+Standard saw the same crops and maintained low Body HD95. Padding, receptive
+field and the Improved network's summed deep-supervision logits remain possible
+mechanisms; none is established by the coverage count.
+
+Job 675392 then compared the Improved model's usual sum of main and two
+auxiliary logits with its main head alone on those same Validation volumes.
+Every summed-output confusion matrix again reproduced the frozen G5 record.
+The summed output reached a patient-balanced small-organ score of **0.8420**,
+median Body HD95 **76.61 mm**, and **1,675,691** Background→Body errors.
+The isolated main head fell to **0.2414**, **108.96 mm**, and **7,561,150**
+errors, respectively. The main head was trained only as part of the sum, so
+this does **not** prove that a separately retrained single-head architecture
+would fail. It does reject a simple inference-time removal of auxiliary
+outputs as the next fix.
+
+A new controlled experiment is justified by the 38-case Body failure. The
+first candidate is a **Train-only edge-aware patch mixture** for Improved 3D:
+keep nine of ten patient patches uniform and reserve one for a volume-margin
+Background/Body context. First dry-run it across the 143 Train volumes and
+50 fixed patient schedules, measuring corner exposure, six-class patch hits
+and voxel shares. Only proceed if this single sampling change genuinely adds
+edge context without materially erasing small-organ exposure. Then retrain
+Improved from scratch with the same architecture, loss, optimizer, seed,
+patient visits, patch size, batch size, 50-epoch budget and Validation
+selection rule. Compare with frozen Improved on patient-balanced small-organ
+Dice **and** Body HD95, distant Background→Body errors, six-class Dice and
+per-patient variance. The held-out Test split has already been inspected and
+must not choose this intervention or be reported as a fresh unbiased test.
+If the Train-only dry run cannot preserve small-organ exposure, redesign the
+sampling proposal before training. If adequate edge exposure fails to fix the
+Validation Body errors, the next separate controlled experiment should
+retrain a single-head Improved architecture; do not combine both changes.
 
 The final epoch-50 Validation panels and the one-time Test case matrices
 identify different failure types. `K018_Week3` is a Validation Rectum
@@ -1030,3 +1144,15 @@ must start as a new controlled Train/Validation experiment; this Test set must n
 be used to tune one. The descriptive Test overlays have been reviewed locally.
 Any submission should include the fixed split, code/config receipts, result
 JSON, figures and this report, with the required HipMRI data acknowledgment.
+
+The completed 38-volume Validation boundary audit now establishes the main
+development problem: Improved has markedly worse Body boundaries than Standard
+under identical 3D training exposure. The next Improved 3D direction is to
+increase remote Background/Body context through a **single-factor, edge-aware
+Train patch sampling experiment**, subject to a full Train-only exposure dry
+run. The isolated main output performed much worse on Validation, so removing
+auxiliary logits at inference is unsupported. If the sampling experiment does
+not improve Validation Body errors, retrain a single-head architecture as a
+separate controlled ablation. Directly importing the 2D organ-aware sampler
+or simply increasing class weights is not justified by the present 3D exposure
+and failure evidence.
