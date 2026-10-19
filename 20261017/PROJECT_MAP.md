@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-20 09:27:28 AEST**
+Updated / 更新时间: **2026-10-20 09:37:16 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **58** · Files / 文件: **450**
+Directories / 目录: **58** · Files / 文件: **451**
 
 ## Directory Tree / 目录树
 
@@ -504,6 +504,7 @@ Directories / 目录: **58** · Files / 文件: **450**
 │   │       │   └── README.md
 │   │       └── README.md
 │   ├── reports/
+│   │   ├── HipMRI_P1_Independent_Review_20261020_ZH.md
 │   │   ├── HipMRI_P1_独立研究审查_ZH.md
 │   │   ├── HipMRI_Pretraining_Data_Analysis.md
 │   │   └── HipMRI_Research_Report.md
@@ -966,6 +967,7 @@ Directories / 目录: **58** · Files / 文件: **450**
 | `results/figures/comparisons/validation/g5_validation_patient_class_dice.svg` | UTF-8 text with 2229 lines; 83,604 bytes | UTF-8 文本，2229 行；83,604 字节 |
 | `results/figures/comparisons/validation/README.md` | Entry point or directory guide; Sections: Validation 六类指标与边界诊断 | 项目入口或目录说明；章节标题：Validation 六类指标与边界诊断 |
 | `results/README.md` | Entry point or directory guide; Sections: Results and Report Artifacts | 项目入口或目录说明；章节标题：Results and Report Artifacts |
+| `results/reports/HipMRI_P1_Independent_Review_20261020_ZH.md` | Sections: P1 独立复审：证据、未决机制与下一项实验; 1. 课程要求映射; 2. 已核实的表现与限制; 3. 实现复核与混杂因素; 4. 根因假设排序 | 章节标题：P1 独立复审：证据、未决机制与下一项实验; 1. 课程要求映射; 2. 已核实的表现与限制; 3. 实现复核与混杂因素; 4. 根因假设排序 |
 | `results/reports/HipMRI_P1_独立研究审查_ZH.md` | Sections: P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 | 章节标题：P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 |
 | `results/reports/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
 | `results/reports/HipMRI_Research_Report.md` | Sections: HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results | 章节标题：HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results |
