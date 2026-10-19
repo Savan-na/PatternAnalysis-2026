@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-20 09:37:16 AEST**
+Updated / 更新时间: **2026-10-20 09:48:38 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **58** · Files / 文件: **451**
+Directories / 目录: **59** · Files / 文件: **463**
 
 ## Directory Tree / 目录树
 
@@ -28,10 +28,12 @@ Directories / 目录: **58** · Files / 文件: **451**
 │   │   ├── g5_weighted_ce_diagnostic.json
 │   │   ├── g7_edge_sampling_candidate.json
 │   │   ├── p2_inference_context.json
+│   │   ├── p2b_prediction_mechanisms.json
 │   │   └── patient_split.json
 │   ├── docs/
 │   │   ├── EXECUTION.md
 │   │   ├── P2_INFERENCE_CONTEXT.md
+│   │   ├── P2B_PREDICTION_MECHANISMS.md
 │   │   ├── RANGPUR_COMMANDS.md
 │   │   ├── SOURCE_DECISIONS.md
 │   │   └── STUDY_PROTOCOL.md
@@ -50,6 +52,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 │   │   ├── inference_context.py
 │   │   ├── losses.py
 │   │   ├── metrics.py
+│   │   ├── prediction_diagnostics.py
 │   │   ├── profile.py
 │   │   ├── sampling.py
 │   │   ├── sampling_2d.py
@@ -63,6 +66,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 │   │   ├── test_inference_context.py
 │   │   ├── test_metrics.py
 │   │   ├── test_models_and_losses.py
+│   │   ├── test_prediction_diagnostics.py
 │   │   ├── test_raw_audit.py
 │   │   ├── test_sampling.py
 │   │   ├── test_sampling_2d.py
@@ -83,6 +87,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 │   │   ├── audit_g5_validation_body.py
 │   │   ├── audit_g7_edge_sampling.py
 │   │   ├── audit_p2_inference_context.py
+│   │   ├── audit_p2b_prediction_mechanisms.py
 │   │   ├── audit_train_raw.py
 │   │   ├── evaluate_g6_test.py
 │   │   ├── organize_result_artifacts.py
@@ -103,6 +108,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 │   │   ├── submit_g6_test.sh
 │   │   ├── submit_g7_edge_audit.sh
 │   │   ├── submit_p2_inference_context.sh
+│   │   ├── submit_p2b_prediction_mechanisms.sh
 │   │   ├── summarize_all_class_review.py
 │   │   ├── summarize_g2_slice_detail.py
 │   │   ├── summarize_g2_train_audit.py
@@ -115,6 +121,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 │   │   ├── summarize_g6_test.py
 │   │   ├── summarize_g7_edge_sampling.py
 │   │   ├── summarize_p2_inference_context.py
+│   │   ├── summarize_p2b_prediction_mechanisms.py
 │   │   ├── tiny_overfit_g5.py
 │   │   ├── train_g5_2d.py
 │   │   ├── train_g5_cohort.py
@@ -122,7 +129,8 @@ Directories / 目录: **58** · Files / 文件: **451**
 │   ├── transfer/
 │   │   ├── 20261017_source.zip
 │   │   ├── g7_edge_audit_20261019.zip
-│   │   └── p2_inference_context_20261020.zip
+│   │   ├── p2_inference_context_20261020.zip
+│   │   └── p2b_prediction_mechanisms_20261020.zip
 │   ├── README.md
 │   └── requirements.txt
 ├── logs/
@@ -473,6 +481,11 @@ Directories / 目录: **58** · Files / 文件: **451**
 │   │       │   ├── six_class_context_comparison.png
 │   │       │   ├── six_class_context_comparison.svg
 │   │       │   └── six_class_metrics.csv
+│   │       ├── p2_mechanism_evidence_20261020/
+│   │       │   ├── README.md
+│   │       │   ├── same_voxel_logit_evidence.png
+│   │       │   ├── same_voxel_logit_evidence.svg
+│   │       │   └── spatial_logit_evidence.csv
 │   │       └── README.md
 │   ├── figures/
 │   │   ├── baseline_2d/
@@ -505,9 +518,9 @@ Directories / 目录: **58** · Files / 文件: **451**
 │   │       └── README.md
 │   ├── reports/
 │   │   ├── HipMRI_P1_Independent_Review_20261020_ZH.md
-│   │   ├── HipMRI_P1_独立研究审查_ZH.md
 │   │   ├── HipMRI_Pretraining_Data_Analysis.md
-│   │   └── HipMRI_Research_Report.md
+│   │   ├── HipMRI_Research_Report.md
+│   │   └── HipMRI_规划和codex指令_ZH.md
 │   ├── tables/
 │   │   └── comparisons/
 │   │       ├── g5_validation_aux_logits.json
@@ -538,9 +551,11 @@ Directories / 目录: **58** · Files / 文件: **451**
 | `code/config/g5_weighted_ce_diagnostic.json` | Train-only weighted CE configuration for the Standard tiny learning diagnostic; JSON fields: scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights | 仅用训练数据为 Standard 微型学习诊断配置加权交叉熵；JSON 字段：scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights |
 | `code/config/g7_edge_sampling_candidate.json` | Predeclared edge crop search and Train exposure gates, not model training config; JSON fields: status, seed, epochs, patch_xyz, patches_per_patient_epoch, preserved_uniform_draws, edge, training_gate, baseline_geometry_counts, scope, fallback, negative_definition | 预先定义边缘裁剪搜索及训练曝光门槛，非模型训练配置；JSON 字段：status, seed, epochs, patch_xyz, patches_per_patient_epoch, preserved_uniform_draws, edge, training_gate, baseline_geometry_counts, scope, fallback, negative_definition |
 | `code/config/p2_inference_context.json` | JSON fields: experiment_id, status, split, cases, case_selection, models, checkpoint, window_xyz, overlap_fraction, fusion, preprocessing, padding | JSON 字段：experiment_id, status, split, cases, case_selection, models, checkpoint, window_xyz, overlap_fraction, fusion, preprocessing, padding |
+| `code/config/p2b_prediction_mechanisms.json` | JSON fields: experiment_id, cases, split, checkpoints, window_xyz, overlap, fusion, replay, self_replay_max_abs_logit_error, self_replay_max_argmax_disagreement_fraction, mechanism_gate, confidence_bins_descriptive_only | JSON 字段：experiment_id, cases, split, checkpoints, window_xyz, overlap, fusion, replay, self_replay_max_abs_logit_error, self_replay_max_argmax_disagreement_fraction, mechanism_gate, confidence_bins_descriptive_only |
 | `code/config/patient_split.json` | Frozen patient groups and expected counts; JSON fields: provenance, train, validation, test, expected_volumes | 固定患者分组与预期数量；JSON 字段：provenance, train, validation, test, expected_volumes |
 | `code/docs/EXECUTION.md` | Evidence and execution gates; Sections: Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: existing-pipeline diagnosis (completed) | 证据与执行关口；章节标题：Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: existing-pipeline diagnosis (completed) |
 | `code/docs/P2_INFERENCE_CONTEXT.md` | Sections: P2：固定权重推理上下文诊断; 当前状态; 固定设计; 运行与输出; 结果解释关口 | 章节标题：P2：固定权重推理上下文诊断; 当前状态; 固定设计; 运行与输出; 结果解释关口 |
+| `code/docs/P2B_PREDICTION_MECHANISMS.md` | Sections: P2B：远处误检机制诊断; 状态与研究问题; 已核对的推理与 Deep Supervision; 固定设计与判别标准; 新测量与后处理 | 章节标题：P2B：远处误检机制诊断; 状态与研究问题; 已核对的推理与 Deep Supervision; 固定设计与判别标准; 新测量与后处理 |
 | `code/docs/RANGPUR_COMMANDS.md` | Separate Windows and Rangpur commands; Sections: Rangpur G2 and G3 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node; Full Train run after the smoke check; G3 existing-pipeline smoke run | 分开的 Windows 与 Rangpur 命令；章节标题：Rangpur G2 and G3 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node; Full Train run after the smoke check; G3 existing-pipeline smoke run |
 | `code/docs/SOURCE_DECISIONS.md` | Paper sources and implementation deviations; Sections: Paper and assignment decision register; Imbalance methods in the three primary papers | 论文来源与实现差异；章节标题：Paper and assignment decision register; Imbalance methods in the three primary papers |
 | `code/docs/STUDY_PROTOCOL.md` | Research hypotheses, endpoints, and freeze rules; Sections: HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints; Assessment and independent-review update — 20 October 2026 | 研究假设、终点指标与冻结规则；章节标题：HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints; Assessment and independent-review update — 20 October 2026 |
@@ -557,6 +572,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 | `code/hipmri_rewrite/models/baseline_3d.py` | Standard volumetric 3D U-Net baseline; Definitions: UNet3D | 标准体数据 3D U-Net 基线；定义：UNet3D |
 | `code/hipmri_rewrite/models/common.py` | Shared standard U-Net convolutional blocks; Definitions: _DoubleConv, _StandardUNet | 标准 U-Net 共用卷积模块；定义：_DoubleConv, _StandardUNet |
 | `code/hipmri_rewrite/models/improved_3d.py` | Residual 3D U-Net with deep supervision; Definitions: _ContextResidual, _Localization, ImprovedUNet3D | 含残差结构及深监督的 3D U-Net；定义：_ContextResidual, _Localization, ImprovedUNet3D |
+| `code/hipmri_rewrite/prediction_diagnostics.py` | Definitions: model_digest, capture_instance_stats, replay_instance_stats, quantiles, confidence, validate_grid, geometry, conservative_component_filter | 定义：model_digest, capture_instance_stats, replay_instance_stats, quantiles, confidence, validate_grid, geometry, conservative_component_filter |
 | `code/hipmri_rewrite/profile.py` | Train-only GPU forward/backward capacity probe; Definitions: profile, main | 仅使用训练数据的 GPU 前反向容量检查；定义：profile, main |
 | `code/hipmri_rewrite/sampling.py` | Patient-balanced Train patch selection and exact label exposure; Definitions: _rng, epoch_cases, crop_origin, crop_for_3d_model, ExposureRecorder | 按患者均衡抽取训练 Patch 并记录实际标签曝光；定义：_rng, epoch_cases, crop_origin, crop_for_3d_model, ExposureRecorder |
 | `code/hipmri_rewrite/sampling_2d.py` | Deterministic Train-only axial crop selection for the optional 2D arm; Definitions: slice_crop_origin, crop_for_2d_model | 可选 2D 模型使用的确定性训练集轴向切片裁剪；定义：slice_crop_origin, crop_for_2d_model |
@@ -571,6 +587,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 | `code/tests/test_inference_context.py` | Definitions: Pointwise, ContextTests | 定义：Pointwise, ContextTests |
 | `code/tests/test_metrics.py` | Class-confusion and overlap metric tests; Definitions: OverlapTests | 类别混淆与重叠指标测试；定义：OverlapTests |
 | `code/tests/test_models_and_losses.py` | Shape, gradient, supervision and inference tests; Definitions: NetworkTests | 形状、梯度、深监督与推理测试；定义：NetworkTests |
+| `code/tests/test_prediction_diagnostics.py` | Definitions: PredictionDiagnosticTests | 定义：PredictionDiagnosticTests |
 | `code/tests/test_raw_audit.py` | Train inventory and file-hash audit tests; Definitions: RawAuditInventoryTests | 训练集文件盘点与文件哈希审计测试；定义：RawAuditInventoryTests |
 | `code/tests/test_sampling.py` | Patient cycle, paired crop and exposure-record tests; Definitions: case, PatientBalancedSamplingTests | 患者轮换、配对裁剪及曝光记录测试；定义：case, PatientBalancedSamplingTests |
 | `code/tests/test_sampling_2d.py` | 2D crop target, bounds and MRI/mask alignment checks; Definitions: TwoDSamplingTests | 核验 2D 裁剪目标、边界和影像标签对齐；定义：TwoDSamplingTests |
@@ -589,6 +606,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 | `code/tools/audit_g5_validation_body.py` | Measure fixed-checkpoint Validation Body boundaries and draw outliers; Definitions: draw, main | 测量固定权重的验证集 Body 边界并绘制异常案例；定义：draw, main |
 | `code/tools/audit_g7_edge_sampling.py` | Replay frozen Train epochs and compare 9+1 edge sampling exposure on CPU; Definitions: sha, main | 在 CPU 重放固定训练轮次并比较 9+1 边缘采样曝光；定义：sha, main |
 | `code/tools/audit_p2_inference_context.py` | Definitions: stats, xyz_logits, border_distance, components, measure, margin_comparison, draw, main | 定义：stats, xyz_logits, border_distance, components, measure, margin_comparison, draw, main |
+| `code/tools/audit_p2b_prediction_mechanisms.py` | Definitions: dump, filter_figure, main | 定义：dump, filter_figure, main |
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/evaluate_g6_test.py` | Definitions: sha256, selected_model, boundary_summary, main | 定义：sha256, selected_model, boundary_summary, main |
 | `code/tools/organize_result_artifacts.py` | Definitions: destination, main | 定义：destination, main |
@@ -609,6 +627,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 | `code/tools/submit_g6_test.sh` | UTF-8 text with 35 lines; 1,550 bytes | UTF-8 文本，35 行；1,550 字节 |
 | `code/tools/submit_g7_edge_audit.sh` | Submit smoke or smoke-gated full Train-only CPU edge audit; UTF-8 text with 66 lines; 2,607 bytes | 提交小规模或通过小规模门槛的完整训练集 CPU 边缘审计；UTF-8 文本，66 行；2,607 字节 |
 | `code/tools/submit_p2_inference_context.sh` | UTF-8 text with 34 lines; 1,365 bytes | UTF-8 文本，34 行；1,365 字节 |
+| `code/tools/submit_p2b_prediction_mechanisms.sh` | UTF-8 text with 32 lines; 1,320 bytes | UTF-8 文本，32 行；1,320 字节 |
 | `code/tools/summarize_all_class_review.py` | Verify selected records and draw six-class, training and failure figures; Definitions: save, paired_bars, validation_figures, test_figures_and_table, three_arm_validation_figures, main | 核验选定记录并绘制六类、训练及失误图；定义：save, paired_bars, validation_figures, test_figures_and_table, three_arm_validation_figures, main |
 | `code/tools/summarize_g2_slice_detail.py` | Reconcile G2 slice and intensity CSVs with G1 and draw local plots; Definitions: read_csv, write_csv, check_hash, main | 将 G2 切片及强度 CSV 与 G1 核对并绘制本地图；定义：read_csv, write_csv, check_hash, main |
 | `code/tools/summarize_g2_train_audit.py` | Summarize verified raw Train audit into G2 tables and plots; Definitions: write_csv, main | 将已核验的训练集原始审计汇总为 G2 表格与图；定义：write_csv, main |
@@ -621,6 +640,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 | `code/tools/summarize_g6_test.py` | Verify one-time held-out Test metrics; Definitions: sha256, same, check, main | 核验一次性独立测试指标；定义：sha256, same, check, main |
 | `code/tools/summarize_g7_edge_sampling.py` | Verify paired G7 crop CSV against 50 training epochs and draw six-class spatial exposure; Definitions: sha, save, main | 对照 50 轮训练核验 G7 配对裁剪 CSV 并绘制六类空间曝光；定义：sha, save, main |
 | `code/tools/summarize_p2_inference_context.py` | Definitions: main | 定义：main |
+| `code/tools/summarize_p2b_prediction_mechanisms.py` | Definitions: sha, checked, existing, replay | 定义：sha, checked, existing, replay |
 | `code/tools/tiny_overfit_g5.py` | Check both 3D models can learn two fixed Train patches on GPU; Definitions: sha256_file, measure, main | 检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch；定义：sha256_file, measure, main |
 | `code/tools/train_g5_2d.py` | Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
 | `code/tools/train_g5_cohort.py` | Train a frozen 3D arm with patient-balanced exposure, Validation selection and resumable checkpoints; Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 按固定方案训练 3D 模型，记录患者均衡曝光、验证集选择及可恢复权重；定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
@@ -628,6 +648,7 @@ Directories / 目录: **58** · Files / 文件: **451**
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |
 | `code/transfer/g7_edge_audit_20261019.zip` | Five-file source-only G7 audit transfer package; ZIP archive with 5 members; 10,348 bytes | 仅含五个 G7 审计源码文件的传输包；ZIP 压缩包，含 5 个成员；10,348 字节 |
 | `code/transfer/p2_inference_context_20261020.zip` | ZIP archive with 6 members; 14,241 bytes | ZIP 压缩包，含 6 个成员；14,241 字节 |
+| `code/transfer/p2b_prediction_mechanisms_20261020.zip` | ZIP archive with 6 members; 19,374 bytes | ZIP 压缩包，含 6 个成员；19,374 字节 |
 | `logs/audits/g1_train_contact_sheets_20261018.json` | JSON fields: scope, screen, patients | JSON 字段：scope, screen, patients |
 | `logs/audits/g3_existing_pipeline_full_20261018_job671892.json` | Binary or large file; 299,809 bytes | 二进制或大文件；299,809 字节 |
 | `logs/audits/g3_patch_candidate_full_20261018/manifest.json` | JSON fields: audit_script_sha256, config, config_sha256, data_code_sha256, full_train, g1_sha256, g3_sha256, patients, scope, split_code_sha256, summary, train_cases | JSON 字段：audit_script_sha256, config, config_sha256, data_code_sha256, full_train, g1_sha256, g3_sha256, patients, scope, split_code_sha256, summary, train_cases |
@@ -942,6 +963,10 @@ Directories / 目录: **58** · Files / 文件: **451**
 | `results/diagnostics/inference_context/p2_four_cases_20261020/six_class_context_comparison.png` | Binary or large file; 105,674 bytes | 二进制或大文件；105,674 字节 |
 | `results/diagnostics/inference_context/p2_four_cases_20261020/six_class_context_comparison.svg` | UTF-8 text with 1834 lines; 58,935 bytes | UTF-8 文本，1834 行；58,935 字节 |
 | `results/diagnostics/inference_context/p2_four_cases_20261020/six_class_metrics.csv` | Table with 96 data rows; columns: model, case, protocol, class, dice, iou, precision, recall | 表格含 96 条数据行；列：model, case, protocol, class, dice, iou, precision, recall |
+| `results/diagnostics/inference_context/p2_mechanism_evidence_20261020/README.md` | Entry point or directory guide; Sections: P2：远处误检与预测机制——现有证据; A. 推理等价性; B–D. 同体素 logits、几何与辅助头; 根因证据排序; E. 下一项与后处理边界 | 项目入口或目录说明；章节标题：P2：远处误检与预测机制——现有证据; A. 推理等价性; B–D. 同体素 logits、几何与辅助头; 根因证据排序; E. 下一项与后处理边界 |
+| `results/diagnostics/inference_context/p2_mechanism_evidence_20261020/same_voxel_logit_evidence.png` | Binary or large file; 135,181 bytes | 二进制或大文件；135,181 字节 |
+| `results/diagnostics/inference_context/p2_mechanism_evidence_20261020/same_voxel_logit_evidence.svg` | UTF-8 text with 2443 lines; 86,786 bytes | UTF-8 文本，2443 行；86,786 字节 |
+| `results/diagnostics/inference_context/p2_mechanism_evidence_20261020/spatial_logit_evidence.csv` | Table with 16 data rows; columns: model, case, protocol, distant_background_to_body, body_hd95_mm, all_body_fp_edge_distance_median_mm, all_body_fp_to_gt_distance_p95_mm, pred_body_component_count_6, pred_body_components_without_gt_overlap, pred_body_voxels_in_components_without_gt_overlap, reference_voxels, margin_p05 | 表格含 16 条数据行；列：model, case, protocol, distant_background_to_body, body_hd95_mm, all_body_fp_edge_distance_median_mm, all_body_fp_to_gt_distance_p95_mm, pred_body_component_count_6, pred_body_components_without_gt_overlap, pred_body_voxels_in_components_without_gt_overlap, reference_voxels, margin_p05 |
 | `results/diagnostics/inference_context/README.md` | Entry point or directory guide; Sections: 推理上下文诊断 | 项目入口或目录说明；章节标题：推理上下文诊断 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.png` | Binary or large file; 58,445 bytes | 二进制或大文件；58,445 字节 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.svg` | UTF-8 text with 1331 lines; 38,132 bytes | UTF-8 文本，1331 行；38,132 字节 |
@@ -968,9 +993,9 @@ Directories / 目录: **58** · Files / 文件: **451**
 | `results/figures/comparisons/validation/README.md` | Entry point or directory guide; Sections: Validation 六类指标与边界诊断 | 项目入口或目录说明；章节标题：Validation 六类指标与边界诊断 |
 | `results/README.md` | Entry point or directory guide; Sections: Results and Report Artifacts | 项目入口或目录说明；章节标题：Results and Report Artifacts |
 | `results/reports/HipMRI_P1_Independent_Review_20261020_ZH.md` | Sections: P1 独立复审：证据、未决机制与下一项实验; 1. 课程要求映射; 2. 已核实的表现与限制; 3. 实现复核与混杂因素; 4. 根因假设排序 | 章节标题：P1 独立复审：证据、未决机制与下一项实验; 1. 课程要求映射; 2. 已核实的表现与限制; 3. 实现复核与混杂因素; 4. 根因假设排序 |
-| `results/reports/HipMRI_P1_独立研究审查_ZH.md` | Sections: P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 | 章节标题：P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 |
 | `results/reports/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
 | `results/reports/HipMRI_Research_Report.md` | Sections: HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results | 章节标题：HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results |
+| `results/reports/HipMRI_规划和codex指令_ZH.md` | Sections: P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 | 章节标题：P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 |
 | `results/STORAGE_GUIDE.md` | Sections: 文件归档与后续分析位置; 后续预留：不是已有结果 | 章节标题：文件归档与后续分析位置; 后续预留：不是已有结果 |
 | `results/tables/comparisons/g5_validation_aux_logits.json` | JSON fields: kind, split, interpretation, checkpoint, body_audit_sha256, cases, summary | JSON 字段：kind, split, interpretation, checkpoint, body_audit_sha256, cases, summary |
 | `results/tables/comparisons/g5_validation_body_audit.json` | JSON fields: kind, split, selection, cases, sources, pictured_cases | JSON 字段：kind, split, selection, cases, sources, pictured_cases |
