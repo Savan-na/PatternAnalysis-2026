@@ -664,3 +664,16 @@ under the predeclared gates. Neither mode reads Validation/Test arrays,
 updates checkpoints or submits A100 model training. Refresh the remote
 `PROJECT_MAP.md` after generating outputs with `python -B code/tools/update_project_map.py`
 from the staged project root; keep the locally maintained documentation local.
+
+Completed state, 20 October: smoke 675465 passed; repeated smoke 675467
+stopped because its output already existed. Full CPU audit 676249 completed
+in 4m46s with all 1,300 edge selections accepted and provisional gates passed.
+The two downloaded files were checked locally against remote hashes:
+`50d26679437bd876182156431b578ca36789657944435268bbf13f67187b1a48`
+for `manifest.json`, and
+`86a7e72227ac7101432b62336f9d70d6d418d0fad152ab67746ce833b36ad4de`
+for `patches.csv`. Reconcile and draw the complete local audit with
+`python -B code/tools/summarize_g7_edge_sampling.py` from `20261017/`.
+The P1 review now prioritizes a fixed-checkpoint Validation inference-context
+diagnostic before choosing another training experiment; the G7 result alone
+does not submit or require GPU training.

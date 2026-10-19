@@ -26,8 +26,12 @@ The [Chinese model review](reports/HipMRI_模型复盘与下一轮实验_ZH.md) 
 decision memo for the next controlled experiment, rather than a second
 cumulative report.
 The earlier mixed-source analysis is archived beside it. The
+[P1 independent review](reports/HipMRI_P1_独立研究审查_ZH.md) maps the local assessment
+draft to current evidence and revises the next diagnostic priority.
+The
 [`data_analysis/`](data_analysis/README.md) index separates historical figures,
-three G1 image groups, a G2 Train summary and a G3 preprocessing group, each
+three G1 image groups, G2/G3 audits, G4 patch exposure and the completed G7
+50-epoch edge-sampling comparison, each
 with a short README beside its figures.
 
 The restarted Standard and Improved 3D arms completed 50 Train epochs each;

@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 18:11:28 AEST**
+Updated / 更新时间: **2026-10-20 01:11:29 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **45** · Files / 文件: **392**
+Directories / 目录: **47** · Files / 文件: **404**
 
 ## Directory Tree / 目录树
 
@@ -106,6 +106,7 @@ Directories / 目录: **45** · Files / 文件: **392**
 │   │   ├── summarize_g5_body_review.py
 │   │   ├── summarize_g5_validation.py
 │   │   ├── summarize_g6_test.py
+│   │   ├── summarize_g7_edge_sampling.py
 │   │   ├── tiny_overfit_g5.py
 │   │   ├── train_g5_2d.py
 │   │   ├── train_g5_cohort.py
@@ -124,6 +125,9 @@ Directories / 目录: **45** · Files / 文件: **392**
 │   │   │   ├── manifest.json
 │   │   │   └── patches.csv
 │   │   ├── g5_2d_sampling_full_20261018/
+│   │   │   ├── manifest.json
+│   │   │   └── patches.csv
+│   │   ├── g7_edge_sampling_full_20261019/
 │   │   │   ├── manifest.json
 │   │   │   └── patches.csv
 │   │   ├── g1_train_contact_sheets_20261018.json
@@ -397,6 +401,15 @@ Directories / 目录: **45** · Files / 文件: **392**
 │   │   │   ├── patient_balanced_exposure.svg
 │   │   │   ├── patient_exposure.csv
 │   │   │   └── README.md
+│   │   ├── g7_edge_sampling/
+│   │   │   ├── class_exposure.csv
+│   │   │   ├── g7_crop_origins.png
+│   │   │   ├── g7_crop_origins.svg
+│   │   │   ├── g7_exposure_and_geometry.png
+│   │   │   ├── g7_exposure_and_geometry.svg
+│   │   │   ├── patient_class_exposure.csv
+│   │   │   ├── README.md
+│   │   │   └── verification.json
 │   │   ├── historical_train/
 │   │   │   ├── HipMRI_Pretraining_Data_Analysis.previous-41201a5e.bak
 │   │   │   ├── HipMRI_Pretraining_Data_Analysis.previous-5dc166bd.bak
@@ -434,6 +447,7 @@ Directories / 目录: **45** · Files / 文件: **392**
 │   │       ├── g6_test_hd95_all_foreground.svg
 │   │       └── README.md
 │   ├── reports/
+│   │   ├── HipMRI_P1_独立研究审查_ZH.md
 │   │   ├── HipMRI_Pretraining_Data_Analysis.md
 │   │   ├── HipMRI_Research_Report.md
 │   │   └── HipMRI_模型复盘与下一轮实验_ZH.md
@@ -469,7 +483,7 @@ Directories / 目录: **45** · Files / 文件: **392**
 | `code/docs/EXECUTION.md` | Evidence and execution gates; Sections: Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: existing-pipeline diagnosis (completed) | 证据与执行关口；章节标题：Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: existing-pipeline diagnosis (completed) |
 | `code/docs/RANGPUR_COMMANDS.md` | Separate Windows and Rangpur commands; Sections: Rangpur G2 and G3 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node; Full Train run after the smoke check; G3 existing-pipeline smoke run | 分开的 Windows 与 Rangpur 命令；章节标题：Rangpur G2 and G3 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node; Full Train run after the smoke check; G3 existing-pipeline smoke run |
 | `code/docs/SOURCE_DECISIONS.md` | Paper sources and implementation deviations; Sections: Paper and assignment decision register; Imbalance methods in the three primary papers | 论文来源与实现差异；章节标题：Paper and assignment decision register; Imbalance methods in the three primary papers |
-| `code/docs/STUDY_PROTOCOL.md` | Research hypotheses, endpoints, and freeze rules; Sections: HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints | 研究假设、终点指标与冻结规则；章节标题：HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints |
+| `code/docs/STUDY_PROTOCOL.md` | Research hypotheses, endpoints, and freeze rules; Sections: HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints; Assessment and independent-review update — 20 October 2026 | 研究假设、终点指标与冻结规则；章节标题：HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints; Assessment and independent-review update — 20 October 2026 |
 | `code/hipmri_rewrite/__init__.py` | Six-class package constants; Definitions: module-level code | 六类别包常量；定义：module-level code |
 | `code/hipmri_rewrite/audit.py` | Train/Validation-only real NIfTI preflight; Definitions: audit, main | 仅针对训练与验证数据的真实 NIfTI 预检；定义：audit, main |
 | `code/hipmri_rewrite/boundaries.py` | Physical base/apex, slice and surface error analysis; Definitions: prostate_axial_regions, slice_dice, symmetric_surface_distances, prostate_organ_confusion | 物理位置的基底/尖端、切片和表面误差分析；定义：prostate_axial_regions, slice_dice, symmetric_surface_distances, prostate_organ_confusion |
@@ -540,6 +554,7 @@ Directories / 目录: **45** · Files / 文件: **392**
 | `code/tools/summarize_g5_body_review.py` | Verify Validation Body audit and plot patient boundary errors; Definitions: main | 核验验证集 Body 审计并绘制患者边界错误；定义：main |
 | `code/tools/summarize_g5_validation.py` | Definitions: sha256, same_metric, load_checked_run, main | 定义：sha256, same_metric, load_checked_run, main |
 | `code/tools/summarize_g6_test.py` | Verify one-time held-out Test metrics; Definitions: sha256, same, check, main | 核验一次性独立测试指标；定义：sha256, same, check, main |
+| `code/tools/summarize_g7_edge_sampling.py` | Verify paired G7 crop CSV against 50 training epochs and draw six-class spatial exposure; Definitions: sha, save, main | 对照 50 轮训练核验 G7 配对裁剪 CSV 并绘制六类空间曝光；定义：sha, save, main |
 | `code/tools/tiny_overfit_g5.py` | Check both 3D models can learn two fixed Train patches on GPU; Definitions: sha256_file, measure, main | 检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch；定义：sha256_file, measure, main |
 | `code/tools/train_g5_2d.py` | Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
 | `code/tools/train_g5_cohort.py` | Train a frozen 3D arm with patient-balanced exposure, Validation selection and resumable checkpoints; Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 按固定方案训练 3D 模型，记录患者均衡曝光、验证集选择及可恢复权重；定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
@@ -554,6 +569,8 @@ Directories / 目录: **45** · Files / 文件: **392**
 | `logs/audits/g4_patient_full_20261018/patches.csv` | Table with 520 data rows; columns: ﻿epoch, policy, patient, case, draw, target, origin_x, origin_y, origin_z, background_voxels, body_voxels, bones_voxels | 表格含 520 条数据行；列：﻿epoch, policy, patient, case, draw, target, origin_x, origin_y, origin_z, background_voxels, body_voxels, bones_voxels |
 | `logs/audits/g5_2d_sampling_full_20261018/manifest.json` | JSON fields: complete_patient_epoch, data_sha256, epoch, g1_sha256, g3_sha256, patch_xy, patches_per_policy, patients, policies, sampling_2d_sha256, scope, script_sha256 | JSON 字段：complete_patient_epoch, data_sha256, epoch, g1_sha256, g3_sha256, patch_xy, patches_per_policy, patients, policies, sampling_2d_sha256, scope, script_sha256 |
 | `logs/audits/g5_2d_sampling_full_20261018/patches.csv` | Table with 520 data rows; columns: ﻿epoch, policy, patient, case, draw, target, origin_x, origin_y, slice_z, background_voxels, body_voxels, bones_voxels | 表格含 520 条数据行；列：﻿epoch, policy, patient, case, draw, target, origin_x, origin_y, slice_z, background_voxels, body_voxels, bones_voxels |
+| `logs/audits/g7_edge_sampling_full_20261019/manifest.json` | Binary or large file; 856,983 bytes | 二进制或大文件；856,983 字节 |
+| `logs/audits/g7_edge_sampling_full_20261019/patches.csv` | Binary or large file; 4,235,680 bytes | 二进制或大文件；4,235,680 字节 |
 | `logs/audits/train_full_20261018_job671208.json` | Binary or large file; 563,622 bytes | 二进制或大文件；563,622 字节 |
 | `logs/internal/map_watcher_stderr.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
 | `logs/internal/map_watcher_stdout.txt` | UTF-8 text with 0 lines; 0 bytes | UTF-8 文本，0 行；0 字节 |
@@ -805,6 +822,14 @@ Directories / 目录: **45** · Files / 文件: **392**
 | `results/data_analysis/g4_patient_sampling/patient_balanced_exposure.svg` | UTF-8 text with 1714 lines; 51,622 bytes | UTF-8 文本，1714 行；51,622 字节 |
 | `results/data_analysis/g4_patient_sampling/patient_exposure.csv` | Table with 52 data rows; columns: ﻿policy, patient, case, patches, bladder_hits, rectum_hits, prostate_hits, bladder_voxel_share, rectum_voxel_share, prostate_voxel_share | 表格含 52 条数据行；列：﻿policy, patient, case, patches, bladder_hits, rectum_hits, prostate_hits, bladder_voxel_share, rectum_voxel_share, prostate_voxel_share |
 | `results/data_analysis/g4_patient_sampling/README.md` | Entry point or directory guide; Sections: G4 patient-balanced patch exposure | 项目入口或目录说明；章节标题：G4 patient-balanced patch exposure |
+| `results/data_analysis/g7_edge_sampling/class_exposure.csv` | Table with 12 data rows; columns: ﻿policy, class, patch_hits, patch_hit_rate, patch_voxels, voxel_share | 表格含 12 条数据行；列：﻿policy, class, patch_hits, patch_hit_rate, patch_voxels, voxel_share |
+| `results/data_analysis/g7_edge_sampling/g7_crop_origins.png` | Binary or large file; 214,581 bytes | 二进制或大文件；214,581 字节 |
+| `results/data_analysis/g7_edge_sampling/g7_crop_origins.svg` | Binary or large file; 175,989 bytes | 二进制或大文件；175,989 字节 |
+| `results/data_analysis/g7_edge_sampling/g7_exposure_and_geometry.png` | Binary or large file; 140,171 bytes | 二进制或大文件；140,171 字节 |
+| `results/data_analysis/g7_edge_sampling/g7_exposure_and_geometry.svg` | UTF-8 text with 2714 lines; 90,154 bytes | UTF-8 文本，2714 行；90,154 字节 |
+| `results/data_analysis/g7_edge_sampling/patient_class_exposure.csv` | Table with 312 data rows; columns: ﻿policy, patient, class, patches, patch_hits, patch_voxels, voxel_share | 表格含 312 条数据行；列：﻿policy, patient, class, patches, patch_hits, patch_voxels, voxel_share |
+| `results/data_analysis/g7_edge_sampling/README.md` | Entry point or directory guide; Sections: G7：原均匀采样与 9+1 边缘采样 | 项目入口或目录说明；章节标题：G7：原均匀采样与 9+1 边缘采样 |
+| `results/data_analysis/g7_edge_sampling/verification.json` | JSON fields: kind, source_hashes, csv_rows, preserved_draw_pairs, baseline_epochs_reproduced, accepted_edge_draws, eligible_under_provisional_gates, inference_or_model_quality_established | JSON 字段：kind, source_hashes, csv_rows, preserved_draw_pairs, baseline_epochs_reproduced, accepted_edge_draws, eligible_under_provisional_gates, inference_or_model_quality_established |
 | `results/data_analysis/historical_train/HipMRI_Pretraining_Data_Analysis.previous-41201a5e.bak` | UTF-8 text with 106 lines; 14,485 bytes | UTF-8 文本，106 行；14,485 字节 |
 | `results/data_analysis/historical_train/HipMRI_Pretraining_Data_Analysis.previous-5dc166bd.bak` | UTF-8 text with 93 lines; 12,305 bytes | UTF-8 文本，93 行；12,305 字节 |
 | `results/data_analysis/historical_train/historical_patch_vs_full_volume.svg` | UTF-8 text with 49 lines; 4,617 bytes | UTF-8 文本，49 行；4,617 字节 |
@@ -838,6 +863,7 @@ Directories / 目录: **45** · Files / 文件: **392**
 | `results/figures/comparisons/g6_test_hd95_all_foreground.svg` | UTF-8 text with 1507 lines; 42,799 bytes | UTF-8 文本，1507 行；42,799 字节 |
 | `results/figures/comparisons/README.md` | Entry point or directory guide; Sections: Model comparison figures | 项目入口或目录说明；章节标题：Model comparison figures |
 | `results/README.md` | Entry point or directory guide; Sections: Results and Report Artifacts | 项目入口或目录说明；章节标题：Results and Report Artifacts |
+| `results/reports/HipMRI_P1_独立研究审查_ZH.md` | Sections: P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 | 章节标题：P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么; 4. 竞争假设与优先级 |
 | `results/reports/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
 | `results/reports/HipMRI_Research_Report.md` | Sections: HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results | 章节标题：HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results |
 | `results/reports/HipMRI_模型复盘与下一轮实验_ZH.md` | Sections: HipMRI 模型复盘与下一轮实验决策; 1. 结论先明确; 2. 六类别与边界：它究竟赢在哪里、输在哪里; 3. 为什么没有达到预期：证据、解释与尚未证明之处; 4. 下一轮：先验证采样假设，再谈新模型胜利 | 章节标题：HipMRI 模型复盘与下一轮实验决策; 1. 结论先明确; 2. 六类别与边界：它究竟赢在哪里、输在哪里; 3. 为什么没有达到预期：证据、解释与尚未证明之处; 4. 下一轮：先验证采样假设，再谈新模型胜利 |

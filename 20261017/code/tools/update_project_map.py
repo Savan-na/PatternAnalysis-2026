@@ -91,6 +91,7 @@ ROLES = {
     "sampling_2d.py": ("Deterministic Train-only axial crop selection for the optional 2D arm", "可选 2D 模型使用的确定性训练集轴向切片裁剪"),
     "sampling_edges.py": ("Candidate Train corner crops with physical hard negatives and uniform fallback", "候选训练集角落裁剪，含物理距离负样本及均匀回退"),
     "audit_g7_edge_sampling.py": ("Replay frozen Train epochs and compare 9+1 edge sampling exposure on CPU", "在 CPU 重放固定训练轮次并比较 9+1 边缘采样曝光"),
+    "summarize_g7_edge_sampling.py": ("Verify paired G7 crop CSV against 50 training epochs and draw six-class spatial exposure", "对照 50 轮训练核验 G7 配对裁剪 CSV 并绘制六类空间曝光"),
     "submit_g7_edge_audit.sh": ("Submit smoke or smoke-gated full Train-only CPU edge audit", "提交小规模或通过小规模门槛的完整训练集 CPU 边缘审计"),
     "g7_edge_sampling_candidate.json": ("Predeclared edge crop search and Train exposure gates, not model training config", "预先定义边缘裁剪搜索及训练曝光门槛，非模型训练配置"),
     "test_sampling_edges.py": ("Verify physical negatives, paired geometry, Train isolation and uniform fallback", "核验物理距离负样本、配对几何、训练集隔离及均匀回退"),

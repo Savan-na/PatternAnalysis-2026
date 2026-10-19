@@ -62,3 +62,18 @@ patient-balanced Validation rule. The supplementary 2D arm completed its
 separate protocol and a strictly checked continuation to epoch 50. The two
 3D checkpoints then underwent one held-out Test evaluation; Test findings
 must not drive model revisions.
+
+## Assessment and independent-review update — 20 October 2026
+
+The supplied local assessment draft explicitly requires volumetric residual
+units and deep supervision for the selected Hard 3D Improved U-Net option.
+Any final candidate must retain these mechanisms; an output-fusion ablation
+can use separately supervised auxiliary losses with a main inference head.
+The complete requirement mapping and source identity are in the
+[P1 review](../../results/reports/HipMRI_P1_独立研究审查_ZH.md).
+G7 passed its Train exposure gates, but this does not establish a causal
+explanation for the Body errors. First compare fixed-weight full-volume and
+training-sized window inference on predefined Validation cases, together
+with logit-margin diagnostics. Retain edge sampling as a candidate, revise
+the sequence when evidence warrants, and keep course boundary/cost analysis
+and final delivery progressing alongside bounded model development.

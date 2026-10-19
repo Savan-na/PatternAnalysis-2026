@@ -1093,8 +1093,11 @@ per-patient variance. The held-out Test split has already been inspected and
 must not choose this intervention or be reported as a fresh unbiased test.
 If the Train-only dry run cannot preserve small-organ exposure, redesign the
 sampling proposal before training. If adequate edge exposure fails to fix the
-Validation Body errors, the next separate controlled experiment should
-retrain a single-head Improved architecture; do not combine both changes.
+Validation Body errors, consider a separate output-fusion ablation with
+independent auxiliary training losses and a main inference head, retaining
+deep supervision and volumetric residual units for the Hard course scope.
+Do not combine sampling and architecture changes. The 20 October P1 review
+below revises the immediate next step to fixed-checkpoint inference diagnosis.
 
 The final epoch-50 Validation panels and the one-time Test case matrices
 identify different failure types. `K018_Week3` is a Validation Rectum
@@ -1147,15 +1150,14 @@ JSON, figures and this report, with the required HipMRI data acknowledgment.
 
 The completed 38-volume Validation boundary audit now establishes the main
 development problem: Improved has markedly worse Body boundaries than Standard
-under identical 3D training exposure. The next Improved 3D direction is to
-increase remote Background/Body context through a **single-factor, edge-aware
-Train patch sampling experiment**, subject to a full Train-only exposure dry
-run. The isolated main output performed much worse on Validation, so removing
-auxiliary logits at inference is unsupported. If the sampling experiment does
-not improve Validation Body errors, retrain a single-head architecture as a
-separate controlled ablation. Directly importing the 2D organ-aware sampler
-or simply increasing class weights is not justified by the present 3D exposure
-and failure evidence.
+under identical 3D training exposure. Edge-aware Train patch sampling remains
+a technically valid candidate after its full exposure audit. The 20 October
+independent review now prioritizes a fixed-checkpoint inference-context/logit
+diagnostic before another training run. Any later output-fusion ablation must
+retain meaningful deep supervision and volumetric residual units for the Hard
+final model; main-only inference on the existing summed-output weights is
+unsupported. Directly importing the 2D sampler or increasing class weights
+is not justified by the present exposure and failure evidence.
 
 The focused [Chinese model review and next-experiment decision](HipMRI_模型复盘与下一轮实验_ZH.md)
 sets explicit success criteria for that proposal and separates demonstrated
@@ -1164,6 +1166,18 @@ results from mechanisms that still require a controlled test.
 The G7 candidate is now implemented in separate source/config files, leaving
 the frozen G5 data, sampler and weights unchanged. Its CPU audit checks exact
 baseline epoch exposure, then compares all six class counts and volume-corner
-coverage for the nine-uniform/one-edge policy. Local tests pass; the staged
-two-patient/two-epoch Rangpur smoke and full Train audit remain unexecuted.
-No candidate exposure or new model-quality result is claimed at this stage.
+coverage for the nine-uniform/one-edge policy. Smoke job 675465 passed; the
+duplicate smoke job 675467 refused an existing output. Full CPU job 676249
+completed in 4m46s. Downloaded hashes and all 26,000 crop rows were reconciled
+locally, including 11,700 preserved crop pairs and all 50 original training
+epoch exposures. Outer-8 corner coverage rose from 3.25% to 12.95%; small-organ
+voxel exposure retained 94.91%–95.80% of baseline. All 1,300 edge crops were
+accepted and the provisional gates passed. The
+[G7 result group](../data_analysis/g7_edge_sampling/README.md) contains complete
+six-class tables and figures. This establishes exposure feasibility, not a
+new segmentation-quality result.
+
+The [P1 independent review](HipMRI_P1_独立研究审查_ZH.md) maps the inspected local
+assessment draft to outstanding delivery requirements, identifies the
+patch/full-volume normalization-context interaction as an untested mechanism,
+and sets a bounded fixed-weight Validation diagnostic before model retraining.
