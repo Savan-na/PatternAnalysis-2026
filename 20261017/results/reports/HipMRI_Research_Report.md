@@ -821,11 +821,20 @@ full-volume Prostate recall above 0.97 on this case but precision below 0.50;
 its current image shows additional and misplaced predicted tissue. A single
 slice should be read alongside the full-volume metrics in the companion JSON.
 
-The supplementary 2D arm currently has 40 complete epochs and selected its
-epoch-40 checkpoint at patient-balanced Validation score 0.7367. A bounded
-continuation to epoch 50 can test whether this trajectory improves under the
-same frozen code, data, sampling, loss and optimizer. Selection must remain
-Validation-only; no 2D Test evaluation is planned for this comparison.
+The supplementary 2D arm later resumed from its complete epoch-40 state and
+finished epoch 50 as job 674592 (`COMPLETED 0:0`). The original 40 checkpoints
+and records were verified before submission, and the training code rejected
+changes to the frozen configuration, sources and software versions on resume.
+The local 50-record manifest SHA-256 is
+`f34deddbf59b4b688464033e4301e99b605637e5fae6e564fc0ba89c09fb5ff9`;
+the epoch-50 record SHA-256 is
+`364c40ebb8c5e460ca99787e242653bc8a39e4868af439cf266be004ce2d6587`.
+The Validation-selected epoch moved from 40 (score 0.7367) to 50 (score
+0.7757). At epoch 50, pooled Validation Dice is 0.9950 Background, 0.9718
+Body, 0.8367 Bones, 0.8983 Bladder, 0.6897 Rectum and 0.7672 Prostate.
+These are Validation findings; no 2D Test evaluation was run. The 2D
+[learning and six-class figures](../figures/baseline_2d/README.md) were
+regenerated from the 50 verified records.
 
 ### G6 one-time held-out 3D Test — 19 October 2026
 
@@ -933,6 +942,18 @@ because HD95 is sensitive to distant surface errors. The JSON identifies
 which volumes warrant a spatial overlay; it cannot alone establish whether
 the error is a remote foreground island, boundary displacement or another
 geometric pattern.
+
+Job 674598 (`COMPLETED 0:0`) reproduced the fixed Test confusion matrices
+before drawing three-plane [Body overlays](../case_studies/comparisons/README.md).
+The selected slices show Improved Body predictions outside the anatomical
+outline and near image margins in all three reviewed volumes. The distant
+false-positive voxel is 135.3 mm from GT Body in M015 Week3, 135.7 mm in
+L011 Week5 and 137.3 mm in W041 Week0. These maxima are **not** HD95 values;
+the fixed Test HD95 values are 93.44, 80.76 and 79.78 mm, respectively.
+Improved has 140,809, 49,756 and 25,656 Background-to-Body false-positive
+voxels in those cases, versus Standard's 36,893, 1,235 and 2,531. The spatial
+evidence supports a remote-background prediction pattern, but its cause still
+needs to be tested on Train/Validation, not selected from Test.
 
 For any later model work, first inspect these patterns on **Train and
 Validation**: patient-level Bladder confusion with Body, small-organ

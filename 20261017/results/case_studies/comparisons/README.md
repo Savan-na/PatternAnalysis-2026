@@ -23,3 +23,16 @@ three-dimensional overlap metrics. These reviews did not change the models.
 A single axial panel cannot establish the full 3D error pattern. These PNGs
 are medical-image-derived; review HipMRI data-use terms before distributing
 them.
+
+The three `g6_body_*.png` panels add axial, coronal and sagittal slices through
+the most distant Improved 3D Body false positive in `M015_Week3`,
+`L011_Week5` and `W041_Week0`. The cyan line is GT Body; orange is predicted
+Body. All six predictions reproduced their original one-time Test confusion
+matrices before drawing. In each example, Improved predicts Body well outside
+the main anatomical outline, including image-margin regions; Standard has far
+fewer such voxels. This visually explains the large Improved Body HD95 without
+asserting that the pictured single voxel itself defines the 95th percentile.
+The matching `g6_body_selected_cases.json` records exact Body Dice, HD95 and
+false-positive counts; it is tied to the unchanged Test JSON SHA-256
+`21ce5e2eb53e3bf758478fd7c9fd95b887d82031b7a66ed77c7ef3168adc3e2f`.
+This is descriptive Test review, not model tuning.

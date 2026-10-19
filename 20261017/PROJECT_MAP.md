@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 12:12:56 AEST**
+Updated / 更新时间: **2026-10-19 12:36:32 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **44** · Files / 文件: **359**
+Directories / 目录: **44** · Files / 文件: **373**
 
 ## Directory Tree / 目录树
 
@@ -171,6 +171,16 @@ Directories / 目录: **44** · Files / 文件: **359**
 │   │   │   ├── epoch_038.json
 │   │   │   ├── epoch_039.json
 │   │   │   ├── epoch_040.json
+│   │   │   ├── epoch_041.json
+│   │   │   ├── epoch_042.json
+│   │   │   ├── epoch_043.json
+│   │   │   ├── epoch_044.json
+│   │   │   ├── epoch_045.json
+│   │   │   ├── epoch_046.json
+│   │   │   ├── epoch_047.json
+│   │   │   ├── epoch_048.json
+│   │   │   ├── epoch_049.json
+│   │   │   ├── epoch_050.json
 │   │   │   └── manifest.json
 │   │   ├── baseline_3d/
 │   │   │   ├── epoch_001.json
@@ -289,6 +299,10 @@ Directories / 目录: **44** · Files / 文件: **359**
 │   │       ├── g5_validation_K018_Week3_rectum.png
 │   │       ├── g5_validation_S022_Week6_prostate.png
 │   │       ├── g5_validation_selected_cases.json
+│   │       ├── g6_body_L011_Week5.png
+│   │       ├── g6_body_M015_Week3.png
+│   │       ├── g6_body_selected_cases.json
+│   │       ├── g6_body_W041_Week0.png
 │   │       ├── g6_test_M015_Week7_bladder.png
 │   │       ├── g6_test_M020_Week1_prostate.png
 │   │       ├── g6_test_selected_cases.json
@@ -561,7 +575,17 @@ Directories / 目录: **44** · Files / 文件: **359**
 | `logs/training/baseline_2d/epoch_038.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/baseline_2d/epoch_039.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/baseline_2d/epoch_040.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
-| `logs/training/baseline_2d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model | JSON 字段：config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model |
+| `logs/training/baseline_2d/epoch_041.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_042.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_043.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_044.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_045.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_046.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_047.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_048.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_049.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/epoch_050.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_2d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 | JSON 字段：config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 |
 | `logs/training/baseline_3d/epoch_001.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/baseline_3d/epoch_002.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/baseline_3d/epoch_003.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
@@ -671,6 +695,10 @@ Directories / 目录: **44** · Files / 文件: **359**
 | `results/case_studies/comparisons/g5_validation_K018_Week3_rectum.png` | Binary or large file; 89,639 bytes | 二进制或大文件；89,639 字节 |
 | `results/case_studies/comparisons/g5_validation_S022_Week6_prostate.png` | Binary or large file; 89,736 bytes | 二进制或大文件；89,736 字节 |
 | `results/case_studies/comparisons/g5_validation_selected_cases.json` | JSON fields: kind, split, cases, sources | JSON 字段：kind, split, cases, sources |
+| `results/case_studies/comparisons/g6_body_L011_Week5.png` | Binary or large file; 218,157 bytes | 二进制或大文件；218,157 字节 |
+| `results/case_studies/comparisons/g6_body_M015_Week3.png` | Binary or large file; 266,760 bytes | 二进制或大文件；266,760 字节 |
+| `results/case_studies/comparisons/g6_body_selected_cases.json` | JSON fields: kind, split, test_result_sha256, cases | JSON 字段：kind, split, test_result_sha256, cases |
+| `results/case_studies/comparisons/g6_body_W041_Week0.png` | Binary or large file; 244,148 bytes | 二进制或大文件；244,148 字节 |
 | `results/case_studies/comparisons/g6_test_M015_Week7_bladder.png` | Binary or large file; 130,570 bytes | 二进制或大文件；130,570 字节 |
 | `results/case_studies/comparisons/g6_test_M020_Week1_prostate.png` | Binary or large file; 94,741 bytes | 二进制或大文件；94,741 字节 |
 | `results/case_studies/comparisons/g6_test_selected_cases.json` | JSON fields: kind, split, test_result_sha256, cases | JSON 字段：kind, split, test_result_sha256, cases |
@@ -755,9 +783,9 @@ Directories / 目录: **44** · Files / 文件: **359**
 | `results/data_analysis/historical_train/train_patient_examinations.svg` | UTF-8 text with 72 lines; 7,370 bytes | UTF-8 文本，72 行；7,370 字节 |
 | `results/data_analysis/historical_train/train_rare_organ_volumes.svg` | UTF-8 text with 320 lines; 25,203 bytes | UTF-8 文本，320 行；25,203 字节 |
 | `results/data_analysis/README.md` | Entry point or directory guide; Sections: Data analysis image groups | 项目入口或目录说明；章节标题：Data analysis image groups |
-| `results/figures/baseline_2d/g5_2d_validation.svg` | UTF-8 text with 2113 lines; 65,832 bytes | UTF-8 文本，2113 行；65,832 字节 |
-| `results/figures/baseline_2d/g5_2d_validation_all_classes.png` | Binary or large file; 57,380 bytes | 二进制或大文件；57,380 字节 |
-| `results/figures/baseline_2d/g5_2d_validation_all_classes.svg` | UTF-8 text with 1299 lines; 37,422 bytes | UTF-8 文本，1299 行；37,422 字节 |
+| `results/figures/baseline_2d/g5_2d_validation.svg` | UTF-8 text with 2085 lines; 65,275 bytes | UTF-8 文本，2085 行；65,275 字节 |
+| `results/figures/baseline_2d/g5_2d_validation_all_classes.png` | Binary or large file; 58,445 bytes | 二进制或大文件；58,445 字节 |
+| `results/figures/baseline_2d/g5_2d_validation_all_classes.svg` | UTF-8 text with 1331 lines; 38,132 bytes | UTF-8 文本，1331 行；38,132 字节 |
 | `results/figures/baseline_2d/README.md` | Entry point or directory guide; Sections: Supplementary 2D Validation figure | 项目入口或目录说明；章节标题：Supplementary 2D Validation figure |
 | `results/figures/comparisons/g5_3d_validation.svg` | UTF-8 text with 2032 lines; 64,580 bytes | UTF-8 文本，2032 行；64,580 字节 |
 | `results/figures/comparisons/g5_3d_validation_all_classes.png` | Binary or large file; 68,380 bytes | 二进制或大文件；68,380 字节 |

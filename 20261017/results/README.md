@@ -28,7 +28,7 @@ three G1 image groups, a G2 Train summary and a G3 preprocessing group, each
 with a short README beside its figures.
 
 The restarted Standard and Improved 3D arms completed 50 Train epochs each;
-the supplementary 2D arm completed 40. Their Validation figures are under
+the supplementary 2D arm also completed 50. Their Validation figures are under
 [`figures/comparisons/`](figures/comparisons/README.md). The one-time 3D
 held-out [Test result](tables/comparisons/README.md) and selected
 [Validation/Test overlays](case_studies/comparisons/README.md) are also local.
