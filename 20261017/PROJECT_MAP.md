@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-20 08:54:39 AEST**
+Updated / 更新时间: **2026-10-20 09:03:09 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **55** · Files / 文件: **414**
+Directories / 目录: **55** · Files / 文件: **422**
 
 ## Directory Tree / 目录树
 
@@ -27,9 +27,11 @@ Directories / 目录: **55** · Files / 文件: **414**
 │   │   ├── g5_controlled_training_frozen.json
 │   │   ├── g5_weighted_ce_diagnostic.json
 │   │   ├── g7_edge_sampling_candidate.json
+│   │   ├── p2_inference_context.json
 │   │   └── patient_split.json
 │   ├── docs/
 │   │   ├── EXECUTION.md
+│   │   ├── P2_INFERENCE_CONTEXT.md
 │   │   ├── RANGPUR_COMMANDS.md
 │   │   ├── SOURCE_DECISIONS.md
 │   │   └── STUDY_PROTOCOL.md
@@ -45,6 +47,7 @@ Directories / 目录: **55** · Files / 文件: **414**
 │   │   ├── boundaries.py
 │   │   ├── data.py
 │   │   ├── inference.py
+│   │   ├── inference_context.py
 │   │   ├── losses.py
 │   │   ├── metrics.py
 │   │   ├── profile.py
@@ -57,6 +60,7 @@ Directories / 目录: **55** · Files / 文件: **414**
 │   │   ├── test_boundaries.py
 │   │   ├── test_data.py
 │   │   ├── test_g5_candidate.py
+│   │   ├── test_inference_context.py
 │   │   ├── test_metrics.py
 │   │   ├── test_models_and_losses.py
 │   │   ├── test_raw_audit.py
@@ -78,6 +82,7 @@ Directories / 目录: **55** · Files / 文件: **414**
 │   │   ├── audit_g5_train_patch_geometry.py
 │   │   ├── audit_g5_validation_body.py
 │   │   ├── audit_g7_edge_sampling.py
+│   │   ├── audit_p2_inference_context.py
 │   │   ├── audit_train_raw.py
 │   │   ├── evaluate_g6_test.py
 │   │   ├── organize_result_artifacts.py
@@ -97,6 +102,7 @@ Directories / 目录: **55** · Files / 文件: **414**
 │   │   ├── submit_g5_extend_50.sh
 │   │   ├── submit_g6_test.sh
 │   │   ├── submit_g7_edge_audit.sh
+│   │   ├── submit_p2_inference_context.sh
 │   │   ├── summarize_all_class_review.py
 │   │   ├── summarize_g2_slice_detail.py
 │   │   ├── summarize_g2_train_audit.py
@@ -108,13 +114,15 @@ Directories / 目录: **55** · Files / 文件: **414**
 │   │   ├── summarize_g5_validation.py
 │   │   ├── summarize_g6_test.py
 │   │   ├── summarize_g7_edge_sampling.py
+│   │   ├── summarize_p2_inference_context.py
 │   │   ├── tiny_overfit_g5.py
 │   │   ├── train_g5_2d.py
 │   │   ├── train_g5_cohort.py
 │   │   └── update_project_map.py
 │   ├── transfer/
 │   │   ├── 20261017_source.zip
-│   │   └── g7_edge_audit_20261019.zip
+│   │   ├── g7_edge_audit_20261019.zip
+│   │   └── p2_inference_context_20261020.zip
 │   ├── README.md
 │   └── requirements.txt
 ├── logs/
@@ -497,8 +505,10 @@ Directories / 目录: **55** · Files / 文件: **414**
 | `code/config/g5_controlled_training_frozen.json` | Frozen paired 3D cohort training protocol with resumable checkpoint selection; JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | 已冻结的双模型训练方案，含可恢复权重和验证集选择规则；JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
 | `code/config/g5_weighted_ce_diagnostic.json` | Train-only weighted CE configuration for the Standard tiny learning diagnostic; JSON fields: scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights | 仅用训练数据为 Standard 微型学习诊断配置加权交叉熵；JSON 字段：scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights |
 | `code/config/g7_edge_sampling_candidate.json` | Predeclared edge crop search and Train exposure gates, not model training config; JSON fields: status, seed, epochs, patch_xyz, patches_per_patient_epoch, preserved_uniform_draws, edge, training_gate, baseline_geometry_counts, scope, fallback, negative_definition | 预先定义边缘裁剪搜索及训练曝光门槛，非模型训练配置；JSON 字段：status, seed, epochs, patch_xyz, patches_per_patient_epoch, preserved_uniform_draws, edge, training_gate, baseline_geometry_counts, scope, fallback, negative_definition |
+| `code/config/p2_inference_context.json` | JSON fields: experiment_id, status, split, cases, case_selection, models, checkpoint, window_xyz, overlap_fraction, fusion, preprocessing, padding | JSON 字段：experiment_id, status, split, cases, case_selection, models, checkpoint, window_xyz, overlap_fraction, fusion, preprocessing, padding |
 | `code/config/patient_split.json` | Frozen patient groups and expected counts; JSON fields: provenance, train, validation, test, expected_volumes | 固定患者分组与预期数量；JSON 字段：provenance, train, validation, test, expected_volumes |
 | `code/docs/EXECUTION.md` | Evidence and execution gates; Sections: Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: existing-pipeline diagnosis (completed) | 证据与执行关口；章节标题：Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: existing-pipeline diagnosis (completed) |
+| `code/docs/P2_INFERENCE_CONTEXT.md` | Sections: P2：固定权重推理上下文诊断; 当前状态; 固定设计; 运行与输出; 结果解释关口 | 章节标题：P2：固定权重推理上下文诊断; 当前状态; 固定设计; 运行与输出; 结果解释关口 |
 | `code/docs/RANGPUR_COMMANDS.md` | Separate Windows and Rangpur commands; Sections: Rangpur G2 and G3 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node; Full Train run after the smoke check; G3 existing-pipeline smoke run | 分开的 Windows 与 Rangpur 命令；章节标题：Rangpur G2 and G3 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node; Full Train run after the smoke check; G3 existing-pipeline smoke run |
 | `code/docs/SOURCE_DECISIONS.md` | Paper sources and implementation deviations; Sections: Paper and assignment decision register; Imbalance methods in the three primary papers | 论文来源与实现差异；章节标题：Paper and assignment decision register; Imbalance methods in the three primary papers |
 | `code/docs/STUDY_PROTOCOL.md` | Research hypotheses, endpoints, and freeze rules; Sections: HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints; Assessment and independent-review update — 20 October 2026 | 研究假设、终点指标与冻结规则；章节标题：HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints; Assessment and independent-review update — 20 October 2026 |
@@ -507,6 +517,7 @@ Directories / 目录: **55** · Files / 文件: **414**
 | `code/hipmri_rewrite/boundaries.py` | Physical base/apex, slice and surface error analysis; Definitions: prostate_axial_regions, slice_dice, symmetric_surface_distances, prostate_organ_confusion | 物理位置的基底/尖端、切片和表面误差分析；定义：prostate_axial_regions, slice_dice, symmetric_surface_distances, prostate_organ_confusion |
 | `code/hipmri_rewrite/data.py` | Paired loading, common-grid downsampling and mask encoding; Definitions: Volume, load_case, downsample, zscore_nonzero, one_hot, to_3d_model_arrays, from_3d_model_prediction | 配对读取、共用网格降采样及标签编码；定义：Volume, load_case, downsample, zscore_nonzero, one_hot, to_3d_model_arrays, from_3d_model_prediction |
 | `code/hipmri_rewrite/inference.py` | 2D/3D predictions restored to the input XYZ grid; Definitions: predict_volume | 将 2D/3D 预测还原至输入 XYZ 网格；定义：predict_volume |
+| `code/hipmri_rewrite/inference_context.py` | Definitions: axis_starts, infer_logits | 定义：axis_starts, infer_logits |
 | `code/hipmri_rewrite/losses.py` | Six-class cross-entropy and soft-Dice objectives; Definitions: _check, foreground_soft_dice_loss, ce_dice_loss | 六类别交叉熵与 Soft Dice 目标函数；定义：_check, foreground_soft_dice_loss, ce_dice_loss |
 | `code/hipmri_rewrite/metrics.py` | Confusion counts, Dice, IoU, precision and recall; Definitions: confusion, overlap | 混淆计数、Dice、IoU、精确率与召回率；定义：confusion, overlap |
 | `code/hipmri_rewrite/models/__init__.py` | Six-class package constants; Definitions: module-level code | 六类别包常量；定义：module-level code |
@@ -525,6 +536,7 @@ Directories / 目录: **55** · Files / 文件: **414**
 | `code/tests/test_boundaries.py` | Physical direction and empty-surface tests; Definitions: BoundaryTests, SurfaceTests | 物理方向及空表面测试；定义：BoundaryTests, SurfaceTests |
 | `code/tests/test_data.py` | NIfTI alignment, downsampling and label tests; Definitions: DataContractTests, DownsamplingGeometryTests, NiftiPairTests | NIfTI 对齐、降采样与标签测试；定义：DataContractTests, DownsamplingGeometryTests, NiftiPairTests |
 | `code/tests/test_g5_candidate.py` | Check paired G5 candidate budget and Train-only weight provenance; Definitions: G5CandidateTests | 核验 G5 双模型候选预算及仅训练集权重来源；定义：G5CandidateTests |
+| `code/tests/test_inference_context.py` | Definitions: Pointwise, ContextTests | 定义：Pointwise, ContextTests |
 | `code/tests/test_metrics.py` | Class-confusion and overlap metric tests; Definitions: OverlapTests | 类别混淆与重叠指标测试；定义：OverlapTests |
 | `code/tests/test_models_and_losses.py` | Shape, gradient, supervision and inference tests; Definitions: NetworkTests | 形状、梯度、深监督与推理测试；定义：NetworkTests |
 | `code/tests/test_raw_audit.py` | Train inventory and file-hash audit tests; Definitions: RawAuditInventoryTests | 训练集文件盘点与文件哈希审计测试；定义：RawAuditInventoryTests |
@@ -544,6 +556,7 @@ Directories / 目录: **55** · Files / 文件: **414**
 | `code/tools/audit_g5_train_patch_geometry.py` | Reconstruct frozen 3D Train patch face and corner coverage; Definitions: digest, touches, main | 重建固定方案的 3D 训练 Patch 边缘及角落覆盖；定义：digest, touches, main |
 | `code/tools/audit_g5_validation_body.py` | Measure fixed-checkpoint Validation Body boundaries and draw outliers; Definitions: draw, main | 测量固定权重的验证集 Body 边界并绘制异常案例；定义：draw, main |
 | `code/tools/audit_g7_edge_sampling.py` | Replay frozen Train epochs and compare 9+1 edge sampling exposure on CPU; Definitions: sha, main | 在 CPU 重放固定训练轮次并比较 9+1 边缘采样曝光；定义：sha, main |
+| `code/tools/audit_p2_inference_context.py` | Definitions: stats, xyz_logits, border_distance, components, measure, margin_comparison, draw, main | 定义：stats, xyz_logits, border_distance, components, measure, margin_comparison, draw, main |
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/evaluate_g6_test.py` | Definitions: sha256, selected_model, boundary_summary, main | 定义：sha256, selected_model, boundary_summary, main |
 | `code/tools/organize_result_artifacts.py` | Definitions: destination, main | 定义：destination, main |
@@ -563,6 +576,7 @@ Directories / 目录: **55** · Files / 文件: **414**
 | `code/tools/submit_g5_extend_50.sh` | UTF-8 text with 109 lines; 4,866 bytes | UTF-8 文本，109 行；4,866 字节 |
 | `code/tools/submit_g6_test.sh` | UTF-8 text with 35 lines; 1,550 bytes | UTF-8 文本，35 行；1,550 字节 |
 | `code/tools/submit_g7_edge_audit.sh` | Submit smoke or smoke-gated full Train-only CPU edge audit; UTF-8 text with 66 lines; 2,607 bytes | 提交小规模或通过小规模门槛的完整训练集 CPU 边缘审计；UTF-8 文本，66 行；2,607 字节 |
+| `code/tools/submit_p2_inference_context.sh` | UTF-8 text with 34 lines; 1,365 bytes | UTF-8 文本，34 行；1,365 字节 |
 | `code/tools/summarize_all_class_review.py` | Verify selected records and draw six-class, training and failure figures; Definitions: save, paired_bars, validation_figures, test_figures_and_table, three_arm_validation_figures, main | 核验选定记录并绘制六类、训练及失误图；定义：save, paired_bars, validation_figures, test_figures_and_table, three_arm_validation_figures, main |
 | `code/tools/summarize_g2_slice_detail.py` | Reconcile G2 slice and intensity CSVs with G1 and draw local plots; Definitions: read_csv, write_csv, check_hash, main | 将 G2 切片及强度 CSV 与 G1 核对并绘制本地图；定义：read_csv, write_csv, check_hash, main |
 | `code/tools/summarize_g2_train_audit.py` | Summarize verified raw Train audit into G2 tables and plots; Definitions: write_csv, main | 将已核验的训练集原始审计汇总为 G2 表格与图；定义：write_csv, main |
@@ -574,12 +588,14 @@ Directories / 目录: **55** · Files / 文件: **414**
 | `code/tools/summarize_g5_validation.py` | Definitions: sha256, same_metric, load_checked_run, main | 定义：sha256, same_metric, load_checked_run, main |
 | `code/tools/summarize_g6_test.py` | Verify one-time held-out Test metrics; Definitions: sha256, same, check, main | 核验一次性独立测试指标；定义：sha256, same, check, main |
 | `code/tools/summarize_g7_edge_sampling.py` | Verify paired G7 crop CSV against 50 training epochs and draw six-class spatial exposure; Definitions: sha, save, main | 对照 50 轮训练核验 G7 配对裁剪 CSV 并绘制六类空间曝光；定义：sha, save, main |
+| `code/tools/summarize_p2_inference_context.py` | Definitions: main | 定义：main |
 | `code/tools/tiny_overfit_g5.py` | Check both 3D models can learn two fixed Train patches on GPU; Definitions: sha256_file, measure, main | 检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch；定义：sha256_file, measure, main |
 | `code/tools/train_g5_2d.py` | Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
 | `code/tools/train_g5_cohort.py` | Train a frozen 3D arm with patient-balanced exposure, Validation selection and resumable checkpoints; Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 按固定方案训练 3D 模型，记录患者均衡曝光、验证集选择及可恢复权重；定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
 | `code/tools/update_project_map.py` | Generate and watch this bilingual inventory; Definitions: _files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main | 生成并持续更新本双语目录；定义：_files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main |
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |
 | `code/transfer/g7_edge_audit_20261019.zip` | Five-file source-only G7 audit transfer package; ZIP archive with 5 members; 10,348 bytes | 仅含五个 G7 审计源码文件的传输包；ZIP 压缩包，含 5 个成员；10,348 字节 |
+| `code/transfer/p2_inference_context_20261020.zip` | ZIP archive with 6 members; 14,241 bytes | ZIP 压缩包，含 6 个成员；14,241 字节 |
 | `logs/audits/g1_train_contact_sheets_20261018.json` | JSON fields: scope, screen, patients | JSON 字段：scope, screen, patients |
 | `logs/audits/g3_existing_pipeline_full_20261018_job671892.json` | Binary or large file; 299,809 bytes | 二进制或大文件；299,809 字节 |
 | `logs/audits/g3_patch_candidate_full_20261018/manifest.json` | JSON fields: audit_script_sha256, config, config_sha256, data_code_sha256, full_train, g1_sha256, g3_sha256, patients, scope, split_code_sha256, summary, train_cases | JSON 字段：audit_script_sha256, config, config_sha256, data_code_sha256, full_train, g1_sha256, g3_sha256, patients, scope, split_code_sha256, summary, train_cases |
@@ -866,7 +882,7 @@ Directories / 目录: **55** · Files / 文件: **414**
 | `results/data_analysis/historical_train/train_patient_examinations.svg` | UTF-8 text with 72 lines; 7,370 bytes | UTF-8 文本，72 行；7,370 字节 |
 | `results/data_analysis/historical_train/train_rare_organ_volumes.svg` | UTF-8 text with 320 lines; 25,203 bytes | UTF-8 文本，320 行；25,203 字节 |
 | `results/data_analysis/README.md` | Entry point or directory guide; Sections: Data analysis image groups | 项目入口或目录说明；章节标题：Data analysis image groups |
-| `results/diagnostics/inference_context/README.md` | Entry point or directory guide; Sections: 推理上下文诊断（预留，未执行） | 项目入口或目录说明；章节标题：推理上下文诊断（预留，未执行） |
+| `results/diagnostics/inference_context/README.md` | Entry point or directory guide; Sections: 推理上下文诊断（已准备程序，真实病例未执行） | 项目入口或目录说明；章节标题：推理上下文诊断（已准备程序，真实病例未执行） |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.png` | Binary or large file; 58,445 bytes | 二进制或大文件；58,445 字节 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.svg` | UTF-8 text with 1331 lines; 38,132 bytes | UTF-8 文本，1331 行；38,132 字节 |
 | `results/figures/baseline_2d/README.md` | Entry point or directory guide; Sections: Supplementary 2D Validation figure | 项目入口或目录说明；章节标题：Supplementary 2D Validation figure |

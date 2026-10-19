@@ -1,0 +1,17 @@
+{
+  "experiment_id": "p2_four_cases_20261020",
+  "status": "fixed_before_measurement",
+  "split": "validation",
+  "cases": ["K018_Week4", "B040_Week4", "J026_Week4", "K008_Week0"],
+  "case_selection": "three previously reviewed high Body HD95 patients and one predefined milder control; exploratory, not representative",
+  "models": ["standard_3d", "improved_3d"],
+  "checkpoint": "unchanged G5 best.pt, selected epoch 50",
+  "window_xyz": [64, 64, 32],
+  "overlap_fraction": 0.5,
+  "fusion": "uniform arithmetic mean of raw logits",
+  "preprocessing": "unchanged factor-two common grid and whole-volume nonzero Z-score",
+  "padding": "existing high-end multiple-of-16 zeros; extra high-end zeros only if smaller than a window",
+  "far_error_distance_mm": 20,
+  "gt_usage": "evaluation and illustrative slice selection only; never ROI or fusion",
+  "decision": "No final model selection from four cases. If errors fall without small-organ damage, consider all 38 Validation volumes under a separately identified protocol. Otherwise consider controlled G7 sampling training; do not sweep window settings."
+}

@@ -14,6 +14,8 @@ whether to train the edge-sampling candidate.
 
 ## Where things belong
 
+The repository-level [feasibility review](<../feasibility review.md>) summarizes feasibility and remaining work. The [P2 execution guide](code/docs/P2_INFERENCE_CONTEXT.md) implements the next fixed-checkpoint Validation diagnostic; real-case execution is pending.
+
 | Directory | Purpose |
 |---|---|
 | [`code/`](code/README.md) | Source, configuration, tests, methods, transfer tools |

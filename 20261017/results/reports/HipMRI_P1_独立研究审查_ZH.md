@@ -121,3 +121,9 @@ G7 方案仍保留为可训练候选，而非必做路线。本轮不因为 samp
 开启 50 轮训练。阶段 P6 的 base/apex、三维连续性及同条件成本分析应与有限模型
 优化并行；P7 需优先补齐提交入口、feasibility 与 AI Disclosure。已有 Test 用于
 历史描述，下一轮选择只依据 Train/Validation，不能再称为新的盲测。
+
+## 6. P2 落地状态（2026 年 10 月 20 日）
+
+英文 [feasibility review](<../../../feasibility review.md>) 已放在仓库最外层。
+[P2 执行说明](../../code/docs/P2_INFERENCE_CONTEXT.md) 对应本节前述四例、固定权重和固定滑窗方案。
+诊断代码、配置、五项本地测试及远程提交包已准备；真实 MRI/GPU 测量尚未运行，不能据此确认错误根因或宣称新协议优于原方案。
