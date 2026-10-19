@@ -73,6 +73,8 @@ ROLES = {
     "probe_g5_full_volume.py": ("Measure full-volume Train inference geometry, time and A100 memory with random weights", "用随机权重测量完整训练体积推理的几何、时间及 A100 显存"),
     "probe_g5_training_smoke.py": ("Check paired two-patient weighted Train batches, gradients and actual exposure without a checkpoint", "不保存权重，检查双模型两患者加权训练批次、梯度和实际曝光"),
     "train_g5_cohort.py": ("Train a frozen 3D arm with patient-balanced exposure, Validation selection and resumable checkpoints", "按固定方案训练 3D 模型，记录患者均衡曝光、验证集选择及可恢复权重"),
+    "summarize_g6_test.py": ("Verify one-time held-out Test metrics and draw local 3D comparison", "核验一次性独立测试指标并绘制本地 3D 对比图"),
+    "review_g6_test_cases.py": ("Reproduce selected held-out Test 3D predictions and draw descriptive overlays", "复现选定独立测试样本的 3D 预测并绘制描述性叠加图"),
     "tiny_overfit_g5.py": ("Check both 3D models can learn two fixed Train patches on GPU", "检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch"),
     "summarize_g4_patient_sampling.py": ("Verify G4 tensor dry run and summarize class/patient exposure", "核验 G4 张量预演并汇总类别及患者曝光"),
     "summarize_g3_candidate_sampling.py": ("Verify full candidate patch records and summarize exposure", "核验完整候选 Patch 记录并汇总曝光"),

@@ -199,13 +199,13 @@ foreground labels. All model inputs were finite, all labels stayed legal,
 and per-case nonzero-intensity normalized means and standard deviations were
 within 8.1×10⁻⁹ of 0 and 5.9×10⁻⁹ of 1, respectively. This verifies the
 implemented numerical path, not that the normalization is optimal for model
-learning. The current restart still lacks ROI cropping, augmentation, a
-Patch Sampler and a formal training loop; actual class exposure in model
-training remains unmeasured.
+learning. At this G3 audit point, the restart had no ROI cropping,
+augmentation, Patch Sampler or formal training loop; actual class exposure
+was measured later in G5.
 
 ### G3 candidate Patch exposure — 18 October 2026
 
-Because the current restart has no training Patch Sampler, a separate,
+Because there was no training Patch Sampler at this G3 decision point, a separate,
 Train-only *candidate simulation* compared two crop policies on the verified
 downsampled masks. The frozen design used ten 64×64×32 XYZ patches per volume
 per policy, seed 371017, across all 143 Train volumes and 26 patients. The
@@ -263,7 +263,7 @@ section-level evidence without claiming expert verification of every boundary.
 | Small organs occupy limited axial sections | Supported by the full Train slice audit |
 | Existing downsampling deletes a small organ | Excluded for these 143 Train volumes; all three organs survive, although physical-volume and boundary changes remain |
 | Uniform candidate crops frequently miss Prostate entirely | Not supported for the audited 64×64×32 crops and seed: 96.29% hit rate; complete-organ inclusion and voxel share remain limited |
-| Insufficient exposure in actual training patches | Unresolved; the current restart code has no Patch Sampler |
+| Insufficient exposure in actual training patches | Unresolved at G3; measured later from G5 optimizer input |
 | Boundary contrast explains segmentation failure | Unresolved; no current model-error or boundary-contrast test isolates it |
 
 ### G1 visual review — 18 October 2026
@@ -593,7 +593,7 @@ compared with 1.207 and 1.106 for Standard. These counts suggest more
 over-segmentation; spatial overlays are needed to locate the extra voxels.
 No Test metrics were consulted.
 
-## Failure Analysis
+### Initial epoch-30 Validation failure review
 
 At selected epoch 30, neither 3D model entirely omitted Rectum or Prostate
 in any of the 38 Validation volumes. That narrows the old missing-organ
@@ -610,7 +610,7 @@ boundary review. Standard's lowest Prostate case Dice was 0.643 on
 cannot distinguish displacement from boundary errors or yield HD95; those
 require full-resolution predictions and physical-grid evaluation.
 
-## Conclusions
+### Interim assessment after G1–G5 checks
 
 G1 passed its raw-data integrity gate: all 143 Train pairs passed mechanical
 checks, and the two-section-per-volume gross-alignment screen found no obvious
@@ -629,8 +629,9 @@ eliminating a small organ. The lowest Prostate labelled physical-volume ratio
 is 0.9383, so spatial-detail and boundary effects still warrant review.
 Neither G2 nor G3 establishes the cause of old model failures. G4 now supplies
 a patient-balanced Train patch interface and verified one-epoch CPU tensor
-dry run; it is still not actual exposure during optimization. The current
-restart has no formal training loop or spatial augmentation.
+dry run; at that interim point it was not actual exposure during optimization.
+Formal training and its exposure records are reported below. Spatial
+augmentation was not part of the frozen run.
 For one fixed 64×64×32 candidate policy and seed, uniform random crops already
 contained Prostate in 96.29% of patches, but Prostate filled only 0.643% of
 their voxels and was fully contained in 38.18%. Organ-aware candidate crops
@@ -750,7 +751,8 @@ training config, patient split, sampling, objective and five-epoch Validation
 interval. Both runs retain their previous best checkpoints unless a later
 Validation score exceeds them. The prepared Slurm submission also schedules
 paired high-overlap and failure-case Validation overlays after both continuations
-finish. This continuation and the overlays have not yet run; Test remains sealed.
+finish. This paragraph records the decision before those jobs ran; their
+results follow below.
 
 ### Supplementary 2D completion and Validation review — 19 October 2026
 
@@ -789,4 +791,125 @@ checkpoint. The existing patient-balanced Validation rule chooses `best.pt`;
 Test values do not choose or alter the weights. The planned output is a single
 derived JSON with per-case and pooled overlap, patient-level small-organ
 scores, physical HD95, prostate apex/base measurements and inference cost.
-The output and Test findings do not yet exist.
+The following sections report the completed outputs from this gate.
+
+### G5 final 3D checkpoint selection and Validation images — 19 October 2026
+
+Standard job 674102 and Improved job 674103 resumed their respective frozen
+epoch-40 states and completed epoch 50 (`COMPLETED 0:0`). All 50 epoch JSON
+records and both updated manifests were copied locally and checked against
+the fixed patient split, per-case confusion matrices and predeclared checkpoint
+rule. The highest patient-balanced Validation scores occurred at **epoch 50**:
+Standard **0.8502**, Improved **0.8420**. Both are higher than their prior
+epoch-30 peaks of 0.8413 and 0.8325. This bounded extension helped the
+selection score; it does not establish that still more epochs would help.
+
+| Pooled Validation at selected epoch 50 | Standard 3D | Improved 3D |
+| --- | ---: | ---: |
+| Bladder Dice | 0.9436 | 0.9509 |
+| Rectum Dice | 0.8038 | 0.7835 |
+| Prostate Dice | 0.8180 | 0.7878 |
+
+The patient-balanced selection score and pooled organ Dice aggregate the
+same cases differently. The updated [G5 figure](../figures/comparisons/g5_3d_validation.svg)
+shows all 50 epochs. Job 674104 reproduced the selected Validation case
+confusion matrices before generating [four paired MRI/GT/prediction panels](../case_studies/comparisons/README.md).
+`J026_Week1` Rectum and `B040_Week1` Prostate show high overlap; `K018_Week3`
+shows extra Rectum prediction. `S022_Week6` was originally chosen for missed
+Prostate tissue using an earlier checkpoint. At epoch 50, both models have
+full-volume Prostate recall above 0.97 on this case but precision below 0.50;
+its current image shows additional and misplaced predicted tissue. A single
+slice should be read alongside the full-volume metrics in the companion JSON.
+
+### G6 one-time held-out 3D Test — 19 October 2026
+
+Job 674125 completed once (`COMPLETED 0:0`) on the fixed 30 volumes from six
+unseen patients, after both epoch-50 continuations. It used the two
+Validation-selected `best.pt` checkpoints and did not select weights or tune
+preprocessing on Test. The local result SHA-256 is
+`21ce5e2eb53e3bf758478fd7c9fd95b887d82031b7a66ed77c7ef3168adc3e2f`.
+The [one-time result](../tables/comparisons/g6_test_3d.json) was independently
+reconciled against all 30 per-case confusion matrices for each arm, the six
+patient scores, selected epoch records, HD95 medians and resource summaries.
+
+| Test measure | Standard 3D | Improved 3D |
+| --- | ---: | ---: |
+| Patient-balanced mean small-organ Dice | 0.7851 | 0.8078 |
+| Pooled Bladder Dice / IoU | 0.5192 / 0.3507 | 0.7316 / 0.5768 |
+| Pooled Rectum Dice / IoU | 0.8063 / 0.6755 | 0.8218 / 0.6975 |
+| Pooled Prostate Dice / IoU | 0.7180 / 0.5601 | 0.7530 / 0.6039 |
+| Bladder median HD95, mm | 3.36 | 3.44 |
+| Rectum median HD95, mm | 7.06 | 9.17 |
+| Prostate median HD95, mm | 7.98 | 6.72 |
+| Parameters | 1,412,550 | 2,366,946 |
+| Selected checkpoint, MiB | 16.28 | 27.21 |
+| Maximum measured allocated VRAM, GiB | 0.255 | 0.351 |
+| Median measured inference, ms/volume | 147.9 | 74.3 |
+
+Improved 3D has higher Test pooled Dice for all three small organs and a
+patient-balanced score higher by 0.0227. It scores higher on three of the six
+Test patients and lower on the other three; the largest positive difference is
+for `M015` (+0.1695 patient small-organ Dice). The checkpoint is 1.67 times the
+parameter count and uses more measured allocated GPU memory. Timing is from
+one run on one A100 with sequential model evaluation and should not establish
+an inherent speed advantage. Other classes trade off: Standard has higher
+pooled Test Body Dice (0.9591 vs 0.9312) and Background Dice (0.9875 vs
+0.9619), while Improved has slightly higher Bones Dice (0.8662 vs 0.8569).
+The median Body HD95 is also much larger for Improved (51.81 mm vs 4.86 mm),
+including large distances on several patients. This requires a separate
+spatial review before describing its overall boundaries as better.
+These models use different loss configurations as well as architectures, so
+their difference is a comparison of full training recipes, not proof of an
+isolated architectural effect.
+
+Patient-level analysis exposes a large Bladder failure concentrated in `M015`:
+the pooled patient Bladder Dice is 0.1056 for Standard and 0.3713 for
+Improved, versus at least 0.90 for each other Test patient under Standard.
+`W029` remains difficult for Prostate (0.4867 Standard, 0.4579 Improved).
+The median per-volume prostate axial-region Dice was lower at the base than
+in the centre (Standard 0.3924 vs 0.7852; Improved 0.6202 vs 0.8323).
+Boundary summaries come from factor-two downsampled masks at approximately
+3.36 × 3.36 × 3.12 mm; fine edges below that resolution cannot be assessed.
+The [Test comparison figure](../figures/comparisons/g6_test_3d.png) shows
+pooled organ and per-patient scores. Only six independent Test patients are
+available, and the case breakdown should accompany any aggregate claim.
+
+## Failure Analysis
+
+The final epoch-50 Validation panels and the one-time Test case matrices
+identify different failure types. `K018_Week3` is a Validation Rectum
+overprediction example. `S022_Week6` had been nominated from an earlier
+checkpoint as missed Prostate tissue, but its final full-volume recall is high
+and its precision is low; the selected image shows extra or displaced regions.
+The frozen Test result shows a patient-specific Bladder collapse on `M015`,
+while `W029` is difficult for Prostate in both models. Improved also has a
+large Body HD95 despite its small-organ Dice gains. Three planned descriptive
+Test overlays will illustrate representative high and low overlap without
+feeding any Test information into training or checkpoint choice.
+
+These observations do not establish whether the remaining errors arise from
+annotation boundaries, resolution loss, anatomy shifts, or optimization. The
+small-organ 3D patches were encountered frequently during actual training;
+therefore a simple claim that the models never saw those organs is ruled out
+for the current pipeline. The small voxel share inside those patches remains
+a plausible pressure on learning.
+
+## Conclusions
+
+The data-led sequence established a mechanically sound Train pairing, measured
+strong raw class imbalance and patient variation, checked that current
+downsampling preserves every small-organ label, and recorded the exact class
+exposure delivered to optimization. The two frozen 3D training recipes reached
+their best Validation score at epoch 50. On the independent six-patient Test
+set, Improved increased the patient-balanced small-organ Dice from 0.7851 to
+0.8078 and improved pooled Bladder, Rectum and Prostate Dice, with a larger
+model and a notable Body-boundary disadvantage. Its patient score advantage is
+concentrated in `M015`; it does not win every patient.
+
+The Standard and Improved arms differ in both architecture and loss design, so
+the result supports the Improved **training recipe**, not an isolated network
+component. The supplementary 2D arm has a separate Validation result but no
+held-out Test result. Any later loss, sampling or architecture revision must
+start as a new controlled Train/Validation experiment; this Test set must not
+be used to tune one. The remaining work is to finish the descriptive Test
+overlays, verify their images locally and prepare the submission record.

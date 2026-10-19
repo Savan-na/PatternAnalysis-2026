@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 08:38:14 AEST**
+Updated / 更新时间: **2026-10-19 11:38:09 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **54** · Files / 文件: **316**
+Directories / 目录: **54** · Files / 文件: **346**
 
 ## Directory Tree / 目录树
 
@@ -90,6 +90,7 @@ Directories / 目录: **54** · Files / 文件: **316**
 │   │   ├── review_g1_overlays.py
 │   │   ├── review_g1_train_contact_sheets.py
 │   │   ├── review_g5_validation_failures.py
+│   │   ├── review_g6_test_cases.py
 │   │   ├── submit_g5_2d.sh
 │   │   ├── submit_g5_40.sh
 │   │   ├── submit_g5_extend_50.sh
@@ -101,6 +102,7 @@ Directories / 目录: **54** · Files / 文件: **316**
 │   │   ├── summarize_g4_patient_sampling.py
 │   │   ├── summarize_g5_2d_validation.py
 │   │   ├── summarize_g5_validation.py
+│   │   ├── summarize_g6_test.py
 │   │   ├── tiny_overfit_g5.py
 │   │   ├── train_g5_2d.py
 │   │   ├── train_g5_cohort.py
@@ -218,6 +220,16 @@ Directories / 目录: **54** · Files / 文件: **316**
 │   │   │   ├── epoch_038.json
 │   │   │   ├── epoch_039.json
 │   │   │   ├── epoch_040.json
+│   │   │   ├── epoch_041.json
+│   │   │   ├── epoch_042.json
+│   │   │   ├── epoch_043.json
+│   │   │   ├── epoch_044.json
+│   │   │   ├── epoch_045.json
+│   │   │   ├── epoch_046.json
+│   │   │   ├── epoch_047.json
+│   │   │   ├── epoch_048.json
+│   │   │   ├── epoch_049.json
+│   │   │   ├── epoch_050.json
 │   │   │   └── manifest.json
 │   │   └── improved_3d/
 │   │       ├── epoch_001.json
@@ -260,6 +272,16 @@ Directories / 目录: **54** · Files / 文件: **316**
 │   │       ├── epoch_038.json
 │   │       ├── epoch_039.json
 │   │       ├── epoch_040.json
+│   │       ├── epoch_041.json
+│   │       ├── epoch_042.json
+│   │       ├── epoch_043.json
+│   │       ├── epoch_044.json
+│   │       ├── epoch_045.json
+│   │       ├── epoch_046.json
+│   │       ├── epoch_047.json
+│   │       ├── epoch_048.json
+│   │       ├── epoch_049.json
+│   │       ├── epoch_050.json
 │   │       └── manifest.json
 │   ├── validation/
 │   │   ├── baseline_2d/
@@ -271,6 +293,11 @@ Directories / 目录: **54** · Files / 文件: **316**
 │   │   ├── baseline_2d/
 │   │   ├── baseline_3d/
 │   │   ├── comparisons/
+│   │   │   ├── g5_validation_B040_Week1_prostate.png
+│   │   │   ├── g5_validation_J026_Week1_rectum.png
+│   │   │   ├── g5_validation_K018_Week3_rectum.png
+│   │   │   ├── g5_validation_S022_Week6_prostate.png
+│   │   │   ├── g5_validation_selected_cases.json
 │   │   │   └── README.md
 │   │   └── improved_3d/
 │   ├── data_analysis/
@@ -367,6 +394,8 @@ Directories / 目录: **54** · Files / 文件: **316**
 │   │   ├── baseline_3d/
 │   │   ├── comparisons/
 │   │   │   ├── g5_3d_validation.svg
+│   │   │   ├── g6_test_3d.png
+│   │   │   ├── g6_test_3d.svg
 │   │   │   └── README.md
 │   │   └── improved_3d/
 │   ├── reports/
@@ -376,6 +405,7 @@ Directories / 目录: **54** · Files / 文件: **316**
 │   │   ├── baseline_2d/
 │   │   ├── baseline_3d/
 │   │   ├── comparisons/
+│   │   │   ├── g6_test_3d.json
 │   │   │   └── README.md
 │   │   └── improved_3d/
 │   └── README.md
@@ -456,6 +486,7 @@ Directories / 目录: **54** · Files / 文件: **316**
 | `code/tools/review_g1_overlays.py` | Render raw Train MRI and ground-truth overlays for G1 review; Definitions: render_case, main | 绘制训练集原始 MRI 与真实标签叠加图供 G1 审查；定义：render_case, main |
 | `code/tools/review_g1_train_contact_sheets.py` | Render two-slice Train patient sheets for G1 alignment screening; Definitions: render_patient, main | 绘制训练集患者双切面图供 G1 对齐筛查；定义：render_patient, main |
 | `code/tools/review_g5_validation_failures.py` | Definitions: sha256, load_selected, selected_slice, render, main | 定义：sha256, load_selected, selected_slice, render, main |
+| `code/tools/review_g6_test_cases.py` | Reproduce selected held-out Test 3D predictions and draw descriptive overlays; Definitions: axial_slice, render, main | 复现选定独立测试样本的 3D 预测并绘制描述性叠加图；定义：axial_slice, render, main |
 | `code/tools/submit_g5_2d.sh` | UTF-8 text with 77 lines; 3,122 bytes | UTF-8 文本，77 行；3,122 字节 |
 | `code/tools/submit_g5_40.sh` | Submit CPU recovery check and dependency-gated Standard/Improved 40-epoch A100 jobs; UTF-8 text with 95 lines; 3,818 bytes | 提交 CPU 恢复测试及依赖测试通过的双模型 40 轮 A100 作业；UTF-8 文本，95 行；3,818 字节 |
 | `code/tools/submit_g5_extend_50.sh` | UTF-8 text with 109 lines; 4,866 bytes | UTF-8 文本，109 行；4,866 字节 |
@@ -467,6 +498,7 @@ Directories / 目录: **54** · Files / 文件: **316**
 | `code/tools/summarize_g4_patient_sampling.py` | Verify G4 tensor dry run and summarize class/patient exposure; Definitions: sha256_file, write_csv, main | 核验 G4 张量预演并汇总类别及患者曝光；定义：sha256_file, write_csv, main |
 | `code/tools/summarize_g5_2d_validation.py` | Definitions: sha256, main | 定义：sha256, main |
 | `code/tools/summarize_g5_validation.py` | Definitions: sha256, same_metric, load_checked_run, main | 定义：sha256, same_metric, load_checked_run, main |
+| `code/tools/summarize_g6_test.py` | Verify one-time held-out Test metrics and draw local 3D comparison; Definitions: sha256, same, check, main | 核验一次性独立测试指标并绘制本地 3D 对比图；定义：sha256, same, check, main |
 | `code/tools/tiny_overfit_g5.py` | Check both 3D models can learn two fixed Train patches on GPU; Definitions: sha256_file, measure, main | 检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch；定义：sha256_file, measure, main |
 | `code/tools/train_g5_2d.py` | Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
 | `code/tools/train_g5_cohort.py` | Train a frozen 3D arm with patient-balanced exposure, Validation selection and resumable checkpoints; Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 按固定方案训练 3D 模型，记录患者均衡曝光、验证集选择及可恢复权重；定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
@@ -572,7 +604,17 @@ Directories / 目录: **54** · Files / 文件: **316**
 | `logs/training/baseline_3d/epoch_038.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/baseline_3d/epoch_039.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/baseline_3d/epoch_040.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
-| `logs/training/baseline_3d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model | JSON 字段：config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model |
+| `logs/training/baseline_3d/epoch_041.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/epoch_042.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/epoch_043.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/epoch_044.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/epoch_045.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/epoch_046.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/epoch_047.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/epoch_048.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/epoch_049.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/epoch_050.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/baseline_3d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 | JSON 字段：config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 |
 | `logs/training/improved_3d/epoch_001.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/improved_3d/epoch_002.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/improved_3d/epoch_003.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
@@ -613,10 +655,25 @@ Directories / 目录: **54** · Files / 文件: **316**
 | `logs/training/improved_3d/epoch_038.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/improved_3d/epoch_039.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/improved_3d/epoch_040.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
-| `logs/training/improved_3d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model | JSON 字段：config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256, model |
+| `logs/training/improved_3d/epoch_041.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/epoch_042.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/epoch_043.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/epoch_044.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/epoch_045.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/epoch_046.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/epoch_047.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/epoch_048.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/epoch_049.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/epoch_050.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `logs/training/improved_3d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 | JSON 字段：config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
 | `README.md` | Entry point or directory guide; Sections: HipMRI Data-Driven Model Development; Where things belong | 项目入口或目录说明；章节标题：HipMRI Data-Driven Model Development; Where things belong |
-| `results/case_studies/comparisons/README.md` | Entry point or directory guide; Sections: G5 Validation failure overlays | 项目入口或目录说明；章节标题：G5 Validation failure overlays |
+| `results/case_studies/comparisons/g5_validation_B040_Week1_prostate.png` | Binary or large file; 99,219 bytes | 二进制或大文件；99,219 字节 |
+| `results/case_studies/comparisons/g5_validation_J026_Week1_rectum.png` | Binary or large file; 100,764 bytes | 二进制或大文件；100,764 字节 |
+| `results/case_studies/comparisons/g5_validation_K018_Week3_rectum.png` | Binary or large file; 89,639 bytes | 二进制或大文件；89,639 字节 |
+| `results/case_studies/comparisons/g5_validation_S022_Week6_prostate.png` | Binary or large file; 89,736 bytes | 二进制或大文件；89,736 字节 |
+| `results/case_studies/comparisons/g5_validation_selected_cases.json` | JSON fields: kind, split, cases, sources | JSON 字段：kind, split, cases, sources |
+| `results/case_studies/comparisons/README.md` | Entry point or directory guide; Sections: Selected segmentation overlays | 项目入口或目录说明；章节标题：Selected segmentation overlays |
 | `results/data_analysis/g1_bladder_review/g1_bladder_island_D031_Week7.png` | Binary or large file; 250,160 bytes | 二进制或大文件；250,160 字节 |
 | `results/data_analysis/g1_bladder_review/g1_bladder_island_N010_Week3.png` | Binary or large file; 254,248 bytes | 二进制或大文件；254,248 字节 |
 | `results/data_analysis/g1_bladder_review/README.md` | Entry point or directory guide; Sections: G1 Bladder component review | 项目入口或目录说明；章节标题：G1 Bladder component review |
@@ -698,11 +755,14 @@ Directories / 目录: **54** · Files / 文件: **316**
 | `results/data_analysis/README.md` | Entry point or directory guide; Sections: Data analysis image groups | 项目入口或目录说明；章节标题：Data analysis image groups |
 | `results/figures/baseline_2d/g5_2d_validation.svg` | UTF-8 text with 2113 lines; 65,832 bytes | UTF-8 文本，2113 行；65,832 字节 |
 | `results/figures/baseline_2d/README.md` | Entry point or directory guide; Sections: Supplementary 2D Validation figure | 项目入口或目录说明；章节标题：Supplementary 2D Validation figure |
-| `results/figures/comparisons/g5_3d_validation.svg` | UTF-8 text with 2075 lines; 65,294 bytes | UTF-8 文本，2075 行；65,294 字节 |
-| `results/figures/comparisons/README.md` | Entry point or directory guide; Sections: G5 3D Validation comparison | 项目入口或目录说明；章节标题：G5 3D Validation comparison |
+| `results/figures/comparisons/g5_3d_validation.svg` | UTF-8 text with 2032 lines; 64,580 bytes | UTF-8 文本，2032 行；64,580 字节 |
+| `results/figures/comparisons/g6_test_3d.png` | Binary or large file; 67,509 bytes | 二进制或大文件；67,509 字节 |
+| `results/figures/comparisons/g6_test_3d.svg` | UTF-8 text with 1640 lines; 47,906 bytes | UTF-8 文本，1640 行；47,906 字节 |
+| `results/figures/comparisons/README.md` | Entry point or directory guide; Sections: 3D model comparison figures | 项目入口或目录说明；章节标题：3D model comparison figures |
 | `results/README.md` | Entry point or directory guide; Sections: Results and Report Artifacts | 项目入口或目录说明；章节标题：Results and Report Artifacts |
 | `results/reports/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
 | `results/reports/HipMRI_Research_Report.md` | Sections: HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results | 章节标题：HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results |
+| `results/tables/comparisons/g6_test_3d.json` | Binary or large file; 220,443 bytes | 二进制或大文件；220,443 字节 |
 | `results/tables/comparisons/README.md` | Entry point or directory guide; Sections: Held-out Test comparison | 项目入口或目录说明；章节标题：Held-out Test comparison |
 
 Generated by `code/tools/update_project_map.py`; edit the source files, then regenerate this index. / 由 `code/tools/update_project_map.py` 生成；修改源文件后重新生成本目录。
