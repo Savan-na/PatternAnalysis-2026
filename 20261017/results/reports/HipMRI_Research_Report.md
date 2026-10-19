@@ -821,6 +821,12 @@ full-volume Prostate recall above 0.97 on this case but precision below 0.50;
 its current image shows additional and misplaced predicted tissue. A single
 slice should be read alongside the full-volume metrics in the companion JSON.
 
+The supplementary 2D arm currently has 40 complete epochs and selected its
+epoch-40 checkpoint at patient-balanced Validation score 0.7367. A bounded
+continuation to epoch 50 can test whether this trajectory improves under the
+same frozen code, data, sampling, loss and optimizer. Selection must remain
+Validation-only; no 2D Test evaluation is planned for this comparison.
+
 ### G6 one-time held-out 3D Test — 19 October 2026
 
 Job 674125 completed once (`COMPLETED 0:0`) on the fixed 30 volumes from six
@@ -877,6 +883,83 @@ pooled organ and per-patient scores. Only six independent Test patients are
 available, and the case breakdown should accompany any aggregate claim.
 
 ## Failure Analysis
+
+The [all-class Validation and Test figures](../figures/comparisons/README.md)
+were regenerated from the current selected epoch records and the same
+one-time Test JSON. They include Background, Body and Bones alongside the
+three small organs. On Test, pooled Bones Dice is 0.8569 for Standard and
+0.8662 for Improved. Standard retains higher Background and Body Dice. The
+[360-row Test case/class table](../tables/comparisons/g6_test_case_class_metrics.csv)
+exposes per-volume confusion and boundary measures for review without
+re-running inference.
+
+| Pooled Test Dice, all classes | Standard 3D | Improved 3D |
+| --- | ---: | ---: |
+| Background | 0.9875 | 0.9619 |
+| Body | 0.9591 | 0.9312 |
+| Bones | 0.8569 | 0.8662 |
+| Bladder | 0.5192 | 0.7316 |
+| Rectum | 0.8063 | 0.8218 |
+| Prostate | 0.7180 | 0.7530 |
+
+M015's Bladder error persists across all eight Test visits: Standard's
+per-volume Bladder Dice ranges from 0.068 to 0.326; Improved ranges from
+0.293 to 0.640. Aggregating its eight confusion matrices, Standard predicts
+142,258 Bladder voxels against 48,316 labelled voxels; 131,891 of its
+Bladder predictions belong to GT Body. Improved predicts 60,953 Bladder
+voxels; 39,700 belong to GT Body. The existing Week7 overlay shows spatial
+misplacement, but these counts establish that the problem is longitudinal,
+not confined to that one image.
+
+| M015 visit | Standard Bladder Dice | Improved Bladder Dice | Standard Body→Bladder FP | Improved Body→Bladder FP |
+| --- | ---: | ---: | ---: | ---: |
+| Week0 | 0.110 | 0.394 | 21,121 | 5,073 |
+| Week1 | 0.083 | 0.333 | 20,114 | 4,552 |
+| Week2 | 0.131 | 0.338 | 13,742 | 7,296 |
+| Week3 | 0.115 | 0.358 | 11,112 | 4,255 |
+| Week4 | 0.091 | 0.365 | 17,936 | 3,875 |
+| Week5 | 0.326 | 0.640 | 3,870 | 1,070 |
+| Week6 | 0.084 | 0.293 | 19,663 | 9,126 |
+| Week7 | 0.068 | 0.406 | 24,333 | 4,453 |
+
+These are descriptive Test counts from the fixed one-time confusion matrices;
+they are not a basis for a new training choice.
+
+Improved Body HD95 is elevated across several Test patients, not just M015.
+Its patient medians include L011 54.49 mm and M015 67.37 mm, versus Standard
+4.58 mm and 18.72 mm; single-volume Improved values reach 93.44 mm on
+M015 Week3 and 80.76 mm on L011 Week5. This can coexist with high Body Dice
+because HD95 is sensitive to distant surface errors. The JSON identifies
+which volumes warrant a spatial overlay; it cannot alone establish whether
+the error is a remote foreground island, boundary displacement or another
+geometric pattern.
+
+For any later model work, first inspect these patterns on **Train and
+Validation**: patient-level Bladder confusion with Body, small-organ
+precision/recall, Body boundary outliers, and patch exposure by class. Choose
+one intervention only after that review and assess it on Validation. These
+held-out Test findings describe the frozen models and must not become a
+selection or tuning criterion.
+
+### Next Train/Validation analysis gate
+
+1. The [G5 Validation case/class table](../tables/comparisons/g5_validation_case_class_metrics.csv)
+   and [patient heatmap](../figures/comparisons/g5_validation_patient_class_dice.png)
+   now expose every class's Dice, precision, recall, prediction volume and
+   GT-to-prediction confusion. Rank patients and visits from these records,
+   keeping patient weighting explicit.
+2. Measure Body HD95 and inspect complete-volume overlays on the **Validation**
+   cases with the largest boundary errors. The current G5 records contain
+   overlap matrices but no per-case Body surface distances, so this requires
+   a separate frozen-checkpoint Validation analysis job.
+3. Cross-reference the problematic Validation patients with Train-only
+   spacing, intensity, organ-size and delivered-patch exposure. Distinguish a
+   sampling gap, class confusion, geometric loss and boundary outlier before
+   proposing an intervention.
+4. Predeclare one intervention and compare it with the frozen baseline using
+   the same Train/Validation split and metrics. Report both gains and new false
+   positives. A changed model would require a fresh independent Test cohort
+   for an unbiased final estimate; the present Test cohort is already known.
 
 The final epoch-50 Validation panels and the one-time Test case matrices
 identify different failure types. `K018_Week3` is a Validation Rectum

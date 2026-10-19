@@ -115,3 +115,13 @@ overlays. `tools/evaluate_g6_test.py` evaluated the two selected checkpoints
 once on the held-out Test set; `tools/review_g6_test_cases.py` reproduced
 selected case confusion matrices before rendering descriptive Test overlays.
 Local summaries and interpretation are in the formal research report.
+
+`tools/summarize_all_class_review.py` verifies the selected G5 records and
+one-time G6 result, then draws six-class comparisons, a foreground HD95
+comparison and a descriptive Test failure review. It also exports per-case,
+per-class Test metrics to the existing comparison table folder. The bounded
+2D continuation helper is `tools/submit_g5_2d_extend_50.sh`; it resumes the
+same frozen run without changing data, weights or optimizer settings.
+`tools/review_g6_body_boundaries.py` is a staged descriptive GPU review of
+three high-HD95 Test cases. It verifies the original Test confusion matrices
+before drawing Body boundaries; its output is pending a Rangpur run.

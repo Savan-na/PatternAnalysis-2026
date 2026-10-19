@@ -34,12 +34,13 @@ def main() -> None:
             or manifest["model"] != "baseline_2d"
             or manifest["job_id_initial"] != "673908"
             or manifest["config_sha256"] != CONFIG_SHA
-            or manifest["max_epochs"] != 40
+            or manifest["max_epochs"] not in (40, 50)
             or sha256(PROJECT / "code/config/g5_2d_training_frozen.json") != CONFIG_SHA):
         raise ValueError("Unexpected 2D run or frozen configuration")
+    max_epochs = manifest["max_epochs"]
     paths = sorted(RUN.glob("epoch_*.json"))
-    if [path.name for path in paths] != [f"epoch_{epoch:03d}.json" for epoch in range(1, 41)]:
-        raise ValueError("Expected exactly forty 2D epoch records")
+    if [path.name for path in paths] != [f"epoch_{epoch:03d}.json" for epoch in range(1, max_epochs + 1)]:
+        raise ValueError("Incomplete 2D epoch records")
     records = [json.loads(path.read_text(encoding="utf-8")) for path in paths]
     best_score, best_epoch = -1.0, None
     validation = []
@@ -47,7 +48,8 @@ def main() -> None:
     for epoch, record in enumerate(records, 1):
         train = record["train"]
         exposure = train["exposure"]
-        if (record["epoch"] != epoch or record["job_id"] != "673908"
+        expected_job = "673908" if epoch <= 40 else manifest["extensions"][-1]["job_id"]
+        if (record["epoch"] != epoch or record["job_id"] != expected_job
                 or len(record["selected_cases"]) != 26
                 or len(train["batch_history"]) != 130
                 or exposure["patches"] != 260
@@ -91,13 +93,13 @@ def main() -> None:
         if (record["best_epoch"] != best_epoch
                 or not math.isclose(record["best_score"], best_score, abs_tol=1e-12)):
             raise ValueError("2D best-score history differs")
-    if best_epoch != 40:
-        raise ValueError("Expected selected 2D epoch 40")
+    if best_epoch is None:
+        raise ValueError("No selected 2D Validation epoch")
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.5), layout="constrained")
     epochs = [epoch for epoch, _ in validation]
     scores = [row["selection_score"] for _, row in validation]
-    axes[0].plot(range(1, 41), [row["train"]["mean_loss"] for row in records],
+    axes[0].plot(range(1, max_epochs + 1), [row["train"]["mean_loss"] for row in records],
                  color="#456996", linewidth=2)
     axes[1].plot(epochs, scores, marker="o", color="#c36837", linewidth=2)
     axes[1].scatter([best_epoch], [best_score], color="#7a2a2a", s=80, zorder=3)
@@ -110,7 +112,7 @@ def main() -> None:
                     width=0.24, color=color, label=metric.title())
     axes[0].set(title="2D Train patch loss", xlabel="Epoch", ylabel="Mean objective")
     axes[1].set(title="2D Validation patient score", xlabel="Epoch", ylabel="Mean small-organ Dice")
-    axes[2].set(title="2D Validation pooled metrics, epoch 40", ylabel="Score")
+    axes[2].set(title=f"2D Validation pooled metrics, epoch {best_epoch}", ylabel="Score")
     axes[2].set_xticks(x, [name for name, _ in ORGANS])
     axes[2].set_ylim(0, 1)
     axes[2].legend(loc="lower left", frameon=False)
@@ -121,7 +123,7 @@ def main() -> None:
     fig.savefig(output, metadata={"Title": "HipMRI G5 supplementary 2D Validation"})
     plt.close(fig)
     print("manifest_sha256", sha256(RUN / "manifest.json"))
-    print("best_record_sha256", sha256(RUN / "epoch_040.json"))
+    print("best_record_sha256", sha256(RUN / f"epoch_{best_epoch:03d}.json"))
     print("best_epoch", best_epoch, "selection_score", round(best_score, 6))
     for name, index in ORGANS:
         print(name, {metric: round(final[metric][index], 5)

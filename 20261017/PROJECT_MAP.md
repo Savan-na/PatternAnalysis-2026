@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 11:52:46 AEST**
+Updated / 更新时间: **2026-10-19 12:12:56 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **54** · Files / 文件: **350**
+Directories / 目录: **44** · Files / 文件: **359**
 
 ## Directory Tree / 目录树
 
@@ -33,9 +33,6 @@ Directories / 目录: **54** · Files / 文件: **350**
 │   │   ├── SOURCE_DECISIONS.md
 │   │   └── STUDY_PROTOCOL.md
 │   ├── hipmri_rewrite/
-│   │   ├── __pycache__/
-│   │   │   ├── sampling_2d.cpython-314.pyc
-│   │   │   └── training.cpython-314.pyc
 │   │   ├── models/
 │   │   │   ├── __init__.py
 │   │   │   ├── baseline_2d.py
@@ -68,13 +65,6 @@ Directories / 目录: **54** · Files / 文件: **350**
 │   │   ├── test_training_recovery.py
 │   │   └── test_training_selection.py
 │   ├── tools/
-│   │   ├── __pycache__/
-│   │   │   ├── audit_g5_2d_sampling.cpython-314.pyc
-│   │   │   ├── probe_g5_full_volume.cpython-314.pyc
-│   │   │   ├── probe_g5_training_smoke.cpython-314.pyc
-│   │   │   ├── tiny_overfit_g5.cpython-314.pyc
-│   │   │   ├── train_g5_2d.cpython-314.pyc
-│   │   │   └── train_g5_cohort.cpython-314.pyc
 │   │   ├── audit_g2_train_slices.py
 │   │   ├── audit_g3_candidate_sampling.py
 │   │   ├── audit_g3_existing_pipeline.py
@@ -90,11 +80,14 @@ Directories / 目录: **54** · Files / 文件: **350**
 │   │   ├── review_g1_overlays.py
 │   │   ├── review_g1_train_contact_sheets.py
 │   │   ├── review_g5_validation_failures.py
+│   │   ├── review_g6_body_boundaries.py
 │   │   ├── review_g6_test_cases.py
 │   │   ├── submit_g5_2d.sh
+│   │   ├── submit_g5_2d_extend_50.sh
 │   │   ├── submit_g5_40.sh
 │   │   ├── submit_g5_extend_50.sh
 │   │   ├── submit_g6_test.sh
+│   │   ├── summarize_all_class_review.py
 │   │   ├── summarize_g2_slice_detail.py
 │   │   ├── summarize_g2_train_audit.py
 │   │   ├── summarize_g3_candidate_sampling.py
@@ -290,20 +283,17 @@ Directories / 目录: **54** · Files / 文件: **350**
 │   └── README.md
 ├── results/
 │   ├── case_studies/
-│   │   ├── baseline_2d/
-│   │   ├── baseline_3d/
-│   │   ├── comparisons/
-│   │   │   ├── g5_validation_B040_Week1_prostate.png
-│   │   │   ├── g5_validation_J026_Week1_rectum.png
-│   │   │   ├── g5_validation_K018_Week3_rectum.png
-│   │   │   ├── g5_validation_S022_Week6_prostate.png
-│   │   │   ├── g5_validation_selected_cases.json
-│   │   │   ├── g6_test_M015_Week7_bladder.png
-│   │   │   ├── g6_test_M020_Week1_prostate.png
-│   │   │   ├── g6_test_selected_cases.json
-│   │   │   ├── g6_test_W029_Week6_prostate.png
-│   │   │   └── README.md
-│   │   └── improved_3d/
+│   │   └── comparisons/
+│   │       ├── g5_validation_B040_Week1_prostate.png
+│   │       ├── g5_validation_J026_Week1_rectum.png
+│   │       ├── g5_validation_K018_Week3_rectum.png
+│   │       ├── g5_validation_S022_Week6_prostate.png
+│   │       ├── g5_validation_selected_cases.json
+│   │       ├── g6_test_M015_Week7_bladder.png
+│   │       ├── g6_test_M020_Week1_prostate.png
+│   │       ├── g6_test_selected_cases.json
+│   │       ├── g6_test_W029_Week6_prostate.png
+│   │       └── README.md
 │   ├── data_analysis/
 │   │   ├── g1_bladder_review/
 │   │   │   ├── g1_bladder_island_D031_Week7.png
@@ -394,24 +384,33 @@ Directories / 目录: **54** · Files / 文件: **350**
 │   ├── figures/
 │   │   ├── baseline_2d/
 │   │   │   ├── g5_2d_validation.svg
+│   │   │   ├── g5_2d_validation_all_classes.png
+│   │   │   ├── g5_2d_validation_all_classes.svg
 │   │   │   └── README.md
-│   │   ├── baseline_3d/
-│   │   ├── comparisons/
-│   │   │   ├── g5_3d_validation.svg
-│   │   │   ├── g6_test_3d.png
-│   │   │   ├── g6_test_3d.svg
-│   │   │   └── README.md
-│   │   └── improved_3d/
+│   │   └── comparisons/
+│   │       ├── g5_3d_validation.svg
+│   │       ├── g5_3d_validation_all_classes.png
+│   │       ├── g5_3d_validation_all_classes.svg
+│   │       ├── g5_validation_patient_class_dice.png
+│   │       ├── g5_validation_patient_class_dice.svg
+│   │       ├── g6_test_3d.png
+│   │       ├── g6_test_3d.svg
+│   │       ├── g6_test_all_classes.png
+│   │       ├── g6_test_all_classes.svg
+│   │       ├── g6_test_failure_patterns.png
+│   │       ├── g6_test_failure_patterns.svg
+│   │       ├── g6_test_hd95_all_foreground.png
+│   │       ├── g6_test_hd95_all_foreground.svg
+│   │       └── README.md
 │   ├── reports/
 │   │   ├── HipMRI_Pretraining_Data_Analysis.md
 │   │   └── HipMRI_Research_Report.md
 │   ├── tables/
-│   │   ├── baseline_2d/
-│   │   ├── baseline_3d/
-│   │   ├── comparisons/
-│   │   │   ├── g6_test_3d.json
-│   │   │   └── README.md
-│   │   └── improved_3d/
+│   │   └── comparisons/
+│   │       ├── g5_validation_case_class_metrics.csv
+│   │       ├── g6_test_3d.json
+│   │       ├── g6_test_case_class_metrics.csv
+│   │       └── README.md
 │   └── README.md
 ├── .gitignore
 ├── PROJECT_MAP.md
@@ -437,8 +436,6 @@ Directories / 目录: **54** · Files / 文件: **350**
 | `code/docs/SOURCE_DECISIONS.md` | Paper sources and implementation deviations; Sections: Paper and assignment decision register; Imbalance methods in the three primary papers | 论文来源与实现差异；章节标题：Paper and assignment decision register; Imbalance methods in the three primary papers |
 | `code/docs/STUDY_PROTOCOL.md` | Research hypotheses, endpoints, and freeze rules; Sections: HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints | 研究假设、终点指标与冻结规则；章节标题：HipMRI research protocol — data-first revision; Research question and evidence order; Cohort and information boundaries; Controlled experiments and endpoints |
 | `code/hipmri_rewrite/__init__.py` | Six-class package constants; Definitions: module-level code | 六类别包常量；定义：module-level code |
-| `code/hipmri_rewrite/__pycache__/sampling_2d.cpython-314.pyc` | Binary or large file; 6,110 bytes | 二进制或大文件；6,110 字节 |
-| `code/hipmri_rewrite/__pycache__/training.cpython-314.pyc` | Binary or large file; 2,180 bytes | 二进制或大文件；2,180 字节 |
 | `code/hipmri_rewrite/audit.py` | Train/Validation-only real NIfTI preflight; Definitions: audit, main | 仅针对训练与验证数据的真实 NIfTI 预检；定义：audit, main |
 | `code/hipmri_rewrite/boundaries.py` | Physical base/apex, slice and surface error analysis; Definitions: prostate_axial_regions, slice_dice, symmetric_surface_distances, prostate_organ_confusion | 物理位置的基底/尖端、切片和表面误差分析；定义：prostate_axial_regions, slice_dice, symmetric_surface_distances, prostate_organ_confusion |
 | `code/hipmri_rewrite/data.py` | Paired loading, common-grid downsampling and mask encoding; Definitions: Volume, load_case, downsample, zscore_nonzero, one_hot, to_3d_model_arrays, from_3d_model_prediction | 配对读取、共用网格降采样及标签编码；定义：Volume, load_case, downsample, zscore_nonzero, one_hot, to_3d_model_arrays, from_3d_model_prediction |
@@ -469,12 +466,6 @@ Directories / 目录: **54** · Files / 文件: **350**
 | `code/tests/test_splits.py` | Patient isolation and file pairing tests; Definitions: PatientSplitTests | 患者隔离与文件配对测试；定义：PatientSplitTests |
 | `code/tests/test_training_recovery.py` | Check atomic batch checkpoints and recovery after an interrupted epoch pointer; Definitions: RecoveryTests | 核验原子批次权重及轮次指针中断后的恢复；定义：RecoveryTests |
 | `code/tests/test_training_selection.py` | Check patient-balanced small-organ checkpoint selection; Definitions: PatientSelectionTests | 核验患者等权的小器官权重选择规则；定义：PatientSelectionTests |
-| `code/tools/__pycache__/audit_g5_2d_sampling.cpython-314.pyc` | Binary or large file; 11,608 bytes | 二进制或大文件；11,608 字节 |
-| `code/tools/__pycache__/probe_g5_full_volume.cpython-314.pyc` | Binary or large file; 10,724 bytes | 二进制或大文件；10,724 字节 |
-| `code/tools/__pycache__/probe_g5_training_smoke.cpython-314.pyc` | Binary or large file; 18,717 bytes | 二进制或大文件；18,717 字节 |
-| `code/tools/__pycache__/tiny_overfit_g5.cpython-314.pyc` | Binary or large file; 16,475 bytes | 二进制或大文件；16,475 字节 |
-| `code/tools/__pycache__/train_g5_2d.cpython-314.pyc` | Binary or large file; 41,774 bytes | 二进制或大文件；41,774 字节 |
-| `code/tools/__pycache__/train_g5_cohort.cpython-314.pyc` | Binary or large file; 39,564 bytes | 二进制或大文件；39,564 字节 |
 | `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: sha256_file, write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：sha256_file, write_csv, main |
 | `code/tools/audit_g3_candidate_sampling.py` | Compare fixed Train-only uniform and organ-aware candidate crops; Definitions: sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main | 比较固定的训练集均匀与器官感知候选裁剪；定义：sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main |
 | `code/tools/audit_g3_existing_pipeline.py` | Audit current Train downsampling, normalization and whole-volume arrays; Definitions: sha256_file, class_counts, occupied_z_slices, software_versions, main | 审计当前训练集降采样、归一化与整卷张量；定义：sha256_file, class_counts, occupied_z_slices, software_versions, main |
@@ -490,11 +481,14 @@ Directories / 目录: **54** · Files / 文件: **350**
 | `code/tools/review_g1_overlays.py` | Render raw Train MRI and ground-truth overlays for G1 review; Definitions: render_case, main | 绘制训练集原始 MRI 与真实标签叠加图供 G1 审查；定义：render_case, main |
 | `code/tools/review_g1_train_contact_sheets.py` | Render two-slice Train patient sheets for G1 alignment screening; Definitions: render_patient, main | 绘制训练集患者双切面图供 G1 对齐筛查；定义：render_patient, main |
 | `code/tools/review_g5_validation_failures.py` | Definitions: sha256, load_selected, selected_slice, render, main | 定义：sha256, load_selected, selected_slice, render, main |
+| `code/tools/review_g6_body_boundaries.py` | Reproduce selected Test cases and draw Body boundary errors; Definitions: planes, draw, main | 复现选定测试案例并绘制 Body 边界错误；定义：planes, draw, main |
 | `code/tools/review_g6_test_cases.py` | Reproduce selected held-out Test 3D predictions and draw descriptive overlays; Definitions: axial_slice, render, main | 复现选定独立测试样本的 3D 预测并绘制描述性叠加图；定义：axial_slice, render, main |
 | `code/tools/submit_g5_2d.sh` | UTF-8 text with 77 lines; 3,122 bytes | UTF-8 文本，77 行；3,122 字节 |
+| `code/tools/submit_g5_2d_extend_50.sh` | Verify and queue a frozen 2D continuation to epoch 50; UTF-8 text with 81 lines; 2,914 bytes | 核验并排队固定配置的 2D 模型续训至 50 轮；UTF-8 文本，81 行；2,914 字节 |
 | `code/tools/submit_g5_40.sh` | Submit CPU recovery check and dependency-gated Standard/Improved 40-epoch A100 jobs; UTF-8 text with 95 lines; 3,818 bytes | 提交 CPU 恢复测试及依赖测试通过的双模型 40 轮 A100 作业；UTF-8 文本，95 行；3,818 字节 |
 | `code/tools/submit_g5_extend_50.sh` | UTF-8 text with 109 lines; 4,866 bytes | UTF-8 文本，109 行；4,866 字节 |
 | `code/tools/submit_g6_test.sh` | UTF-8 text with 35 lines; 1,550 bytes | UTF-8 文本，35 行；1,550 字节 |
+| `code/tools/summarize_all_class_review.py` | Verify selected records and draw six-class and Test failure figures; Definitions: save, paired_bars, validation_figures, test_figures_and_table, main | 核验选定记录并绘制六类及测试失误图；定义：save, paired_bars, validation_figures, test_figures_and_table, main |
 | `code/tools/summarize_g2_slice_detail.py` | Reconcile G2 slice and intensity CSVs with G1 and draw local plots; Definitions: read_csv, write_csv, check_hash, main | 将 G2 切片及强度 CSV 与 G1 核对并绘制本地图；定义：read_csv, write_csv, check_hash, main |
 | `code/tools/summarize_g2_train_audit.py` | Summarize verified raw Train audit into G2 tables and plots; Definitions: write_csv, main | 将已核验的训练集原始审计汇总为 G2 表格与图；定义：write_csv, main |
 | `code/tools/summarize_g3_candidate_sampling.py` | Verify full candidate patch records and summarize exposure; Definitions: sha256_file, write_csv, main | 核验完整候选 Patch 记录并汇总曝光；定义：sha256_file, write_csv, main |
@@ -762,15 +756,29 @@ Directories / 目录: **54** · Files / 文件: **350**
 | `results/data_analysis/historical_train/train_rare_organ_volumes.svg` | UTF-8 text with 320 lines; 25,203 bytes | UTF-8 文本，320 行；25,203 字节 |
 | `results/data_analysis/README.md` | Entry point or directory guide; Sections: Data analysis image groups | 项目入口或目录说明；章节标题：Data analysis image groups |
 | `results/figures/baseline_2d/g5_2d_validation.svg` | UTF-8 text with 2113 lines; 65,832 bytes | UTF-8 文本，2113 行；65,832 字节 |
+| `results/figures/baseline_2d/g5_2d_validation_all_classes.png` | Binary or large file; 57,380 bytes | 二进制或大文件；57,380 字节 |
+| `results/figures/baseline_2d/g5_2d_validation_all_classes.svg` | UTF-8 text with 1299 lines; 37,422 bytes | UTF-8 文本，1299 行；37,422 字节 |
 | `results/figures/baseline_2d/README.md` | Entry point or directory guide; Sections: Supplementary 2D Validation figure | 项目入口或目录说明；章节标题：Supplementary 2D Validation figure |
 | `results/figures/comparisons/g5_3d_validation.svg` | UTF-8 text with 2032 lines; 64,580 bytes | UTF-8 文本，2032 行；64,580 字节 |
+| `results/figures/comparisons/g5_3d_validation_all_classes.png` | Binary or large file; 68,380 bytes | 二进制或大文件；68,380 字节 |
+| `results/figures/comparisons/g5_3d_validation_all_classes.svg` | UTF-8 text with 1503 lines; 44,330 bytes | UTF-8 文本，1503 行；44,330 字节 |
+| `results/figures/comparisons/g5_validation_patient_class_dice.png` | Binary or large file; 172,263 bytes | 二进制或大文件；172,263 字节 |
+| `results/figures/comparisons/g5_validation_patient_class_dice.svg` | UTF-8 text with 2229 lines; 83,604 bytes | UTF-8 文本，2229 行；83,604 字节 |
 | `results/figures/comparisons/g6_test_3d.png` | Binary or large file; 67,509 bytes | 二进制或大文件；67,509 字节 |
 | `results/figures/comparisons/g6_test_3d.svg` | UTF-8 text with 1640 lines; 47,906 bytes | UTF-8 文本，1640 行；47,906 字节 |
+| `results/figures/comparisons/g6_test_all_classes.png` | Binary or large file; 70,228 bytes | 二进制或大文件；70,228 字节 |
+| `results/figures/comparisons/g6_test_all_classes.svg` | UTF-8 text with 1505 lines; 44,031 bytes | UTF-8 文本，1505 行；44,031 字节 |
+| `results/figures/comparisons/g6_test_failure_patterns.png` | Binary or large file; 128,918 bytes | 二进制或大文件；128,918 字节 |
+| `results/figures/comparisons/g6_test_failure_patterns.svg` | UTF-8 text with 2063 lines; 69,179 bytes | UTF-8 文本，2063 行；69,179 字节 |
+| `results/figures/comparisons/g6_test_hd95_all_foreground.png` | Binary or large file; 64,275 bytes | 二进制或大文件；64,275 字节 |
+| `results/figures/comparisons/g6_test_hd95_all_foreground.svg` | UTF-8 text with 1507 lines; 42,799 bytes | UTF-8 文本，1507 行；42,799 字节 |
 | `results/figures/comparisons/README.md` | Entry point or directory guide; Sections: 3D model comparison figures | 项目入口或目录说明；章节标题：3D model comparison figures |
 | `results/README.md` | Entry point or directory guide; Sections: Results and Report Artifacts | 项目入口或目录说明；章节标题：Results and Report Artifacts |
 | `results/reports/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
 | `results/reports/HipMRI_Research_Report.md` | Sections: HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results | 章节标题：HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results |
+| `results/tables/comparisons/g5_validation_case_class_metrics.csv` | Table with 456 data rows; columns: split, model, patient, case, class, gt_voxels, predicted_voxels, tp, fp, fn, dice, iou | 表格含 456 条数据行；列：split, model, patient, case, class, gt_voxels, predicted_voxels, tp, fp, fn, dice, iou |
 | `results/tables/comparisons/g6_test_3d.json` | Binary or large file; 220,443 bytes | 二进制或大文件；220,443 字节 |
+| `results/tables/comparisons/g6_test_case_class_metrics.csv` | Table with 360 data rows; columns: split, model, patient, case, class, gt_voxels, predicted_voxels, tp, fp, fn, dice, iou | 表格含 360 条数据行；列：split, model, patient, case, class, gt_voxels, predicted_voxels, tp, fp, fn, dice, iou |
 | `results/tables/comparisons/README.md` | Entry point or directory guide; Sections: Held-out Test comparison | 项目入口或目录说明；章节标题：Held-out Test comparison |
 
 Generated by `code/tools/update_project_map.py`; edit the source files, then regenerate this index. / 由 `code/tools/update_project_map.py` 生成；修改源文件后重新生成本目录。
