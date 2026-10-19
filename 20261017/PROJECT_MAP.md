@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 18:02:55 AEST**
+Updated / 更新时间: **2026-10-19 18:11:28 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **45** · Files / 文件: **386**
+Directories / 目录: **45** · Files / 文件: **392**
 
 ## Directory Tree / 目录树
 
@@ -26,6 +26,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 │   │   ├── g5_controlled_training_candidate.json
 │   │   ├── g5_controlled_training_frozen.json
 │   │   ├── g5_weighted_ce_diagnostic.json
+│   │   ├── g7_edge_sampling_candidate.json
 │   │   └── patient_split.json
 │   ├── docs/
 │   │   ├── EXECUTION.md
@@ -49,6 +50,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 │   │   ├── profile.py
 │   │   ├── sampling.py
 │   │   ├── sampling_2d.py
+│   │   ├── sampling_edges.py
 │   │   ├── splits.py
 │   │   └── training.py
 │   ├── tests/
@@ -61,6 +63,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 │   │   ├── test_sampling.py
 │   │   ├── test_sampling_2d.py
 │   │   ├── test_sampling_audit.py
+│   │   ├── test_sampling_edges.py
 │   │   ├── test_splits.py
 │   │   ├── test_training_recovery.py
 │   │   └── test_training_selection.py
@@ -74,6 +77,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 │   │   ├── audit_g5_aux_logits_validation.py
 │   │   ├── audit_g5_train_patch_geometry.py
 │   │   ├── audit_g5_validation_body.py
+│   │   ├── audit_g7_edge_sampling.py
 │   │   ├── audit_train_raw.py
 │   │   ├── evaluate_g6_test.py
 │   │   ├── package_transfer.py
@@ -91,6 +95,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 │   │   ├── submit_g5_40.sh
 │   │   ├── submit_g5_extend_50.sh
 │   │   ├── submit_g6_test.sh
+│   │   ├── submit_g7_edge_audit.sh
 │   │   ├── summarize_all_class_review.py
 │   │   ├── summarize_g2_slice_detail.py
 │   │   ├── summarize_g2_train_audit.py
@@ -106,7 +111,8 @@ Directories / 目录: **45** · Files / 文件: **386**
 │   │   ├── train_g5_cohort.py
 │   │   └── update_project_map.py
 │   ├── transfer/
-│   │   └── 20261017_source.zip
+│   │   ├── 20261017_source.zip
+│   │   └── g7_edge_audit_20261019.zip
 │   ├── README.md
 │   └── requirements.txt
 ├── logs/
@@ -458,6 +464,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 | `code/config/g5_controlled_training_candidate.json` | Historical candidate for the paired 3D cohort training protocol; JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | 双模型队列训练方案的历史候选配置；JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
 | `code/config/g5_controlled_training_frozen.json` | Frozen paired 3D cohort training protocol with resumable checkpoint selection; JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | 已冻结的双模型训练方案，含可恢复权重和验证集选择规则；JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
 | `code/config/g5_weighted_ce_diagnostic.json` | Train-only weighted CE configuration for the Standard tiny learning diagnostic; JSON fields: scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights | 仅用训练数据为 Standard 微型学习诊断配置加权交叉熵；JSON 字段：scope, source_table, source_table_sha256, source_policy, formula, ce_weight_in_combined_loss, class_weights |
+| `code/config/g7_edge_sampling_candidate.json` | Predeclared edge crop search and Train exposure gates, not model training config; JSON fields: status, seed, epochs, patch_xyz, patches_per_patient_epoch, preserved_uniform_draws, edge, training_gate, baseline_geometry_counts, scope, fallback, negative_definition | 预先定义边缘裁剪搜索及训练曝光门槛，非模型训练配置；JSON 字段：status, seed, epochs, patch_xyz, patches_per_patient_epoch, preserved_uniform_draws, edge, training_gate, baseline_geometry_counts, scope, fallback, negative_definition |
 | `code/config/patient_split.json` | Frozen patient groups and expected counts; JSON fields: provenance, train, validation, test, expected_volumes | 固定患者分组与预期数量；JSON 字段：provenance, train, validation, test, expected_volumes |
 | `code/docs/EXECUTION.md` | Evidence and execution gates; Sections: Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: existing-pipeline diagnosis (completed) | 证据与执行关口；章节标题：Execution and evidence checklist; Evidence identity; G1: raw integrity gate; G2: completed Train-only raw EDA gate; G3: existing-pipeline diagnosis (completed) |
 | `code/docs/RANGPUR_COMMANDS.md` | Separate Windows and Rangpur commands; Sections: Rangpur G2 and G3 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node; Full Train run after the smoke check; G3 existing-pipeline smoke run | 分开的 Windows 与 Rangpur 命令；章节标题：Rangpur G2 and G3 command handoff; Transfer the G2 slice audit script; Two-case smoke run on a CPU node; Full Train run after the smoke check; G3 existing-pipeline smoke run |
@@ -478,6 +485,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 | `code/hipmri_rewrite/profile.py` | Train-only GPU forward/backward capacity probe; Definitions: profile, main | 仅使用训练数据的 GPU 前反向容量检查；定义：profile, main |
 | `code/hipmri_rewrite/sampling.py` | Patient-balanced Train patch selection and exact label exposure; Definitions: _rng, epoch_cases, crop_origin, crop_for_3d_model, ExposureRecorder | 按患者均衡抽取训练 Patch 并记录实际标签曝光；定义：_rng, epoch_cases, crop_origin, crop_for_3d_model, ExposureRecorder |
 | `code/hipmri_rewrite/sampling_2d.py` | Deterministic Train-only axial crop selection for the optional 2D arm; Definitions: slice_crop_origin, crop_for_2d_model | 可选 2D 模型使用的确定性训练集轴向切片裁剪；定义：slice_crop_origin, crop_for_2d_model |
+| `code/hipmri_rewrite/sampling_edges.py` | Candidate Train corner crops with physical hard negatives and uniform fallback; Definitions: boundary_hits, EdgeSelection, EdgePatchSelector | 候选训练集角落裁剪，含物理距离负样本及均匀回退；定义：boundary_hits, EdgeSelection, EdgePatchSelector |
 | `code/hipmri_rewrite/splits.py` | Frozen patient identity and MRI/mask file pairing; Definitions: Case, read_split, discover | 固定患者身份及 MRI/mask 文件配对；定义：Case, read_split, discover |
 | `code/hipmri_rewrite/training.py` | Predeclared equal-patient Validation selection score; Definitions: patient_small_organ_score | 预先定义患者等权的验证集模型选择指标；定义：patient_small_organ_score |
 | `code/README.md` | Entry point or directory guide; Sections: Code and Methods | 项目入口或目录说明；章节标题：Code and Methods |
@@ -491,6 +499,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 | `code/tests/test_sampling.py` | Patient cycle, paired crop and exposure-record tests; Definitions: case, PatientBalancedSamplingTests | 患者轮换、配对裁剪及曝光记录测试；定义：case, PatientBalancedSamplingTests |
 | `code/tests/test_sampling_2d.py` | 2D crop target, bounds and MRI/mask alignment checks; Definitions: TwoDSamplingTests | 核验 2D 裁剪目标、边界和影像标签对齐；定义：TwoDSamplingTests |
 | `code/tests/test_sampling_audit.py` | Candidate crop bounds and repeatability checks; Definitions: CandidateCropTests | 候选裁剪边界与可重复性检查；定义：CandidateCropTests |
+| `code/tests/test_sampling_edges.py` | Verify physical negatives, paired geometry, Train isolation and uniform fallback; Definitions: volume, selector, EdgeSamplingTests | 核验物理距离负样本、配对几何、训练集隔离及均匀回退；定义：volume, selector, EdgeSamplingTests |
 | `code/tests/test_splits.py` | Patient isolation and file pairing tests; Definitions: PatientSplitTests | 患者隔离与文件配对测试；定义：PatientSplitTests |
 | `code/tests/test_training_recovery.py` | Check atomic batch checkpoints and recovery after an interrupted epoch pointer; Definitions: RecoveryTests | 核验原子批次权重及轮次指针中断后的恢复；定义：RecoveryTests |
 | `code/tests/test_training_selection.py` | Check patient-balanced small-organ checkpoint selection; Definitions: PatientSelectionTests | 核验患者等权的小器官权重选择规则；定义：PatientSelectionTests |
@@ -502,6 +511,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 | `code/tools/audit_g5_aux_logits_validation.py` | Compare selected Improved 3D summed and main-only logits on Validation; Definitions: predictions, main | 在验证集比较选定 Improved 3D 的相加输出和单独主输出；定义：predictions, main |
 | `code/tools/audit_g5_train_patch_geometry.py` | Reconstruct frozen 3D Train patch face and corner coverage; Definitions: digest, touches, main | 重建固定方案的 3D 训练 Patch 边缘及角落覆盖；定义：digest, touches, main |
 | `code/tools/audit_g5_validation_body.py` | Measure fixed-checkpoint Validation Body boundaries and draw outliers; Definitions: draw, main | 测量固定权重的验证集 Body 边界并绘制异常案例；定义：draw, main |
+| `code/tools/audit_g7_edge_sampling.py` | Replay frozen Train epochs and compare 9+1 edge sampling exposure on CPU; Definitions: sha, main | 在 CPU 重放固定训练轮次并比较 9+1 边缘采样曝光；定义：sha, main |
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/evaluate_g6_test.py` | Definitions: sha256, selected_model, boundary_summary, main | 定义：sha256, selected_model, boundary_summary, main |
 | `code/tools/package_transfer.py` | Build and verify a source-only transfer ZIP; Definitions: main | 创建并校验仅含源码的传输包；定义：main |
@@ -519,6 +529,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 | `code/tools/submit_g5_40.sh` | Submit CPU recovery check and dependency-gated Standard/Improved 40-epoch A100 jobs; UTF-8 text with 95 lines; 3,818 bytes | 提交 CPU 恢复测试及依赖测试通过的双模型 40 轮 A100 作业；UTF-8 文本，95 行；3,818 字节 |
 | `code/tools/submit_g5_extend_50.sh` | UTF-8 text with 109 lines; 4,866 bytes | UTF-8 文本，109 行；4,866 字节 |
 | `code/tools/submit_g6_test.sh` | UTF-8 text with 35 lines; 1,550 bytes | UTF-8 文本，35 行；1,550 字节 |
+| `code/tools/submit_g7_edge_audit.sh` | Submit smoke or smoke-gated full Train-only CPU edge audit; UTF-8 text with 66 lines; 2,607 bytes | 提交小规模或通过小规模门槛的完整训练集 CPU 边缘审计；UTF-8 文本，66 行；2,607 字节 |
 | `code/tools/summarize_all_class_review.py` | Verify selected records and draw six-class, training and failure figures; Definitions: save, paired_bars, validation_figures, test_figures_and_table, three_arm_validation_figures, main | 核验选定记录并绘制六类、训练及失误图；定义：save, paired_bars, validation_figures, test_figures_and_table, three_arm_validation_figures, main |
 | `code/tools/summarize_g2_slice_detail.py` | Reconcile G2 slice and intensity CSVs with G1 and draw local plots; Definitions: read_csv, write_csv, check_hash, main | 将 G2 切片及强度 CSV 与 G1 核对并绘制本地图；定义：read_csv, write_csv, check_hash, main |
 | `code/tools/summarize_g2_train_audit.py` | Summarize verified raw Train audit into G2 tables and plots; Definitions: write_csv, main | 将已核验的训练集原始审计汇总为 G2 表格与图；定义：write_csv, main |
@@ -534,6 +545,7 @@ Directories / 目录: **45** · Files / 文件: **386**
 | `code/tools/train_g5_cohort.py` | Train a frozen 3D arm with patient-balanced exposure, Validation selection and resumable checkpoints; Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 按固定方案训练 3D 模型，记录患者均衡曝光、验证集选择及可恢复权重；定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
 | `code/tools/update_project_map.py` | Generate and watch this bilingual inventory; Definitions: _files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main | 生成并持续更新本双语目录；定义：_files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main |
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |
+| `code/transfer/g7_edge_audit_20261019.zip` | Five-file source-only G7 audit transfer package; ZIP archive with 5 members; 10,348 bytes | 仅含五个 G7 审计源码文件的传输包；ZIP 压缩包，含 5 个成员；10,348 字节 |
 | `logs/audits/g1_train_contact_sheets_20261018.json` | JSON fields: scope, screen, patients | JSON 字段：scope, screen, patients |
 | `logs/audits/g3_existing_pipeline_full_20261018_job671892.json` | Binary or large file; 299,809 bytes | 二进制或大文件；299,809 字节 |
 | `logs/audits/g3_patch_candidate_full_20261018/manifest.json` | JSON fields: audit_script_sha256, config, config_sha256, data_code_sha256, full_train, g1_sha256, g3_sha256, patients, scope, split_code_sha256, summary, train_cases | JSON 字段：audit_script_sha256, config, config_sha256, data_code_sha256, full_train, g1_sha256, g3_sha256, patients, scope, split_code_sha256, summary, train_cases |

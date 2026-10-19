@@ -1160,3 +1160,10 @@ and failure evidence.
 The focused [Chinese model review and next-experiment decision](HipMRI_模型复盘与下一轮实验_ZH.md)
 sets explicit success criteria for that proposal and separates demonstrated
 results from mechanisms that still require a controlled test.
+
+The G7 candidate is now implemented in separate source/config files, leaving
+the frozen G5 data, sampler and weights unchanged. Its CPU audit checks exact
+baseline epoch exposure, then compares all six class counts and volume-corner
+coverage for the nine-uniform/one-edge policy. Local tests pass; the staged
+two-patient/two-epoch Rangpur smoke and full Train audit remain unexecuted.
+No candidate exposure or new model-quality result is claimed at this stage.

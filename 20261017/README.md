@@ -9,6 +9,8 @@ the evidence, results, limits and conclusions.
 The [Chinese model review and next-experiment memo](results/reports/HipMRI_模型复盘与下一轮实验_ZH.md)
 assesses whether Improved clearly exceeds Standard and states the next
 controlled development gate.
+The G7 edge-sampling candidate and CPU audit are prepared in `code/`; its
+Rangpur smoke and full Train-only exposure checks precede any new training.
 
 ## Where things belong
 

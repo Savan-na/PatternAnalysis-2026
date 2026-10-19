@@ -139,3 +139,19 @@ read-only diagnostic checks whether the auxiliary outputs contribute to the
 Body false positives; the main head was not trained as a separate model.
 `tools/summarize_g5_body_review.py` verifies the transferred Validation
 audit against the selected epoch records and draws patient-level Body errors.
+
+`hipmri_rewrite/sampling_edges.py` implements the separate G7 candidate:
+preserve draws 0–8 and replace draw 9 with a deterministic corner crop. It
+requires at least 5% nonzero model-input MRI and 128 nonzero GT Background
+voxels in the outer 8-voxel shell at least 20 mm from GT Body. It tries up to
+64 origins across eight corners, then falls back to the original uniform
+draw. These proposed thresholds are for the Train-only audit.
+`tools/audit_g7_edge_sampling.py` decodes each scheduled Train volume once,
+replays up to 50 G5 epochs, and checks every full baseline epoch's measured
+label exposure against its saved training record. Its paired CSV and manifest
+report spatial coverage, all six class counts, nonzero intensity, fallbacks,
+and the predeclared exposure gates. `tools/submit_g7_edge_audit.sh smoke`
+submits a two-patient/two-epoch CPU check; `full` requires a successful smoke
+with unchanged candidate sources before submitting the 143-volume audit.
+Neither command submits model training. Transfer and execution steps are in
+[`docs/RANGPUR_COMMANDS.md`](docs/RANGPUR_COMMANDS.md).

@@ -1,0 +1,30 @@
+{
+  "status": "candidate_Train_only_CPU_dry_run_not_training_config",
+  "seed": 371017,
+  "epochs": 50,
+  "patch_xyz": [64, 64, 32],
+  "patches_per_patient_epoch": 10,
+  "preserved_uniform_draws": 9,
+  "edge": {
+    "width": 8,
+    "distance_mm": 20.0,
+    "min_nonzero_fraction": 0.05,
+    "min_hard_negative_voxels": 128,
+    "max_attempts": 64
+  },
+  "training_gate": {
+    "min_outer_8_corner_rate": 0.05,
+    "min_small_organ_hit_ratio": 0.90,
+    "min_small_organ_voxel_share_ratio": 0.90
+  },
+  "baseline_geometry_counts": {
+    "patches": 13000,
+    "outer_2_any_face": 2936,
+    "outer_2_any_corner": 6,
+    "outer_8_any_face": 9177,
+    "outer_8_any_corner": 423
+  },
+  "scope": "Train MRI/Mask only; replay frozen G5 patient schedules; no model training or checkpoint changes",
+  "fallback": "exact original uniform draw if no acceptable corner crop is found",
+  "negative_definition": "GT Background AND nonzero normalized MRI AND >=20 mm from GT Body AND in outer 8-voxel volume shell"
+}

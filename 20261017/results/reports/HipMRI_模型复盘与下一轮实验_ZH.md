@@ -54,4 +54,4 @@ Improved 有真实的局部价值，例如 Test 的 Bladder 和 Bones，以及�
 
 ## 5. 当前状态
 
-本报告是**实验决策**，不是新实验结果。实验 A 的 Train-only 预演、新模型训练、多种子比较和新独立 Test 均尚未执行。下一项实际工作是实现并核查边缘 sampler 的 CPU 预演，再决定是否提交 A100 训练。此时保留当前 Standard、Improved、2D 的原始训练记录与第 50 轮选定权重，确保后续比较可追溯。
+本报告是**实验决策**，不是新实验结果。实验 A 已实现为独立的[候选采样模块](../../code/hipmri_rewrite/sampling_edges.py)、[CPU 预演程序](../../code/tools/audit_g7_edge_sampling.py)和[候选配置](../../code/config/g7_edge_sampling_candidate.json)，35 项本地测试通过。程序先用两名患者、两轮检查真实数据流程，再重放完整 50 轮；每个原均匀采样轮次必须复现训练记录中的类别曝光。完整输出还要满足第 4 节的覆盖与小器官门槛，才会标记为可进入训练。Rangpur 真实数据预演、新模型训练、多种子比较和新独立 Test 均尚未执行。操作入口在[远端命令说明](../../code/docs/RANGPUR_COMMANDS.md)。

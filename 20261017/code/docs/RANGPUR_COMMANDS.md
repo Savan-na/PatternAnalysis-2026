@@ -614,5 +614,53 @@ The first 2D CPU check (673901) failed because the staged checkout lacked
 `tests/test_sampling_2d.py`; its dependent GPU job 673902 never started and
 was cancelled. After transferring the missing test, CPU check 673907 passed
 and formal A100 job 673908 started. The first epoch completed with durable
-batch and epoch records. This is an ongoing training run, not a completed
-Validation or Test result.
+batch and epoch records. The 2D run subsequently completed 40 epochs and a
+checked continuation to 50; current results are in the formal research report.
+
+## G7 Train-only edge sampling CPU audit — 19 October 2026
+
+The five-file source archive is `code/transfer/g7_edge_audit_20261019.zip`.
+Its SHA-256 is `95553ad1350f2d664f35a88973f3f0a16929dd880d60c75bdf3afceef2b88999`.
+It contains only the new edge selector, CPU audit, submission helper, candidate
+config and selector tests. The existing G5 sources are not included.
+
+From Windows PowerShell at `Final project>`:
+
+```powershell
+scp '.\20261017\code\transfer\g7_edge_audit_20261019.zip' 's4906923@login0.compute.eait.uq.edu.au:~/g7_edge_audit_20261019.zip'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+Run each following command separately in the Rangpur login terminal. Check
+the archive hash against the value above before extraction. Extraction checks
+the exact five names and refuses to replace any existing destination file:
+
+```bash
+sha256sum "$HOME/g7_edge_audit_20261019.zip"
+python -B -c 'from pathlib import Path; from zipfile import ZipFile; p=Path.home(); root=p/"20261018_g1_stage/20261017"; names={"code/hipmri_rewrite/sampling_edges.py","code/tools/audit_g7_edge_sampling.py","code/tools/submit_g7_edge_audit.sh","code/config/g7_edge_sampling_candidate.json","code/tests/test_sampling_edges.py"}; z=ZipFile(p/"g7_edge_audit_20261019.zip"); assert root.is_dir() and set(z.namelist())==names and len(z.namelist())==5 and z.testzip() is None; assert all(not (root/n).exists() for n in names), "A G7 destination already exists; inspect before extraction"; z.extractall(root); print("Extracted five new G7 files")'
+bash -n "$HOME/20261018_g1_stage/20261017/code/tools/submit_g7_edge_audit.sh"
+bash "$HOME/20261018_g1_stage/20261017/code/tools/submit_g7_edge_audit.sh" smoke
+```
+
+The smoke checks two Train patients across two epochs and reruns the selector
+tests on a CPU node. Review the printed job ID with `sacct` and its log at
+`logs/audits/g7_edge_sampling_smoke_<job>.out`. Expected successful output is
+`smoke_pass=true`, `full_train=false`, and `eligible_for_training=false`.
+The last value requires the complete audit and is not a smoke failure.
+
+Only after reviewing a successful smoke, submit the full CPU audit:
+
+```bash
+bash "$HOME/20261018_g1_stage/20261017/code/tools/submit_g7_edge_audit.sh" full
+```
+
+The full submission verifies candidate sources against the smoke receipt,
+requests 45 minutes on `cpu`, replays 50 epochs and writes two files to
+`logs/audits/g7_edge_sampling_full_20261019/`: `patches.csv` and
+`manifest.json`. Each arm should have 13,000 patches, giving 26,000 CSV data
+rows. Baseline class exposure must reproduce every G5 epoch; the manifest
+then reports corner coverage, rare-organ exposure ratios and eligibility
+under the predeclared gates. Neither mode reads Validation/Test arrays,
+updates checkpoints or submits A100 model training. Refresh the remote
+`PROJECT_MAP.md` after generating outputs with `python -B code/tools/update_project_map.py`
+from the staged project root; keep the locally maintained documentation local.
