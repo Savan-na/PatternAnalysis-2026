@@ -883,9 +883,18 @@ checkpoint as missed Prostate tissue, but its final full-volume recall is high
 and its precision is low; the selected image shows extra or displaced regions.
 The frozen Test result shows a patient-specific Bladder collapse on `M015`,
 while `W029` is difficult for Prostate in both models. Improved also has a
-large Body HD95 despite its small-organ Dice gains. Three planned descriptive
-Test overlays will illustrate representative high and low overlap without
-feeding any Test information into training or checkpoint choice.
+large Body HD95 despite its small-organ Dice gains. Job 674523 completed on
+the short A100 test partition. It reproduced both original Test confusion
+matrices on each of three cases and generated the
+[local descriptive overlays](../case_studies/comparisons/README.md). `M020_Week1`
+Prostate has high full-volume Dice (0.9046 Standard, 0.8866 Improved).
+`M015_Week7` shows a severe Standard Bladder localization error: Dice 0.0676,
+precision 0.0404, with much of the predicted region in other tissue. Improved
+partly recovers it (Dice 0.4063) but still has false positives. On
+`W029_Week6`, Prostate precision is 0.3046 Standard and 0.2045 Improved;
+the displayed slice alone looks closer to GT than the full-volume metrics.
+These cases illustrate the errors without feeding Test information into
+training or checkpoint selection.
 
 These observations do not establish whether the remaining errors arise from
 annotation boundaries, resolution loss, anatomy shifts, or optimization. The
@@ -911,5 +920,6 @@ the result supports the Improved **training recipe**, not an isolated network
 component. The supplementary 2D arm has a separate Validation result but no
 held-out Test result. Any later loss, sampling or architecture revision must
 start as a new controlled Train/Validation experiment; this Test set must not
-be used to tune one. The remaining work is to finish the descriptive Test
-overlays, verify their images locally and prepare the submission record.
+be used to tune one. The descriptive Test overlays have been reviewed locally.
+Any submission should include the fixed split, code/config receipts, result
+JSON, figures and this report, with the required HipMRI data acknowledgment.

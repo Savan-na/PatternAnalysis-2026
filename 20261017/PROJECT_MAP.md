@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 11:38:09 AEST**
+Updated / 更新时间: **2026-10-19 11:47:02 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **54** · Files / 文件: **346**
+Directories / 目录: **54** · Files / 文件: **350**
 
 ## Directory Tree / 目录树
 
@@ -298,6 +298,10 @@ Directories / 目录: **54** · Files / 文件: **346**
 │   │   │   ├── g5_validation_K018_Week3_rectum.png
 │   │   │   ├── g5_validation_S022_Week6_prostate.png
 │   │   │   ├── g5_validation_selected_cases.json
+│   │   │   ├── g6_test_M015_Week7_bladder.png
+│   │   │   ├── g6_test_M020_Week1_prostate.png
+│   │   │   ├── g6_test_selected_cases.json
+│   │   │   ├── g6_test_W029_Week6_prostate.png
 │   │   │   └── README.md
 │   │   └── improved_3d/
 │   ├── data_analysis/
@@ -673,6 +677,10 @@ Directories / 目录: **54** · Files / 文件: **346**
 | `results/case_studies/comparisons/g5_validation_K018_Week3_rectum.png` | Binary or large file; 89,639 bytes | 二进制或大文件；89,639 字节 |
 | `results/case_studies/comparisons/g5_validation_S022_Week6_prostate.png` | Binary or large file; 89,736 bytes | 二进制或大文件；89,736 字节 |
 | `results/case_studies/comparisons/g5_validation_selected_cases.json` | JSON fields: kind, split, cases, sources | JSON 字段：kind, split, cases, sources |
+| `results/case_studies/comparisons/g6_test_M015_Week7_bladder.png` | Binary or large file; 130,570 bytes | 二进制或大文件；130,570 字节 |
+| `results/case_studies/comparisons/g6_test_M020_Week1_prostate.png` | Binary or large file; 94,741 bytes | 二进制或大文件；94,741 字节 |
+| `results/case_studies/comparisons/g6_test_selected_cases.json` | JSON fields: kind, split, test_result_sha256, cases | JSON 字段：kind, split, test_result_sha256, cases |
+| `results/case_studies/comparisons/g6_test_W029_Week6_prostate.png` | Binary or large file; 83,023 bytes | 二进制或大文件；83,023 字节 |
 | `results/case_studies/comparisons/README.md` | Entry point or directory guide; Sections: Selected segmentation overlays | 项目入口或目录说明；章节标题：Selected segmentation overlays |
 | `results/data_analysis/g1_bladder_review/g1_bladder_island_D031_Week7.png` | Binary or large file; 250,160 bytes | 二进制或大文件；250,160 字节 |
 | `results/data_analysis/g1_bladder_review/g1_bladder_island_N010_Week3.png` | Binary or large file; 254,248 bytes | 二进制或大文件；254,248 字节 |
