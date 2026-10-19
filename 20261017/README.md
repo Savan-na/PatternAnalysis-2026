@@ -14,7 +14,7 @@ whether to train the edge-sampling candidate.
 
 ## Where things belong
 
-The repository-level [feasibility review](<../feasibility review.md>) summarizes feasibility and remaining work. The [P2 execution guide](code/docs/P2_INFERENCE_CONTEXT.md) implements the next fixed-checkpoint Validation diagnostic; real-case execution is pending.
+The repository-level [feasibility review](<../feasibility review.md>) summarizes feasibility and remaining work. The [P2 diagnostic results](results/diagnostics/inference_context/p2_four_cases_20261020/P2_review_ZH.md) show context sensitivity with small-organ trade-offs; the sliding protocol was not adopted.
 
 | Directory | Purpose |
 |---|---|

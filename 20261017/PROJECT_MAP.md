@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-20 09:03:09 AEST**
+Updated / 更新时间: **2026-10-20 09:27:28 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **55** · Files / 文件: **422**
+Directories / 目录: **58** · Files / 文件: **450**
 
 ## Directory Tree / 目录树
 
@@ -311,6 +311,18 @@ Directories / 目录: **55** · Files / 文件: **422**
 │   │       ├── epoch_050.json
 │   │       └── manifest.json
 │   ├── validation/
+│   │   ├── inference_context/
+│   │   │   └── p2_four_cases_20261020/
+│   │   │       ├── B040_Week4_improved_3d.json
+│   │   │       ├── B040_Week4_standard_3d.json
+│   │   │       ├── checksums.json
+│   │   │       ├── J026_Week4_improved_3d.json
+│   │   │       ├── J026_Week4_standard_3d.json
+│   │   │       ├── K008_Week0_improved_3d.json
+│   │   │       ├── K008_Week0_standard_3d.json
+│   │   │       ├── K018_Week4_improved_3d.json
+│   │   │       ├── K018_Week4_standard_3d.json
+│   │   │       └── manifest.json
 │   │   └── README.md
 │   └── README.md
 ├── results/
@@ -442,6 +454,25 @@ Directories / 目录: **55** · Files / 文件: **422**
 │   │   └── README.md
 │   ├── diagnostics/
 │   │   └── inference_context/
+│   │       ├── p2_four_cases_20261020/
+│   │       │   ├── B040_Week4_head_margins.png
+│   │       │   ├── B040_Week4_improved_3d_body.png
+│   │       │   ├── B040_Week4_standard_3d_body.png
+│   │       │   ├── checksums.json
+│   │       │   ├── J026_Week4_head_margins.png
+│   │       │   ├── J026_Week4_improved_3d_body.png
+│   │       │   ├── J026_Week4_standard_3d_body.png
+│   │       │   ├── K008_Week0_head_margins.png
+│   │       │   ├── K008_Week0_improved_3d_body.png
+│   │       │   ├── K008_Week0_standard_3d_body.png
+│   │       │   ├── K018_Week4_head_margins.png
+│   │       │   ├── K018_Week4_improved_3d_body.png
+│   │       │   ├── K018_Week4_standard_3d_body.png
+│   │       │   ├── P2_review_ZH.md
+│   │       │   ├── README.md
+│   │       │   ├── six_class_context_comparison.png
+│   │       │   ├── six_class_context_comparison.svg
+│   │       │   └── six_class_metrics.csv
 │   │       └── README.md
 │   ├── figures/
 │   │   ├── baseline_2d/
@@ -770,6 +801,16 @@ Directories / 目录: **55** · Files / 文件: **422**
 | `logs/training/improved_3d/epoch_049.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/improved_3d/epoch_050.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `logs/training/improved_3d/manifest.json` | JSON fields: config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 | JSON 字段：config_sha256, data_sha256, dataset_root, extensions, g1_sha256, gpu, inference_sha256, job_id_initial, kind, loss_sha256, max_epochs, metrics_sha256 |
+| `logs/validation/inference_context/p2_four_cases_20261020/B040_Week4_improved_3d.json` | JSON fields: case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference | JSON 字段：case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference |
+| `logs/validation/inference_context/p2_four_cases_20261020/B040_Week4_standard_3d.json` | JSON fields: case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference | JSON 字段：case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference |
+| `logs/validation/inference_context/p2_four_cases_20261020/checksums.json` | JSON fields: B040_Week4_improved_3d.json, B040_Week4_standard_3d.json, J026_Week4_improved_3d.json, J026_Week4_standard_3d.json, K008_Week0_improved_3d.json, K008_Week0_standard_3d.json, K018_Week4_improved_3d.json, K018_Week4_standard_3d.json, manifest.json | JSON 字段：B040_Week4_improved_3d.json, B040_Week4_standard_3d.json, J026_Week4_improved_3d.json, J026_Week4_standard_3d.json, K008_Week0_improved_3d.json, K008_Week0_standard_3d.json, K018_Week4_improved_3d.json, K018_Week4_standard_3d.json, manifest.json |
+| `logs/validation/inference_context/p2_four_cases_20261020/J026_Week4_improved_3d.json` | JSON fields: case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference | JSON 字段：case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference |
+| `logs/validation/inference_context/p2_four_cases_20261020/J026_Week4_standard_3d.json` | JSON fields: case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference | JSON 字段：case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference |
+| `logs/validation/inference_context/p2_four_cases_20261020/K008_Week0_improved_3d.json` | JSON fields: case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference | JSON 字段：case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference |
+| `logs/validation/inference_context/p2_four_cases_20261020/K008_Week0_standard_3d.json` | JSON fields: case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference | JSON 字段：case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference |
+| `logs/validation/inference_context/p2_four_cases_20261020/K018_Week4_improved_3d.json` | JSON fields: case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference | JSON 字段：case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference |
+| `logs/validation/inference_context/p2_four_cases_20261020/K018_Week4_standard_3d.json` | JSON fields: case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference | JSON 字段：case, patient, model, shape_xyz, spacing_mm, affine, input_sha256, full_confusion_reproduced, protocols, changed_prediction_voxels, same_voxel_margins, shared_reference |
+| `logs/validation/inference_context/p2_four_cases_20261020/manifest.json` | Binary or large file; 244,703 bytes | 二进制或大文件；244,703 字节 |
 | `logs/validation/README.md` | Entry point or directory guide; Sections: Validation 诊断原始记录 | 项目入口或目录说明；章节标题：Validation 诊断原始记录 |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
 | `README.md` | Entry point or directory guide; Sections: HipMRI Data-Driven Model Development; Where things belong | 项目入口或目录说明；章节标题：HipMRI Data-Driven Model Development; Where things belong |
@@ -882,7 +923,25 @@ Directories / 目录: **55** · Files / 文件: **422**
 | `results/data_analysis/historical_train/train_patient_examinations.svg` | UTF-8 text with 72 lines; 7,370 bytes | UTF-8 文本，72 行；7,370 字节 |
 | `results/data_analysis/historical_train/train_rare_organ_volumes.svg` | UTF-8 text with 320 lines; 25,203 bytes | UTF-8 文本，320 行；25,203 字节 |
 | `results/data_analysis/README.md` | Entry point or directory guide; Sections: Data analysis image groups | 项目入口或目录说明；章节标题：Data analysis image groups |
-| `results/diagnostics/inference_context/README.md` | Entry point or directory guide; Sections: 推理上下文诊断（已准备程序，真实病例未执行） | 项目入口或目录说明；章节标题：推理上下文诊断（已准备程序，真实病例未执行） |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/B040_Week4_head_margins.png` | Binary or large file; 288,330 bytes | 二进制或大文件；288,330 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/B040_Week4_improved_3d_body.png` | Binary or large file; 247,830 bytes | 二进制或大文件；247,830 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/B040_Week4_standard_3d_body.png` | Binary or large file; 204,666 bytes | 二进制或大文件；204,666 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/checksums.json` | JSON fields: B040_Week4_head_margins.png, B040_Week4_improved_3d_body.png, B040_Week4_standard_3d_body.png, J026_Week4_head_margins.png, J026_Week4_improved_3d_body.png, J026_Week4_standard_3d_body.png, K008_Week0_head_margins.png, K008_Week0_improved_3d_body.png, K008_Week0_standard_3d_body.png, K018_Week4_head_margins.png, K018_Week4_improved_3d_body.png, K018_Week4_standard_3d_body.png | JSON 字段：B040_Week4_head_margins.png, B040_Week4_improved_3d_body.png, B040_Week4_standard_3d_body.png, J026_Week4_head_margins.png, J026_Week4_improved_3d_body.png, J026_Week4_standard_3d_body.png, K008_Week0_head_margins.png, K008_Week0_improved_3d_body.png, K008_Week0_standard_3d_body.png, K018_Week4_head_margins.png, K018_Week4_improved_3d_body.png, K018_Week4_standard_3d_body.png |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/J026_Week4_head_margins.png` | Binary or large file; 261,434 bytes | 二进制或大文件；261,434 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/J026_Week4_improved_3d_body.png` | Binary or large file; 197,241 bytes | 二进制或大文件；197,241 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/J026_Week4_standard_3d_body.png` | Binary or large file; 175,030 bytes | 二进制或大文件；175,030 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/K008_Week0_head_margins.png` | Binary or large file; 299,816 bytes | 二进制或大文件；299,816 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/K008_Week0_improved_3d_body.png` | Binary or large file; 213,450 bytes | 二进制或大文件；213,450 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/K008_Week0_standard_3d_body.png` | Binary or large file; 200,852 bytes | 二进制或大文件；200,852 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/K018_Week4_head_margins.png` | Binary or large file; 304,804 bytes | 二进制或大文件；304,804 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/K018_Week4_improved_3d_body.png` | Binary or large file; 256,174 bytes | 二进制或大文件；256,174 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/K018_Week4_standard_3d_body.png` | Binary or large file; 161,339 bytes | 二进制或大文件；161,339 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/P2_review_ZH.md` | Sections: P2 固定权重推理上下文诊断; Body 误检与小器官变化; 如何解释 | 章节标题：P2 固定权重推理上下文诊断; Body 误检与小器官变化; 如何解释 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/README.md` | Entry point or directory guide; Sections: P2 fixed-weight Validation diagnostic | 项目入口或目录说明；章节标题：P2 fixed-weight Validation diagnostic |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/six_class_context_comparison.png` | Binary or large file; 105,674 bytes | 二进制或大文件；105,674 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/six_class_context_comparison.svg` | UTF-8 text with 1834 lines; 58,935 bytes | UTF-8 文本，1834 行；58,935 字节 |
+| `results/diagnostics/inference_context/p2_four_cases_20261020/six_class_metrics.csv` | Table with 96 data rows; columns: model, case, protocol, class, dice, iou, precision, recall | 表格含 96 条数据行；列：model, case, protocol, class, dice, iou, precision, recall |
+| `results/diagnostics/inference_context/README.md` | Entry point or directory guide; Sections: 推理上下文诊断 | 项目入口或目录说明；章节标题：推理上下文诊断 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.png` | Binary or large file; 58,445 bytes | 二进制或大文件；58,445 字节 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.svg` | UTF-8 text with 1331 lines; 38,132 bytes | UTF-8 文本，1331 行；38,132 字节 |
 | `results/figures/baseline_2d/README.md` | Entry point or directory guide; Sections: Supplementary 2D Validation figure | 项目入口或目录说明；章节标题：Supplementary 2D Validation figure |
