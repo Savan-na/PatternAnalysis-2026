@@ -155,3 +155,8 @@ submits a two-patient/two-epoch CPU check; `full` requires a successful smoke
 with unchanged candidate sources before submitting the 143-volume audit.
 Neither command submits model training. Transfer and execution steps are in
 [`docs/RANGPUR_COMMANDS.md`](docs/RANGPUR_COMMANDS.md).
+The full CPU audit completed as job 676249. Its downloaded CSV and manifest
+are independently reconciled by `tools/summarize_g7_edge_sampling.py`, which
+exports six-class exposure and normalized crop-origin figures to
+`results/data_analysis/g7_edge_sampling/`. Passing its provisional exposure
+gates does not establish a model-quality benefit.
