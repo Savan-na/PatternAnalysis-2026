@@ -39,7 +39,7 @@ Rangpur G2 commands are maintained in [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.md)
   measurable, and the limits of selected visual overlays. Record supported,
   excluded and unresolved hypotheses before entering G3.
 
-## G3: current existing-pipeline diagnosis
+## G3: existing-pipeline diagnosis (completed)
 
 - Audit the actual implemented Train path: `load_case`, factor-two
   `downsample`, `zscore_nonzero`, and whole-volume `to_3d_model_arrays`.
@@ -48,14 +48,15 @@ Rangpur G2 commands are maintained in [RANGPUR_COMMANDS.md](RANGPUR_COMMANDS.md)
 - Use a two-case Rangpur CPU smoke run before the full 143-case audit. Preserve
   the G1 source hashes and frozen patient split; do not process Validation/Test
   label distributions for these decisions.
-- The restart currently has no ROI crop, augmentation, Patch Sampler or formal
-  training loop. Specify and freeze a candidate sampler before measuring its
-  patch exposure. Do not present raw-slice presence as a patch-hit rate.
+- At this diagnosis point, the restart had no ROI crop, augmentation, Patch
+  Sampler or formal training loop. The subsequent G4/G5 implementation and
+  measured exposure are recorded in the formal report. Do not present
+  raw-slice presence as a patch-hit rate.
 
 ### G3 candidate crop comparison
 
-The current model adapter supplies complete downsampled volumes; no existing
-training sampler is available in this checkout. Before selecting a new policy,
+At the G3 decision point, the model adapter supplied complete downsampled
+volumes; no training sampler was yet available. Before selecting a new policy,
 audit two *candidate* patch streams on the same 143 Train cases with the
 frozen `config/g3_patch_audit.json`: ten 64×64×32 XYZ crops per volume per
 arm, using seed 371017. The uniform arm places all crops randomly. The
@@ -131,9 +132,11 @@ instruction above is historical and no longer the launch procedure.
 - Check both primary 3D models' forward and backward passes, then a few-case
   Train-only overfit including prostate and rectum.
 
-## Outputs still required
+## Output status at 19 October 2026
 
-Full training checkpoints and per-step logs; complete Validation predictions;
-frozen selection receipt; one-time Test metrics; 3–5 selected failure-case
-panels; measured latency/VRAM; README report; final Git commit and Pull
-Request. These are not present merely because this checklist exists.
+The three completed training runs have durable epoch checkpoints and detailed
+JSON records on Rangpur. Their derived epoch JSON records are local. The
+frozen Validation selection, one-time 3D Test metrics, selected Validation
+and Test panels, measured latency/VRAM, and cumulative report are local under
+`results/` and `logs/`. Raw MRI and checkpoint weights remain on Rangpur.
+The report records remaining scientific limitations and submission work.

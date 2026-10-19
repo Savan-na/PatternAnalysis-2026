@@ -56,10 +56,8 @@ predictions are explicitly counted. Report both segmentation quality and
 compute cost on the final held-out Test without tuning on its results.
 
 The current evidence status is recorded in the single formal research report
-rather than this methods protocol. The initial 40-epoch 3D runs and their
-per-class Validation analysis are complete. A bounded continuation to epoch
-50 uses the same frozen configuration and strict checkpoint recovery; it is
-an extension check because both initial Validation peaks occurred at epoch
-30. Final checkpoint choice uses the same patient-balanced Validation rule.
-The supplementary 2D arm follows its separate frozen protocol. Held-out Test
-evaluation waits until checkpoint selection and evaluation rules are fixed.
+rather than this methods protocol. Both 3D runs completed a strictly checked
+continuation from 40 to 50 epochs and selected epoch 50 by the frozen
+patient-balanced Validation rule. The supplementary 2D arm completed its
+separate 40-epoch protocol. The two 3D checkpoints then underwent one
+held-out Test evaluation; Test findings must not drive model revisions.

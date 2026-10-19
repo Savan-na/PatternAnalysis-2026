@@ -8,12 +8,12 @@ contains the fixed patient split; `tests/` contains synthetic contract tests.
 
 The available model implementations live in
 `hipmri_rewrite/models/baseline_2d.py`, `baseline_3d.py`, and
-`improved_3d.py`. Their provisional identity records are in
-`config/arms/<arm_id>/arm.json`. These records reserve separate experiment
-spaces; they do not prescribe training settings before the real-data audit.
-The 3D arms are the primary controlled comparison. A supplementary 2D run
-has been requested; it has a separate Train-only sampling audit and will use
-its own frozen training protocol after that audit is reviewed.
+`improved_3d.py`. Their identity records are in
+`config/arms/<arm_id>/arm.json`. The frozen training configurations are
+`config/g5_controlled_training_frozen.json` for the two primary 3D arms and
+`config/g5_2d_training_frozen.json` for the supplementary 2D arm. All three
+runs completed; the 3D runs continued from 40 to 50 epochs without changing
+their frozen data, model or optimizer settings.
 
 Run from this `code` directory in the existing Python 3.11 `torch` environment:
 
@@ -108,3 +108,10 @@ a CPU recovery and frozen-config check.
 epoch JSON records, independently checks each Train and Validation summary,
 and draws the comparison figure in `results/figures/comparisons/`. It uses
 derived run records only and does not open held-out Test data.
+
+`tools/submit_g5_extend_50.sh` continued both 3D runs with strict resume
+checks. `tools/review_g5_validation_failures.py` generated selected Validation
+overlays. `tools/evaluate_g6_test.py` evaluated the two selected checkpoints
+once on the held-out Test set; `tools/review_g6_test_cases.py` reproduced
+selected case confusion matrices before rendering descriptive Test overlays.
+Local summaries and interpretation are in the formal research report.

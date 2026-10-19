@@ -1,5 +1,10 @@
 # Rangpur G2 and G3 command handoff
 
+This is the historical command record for the 2026 restart. G1–G6 have since
+completed; check the [formal research report](../../results/reports/HipMRI_Research_Report.md)
+for current evidence before submitting any job. Do not rerun the one-time Test
+evaluation or old training commands as a continuation.
+
 Use Windows PowerShell at `Final project` for `scp` and `ssh`. Use the Rangpur
 login shell only to check files and request a Slurm CPU node. Decode MRI arrays
 only after `hostname` shows an allocated compute node. The active source is

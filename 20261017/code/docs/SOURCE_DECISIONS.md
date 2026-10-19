@@ -2,14 +2,14 @@
 
 | Decision | Basis | Implementation status / deviation |
 |---|---|
-| Core research question, six-class HipMRI and test endpoints | COMP3710 commission and revised data-driven research direction | Raw data and sampling exposure are investigated before model changes; no new results |
+| Core research question, six-class HipMRI and test endpoints | COMP3710 commission and revised data-driven research direction | Raw data and sampling exposure were investigated before the frozen model comparison and one-time Test |
 | Patient-level split | Existing approved project split, 26/6/6 patients and 143/38/30 volumes | Preserved for comparison; prior Validation reuse disclosed |
-| 2D U-Net | Ronneberger et al. (2015), assignment baseline option | Existing independent implementation retained as background; no required retraining |
+| 2D U-Net | Ronneberger et al. (2015), assignment baseline option | Supplementary 40-epoch arm completed under its separate frozen protocol |
 | Standard 3D U-Net | Çiçek et al. (2016), DOI 10.1007/978-3-319-46723-8_49 | 3D encoder/decoder, skip links, convolution and pooling; same-padding/group normalization and six-class output are explicit adaptations |
 | Improved 3D U-Net | Isensee et al., *Brain Tumor Segmentation and Radiomics Survival Prediction* (2018), arXiv:1802.10508 | Pre-activation residual context, stride-2 convolution, interpolation-based upsampling, localization blocks, additive deep-supervision logits; six-class HipMRI adaptation |
 | CAN3D and its pelvis comparisons | Dai et al. (2022), DOI 10.1016/j.media.2022.102562 | Literature context only; not a fourth training arm or a source of directly comparable target results |
-| Common image grid | Assignment specifies downsampled 3D HipMRI and alignment | Factor-two voxel-edge-aligned grid is an initial engineering choice; must be validated on real data before training |
-| Loss and optimizer | Still to be finalized before GPU training | Do not infer that Dai's DSF is the original loss of either U-Net |
+| Common image grid | Assignment specifies downsampled 3D HipMRI and alignment | Factor-two voxel-edge-aligned grid was audited on all 143 Train volumes before training |
+| Loss and optimizer | Train-only G4 exposure, G5 fixed-patch diagnostics and frozen run configurations | Standard and Improved share the same weighted CE plus foreground Dice objective and Adam settings. Do not attribute Dai's DSF to either U-Net |
 | Academic integrity | Course commission and source attribution requirements | Original PyTorch code written here; cite papers and consulted author code in README/report |
 
 Primary sources:
@@ -54,16 +54,16 @@ are also described; the paper does not specify foreground-anchored sampling as
 its own method. Its brain-specific intensity region and clipping thresholds
 require HipMRI Train evidence before adaptation.
 
-Current HipMRI G3 evidence supports keeping the validated nonzero-intensity
-Z-score and measured downsampling as a starting point. G4 verified a
+HipMRI G3 evidence supported keeping the validated nonzero-intensity
+Z-score and measured downsampling. G4 verified a
 patient-balanced patch mechanism and exact post-transform label exposure
 recorder on all 26 Train patients in one CPU dry-run epoch. The reference
 sampling design for the first controlled Standard/Improved comparison is equal
 patient selection and uniform crops; organ-aware placement remains a targeted
 candidate because its pooled exposure gain was modest and patient-level gains
-were mixed. This selection is based on HipMRI Train evidence, not prescribed
-by the three papers. Actual training exposure and Validation performance must
-still be measured. No Dice/weighted-CE choice has been established.
+were mixed. This selection was based on HipMRI Train evidence, not prescribed
+by the three papers. Actual training exposure and Validation performance are
+reported in the formal research report.
 
 The G5 two-patch Standard diagnostic still predicted no Bladder, Rectum or
 Prostate at 500 optimizer steps under the provisional unweighted CE plus

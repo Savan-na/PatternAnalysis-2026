@@ -1,12 +1,11 @@
 # HipMRI Data-Driven Model Development
 
-This is the COMP3710 research workspace. G1 raw Train integrity passed with
-documented limits, and G2 measured Train-only raw distributions. G3 now
-examines preprocessing and actual patch exposure before changing sampling,
-loss, or architecture. The primary later comparison
-is standard versus improved 3D U-Net. The existing 2D implementation is
-background work and does not require
-a new training run.
+This is the COMP3710 research workspace. G1–G4 audited the Train data and
+model input; G5 trained Standard and Improved 3D U-Net for 50 epochs each and
+a supplementary 2D U-Net for 40 epochs. G6 evaluated the two
+Validation-selected 3D checkpoints once on the held-out Test set. The
+[formal research report](results/reports/HipMRI_Research_Report.md) contains
+the evidence, results, limits and conclusions.
 
 ## Where things belong
 
@@ -20,6 +19,7 @@ a new training run.
 per-file content index. The scientific rules are in
 [`code/docs/STUDY_PROTOCOL.md`](code/docs/STUDY_PROTOCOL.md). Historical Train
 statistics in [`results/data_analysis/historical_train/`](results/data_analysis/historical_train/README.md)
-are previous evidence; G1 figures are in separate image groups. No model in
-this workspace has been trained on the restarted data. The held-out Test
-arrays remain protected.
+are previous evidence; G1 figures are in separate image groups. The 3D
+checkpoints and raw MRI remain on Rangpur; local JSON records, figures and
+case panels are indexed under `logs/` and `results/`. Test was used once
+after Validation selected the checkpoints; it must not guide later tuning.

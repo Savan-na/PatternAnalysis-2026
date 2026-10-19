@@ -385,8 +385,8 @@ post-augmentation class exposure still needs to be logged during training.
 
 ## Experimental Results
 
-No formal cohort model has been trained. G1–G4 are data and pipeline
-measurements, not segmentation performance comparisons.
+At this G1–G4 review point, no formal cohort model had been trained. G1–G4
+were data and pipeline measurements, not segmentation performance comparisons.
 
 The G5 real-Train-patch GPU probe ran as Rangpur A100 job `672173` on
 `B006_Week0`, batch size two, input `2×1×32×64×64`, with the same provisional
@@ -858,9 +858,11 @@ pooled Test Body Dice (0.9591 vs 0.9312) and Background Dice (0.9875 vs
 The median Body HD95 is also much larger for Improved (51.81 mm vs 4.86 mm),
 including large distances on several patients. This requires a separate
 spatial review before describing its overall boundaries as better.
-These models use different loss configurations as well as architectures, so
-their difference is a comparison of full training recipes, not proof of an
-isolated architectural effect.
+Both models use the same frozen loss, sampling, optimizer, split and
+Validation selection rule. Their Test difference is therefore evidence for
+the compared architecture implementations under this protocol. The two
+architectures change several components together, so it does not isolate any
+single residual, upsampling or deep-supervision component.
 
 Patient-level analysis exposes a large Bladder failure concentrated in `M015`:
 the pooled patient Bladder Dice is 0.1056 for Standard and 0.3713 for
@@ -915,11 +917,12 @@ set, Improved increased the patient-balanced small-organ Dice from 0.7851 to
 model and a notable Body-boundary disadvantage. Its patient score advantage is
 concentrated in `M015`; it does not win every patient.
 
-The Standard and Improved arms differ in both architecture and loss design, so
-the result supports the Improved **training recipe**, not an isolated network
-component. The supplementary 2D arm has a separate Validation result but no
-held-out Test result. Any later loss, sampling or architecture revision must
-start as a new controlled Train/Validation experiment; this Test set must not
+The Standard and Improved arms share the frozen data and loss protocol, so
+the result supports the Improved **architecture implementation** under these
+conditions. Its residual, upsampling and deep-supervision components were not
+ablated separately. The supplementary 2D arm has a separate Validation result
+but no held-out Test result. Any later loss, sampling or architecture revision
+must start as a new controlled Train/Validation experiment; this Test set must not
 be used to tune one. The descriptive Test overlays have been reviewed locally.
 Any submission should include the fixed split, code/config receipts, result
 JSON, figures and this report, with the required HipMRI data acknowledgment.
