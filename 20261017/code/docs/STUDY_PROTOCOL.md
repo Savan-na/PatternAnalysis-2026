@@ -59,5 +59,6 @@ The current evidence status is recorded in the single formal research report
 rather than this methods protocol. Both 3D runs completed a strictly checked
 continuation from 40 to 50 epochs and selected epoch 50 by the frozen
 patient-balanced Validation rule. The supplementary 2D arm completed its
-separate 40-epoch protocol. The two 3D checkpoints then underwent one
-held-out Test evaluation; Test findings must not drive model revisions.
+separate protocol and a strictly checked continuation to epoch 50. The two
+3D checkpoints then underwent one held-out Test evaluation; Test findings
+must not drive model revisions.

@@ -2,10 +2,13 @@
 
 This is the COMP3710 research workspace. G1–G4 audited the Train data and
 model input; G5 trained Standard and Improved 3D U-Net for 50 epochs each and
-a supplementary 2D U-Net for 40 epochs. G6 evaluated the two
+a supplementary 2D U-Net for 50 epochs. G6 evaluated the two
 Validation-selected 3D checkpoints once on the held-out Test set. The
 [formal research report](results/reports/HipMRI_Research_Report.md) contains
 the evidence, results, limits and conclusions.
+The [Chinese model review and next-experiment memo](results/reports/HipMRI_模型复盘与下一轮实验_ZH.md)
+assesses whether Improved clearly exceeds Standard and states the next
+controlled development gate.
 
 ## Where things belong
 

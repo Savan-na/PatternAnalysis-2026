@@ -1156,3 +1156,7 @@ not improve Validation Body errors, retrain a single-head architecture as a
 separate controlled ablation. Directly importing the 2D organ-aware sampler
 or simply increasing class weights is not justified by the present 3D exposure
 and failure evidence.
+
+The focused [Chinese model review and next-experiment decision](HipMRI_模型复盘与下一轮实验_ZH.md)
+sets explicit success criteria for that proposal and separates demonstrated
+results from mechanisms that still require a controlled test.

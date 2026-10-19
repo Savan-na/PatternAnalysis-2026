@@ -22,6 +22,9 @@ Only populated analysis groups are retained. Cross-model tables and visuals
 are in `comparisons`; the supplementary 2D figure has its own folder. The one
 cumulative formal research report
 is [`reports/HipMRI_Research_Report.md`](reports/HipMRI_Research_Report.md).
+The [Chinese model review](reports/HipMRI_模型复盘与下一轮实验_ZH.md) is a focused
+decision memo for the next controlled experiment, rather than a second
+cumulative report.
 The earlier mixed-source analysis is archived beside it. The
 [`data_analysis/`](data_analysis/README.md) index separates historical figures,
 three G1 image groups, a G2 Train summary and a G3 preprocessing group, each

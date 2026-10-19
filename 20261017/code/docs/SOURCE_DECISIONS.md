@@ -4,7 +4,7 @@
 |---|---|
 | Core research question, six-class HipMRI and test endpoints | COMP3710 commission and revised data-driven research direction | Raw data and sampling exposure were investigated before the frozen model comparison and one-time Test |
 | Patient-level split | Existing approved project split, 26/6/6 patients and 143/38/30 volumes | Preserved for comparison; prior Validation reuse disclosed |
-| 2D U-Net | Ronneberger et al. (2015), assignment baseline option | Supplementary 40-epoch arm completed under its separate frozen protocol |
+| 2D U-Net | Ronneberger et al. (2015), assignment baseline option | Supplementary arm completed its separate frozen 40-epoch protocol and a checked continuation to epoch 50 |
 | Standard 3D U-Net | Çiçek et al. (2016), DOI 10.1007/978-3-319-46723-8_49 | 3D encoder/decoder, skip links, convolution and pooling; same-padding/group normalization and six-class output are explicit adaptations |
 | Improved 3D U-Net | Isensee et al., *Brain Tumor Segmentation and Radiomics Survival Prediction* (2018), arXiv:1802.10508 | Pre-activation residual context, stride-2 convolution, interpolation-based upsampling, localization blocks, additive deep-supervision logits; six-class HipMRI adaptation |
 | CAN3D and its pelvis comparisons | Dai et al. (2022), DOI 10.1016/j.media.2022.102562 | Literature context only; not a fourth training arm or a source of directly comparable target results |

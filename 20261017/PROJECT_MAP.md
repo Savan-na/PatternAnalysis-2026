@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-19 17:44:12 AEST**
+Updated / 更新时间: **2026-10-19 18:02:55 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **45** · Files / 文件: **385**
+Directories / 目录: **45** · Files / 文件: **386**
 
 ## Directory Tree / 目录树
 
@@ -429,7 +429,8 @@ Directories / 目录: **45** · Files / 文件: **385**
 │   │       └── README.md
 │   ├── reports/
 │   │   ├── HipMRI_Pretraining_Data_Analysis.md
-│   │   └── HipMRI_Research_Report.md
+│   │   ├── HipMRI_Research_Report.md
+│   │   └── HipMRI_模型复盘与下一轮实验_ZH.md
 │   ├── tables/
 │   │   └── comparisons/
 │   │       ├── g5_validation_aux_logits.json
@@ -827,6 +828,7 @@ Directories / 目录: **45** · Files / 文件: **385**
 | `results/README.md` | Entry point or directory guide; Sections: Results and Report Artifacts | 项目入口或目录说明；章节标题：Results and Report Artifacts |
 | `results/reports/HipMRI_Pretraining_Data_Analysis.md` | Sections: HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown | 章节标题：HipMRI Raw Train Data: Statistical Review and Improvement Priorities; 1. Independent verification of the available record; 2. What the raw label statistics show; 3. Unusual cases to inspect first; 4. What remains unknown |
 | `results/reports/HipMRI_Research_Report.md` | Sections: HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results | 章节标题：HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results |
+| `results/reports/HipMRI_模型复盘与下一轮实验_ZH.md` | Sections: HipMRI 模型复盘与下一轮实验决策; 1. 结论先明确; 2. 六类别与边界：它究竟赢在哪里、输在哪里; 3. 为什么没有达到预期：证据、解释与尚未证明之处; 4. 下一轮：先验证采样假设，再谈新模型胜利 | 章节标题：HipMRI 模型复盘与下一轮实验决策; 1. 结论先明确; 2. 六类别与边界：它究竟赢在哪里、输在哪里; 3. 为什么没有达到预期：证据、解释与尚未证明之处; 4. 下一轮：先验证采样假设，再谈新模型胜利 |
 | `results/tables/comparisons/g5_validation_aux_logits.json` | JSON fields: kind, split, interpretation, checkpoint, body_audit_sha256, cases, summary | JSON 字段：kind, split, interpretation, checkpoint, body_audit_sha256, cases, summary |
 | `results/tables/comparisons/g5_validation_body_audit.json` | JSON fields: kind, split, selection, cases, sources, pictured_cases | JSON 字段：kind, split, selection, cases, sources, pictured_cases |
 | `results/tables/comparisons/g5_validation_case_class_metrics.csv` | Table with 456 data rows; columns: split, model, patient, case, class, gt_voxels, predicted_voxels, tp, fp, fn, dice, iou | 表格含 456 条数据行；列：split, model, patient, case, class, gt_voxels, predicted_voxels, tp, fp, fn, dice, iou |
