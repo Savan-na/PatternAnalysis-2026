@@ -1,0 +1,14 @@
+{
+  "a0": {
+    "best_epoch": 45,
+    "selection_score": 0.8450022550404671,
+    "far_body_fp_voxels": 9572,
+    "body_hd95_volume_median_mm": 4.750873686097116
+  },
+  "a1": {
+    "best_epoch": 45,
+    "selection_score": 0.8297643537048893,
+    "far_body_fp_voxels": 1171,
+    "body_hd95_volume_median_mm": 5.683763745312066
+  }
+}

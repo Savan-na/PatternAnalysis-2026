@@ -27,6 +27,7 @@ lightning_logs/
 experiment_store.zip
 
 # Temporary files
+tmp/
 *.tmp
 *.log
 .DS_Store

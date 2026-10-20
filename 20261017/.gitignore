@@ -24,6 +24,12 @@ results/**
 !results/model_evaluation/best_checkpoint_comparison/assessment_required/tables/selected_checkpoints.json
 code/transfer/*.zip
 artifacts/
+archives/remote_training_backups/
+!results/experiments/improved_3d_v4/paired_analysis/**/*.svg
+!results/experiments/improved_3d_v4/paired_analysis/**/*.csv
+!results/experiments/improved_3d_v4/paired_analysis/summary.json
+!results/experiments/improved_3d_v4/paired_analysis/record_checksums.json
+!results/experiments/improved_3d_v4/paired_analysis/all_models/source_checksums.json
 checkpoints/
 predictions/
 *.nii
