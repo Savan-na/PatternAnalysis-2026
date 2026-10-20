@@ -1,0 +1,191 @@
+﻿model,case,patient,body_hd95_mm,far_fp,availability
+2D,B040_Week0,B040,,,pending matched audit
+2D,B040_Week1,B040,,,pending matched audit
+2D,B040_Week2,B040,,,pending matched audit
+2D,B040_Week3,B040,,,pending matched audit
+2D,B040_Week4,B040,,,pending matched audit
+2D,B040_Week5,B040,,,pending matched audit
+2D,B040_Week7,B040,,,pending matched audit
+2D,J026_Week0,J026,,,pending matched audit
+2D,J026_Week1,J026,,,pending matched audit
+2D,J026_Week2,J026,,,pending matched audit
+2D,J026_Week3,J026,,,pending matched audit
+2D,J026_Week4,J026,,,pending matched audit
+2D,J026_Week5,J026,,,pending matched audit
+2D,J026_Week6,J026,,,pending matched audit
+2D,J026_Week7,J026,,,pending matched audit
+2D,K008_Week0,K008,,,pending matched audit
+2D,K018_Week0,K018,,,pending matched audit
+2D,K018_Week1,K018,,,pending matched audit
+2D,K018_Week2,K018,,,pending matched audit
+2D,K018_Week3,K018,,,pending matched audit
+2D,K018_Week4,K018,,,pending matched audit
+2D,K018_Week5,K018,,,pending matched audit
+2D,K018_Week6,K018,,,pending matched audit
+2D,K018_Week7,K018,,,pending matched audit
+2D,M030_Week0,M030,,,pending matched audit
+2D,M030_Week1,M030,,,pending matched audit
+2D,M030_Week2,M030,,,pending matched audit
+2D,M030_Week3,M030,,,pending matched audit
+2D,M030_Week4,M030,,,pending matched audit
+2D,M030_Week5,M030,,,pending matched audit
+2D,S022_Week0,S022,,,pending matched audit
+2D,S022_Week1,S022,,,pending matched audit
+2D,S022_Week2,S022,,,pending matched audit
+2D,S022_Week3,S022,,,pending matched audit
+2D,S022_Week4,S022,,,pending matched audit
+2D,S022_Week5,S022,,,pending matched audit
+2D,S022_Week6,S022,,,pending matched audit
+2D,S022_Week7,S022,,,pending matched audit
+Standard,B040_Week0,B040,4.415879813952577,4,measured
+Standard,B040_Week1,B040,4.58473226283704,1,measured
+Standard,B040_Week2,B040,4.750873686097116,5,measured
+Standard,B040_Week3,B040,4.750873686097116,9,measured
+Standard,B040_Week4,B040,6.24005126953125,47,measured
+Standard,B040_Week5,B040,4.750873686097116,21,measured
+Standard,B040_Week7,B040,4.58473226283704,11,measured
+Standard,J026_Week0,J026,4.415879813952577,2,measured
+Standard,J026_Week1,J026,4.58473226283704,11,measured
+Standard,J026_Week2,J026,4.58473226283704,5,measured
+Standard,J026_Week3,J026,4.58473226283704,4,measured
+Standard,J026_Week4,J026,4.58473226283704,38,measured
+Standard,J026_Week5,J026,4.58473226283704,0,measured
+Standard,J026_Week6,J026,4.750873686097116,12,measured
+Standard,J026_Week7,J026,4.58473226283704,39,measured
+Standard,K008_Week0,K008,5.869719568473765,0,measured
+Standard,K018_Week0,K018,4.415879813952577,0,measured
+Standard,K018_Week1,K018,4.415901375890843,4,measured
+Standard,K018_Week2,K018,4.750873686097116,0,measured
+Standard,K018_Week3,K018,4.58473226283704,0,measured
+Standard,K018_Week4,K018,4.750873686097116,5,measured
+Standard,K018_Week5,K018,5.683763745312066,0,measured
+Standard,K018_Week6,K018,5.683763745312066,6,measured
+Standard,K018_Week7,K018,6.71875,0,measured
+Standard,M030_Week0,M030,4.419417382415922,6,measured
+Standard,M030_Week1,M030,4.58473226283704,16,measured
+Standard,M030_Week2,M030,4.750873686097116,46,measured
+Standard,M030_Week3,M030,4.58473226283704,38,measured
+Standard,M030_Week4,M030,6.71875,3,measured
+Standard,M030_Week5,M030,4.58473226283704,12,measured
+Standard,S022_Week0,S022,4.750873686097116,16,measured
+Standard,S022_Week1,S022,4.640388251536718,61,measured
+Standard,S022_Week2,S022,5.683763745312066,8,measured
+Standard,S022_Week3,S022,6.24005126953125,78,measured
+Standard,S022_Week4,S022,4.750873686097116,2,measured
+Standard,S022_Week5,S022,5.683763745312066,124,measured
+Standard,S022_Week6,S022,7.0868101791793725,343,measured
+Standard,S022_Week7,S022,4.750873686097116,30,measured
+v1,B040_Week0,B040,20.239964488614635,5585,measured
+v1,B040_Week1,B040,69.17376500975641,12320,measured
+v1,B040_Week2,B040,80.625,12245,measured
+v1,B040_Week3,B040,57.49649340213361,8316,measured
+v1,B040_Week4,B040,97.4365856847317,31574,measured
+v1,B040_Week5,B040,94.0625,52587,measured
+v1,B040_Week7,B040,77.265625,10886,measured
+v1,J026_Week0,J026,79.67217989988727,58835,measured
+v1,J026_Week1,J026,85.42092531939976,60302,measured
+v1,J026_Week2,J026,80.625,21641,measured
+v1,J026_Week3,J026,80.625,30729,measured
+v1,J026_Week4,J026,97.421875,59591,measured
+v1,J026_Week5,J026,94.0625,102705,measured
+v1,J026_Week6,J026,90.50372124408055,59062,measured
+v1,J026_Week7,J026,73.634730015484,18338,measured
+v1,K008_Week0,K008,11.73943913694753,4643,measured
+v1,K018_Week0,K018,101.74176855156898,117448,measured
+v1,K018_Week1,K018,48.879682965054734,15652,measured
+v1,K018_Week2,K018,78.7028206230507,30185,measured
+v1,K018_Week3,K018,97.421875,62037,measured
+v1,K018_Week4,K018,125.63182549088614,58078,measured
+v1,K018_Week5,K018,90.703125,40773,measured
+v1,K018_Week6,K018,110.859375,73385,measured
+v1,K018_Week7,K018,123.27462321870198,119446,measured
+v1,M030_Week0,M030,68.75,9101,measured
+v1,M030_Week1,M030,64.85017126934294,9987,measured
+v1,M030_Week2,M030,75.95875274873205,14640,measured
+v1,M030_Week3,M030,36.424100802070285,6087,measured
+v1,M030_Week4,M030,96.6230997933364,38473,measured
+v1,M030_Week5,M030,28.396209336592715,5738,measured
+v1,S022_Week0,S022,33.59375,6762,measured
+v1,S022_Week1,S022,50.39300276949694,21425,measured
+v1,S022_Week2,S022,67.1875,8131,measured
+v1,S022_Week3,S022,55.05114428308867,29241,measured
+v1,S022_Week4,S022,42.20010772722296,10895,measured
+v1,S022_Week5,S022,71.97709733943793,44171,measured
+v1,S022_Week6,S022,69.9897673352705,46175,measured
+v1,S022_Week7,S022,67.1875,41327,measured
+v2,B040_Week0,B040,59.696496867754696,18902,measured
+v2,B040_Week1,B040,59.26851450905905,11077,measured
+v2,B040_Week2,B040,40.3125,7005,measured
+v2,B040_Week3,B040,40.930679627459405,10009,measured
+v2,B040_Week4,B040,68.51807471390305,13936,measured
+v2,B040_Week5,B040,94.0625,41525,measured
+v2,B040_Week7,B040,43.671875,12135,measured
+v2,J026_Week0,J026,84.375,51236,measured
+v2,J026_Week1,J026,83.984375,37063,measured
+v2,J026_Week2,J026,70.546875,15969,measured
+v2,J026_Week3,J026,88.8087877281089,22209,measured
+v2,J026_Week4,J026,97.421875,42897,measured
+v2,J026_Week5,J026,91.16543185030838,38802,measured
+v2,J026_Week6,J026,94.0625,36856,measured
+v2,J026_Week7,J026,68.01132754670164,13627,measured
+v2,K008_Week0,K008,9.400848615289759,4604,measured
+v2,K018_Week0,K018,103.54648648448602,86847,measured
+v2,K018_Week1,K018,34.375,16678,measured
+v2,K018_Week2,K018,70.45708808889812,23683,measured
+v2,K018_Week3,K018,60.743835878866435,32270,measured
+v2,K018_Week4,K018,98.85927745174577,31656,measured
+v2,K018_Week5,K018,80.625,27996,measured
+v2,K018_Week6,K018,104.140625,30716,measured
+v2,K018_Week7,K018,107.5,35350,measured
+v2,M030_Week0,M030,53.125,7077,measured
+v2,M030_Week1,M030,41.068308160385,6285,measured
+v2,M030_Week2,M030,37.4786250075198,5821,measured
+v2,M030_Week3,M030,7.511790861913356,3393,measured
+v2,M030_Week4,M030,77.265625,15251,measured
+v2,M030_Week5,M030,26.875,5179,measured
+v2,S022_Week0,S022,51.25255519163986,11283,measured
+v2,S022_Week1,S022,53.83992791862914,11002,measured
+v2,S022_Week2,S022,60.46875,7540,measured
+v2,S022_Week3,S022,68.61777429298296,13545,measured
+v2,S022_Week4,S022,73.91224987224085,11135,measured
+v2,S022_Week5,S022,71.32429859399883,19655,measured
+v2,S022_Week6,S022,66.62836802875154,27295,measured
+v2,S022_Week7,S022,65.42216189931749,13126,measured
+v3,B040_Week0,B040,4.415879813952577,1403,measured
+v3,B040_Week1,B040,3.359375,1610,measured
+v3,B040_Week2,B040,4.58473226283704,2702,measured
+v3,B040_Week3,B040,4.58473226283704,1283,measured
+v3,B040_Week4,B040,4.750873686097116,2355,measured
+v3,B040_Week5,B040,4.58473226283704,1010,measured
+v3,B040_Week7,B040,4.58473226283704,2084,measured
+v3,J026_Week0,J026,4.415879813952577,1810,measured
+v3,J026_Week1,J026,3.359375,791,measured
+v3,J026_Week2,J026,3.359375,1316,measured
+v3,J026_Week3,J026,3.359375,525,measured
+v3,J026_Week4,J026,3.359375,303,measured
+v3,J026_Week5,J026,3.359375,59,measured
+v3,J026_Week6,J026,4.58473226283704,874,measured
+v3,J026_Week7,J026,4.58473226283704,1431,measured
+v3,K008_Week0,K008,5.869719568473765,3921,measured
+v3,K018_Week0,K018,4.415879813952577,134,measured
+v3,K018_Week1,K018,4.415901375890843,1650,measured
+v3,K018_Week2,K018,4.5847530306680255,1387,measured
+v3,K018_Week3,K018,4.58473226283704,482,measured
+v3,K018_Week4,K018,6.239990234375,3128,measured
+v3,K018_Week5,K018,4.750873686097116,2346,measured
+v3,K018_Week6,K018,5.683763745312066,3707,measured
+v3,K018_Week7,K018,4.58473226283704,1040,measured
+v3,M030_Week0,M030,6.25,2770,measured
+v3,M030_Week1,M030,6.71875,4193,measured
+v3,M030_Week2,M030,6.71875,3037,measured
+v3,M030_Week3,M030,5.683763745312066,3621,measured
+v3,M030_Week4,M030,21.510495485125976,5962,measured
+v3,M030_Week5,M030,4.750873686097116,2550,measured
+v3,S022_Week0,S022,4.58473226283704,1330,measured
+v3,S022_Week1,S022,3.28125,723,measured
+v3,S022_Week2,S022,7.0868101791793725,4081,measured
+v3,S022_Week3,S022,4.5847530306680255,805,measured
+v3,S022_Week4,S022,3.359375,1122,measured
+v3,S022_Week5,S022,3.359375,948,measured
+v3,S022_Week6,S022,12.47998046875,3500,measured
+v3,S022_Week7,S022,4.58473226283704,1211,measured

@@ -1,5 +1,7 @@
 # Feasibility Review — HipMRI Segmentation
 
+> Status note — 20 October 2026: the review below records an earlier P1/P2 decision point. Subsequent v2 and v3 training is complete; the current v4 A0/A1 paired training jobs have been submitted. The G7 intervention proposed below was not adopted for these runs. Use the [current documentation index](20261017/DOCUMENTATION_INDEX.md) for current evidence and execution status.
+
 **COMP3710 | 20 October 2026 | Status: feasible, with outstanding validation and submission work**
 
 ## Objective and scope
@@ -23,4 +25,4 @@ The four-case diagnostic completed with unchanged checkpoints and reproduced all
 
 Complete Validation boundary/continuity analysis, standardized resource measurement, reproducible submission entry points, exact dependencies, and AI disclosure. Confirm the applicable assessment version and tutor check-off; neither is certified by this review. Previously inspected Test results remain descriptive and cannot provide a fresh blind evaluation for subsequent tuning. Raw medical data and model weights must remain outside the submitted repository.
 
-**Decision:** the diagnostic is complete; prepare a single-factor G7 sampling comparison under the original inference protocol. See [the P1 research review](20261017/results/reports/HipMRI_P1_独立研究审查_ZH.md) for the evidence and decision gates.
+**Decision:** the diagnostic is complete; prepare a single-factor G7 sampling comparison under the original inference protocol. See [the P1 research review](20261017/results/reports/DATA_AND_METHODS_REVIEW_ZH.md#p1) for the evidence and decision gates.

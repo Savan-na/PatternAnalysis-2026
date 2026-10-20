@@ -1,0 +1,929 @@
+# Methods and execution history — reference, not a submission queue
+
+合并日期：2026-10-20。保留下列原始报告完整正文，仅重设标题层级及相对链接；历史判断按其当时证据解读，不作为当前自动执行指令。最新状态见[项目入口](../../README.md)。
+
+<a id="sources"></a>
+
+## 原文：SOURCE_DECISIONS.md
+
+来源SHA-256：`4245d32f08c55e98e617eb48978d375bb5c1ae55264b762a7cf4105172626019`。
+
+## Paper and assignment decision register
+
+| Decision | Basis | Implementation status / deviation |
+|---|---|
+| Core research question, six-class HipMRI and test endpoints | COMP3710 commission and revised data-driven research direction | Raw data and sampling exposure were investigated before the frozen model comparison and one-time Test |
+| Patient-level split | Existing approved project split, 26/6/6 patients and 143/38/30 volumes | Preserved for comparison; prior Validation reuse disclosed |
+| 2D U-Net | Ronneberger et al. (2015), assignment baseline option | Supplementary arm completed its separate frozen 40-epoch protocol and a checked continuation to epoch 50 |
+| Standard 3D U-Net | Çiçek et al. (2016), DOI 10.1007/978-3-319-46723-8_49 | 3D encoder/decoder, skip links, convolution and pooling; same-padding/group normalization and six-class output are explicit adaptations |
+| Improved 3D U-Net | Isensee et al., *Brain Tumor Segmentation and Radiomics Survival Prediction* (2018), arXiv:1802.10508 | Pre-activation residual context, stride-2 convolution, interpolation-based upsampling, localization blocks, additive deep-supervision logits; six-class HipMRI adaptation |
+| CAN3D and its pelvis comparisons | Dai et al. (2022), DOI 10.1016/j.media.2022.102562 | Literature context only; not a fourth training arm or a source of directly comparable target results |
+| Common image grid | Assignment specifies downsampled 3D HipMRI and alignment | Factor-two voxel-edge-aligned grid was audited on all 143 Train volumes before training |
+| Loss and optimizer | Train-only G4 exposure, G5 fixed-patch diagnostics and frozen run configurations | Standard and Improved share the same weighted CE plus foreground Dice objective and Adam settings. Do not attribute Dai's DSF to either U-Net |
+| Academic integrity | Course commission and source attribution requirements | Original PyTorch code written here; cite papers and consulted author code in README/report |
+
+Primary sources:
+
+- Ronneberger et al. (2015): https://arxiv.org/abs/1505.04597
+- Çiçek et al. (2016): https://lmb.informatik.uni-freiburg.de/Publications/2016/CABR16/cicek16miccai.pdf
+- Çiçek author resources: https://lmb.informatik.uni-freiburg.de/lmbsoft/unet.en.html
+- Isensee et al. (2018): https://arxiv.org/abs/1802.10508
+- Isensee team code: https://github.com/MIC-DKFZ/BraTS2017
+- Dai et al. (2022): https://doi.org/10.1016/j.media.2022.102562
+- CSIRO HipMRI data: https://data.csiro.au/collection/csiro%3A51392
+
+The original Çiçek network's reported 19.07M parameters and Dai's reduced
+pelvis comparator's 1.196M parameters describe different instances. Matching
+one number cannot establish layer-for-layer fidelity. Do not claim exact
+reproduction of unavailable Dai comparator settings.
+
+Initial implementations have 1,942,374 (2D), 1,412,550 (standard 3D), and
+2,366,946 (improved 3D) trainable parameters at their documented default
+widths. These counts are local code measurements, **not** paper claims or
+validated full-volume memory measurements.
+
+### Imbalance methods in the three primary papers
+
+Ronneberger et al. (2015) use a pixel-weighted cross-entropy map to compensate
+class frequency and emphasize the narrow background gaps between touching
+cells; strong elastic augmentation addresses limited annotated images. The
+cell-border formula and constants are specific to their microscopy task.
+
+Çiçek et al. (2016) reduce loss weight for common background and increase it
+for the less common inner tubule. They separately give *unlabelled* voxels
+zero loss weight because their 3D volumes are sparsely annotated. HipMRI's
+labelled Background is not an unlabelled class. Their batch normalization and
+spatial/gray-value augmentation serve optimization and generalization, not
+class-frequency correction.
+
+Isensee et al. (2018) standardize each patient's MRI modality using brain-region
+intensity statistics, then clip and rescale. They explicitly address their
+background-to-enhancing-tumor imbalance with multiclass Dice loss. Random 3D
+patches, instance normalization, augmentation, dropout and L2 regularization
+are also described; the paper does not specify foreground-anchored sampling as
+its own method. Its brain-specific intensity region and clipping thresholds
+require HipMRI Train evidence before adaptation.
+
+HipMRI G3 evidence supported keeping the validated nonzero-intensity
+Z-score and measured downsampling. G4 verified a
+patient-balanced patch mechanism and exact post-transform label exposure
+recorder on all 26 Train patients in one CPU dry-run epoch. The reference
+sampling design for the first controlled Standard/Improved comparison is equal
+patient selection and uniform crops; organ-aware placement remains a targeted
+candidate because its pooled exposure gain was modest and patient-level gains
+were mixed. This selection was based on HipMRI Train evidence, not prescribed
+by the three papers. Actual training exposure and Validation performance are
+reported in the formal research report.
+
+The G5 two-patch Standard diagnostic still predicted no Bladder, Rectum or
+Prostate at 500 optimizer steps under the provisional unweighted CE plus
+foreground Dice mixture. The follow-up configuration
+`code/config/g5_weighted_ce_diagnostic.json` uses square-root inverse class
+frequency relative to Body from the G4 Train-only patient-uniform Patch
+exposure, capped at 10. This bounded weighting is a HipMRI diagnostic choice,
+not a parameter copied from any of the three papers or a final loss decision.
+Its 500-step fixed-Train-patch follow-up recovered small-organ predictions
+under the same provisional CE/Dice mixture. This supports a controlled cohort
+comparison of loss weighting; the two-patch result does not establish
+generalization or optimal weights.
+
+---
+
+<a id="evidence"></a>
+
+## 原文：EXECUTION.md
+
+来源SHA-256：`690881d59d42e37e1e8beac6962ec6d3bf60882d339b06ed2337592528f6a457`。
+
+## Execution and evidence checklist
+
+### Evidence identity
+
+Use the Python 3.11 `torch` environment. Record Python, PyTorch, CUDA, NumPy,
+SciPy and NiBabel versions in every run manifest, along with the source ZIP or
+Git revision and the exact patient-split/configuration hashes. The current
+Rangpur G2 commands are maintained in [RANGPUR_COMMANDS.md](METHODS_EXECUTION_HISTORY.md#commands).
+
+### G1: raw integrity gate
+
+- Confirm the current Rangpur dataset root by read-only inspection; the old
+  path in previous instructions is not presumed valid. Never copy raw data
+  into Git.
+- Inventory all 211 filename pairs and confirm the frozen 143/38/30 volume
+  split. This inventory lists Test filenames only; it must not decode Test
+  arrays.
+- Check the completed full Train audit and its case warnings in the
+  [formal research report](../../results/reports/RESEARCH_REPORT.md).
+  A two-case smoke run alone is not a full-audit pass.
+- Keep Validation labels out of distribution analysis and tuning. Any later
+  Validation integrity check must be limited to what is needed to confirm
+  file readability and geometry; it must not drive preprocessing or model
+  choices.
+- Confirm affine, units, orientation, shape, six-class ID range, intensity
+  finiteness, and file hashes on Train data. Record unknown units or
+  conflicting header transforms for review rather than silently correcting
+  them.
+
+### G2: completed Train-only raw EDA gate
+
+- Reconcile the derived class, patient, volume, intensity and spacing tables
+  with the complete G1 JSON. Keep historical statistics distinct from the
+  current raw-audit result.
+- On Rangpur CPU, smoke-test then measure axial class coverage and nonzero MRI
+  intensity histograms for all Train cases. Verify case identity and source
+  hashes; transfer approved derived statistics only.
+- Review organ-size and longitudinal differences, boundary contrast where
+  measurable, and the limits of selected visual overlays. Record supported,
+  excluded and unresolved hypotheses before entering G3.
+
+### G3: existing-pipeline diagnosis (completed)
+
+- Audit the actual implemented Train path: `load_case`, factor-two
+  `downsample`, `zscore_nonzero`, and whole-volume `to_3d_model_arrays`.
+  Record label counts, physical organ volumes, axial-slice coverage, image
+  finiteness, normalized nonzero mean/std and padded-background voxels.
+- Use a two-case Rangpur CPU smoke run before the full 143-case audit. Preserve
+  the G1 source hashes and frozen patient split; do not process Validation/Test
+  label distributions for these decisions.
+- At this diagnosis point, the restart had no ROI crop, augmentation, Patch
+  Sampler or formal training loop. The subsequent G4/G5 implementation and
+  measured exposure are recorded in the formal report. Do not present
+  raw-slice presence as a patch-hit rate.
+
+#### G3 candidate crop comparison
+
+At the G3 decision point, the model adapter supplied complete downsampled
+volumes; no training sampler was yet available. Before selecting a new policy,
+audit two *candidate* patch streams on the same 143 Train cases with the
+frozen `config/g3_patch_audit.json`: ten 64×64×32 XYZ crops per volume per
+arm, using seed 371017. The uniform arm places all crops randomly. The
+organ-aware candidate uses four identical uniform crops plus two crops each
+anchored on a randomly selected Bladder, Rectum, and Prostate voxel. Case
+frequency is held equal between arms to isolate crop-placement effects; this
+design still weights patients with more visits more heavily. Record class
+patch-hit rate, pooled voxel share, and the fraction of patches containing an
+entire organ. Run a two-case smoke audit before the full CPU cohort. These
+are hypothetical exposure measurements, not historical or actual training
+exposure, and cannot establish model performance without later Validation.
+
+### Later gates
+
+The paired cohort training candidate is recorded in
+`code/config/g5_controlled_training_candidate.json`. Check its Train-only
+weight provenance, split hash, patient-epoch update count, and equal model
+settings before a bounded GPU training smoke run. Freeze the configuration
+only after the GPU probes demonstrate correct batches, gradients, actual
+class-exposure recording, full-volume inference geometry and feasible
+one-epoch runtime. The first formal Validation evaluation then occurs at
+the predeclared epoch; it must not silently change the frozen setup.
+`code/tools/train_g5_cohort.py` is staged for the subsequent formal run. It
+refuses the current candidate status and requires an explicitly frozen config;
+its one-epoch stopping option saves a resumable checkpoint instead of
+discarding the optimization work. The Validation selection score is defined
+in `code/hipmri_rewrite/training.py` and gives each patient equal weight.
+
+The paired GPU smoke and whole-volume inference checks have passed. The
+execution protocol is now `code/config/g5_controlled_training_frozen.json`.
+Run the formal trainer for one complete epoch first, preserving `latest.pt`
+and its epoch log; then resume the same run to the fixed budget. The separate
+full-epoch no-checkpoint probe was submitted as job 672837 but was still
+pending when this decision was made. Cancel that pending job before launching
+the formal epoch; do not interpret its absent log or JSON as a model failure.
+
+The user then requested one submission targeting all 40 epochs, recovery after
+each optimizer batch, immutable weights and records for every completed epoch,
+and strict resume checks. The two pending one-epoch jobs (672872, 672886)
+were cancelled before allocation. The revised trainer checkpoints `latest.pt`
+atomically after every completed batch, then writes `epoch_NNN.pt` and
+`epoch_NNN.json` on completion. The manifest records the frozen config hash,
+source hashes, software versions and dataset path; resume refuses a mismatch.
+Only the latest batch weight state is retained between epoch snapshots; the
+epoch JSON retains individual batch loss, gradient and delivered-label counts.
+An explicit `--extend-to-epochs` on resume can lengthen the horizon while
+retaining the same data, model and optimizer settings. The earlier one-epoch
+instruction above is historical and no longer the launch procedure.
+
+- G4: dry-run one scan per Train patient per epoch through the same
+  downsampling, normalization and paired patch conversion that GPU training
+  will use. Compare uniform and organ-aware candidates, record class hits,
+  voxel shares and patient counts from delivered masks. Repeat measurement
+  during real training after any augmentation; a CPU dry run alone is not
+  actual optimization exposure or evidence of improved Validation Dice.
+- Confirm every foreground class present before downsampling remains present
+  afterward, and quantify per-class physical-volume and slice-coverage
+  changes, or stop and revise the spatial resolution before any model run.
+- Benchmark a complete downsampled volume on allocated GPU. Fix the final
+  shape, padding, batch size and training budget in a hashed run config.
+- Use the largest-Z Train volume for this inference capacity check before
+  deciding how frequently whole-volume Validation can run. Its random-weight
+  outputs are not evaluation scores.
+- Before formal G5 training, run the dedicated real-Train-patch A100 probe for
+  both primary 3D models at batch size 2. Check every parameter gradient,
+  forward/backward time and peak allocated/reserved memory with the same
+  provisional objective. Its success is a capacity result only; freeze the
+  actual objective and training budget after reviewing it.
+- Check learnability on two fixed Train patches including Rectum and Prostate
+  before any full run. Log initial and later loss, each organ's Dice, recall
+  and prediction count. This temporary optimizer run saves no checkpoint;
+  learning on two patches is a correctness gate, not generalization evidence.
+- Check both primary 3D models' forward and backward passes, then a few-case
+  Train-only overfit including prostate and rectum.
+
+### Output status at 19 October 2026
+
+The three completed training runs have durable epoch checkpoints and detailed
+JSON records on Rangpur. Their derived epoch JSON records are local. The
+frozen Validation selection, one-time 3D Test metrics, selected Validation
+and Test panels, measured latency/VRAM, and cumulative report are local under
+`results/` and `logs/`. Raw MRI and checkpoint weights remain on Rangpur.
+The report records remaining scientific limitations and submission work.
+
+---
+
+<a id="commands"></a>
+
+## 原文：RANGPUR_COMMANDS.md
+
+来源SHA-256：`a773eda781e030e407eb504b979e6e3e830b0b15ae5825225c49ea1271374574`。
+
+## Rangpur G2 and G3 command handoff
+
+This is the historical command record for the 2026 restart. G1–G6 have since
+completed; check the [formal research report](../../results/reports/RESEARCH_REPORT.md)
+for current evidence before submitting any job. Do not rerun the one-time Test
+evaluation or old training commands as a continuation.
+
+Use Windows PowerShell at `Final project` for `scp` and `ssh`. Use the Rangpur
+login shell only to check files and request a Slurm CPU node. Decode MRI arrays
+only after `hostname` shows an allocated compute node. The active source is
+`/home/groups/comp3710/HipMRI_Study_open`; the existing research stage is
+`~/20261018_g1_stage/20261017`. The G1 record and its evidence are in the
+[research report](../../results/reports/RESEARCH_REPORT.md).
+
+### Transfer the G2 slice audit script
+
+From Windows PowerShell:
+
+```powershell
+scp '.\20261017\code\tools\audit_g2_train_slices.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/audit_g2_train_slices.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+Compare the local `Get-FileHash -Algorithm SHA256` result with Rangpur
+`sha256sum` before running the transferred file. The script also verifies the
+complete G1 audit and the hash of every Train MRI/Mask file it processes.
+
+### Two-case smoke run on a CPU node
+
+From the Rangpur login shell:
+
+```bash
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/audit_g2_train_slices.py"
+srun --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=00:30:00 --pty bash
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/audit_g2_train_slices.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --limit 2 \
+  --output-dir ../logs/audits/g2_slice_smoke_20261018
+```
+
+The `--limit 2` output is a software check, not a full G2 result. Check its
+row counts and per-case voxel totals against the G1 JSON before requesting a
+longer CPU allocation for all 143 Train cases. The full output belongs in the
+existing `results/data_analysis/training_distribution/` group; transfer only
+approved derived CSVs to Windows for analysis. G2 makes no preprocessing,
+sampling, loss, architecture, or model-training change.
+
+### Full Train run after the smoke check
+
+Starting from the smoke run's compute shell, exit to `login0` and request a
+fresh one-hour CPU allocation:
+
+```bash
+exit
+srun --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=01:00:00 --pty bash
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+out_dir="$HOME/20261018_g1_stage/20261017/results/data_analysis/g2_train_summary"
+if [ -e "$out_dir/per_slice_class_coverage.csv" ] || [ -e "$out_dir/per_volume_intensity_histogram.csv" ]; then
+  echo "Full G2 CSV destination already exists; inspect it before rerunning"
+  exit 1
+fi
+python -B tools/audit_g2_train_slices.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --output-dir "$out_dir"
+wc -l "$out_dir/per_slice_class_coverage.csv" "$out_dir/per_volume_intensity_histogram.csv"
+sha256sum "$out_dir/per_slice_class_coverage.csv" "$out_dir/per_volume_intensity_histogram.csv"
+```
+
+Stop if either destination CSV already exists. A complete run should create
+18,320 slice records and 17,160 intensity-bin records, plus one header row in
+each CSV. Transfer these two derived CSVs to the local folder of the same name
+only after the full run passes; then reconcile class totals with G1 and add
+plots and findings to the formal report.
+
+### G3 existing-pipeline smoke run
+
+The current restart implements downsampling and whole-volume model arrays;
+it has no Patch Sampler to audit yet. Transfer the G3 script from Windows
+PowerShell at `Final project`:
+
+```powershell
+scp '.\20261017\code\tools\audit_g3_existing_pipeline.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/audit_g3_existing_pipeline.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On `login0`, compare its `sha256sum` with the local `Get-FileHash` output. Run
+`srun` there; after allocation, continue the remaining commands on the CPU
+node:
+
+```bash
+srun --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=00:30:00 --pty bash
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/audit_g3_existing_pipeline.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --limit 2 \
+  --output ../logs/audits/g3_existing_pipeline_smoke_20261018.json
+```
+
+The script refuses to overwrite an existing output and verifies the hashes of
+the frozen split, G1 audit, reviewed preprocessing code and every source pair
+it processes. A smoke result has `pipeline_pass=false` by design; check
+`case_error_count` and per-case measurements before scheduling the full cohort.
+
+### G3 full Train run and local analysis
+
+The two-case smoke run passed. On a Rangpur CPU node with `torch` active and
+the working directory at `20261017/code`, run the full cohort without
+`--limit`:
+
+```bash
+python -B tools/audit_g3_existing_pipeline.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --output ../logs/audits/g3_existing_pipeline_full_20261018_job671892.json
+```
+
+The completed job `671892` reported 143 audited cases, zero case errors and
+`pipeline_pass=true`. Its JSON SHA-256 is
+`319973a8759265521870f831e7b17eb7249f4130b6a9e9634fe993f22bf687e9`.
+After downloading that JSON into local `logs/audits/`, regenerate the derived
+table and figure with `python -B code/tools/summarize_g3_pipeline.py` from an
+existing Matplotlib environment. The tool reconciles raw counts with G1 and
+rejects unexpected input hashes.
+
+### G3 candidate-crop smoke run
+
+From Windows PowerShell at `Final project`, transfer only the two new audit
+sources to the existing staged project, then reconnect:
+
+```powershell
+scp '.\20261017\code\tools\audit_g3_candidate_sampling.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/audit_g3_candidate_sampling.py'
+scp '.\20261017\code\config\g3_patch_audit.json' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/config/g3_patch_audit.json'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On `login0`, verify both remote `sha256sum` values against local
+`Get-FileHash`. The first interactive attempt (job `671962`) failed while
+creating the `srun` job step, leaving the shell on `login0`; the subsequent
+Python process was interrupted during OpenBLAS thread creation and produced
+no valid smoke result. Submit the smoke audit as a CPU batch job instead:
+
+```bash
+sbatch --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=00:30:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/audits/g3_patch_candidate_smoke_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/audit_g3_candidate_sampling.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --limit 2 \
+  --output-dir ../logs/audits/g3_patch_candidate_smoke_20261018
+SBATCH
+```
+
+Read the returned job ID and inspect its `.out` file after `squeue -j ID`
+shows the job has finished. The audit script itself rejects execution without
+an allocated Slurm job or on a login host. Check the smoke manifest and patch
+CSV before allocating time for all 143 cases. Keep the full run in a separate
+new output directory.
+
+The successful smoke job `671975` saved 40 patch rows across two Train cases.
+Full CPU job `671984` saved 2,860 rows across all 143 Train cases under
+`logs/audits/g3_patch_candidate_full_20261018/`. The manifest and patch CSV
+SHA-256 values are respectively
+`e142be157e692572a7fd96084ec80c241edc6f165498dec25ea13919abb1889b`
+and `96ac1118b0109a21e3bc943df71094026dcf1852535d79124f200383d790dce2`.
+After downloading both files into the matching local `logs/audits/` directory,
+run `code/tools/summarize_g3_candidate_sampling.py` in the existing local
+Matplotlib environment with those two hashes. The verifier checks all 2,860
+rows against G3 before writing derived CSVs and a figure.
+
+### G4 patient-balanced tensor dry run
+
+The G4 source uses the already staged G1/G3 full JSON files. Transfer two new
+files from Windows PowerShell at `Final project`, then connect to Rangpur:
+
+```powershell
+scp '.\20261017\code\hipmri_rewrite\sampling.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/hipmri_rewrite/sampling.py'
+scp '.\20261017\code\tools\audit_g4_patient_sampling.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/audit_g4_patient_sampling.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On login0, compare the remote `sha256sum` of both files with local
+`Get-FileHash`. Submit a two-patient smoke run; the script refuses login-node
+computation. Use a new output directory if this name already exists:
+
+```bash
+sbatch --partition=cpu --nodes=1 --ntasks=1 --cpus-per-task=2 --time=00:20:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/audits/g4_patient_smoke_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/audit_g4_patient_sampling.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --limit-patients 2 \
+  --output-dir ../logs/audits/g4_patient_smoke_20261018
+SBATCH
+```
+
+Inspect the job output and `manifest.json`: expect two patients, ten patches
+per policy per patient, and 40 CSV rows. This is a CPU *dry run*, not GPU
+training or evidence of model benefit. A full patient-epoch run follows only
+after reviewing the smoke output.
+
+The two-patient smoke job `672082` passed. The full 26-patient CPU job
+`672092` saved 520 model-ready patch records under
+`logs/audits/g4_patient_full_20261018/`, 260 per policy. Its manifest and CSV
+SHA-256 values are respectively
+`cafd3593efa5880a4a61b6281bac5d177f58cd713e734cf8dad422d191f0b90c`
+and `04a6822f15940b658f0c3eb062528aa4fa17721552030dc5dc6d45ce5c441968`.
+The files were downloaded and verified locally. Run
+`code/tools/summarize_g4_patient_sampling.py` from a local environment with
+NumPy and Matplotlib to reproduce the G4 tables and SVG. This is still a
+one-epoch dry run without optimizer steps.
+
+### G5 patch GPU preflight
+
+The Train-only probe source is `code/tools/probe_g5_patch_gpu.py`. It uses the
+already transferred G4 sampler, one approved Train case, two 64×64×32 patches,
+and the same provisional CE+foreground-Dice objective for both 3D models.
+It records shape, loss, every parameter gradient, runtime and CUDA peak memory
+without taking an optimizer step. From Windows PowerShell at `Final project`:
+
+```powershell
+scp '.\20261017\code\tools\probe_g5_patch_gpu.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/probe_g5_patch_gpu.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+Check the transferred SHA-256 before submitting. On 18 October 2026,
+`scontrol show partition a100-test` reported nodes `a100-a,a100-b`, and
+`sinfo -N -p a100-test -o '%N %G %m %t'` showed one `gpu:a100:1` GRES on each
+idle node. The partition's default test time is ten minutes. Submit this
+single-GPU, ten-minute probe from login0 after confirming the output path is
+unused:
+
+```bash
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_patch_probe_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/probe_g5_patch_gpu.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id B006_Week0 --batch-size 2 \
+  --output ../logs/profiles/g5_patch_probe_20261018.json
+SBATCH
+```
+
+The `.out` file identifies the allocated node and both model measurements.
+The JSON is a capacity record, not a model checkpoint. Do not run the CUDA
+workload directly on login0.
+
+GPU probe job `672173` completed on `a100-a`. The JSON at
+`logs/profiles/g5_patch_probe_20261018.json` has SHA-256
+`f8d2a059d31f5d50302399dd8e92d1218c6159352775545f5f02b38ceee651eb`.
+Both 3D models produced finite losses and gradients at batch size two; see
+the formal research report for interpretation. Their first-run timings are
+not a controlled speed comparison.
+
+### G5 two-patch learning check
+
+Transfer `code/tools/tiny_overfit_g5.py` from Windows PowerShell at
+`Final project` to the existing staged Rangpur code directory, then confirm
+its SHA-256. The check takes optimizer steps on two fixed *Train* patches and
+saves metrics only, not weights. After verifying the output path is unused,
+submit on the same A100 test partition:
+
+```bash
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_tiny_overfit_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/tiny_overfit_g5.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id B006_Week0 --steps 100 \
+  --output ../logs/profiles/g5_tiny_overfit_20261018.json
+SBATCH
+```
+
+Review initial/final fixed-batch loss, Rectum and Prostate Dice/recall and
+predicted voxel counts before planning a full training run. The result shows
+only whether these two patches are learnable under the temporary objective.
+
+Job `672194` completed 100 steps per model. Its JSON SHA-256 is
+`097b047bd9d2a7c7f6c713cbbb98ba42558a2577f661aed744cfc8feba43c5ad`.
+The Standard arm predicted only Body at step 100; Improved fitted all three
+small organs on these fixed patches. To check whether Standard is simply
+slower, transfer the revised `tiny_overfit_g5.py` (SHA-256
+`ae9c851a79773e84045812c0ccebd0eb176469d3342c02eff2207b2066990045`)
+and verify its hash,
+then run only Standard for 500 steps with the same case, patches, seed,
+objective and optimizer. Use a new output path:
+
+```bash
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_standard_500_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/tiny_overfit_g5.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id B006_Week0 --model standard_3d --steps 500 \
+  --output ../logs/profiles/g5_standard_500_20261018.json
+SBATCH
+```
+
+This changes the step budget only and does not replace the original 100-step
+record or create a checkpoint. Its diagnostic purpose is limited to fixed
+Train patches; full training remains gated on reviewing the result.
+
+Job `672228` completed. The returned JSON SHA-256 is
+`d10c454a24f1bdb1876fec034784a53fbb4d0a5c0da6fcfdcdc0dee75a72c53f`.
+At step 500, Standard still predicted zero Bladder, Rectum and Prostate voxels
+on the fixed batch. See the research report for the class counts and limits.
+
+### G5 controlled weighted-CE diagnostic
+
+The next check keeps the Standard model, two Train patches, seed, optimizer,
+500 steps and the 0.5 CE / 0.5 foreground Dice mixture fixed. Only the CE
+class weights change. `code/config/g5_weighted_ce_diagnostic.json` records the
+weights and their Train-only G4 patient-uniform exposure source. This is a
+learning diagnostic, not an approved full-training objective.
+
+From **Windows PowerShell** in `Final project`, transfer the updated script
+(SHA-256 `393dff3896fc8949ffd0feb9433163fbe8d9bc3d70401e7d9d87bbfce05a404c`)
+and new config (SHA-256
+`4daa7f5b202e6446a31a5780247ff2e93c3e79390c61137621ecdb097c4e85f`):
+
+```powershell
+scp '.\20261017\code\tools\tiny_overfit_g5.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/tiny_overfit_g5.py'
+scp '.\20261017\code\config\g5_weighted_ce_diagnostic.json' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/config/g5_weighted_ce_diagnostic.json'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On the **Rangpur login node**, verify the two transferred hashes, check the
+result path is free, then submit the small GPU job:
+
+```bash
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/tiny_overfit_g5.py" \
+  "$HOME/20261018_g1_stage/20261017/code/config/g5_weighted_ce_diagnostic.json"
+test ! -e "$HOME/20261018_g1_stage/20261017/logs/profiles/g5_standard_weighted_500_20261018.json" && echo 'Weighted diagnostic output path is free'
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_standard_weighted_500_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/tiny_overfit_g5.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id B006_Week0 --model standard_3d --steps 500 \
+  --class-weights-config config/g5_weighted_ce_diagnostic.json \
+  --output ../logs/profiles/g5_standard_weighted_500_20261018.json
+SBATCH
+```
+
+After completion, report the job ID, final ten output lines and JSON SHA-256.
+Compare the final Bladder, Rectum and Prostate predicted voxel counts with the
+unweighted 500-step JSON before deciding any further experiment.
+
+Job `672730` completed and its returned JSON SHA-256 matched Rangpur:
+`f9f53f6eaaabb922f29e04d4905d5529ad24c668b3b2733620c9de340008b7c7`.
+The comparison and its limits are recorded in the formal research report.
+
+### G5 full-volume inference capacity gate
+
+Before freezing cohort training and Validation schedules, check that both
+current 3D networks can infer an entire preprocessed volume on one allocated
+A100. The Train case `K019_Week1` is the sole 256×256×144 raw Train MRI in the
+G1 inventory, so it covers the largest observed Z extent. The script uses
+random weights and measures geometry, execution time and peak memory only;
+its predictions are not segmentation evidence. It reads the frozen G1 hash
+and refuses changed source files.
+
+From **Windows PowerShell** in `Final project`, transfer the source (SHA-256
+`d47d4a4508f4ee7236927444696384bb25b8cbdc5a7bb6b55b939b4ac71e7040`):
+
+```powershell
+scp '.\20261017\code\tools\probe_g5_full_volume.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/probe_g5_full_volume.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On the **Rangpur login node**, verify the hash and empty destination before
+submitting the short GPU job:
+
+```bash
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/probe_g5_full_volume.py"
+test ! -e "$HOME/20261018_g1_stage/20261017/logs/profiles/g5_full_volume_probe_20261018.json" && echo 'Full-volume probe output path is free'
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_full_volume_probe_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/probe_g5_full_volume.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --case-id K019_Week1 --repeats 2 \
+  --output ../logs/profiles/g5_full_volume_probe_20261018.json
+SBATCH
+```
+
+Use the job ID printed by `sbatch` to inspect the `.out` file. Once the JSON
+exists, send its SHA-256 and the two model rows. A pass supports selecting a
+whole-volume Validation inference strategy; it does not approve a training
+budget or show model accuracy.
+
+Job `672782` completed; its JSON SHA-256 matched Rangpur:
+`263c2309e00d21666e69418a8c82d436585e3037285c0e02f17f959488b21c53`.
+Both model outputs had the expected XYZ shape. See the formal report for
+measured capacity and interpretation.
+
+### G5 paired training-candidate smoke
+
+The candidate protocol is `code/config/g5_controlled_training_candidate.json`.
+Before a 40-epoch cohort run, use `code/tools/probe_g5_training_smoke.py` to
+take exactly two weighted optimizer steps per model. It selects two distinct
+Train patients under the G4 visit rule, draws two uniform patches per patient,
+mixes both patients in each batch, and records delivered-mask class exposure,
+loss, gradient norm, prediction counts, time and CUDA memory. No checkpoint
+or Validation metric is produced. It verifies the wiring and initial runtime,
+not learnability or generalization.
+
+From **Windows PowerShell** in `Final project`, upload the two new files:
+
+```powershell
+scp '.\20261017\code\tools\probe_g5_training_smoke.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/probe_g5_training_smoke.py'
+scp '.\20261017\code\config\g5_controlled_training_candidate.json' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/config/g5_controlled_training_candidate.json'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On the **Rangpur login node**, verify the script SHA-256
+`8ee48773309e8240557fbd860ab9cec69def4776a4d9e16c3f40fe168aaf9a2a`
+and configuration SHA-256
+`aafdcc4e695de24fec9c6748db3448287b9e5040d036bd7eb4422776521f0ee7`.
+If the result path is free, submit the bounded A100 test job:
+
+```bash
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/probe_g5_training_smoke.py" \
+  "$HOME/20261018_g1_stage/20261017/code/config/g5_controlled_training_candidate.json"
+test ! -e "$HOME/20261018_g1_stage/20261017/logs/profiles/g5_training_smoke_20261018.json" && echo 'Training smoke output path is free'
+sbatch --partition=a100-test --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:10:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_training_smoke_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/probe_g5_training_smoke.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --output ../logs/profiles/g5_training_smoke_20261018.json
+SBATCH
+```
+
+The job should print two successful model rows and a JSON path. Transfer only
+the JSON after SHA-256 verification; do not copy source MRI or masks.
+
+Job `672807` completed. The returned JSON matched Rangpur SHA-256
+`4161b30138243dbf3f52ba44cb097aead6046e50d60e37b60d64329bf6a336d5`.
+Two mixed-patient batches per model passed; the formal report records the
+exposure and interpretation. Full-epoch I/O, Validation and checkpoints
+remain unchecked.
+
+### G5 one-epoch budget and exposure probe
+
+The revised `probe_g5_training_smoke.py` adds `--full-epoch`. It runs epoch
+zero of the candidate Train sampler across all 26 patients, 10 uniform
+patches per patient, batch size two, for 130 temporary optimizer updates
+per model. It measures NIfTI/hash/preprocessing/patch preparation separately
+from each model loop and records every delivered mask. It saves **no** model
+checkpoint and does not inspect Validation or Test. This is the remaining
+runtime/exposure check before freezing the cohort training protocol.
+
+From **Windows PowerShell** in `Final project`, transfer the revised script
+(SHA-256 `6d89a7055afad98cc1288db212b8c9dd12fd5d65deb6968264ca441160d5a4fb`):
+
+```powershell
+scp '.\20261017\code\tools\probe_g5_training_smoke.py' 's4906923@login0.compute.eait.uq.edu.au:~/20261018_g1_stage/20261017/code/tools/probe_g5_training_smoke.py'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+On the **Rangpur login node**, verify the hash, confirm the regular A100
+partition is available, and check the fresh JSON path before submitting:
+
+```bash
+sha256sum "$HOME/20261018_g1_stage/20261017/code/tools/probe_g5_training_smoke.py"
+scontrol show partition a100 | head -n 5
+test ! -e "$HOME/20261018_g1_stage/20261017/logs/profiles/g5_epoch_budget_20261018.json" && echo 'Epoch probe output path is free'
+sbatch --partition=a100 --gres=gpu:a100:1 --nodes=1 --ntasks=1 \
+  --cpus-per-task=2 --time=00:30:00 \
+  --output="$HOME/20261018_g1_stage/20261017/logs/profiles/g5_epoch_budget_%j.out" <<'SBATCH'
+#!/bin/bash
+set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+hostname
+source "$HOME/miniconda3/etc/profile.d/conda.sh"
+conda activate torch
+cd "$HOME/20261018_g1_stage/20261017/code"
+python -B tools/probe_g5_training_smoke.py \
+  --dataset-root /home/groups/comp3710/HipMRI_Study_open \
+  --full-epoch --output ../logs/profiles/g5_epoch_budget_20261018.json
+SBATCH
+```
+
+Check the job log for 130 batches per model and the JSON SHA-256. Its first
+epoch loss cannot be used as a Validation result or an optimal epoch count.
+
+### G5 formal training transition
+
+Job 672837 was still PENDING when the protocol was frozen. Its no-checkpoint
+full-epoch probe has been superseded by a first formal epoch that saves
+`latest.pt`. Cancel job 672837 while it is pending and confirm it has left the
+queue before starting a formal job. The absence of a Slurm `.out` file and
+JSON while PENDING is expected.
+
+The executable protocol is now
+`code/config/g5_controlled_training_frozen.json`. Transfer this file,
+`code/tools/train_g5_cohort.py`, and `code/hipmri_rewrite/training.py` to their
+matching paths under `~/20261018_g1_stage/20261017/`. Verify their SHA-256
+hashes against local files. The first formal command is the trainer with
+`--model standard_3d`, `--stop-after-epoch 1`, and a new directory under
+`logs/training/`. It saves model and optimizer weights plus a Train epoch log.
+Run the Improved arm with the same config and its own new directory; resume
+both with `--resume` to the frozen budget. Validation first occurs at epoch 5,
+and Test remains untouched during training and selection.
+
+The pending one-epoch jobs 672872 and 672886 were subsequently cancelled.
+The revised frozen configuration requires one atomic recovery checkpoint per
+completed optimizer batch and an immutable snapshot for each epoch. For a new
+40-epoch job, omit `--stop-after-epoch`; `--resume` continues from the latest
+saved batch if a Slurm time limit interrupts it. Verify the new script/config
+hashes before submission. Request a walltime allowed by both partition and
+QoS; `MaxTime=UNLIMITED` at the partition does not prove a particular job can
+run forever or start promptly.
+
+The reviewed submission entry point is `code/tools/submit_g5_40.sh`. Run it
+only on the Rangpur login node after transferring the revised config,
+trainer, recovery test and the script itself. It verifies the source hashes
+and unused output directories, submits a short CPU checkpoint recovery test,
+then submits both six-hour, 40-epoch A100 jobs with `afterok` dependencies on
+that test. If the test fails, the GPU jobs do not start. The script prints all
+three job IDs. It does not submit the optional 2D arm.
+
+On 18 October, recovery test 672953 cleared the dependency for A100 jobs
+672954 (Standard) and 672955 (Improved). Both remained PENDING for priority
+at the queue observation. Both later completed 40 epochs with exit code 0;
+their logs and checkpoints must be reviewed before comparing per-class
+Validation or opening held-out Test data.
+
+### Optional 2D arm: Train-only exposure gate
+
+The two 2D source files have been transferred to Rangpur. Their local
+SHA-256 values are `b98fbb0db5936a6260bc1d1f74b1446411e4ba8e1a9584ca715fb48d6a1624f3`
+for `code/tools/audit_g5_2d_sampling.py` and
+`99054855ecd2869796af9a4ce5decbdb2522d5402dac0fa7b4782676aa3d9f08`
+for `code/hipmri_rewrite/sampling_2d.py`. Run the audit in a separate CPU
+Slurm job while the 3D jobs queue or train. It compares the two candidate
+policies across one visit from each of the 26 Train patients, yielding 260
+crops per policy. Job 673872 completed and its `manifest.json` and
+`patches.csv` passed local hash and row-count checks. Organ-aware sampling
+raised small-organ patch coverage, so the separate 2D protocol is frozen in
+`code/config/g5_2d_training_frozen.json`; it cannot serve as a segmentation
+quality score. Transfer that config, `code/tools/train_g5_2d.py` and
+`code/tools/submit_g5_2d.sh` to their matching Rangpur staging paths. The
+submission script verifies hashes, runs a CPU config/recovery check, then
+queues the optional 40-epoch A100 job on success. It does not modify the
+completed 3D runs. The 2D run's Validation score is separate from the
+architecture-controlled 3D comparison.
+
+The first 2D CPU check (673901) failed because the staged checkout lacked
+`tests/test_sampling_2d.py`; its dependent GPU job 673902 never started and
+was cancelled. After transferring the missing test, CPU check 673907 passed
+and formal A100 job 673908 started. The first epoch completed with durable
+batch and epoch records. The 2D run subsequently completed 40 epochs and a
+checked continuation to 50; current results are in the formal research report.
+
+### G7 Train-only edge sampling CPU audit — 19 October 2026
+
+The five-file source archive is `code/transfer/g7_edge_audit_20261019.zip`.
+Its SHA-256 is `95553ad1350f2d664f35a88973f3f0a16929dd880d60c75bdf3afceef2b88999`.
+It contains only the new edge selector, CPU audit, submission helper, candidate
+config and selector tests. The existing G5 sources are not included.
+
+From Windows PowerShell at `Final project>`:
+
+```powershell
+scp '.\20261017\code\transfer\g7_edge_audit_20261019.zip' 's4906923@login0.compute.eait.uq.edu.au:~/g7_edge_audit_20261019.zip'
+ssh s4906923@login0.compute.eait.uq.edu.au
+```
+
+Run each following command separately in the Rangpur login terminal. Check
+the archive hash against the value above before extraction. Extraction checks
+the exact five names and refuses to replace any existing destination file:
+
+```bash
+sha256sum "$HOME/g7_edge_audit_20261019.zip"
+python -B -c 'from pathlib import Path; from zipfile import ZipFile; p=Path.home(); root=p/"20261018_g1_stage/20261017"; names={"code/hipmri_rewrite/sampling_edges.py","code/tools/audit_g7_edge_sampling.py","code/tools/submit_g7_edge_audit.sh","code/config/g7_edge_sampling_candidate.json","code/tests/test_sampling_edges.py"}; z=ZipFile(p/"g7_edge_audit_20261019.zip"); assert root.is_dir() and set(z.namelist())==names and len(z.namelist())==5 and z.testzip() is None; assert all(not (root/n).exists() for n in names), "A G7 destination already exists; inspect before extraction"; z.extractall(root); print("Extracted five new G7 files")'
+bash -n "$HOME/20261018_g1_stage/20261017/code/tools/submit_g7_edge_audit.sh"
+bash "$HOME/20261018_g1_stage/20261017/code/tools/submit_g7_edge_audit.sh" smoke
+```
+
+The smoke checks two Train patients across two epochs and reruns the selector
+tests on a CPU node. Review the printed job ID with `sacct` and its log at
+`logs/audits/g7_edge_sampling_smoke_<job>.out`. Expected successful output is
+`smoke_pass=true`, `full_train=false`, and `eligible_for_training=false`.
+The last value requires the complete audit and is not a smoke failure.
+
+Only after reviewing a successful smoke, submit the full CPU audit:
+
+```bash
+bash "$HOME/20261018_g1_stage/20261017/code/tools/submit_g7_edge_audit.sh" full
+```
+
+The full submission verifies candidate sources against the smoke receipt,
+requests 45 minutes on `cpu`, replays 50 epochs and writes two files to
+`logs/audits/g7_edge_sampling_full_20261019/`: `patches.csv` and
+`manifest.json`. Each arm should have 13,000 patches, giving 26,000 CSV data
+rows. Baseline class exposure must reproduce every G5 epoch; the manifest
+then reports corner coverage, rare-organ exposure ratios and eligibility
+under the predeclared gates. Neither mode reads Validation/Test arrays,
+updates checkpoints or submits A100 model training. Refresh the remote
+`PROJECT_MAP.md` after generating outputs with `python -B code/tools/update_project_map.py`
+from the staged project root; keep the locally maintained documentation local.
+
+Completed state, 20 October: smoke 675465 passed; repeated smoke 675467
+stopped because its output already existed. Full CPU audit 676249 completed
+in 4m46s with all 1,300 edge selections accepted and provisional gates passed.
+The two downloaded files were checked locally against remote hashes:
+`50d26679437bd876182156431b578ca36789657944435268bbf13f67187b1a48`
+for `manifest.json`, and
+`86a7e72227ac7101432b62336f9d70d6d418d0fad152ab67746ce833b36ad4de`
+for `patches.csv`. Reconcile and draw the complete local audit with
+`python -B code/tools/summarize_g7_edge_sampling.py` from `20261017/`.
+The P1 review now prioritizes a fixed-checkpoint Validation inference-context
+diagnostic before choosing another training experiment; the G7 result alone
+does not submit or require GPU training.
+
+---

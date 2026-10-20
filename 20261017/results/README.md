@@ -1,43 +1,18 @@
-# Results and Report Artifacts
+# 结果与分析产物
 
-This folder is for **interpreted** outputs linked to immutable run IDs in
-`../logs/`: per-patient and per-class metric tables, boundary analyses,
-resource comparisons, selected failure-case panels, and the manager-facing
-research report. Every new result should identify its source run, checkpoint hash,
-data split, measurement definition, and any incomplete cases.
+本目录保存由实验记录解释得到的结果。每组新结果应标注来源run、checkpoint、数据split、指标定义和缺失项；指标、图像和结论不能脱离原记录。
 
-Current layout:
+| 内容 | 入口 |
+|---|---|
+| 当前已完成模型统一best比较 | [v3/analysis](model_evaluation/best_checkpoint_comparison/README.md) |
+| 版本专属设计、结果和证据 | [v2](experiments/improved_3d_v2/README.md)、[v3](experiments/improved_3d_v3/README.md)、[v4](experiments/improved_3d_v4/README.md) |
+| 原始Train数据问题、预处理与采样 | [data_analysis](data_analysis/README.md) |
+| 固定权重机制/推理诊断 | [diagnostics](diagnostics/inference_context/README.md) |
+| 历史G5/G6统计图与原始评估 | [figures/comparisons](figures/comparisons/README.md)、[tables/comparisons](tables/comparisons/README.md) |
+| 真实MRI、GT、预测和错误对照 | [case_studies](case_studies/comparisons/README.md)；v2/v4案例在各自实验区 |
+| 完整研究与治理报告 | [reports](reports/README.md) |
+| 清理来源与完整性检查 | [documentation_audit](documentation_audit/README.md) |
 
-```text
-results/
-  data_analysis/          Train-only audits and historical evidence
-  tables/comparisons/     Frozen 3D Test JSON and per-case/class CSV
-  figures/comparisons/    3D Validation, Test and failure figures
-  figures/baseline_2d/   Supplementary 2D Validation figures
-  case_studies/comparisons/  Selected MRI/GT/prediction panels
-  reports/
-```
+历史图仍保留其独立问题：pooled指标、Test错误案例、v2末期退步、P2机制诊断等不等于重复版本。已被五模型best完全覆盖的旧v3概览图已删除。PNG与SVG用途不同，前者便于查看，后者用于出版排版；数值CSV是精确分析依据，不视为重复文件。
 
-Current groups and explicitly planned diagnostics are indexed in [STORAGE_GUIDE.md](STORAGE_GUIDE.md). Cross-model tables and visuals
-are in `comparisons`; the supplementary 2D figure has its own folder. The one
-cumulative formal research report
-is [`reports/HipMRI_Research_Report.md`](reports/HipMRI_Research_Report.md).
-The earlier mixed-source analysis is archived beside it. The
-[P1 independent review](reports/HipMRI_P1_独立研究审查_ZH.md) maps the local assessment
-draft to current evidence and revises the next diagnostic priority.
-The
-[`data_analysis/`](data_analysis/README.md) index separates historical figures,
-three G1 image groups, G2/G3 audits, G4 patch exposure and the completed G7
-50-epoch edge-sampling comparison, each
-with a short README beside its figures.
-
-The restarted Standard and Improved 3D arms completed 50 Train epochs each;
-the supplementary 2D arm also completed 50. Their Validation figures are under
-[`figures/comparisons/`](figures/comparisons/README.md). The one-time 3D
-held-out [Test result](tables/comparisons/README.md) and selected
-[Validation/Test overlays](case_studies/comparisons/README.md) are also local.
-Generated artifacts and medical-derived PNGs stay in ignored subdirectories
-unless course and data licence requirements allow inclusion in the final
-submission. Historical
-Baseline–V4 plots or scores are background evidence, not results of this
-restart.
+数据位置与输出约定见[STORAGE_GUIDE](STORAGE_GUIDE.md)。项目训练进度只从[项目入口](../README.md)及实验入口维护。

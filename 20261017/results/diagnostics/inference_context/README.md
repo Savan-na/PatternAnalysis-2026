@@ -1,11 +1,11 @@
-# 推理上下文诊断
+﻿# 推理范围与预测机制诊断
 
-将存放固定权重下全体积与训练尺寸滑窗推理的 Validation 对比、logit 和辅助输出贡献图。用于检验输入范围与归一化是否参与 Body 误检，当前不能认定根因。
+本区研究固定权重模型为何产生远处Body误检，区分可观测结果、实现问题与未证明的机制。
 
-原始记录预留 logs/validation/inference_context/<run_id>/，必须记录权重哈希、窗口、重叠率和融合方式。
+| 诊断 | 证据与状态 |
+|---|---|
+| [输入范围敏感性](context_sensitivity_20261020/CONTEXT_SENSITIVITY_REVIEW_ZH.md) | 四例全体积/滑窗对照已完成；远处误检下降，但小器官受损，未替换正式推理 |
+| [空间与logit证据](prediction_mechanisms_20261020/README.md) | 原始预测记录衍生的描述性定位，不是单独因果证明 |
+| [数值回放审查](prediction_mechanisms_20261020/NUMERICAL_REPLAY_REVIEW_ZH.md) | 正控失败后停止机制归因，保留失败及数值审计证据 |
 
-四例固定权重 P2 的设计、测试与远程操作见 [执行说明](../../../code/docs/P2_INFERENCE_CONTEXT.md)。完成后，每次实验的图与简报放在独立 run_id 子目录。
-
-P2 已完成：[四例结果与中文分析](p2_four_cases_20261020/P2_review_ZH.md)。上下文敏感性得到支持，但有小器官损伤，未采用滑窗作为替代协议。
-
-本轮 [同体素空间/logit 证据](p2_mechanism_evidence_20261020/README.md) 已从原始记录生成。[P2B](../../../code/docs/P2B_PREDICTION_MECHANISMS.md) 作业 677509 在首例数值正控失败后停止；先按 [数值定位方案](p2_mechanism_evidence_20261020/P2B_numerical_failure_ZH.md) 检查回放实现，不放宽阈值、不自动进入 G7 训练。
+方法见[推理范围协议](../../../code/docs/INFERENCE_CONTEXT_DIAGNOSTIC_ZH.md)和[预测机制协议](../../../code/docs/PREDICTION_MECHANISM_DIAGNOSTIC_ZH.md)。原始logs中的历史run ID及checksum身份不更名；图和分析目录采用明确主题＋日期。

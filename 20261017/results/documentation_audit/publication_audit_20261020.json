@@ -1,0 +1,831 @@
+{
+  "markdown_count": 62,
+  "local_link_scope": "Markdown inline relative links; excludes fenced code, URLs and fragment validation",
+  "broken_local_links": [],
+  "encoding_flags": [],
+  "protected_count": 9,
+  "approved_protected_retirements": {
+    "20261017/code/docs/V4_PRETEST_PLAN_ZH.md": "8c02bbd66681ee065a6b198989a8f1e4740a6ed72df0d24940b2e42381c2bfb1",
+    "20261017/code/docs/V3_GENERALIZATION_AUDIT.md": "3868b9bb1853ccc01fd81860d60db85c41b394390ac9b09494837b7314868ccf",
+    "20261017/code/docs/BEST_AUDIT_V4_PLAN_ZH.md": "8c02bbd66681ee065a6b198989a8f1e4740a6ed72df0d24940b2e42381c2bfb1"
+  },
+  "publication_scope": "repository",
+  "intentionally_local_links": [
+    {
+      "file": "20261017/results/diagnostics/inference_context/context_sensitivity_20261020/CONTEXT_SENSITIVITY_REVIEW_ZH.md",
+      "target": "K018_Week4_improved_3d_body.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/diagnostics/inference_context/context_sensitivity_20261020/CONTEXT_SENSITIVITY_REVIEW_ZH.md",
+      "target": "J026_Week4_head_margins.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/diagnostics/inference_context/prediction_mechanisms_20261020/README.md",
+      "target": "../context_sensitivity_20261020/K018_Week4_improved_3d_body.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/diagnostics/inference_context/prediction_mechanisms_20261020/README.md",
+      "target": "../context_sensitivity_20261020/B040_Week4_improved_3d_body.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/diagnostics/inference_context/prediction_mechanisms_20261020/README.md",
+      "target": "../context_sensitivity_20261020/J026_Week4_head_margins.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v2/README.md",
+      "target": "figures/all_six_classes.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v2/README.md",
+      "target": "figures/patient_comparison.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v2/README.md",
+      "target": "figures/training_and_boundary_trajectory.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../provenance/local_source_checksums.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../tables/six_class_comparison.csv",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../figures/all_six_classes.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../figures/training_and_boundary_trajectory.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../figures/S022_Week2_error_counts.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../tables/S022_Week2_error_counts.csv",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../../improved_3d_v2/tables/analysis_summary.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../provenance/local_source_checksums.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../tables/six_class_comparison.csv",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../../../model_evaluation/generalization_diagnostics/tables/audit.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/figures/baseline_2d/README.md",
+      "target": "../comparisons/training/g5_three_arm_training_trajectories.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/DATA_AND_METHODS_REVIEW_ZH.md",
+      "target": "../../../../COMP3710_Report_2026_draft_v2.2.pdf",
+      "status": "external local source; outside published repository"
+    },
+    {
+      "file": "20261017/results/reports/DATA_AND_METHODS_REVIEW_ZH.md",
+      "target": "../../logs/training/baseline_3d/epoch_050.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/DATA_AND_METHODS_REVIEW_ZH.md",
+      "target": "../../logs/training/improved_3d/epoch_050.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/DATA_AND_METHODS_REVIEW_ZH.md",
+      "target": "../../logs/training/baseline_2d/epoch_050.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/DATA_AND_METHODS_REVIEW_ZH.md",
+      "target": "../tables/comparisons/g5_validation_body_audit.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/DATA_AND_METHODS_REVIEW_ZH.md",
+      "target": "../tables/comparisons/g5_validation_aux_logits.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/DATA_AND_METHODS_REVIEW_ZH.md",
+      "target": "../../logs/validation/inference_context/p2_four_cases_20261020/manifest.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_GOVERNANCE_ZH.md",
+      "target": "../../../../COMP3710_Report_2026_draft_v2.2.pdf",
+      "status": "external local source; outside published repository"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/representative_alignment_review/g1_overlay_B038_Week0.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/representative_alignment_review/g1_overlay_K019_Week1.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/representative_alignment_review/g1_overlay_N010_Week3.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/representative_alignment_review/g1_overlay_D031_Week7.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/representative_alignment_review/g1_overlay_S033_Week1.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/representative_alignment_review/g1_overlay_H017_Week7.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/label_component_review/g1_bladder_island_N010_Week3.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/label_component_review/g1_bladder_island_D031_Week7.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/patient_alignment_screening/g1_train_patient_C032.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/patient_alignment_screening/g1_train_patient_M036.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../data_analysis/patient_alignment_screening/g1_train_patient_W012.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../figures/comparisons/training/g5_three_arm_training_trajectories.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../figures/comparisons/training/g5_three_arm_training_trajectories.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../figures/comparisons/validation/g5_three_arm_validation_all_classes.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../figures/comparisons/training/g5_three_arm_training_trajectories.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../figures/comparisons/training/g5_three_arm_training_trajectories.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../tables/comparisons/g6_test_3d.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../figures/comparisons/test/g6_test_all_classes.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../tables/comparisons/g6_test_case_class_metrics.csv",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../tables/comparisons/g6_test_case_class_metrics.csv",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../tables/comparisons/g5_validation_case_class_metrics.csv",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../figures/comparisons/validation/g5_validation_patient_class_dice.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../tables/comparisons/g5_validation_body_audit.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/reports/RESEARCH_REPORT.md",
+      "target": "../figures/comparisons/validation/g5_validation_body_boundaries.svg",
+      "status": "intentionally local artifact; excluded from publication"
+    }
+  ],
+  "changed_protected_files": [],
+  "files": [
+    {
+      "path": "20261017/code/docs/BEST_CHECKPOINT_AUDIT.md",
+      "title": "Best-checkpoint assessment audit",
+      "h1_count": 1,
+      "category": "方法/协议",
+      "status": "阶段及固定快照见code/docs/README",
+      "protected": true,
+      "sha256": "e974332c6955ea027e45cacb413669b39acb770834e3553de2a4a10f040960dd"
+    },
+    {
+      "path": "20261017/code/docs/INFERENCE_CONTEXT_DIAGNOSTIC_ZH.md",
+      "title": "固定权重推理范围诊断",
+      "h1_count": 1,
+      "category": "方法/协议",
+      "status": "阶段及固定快照见code/docs/README",
+      "protected": false,
+      "sha256": "b5a30eb87154b66c548e32f0a1e8914406f1a8110fce901c6f209ac06ffbd280"
+    },
+    {
+      "path": "20261017/code/docs/METHODS_EXECUTION_HISTORY.md",
+      "title": "Methods and execution history — reference, not a submission queue",
+      "h1_count": 1,
+      "category": "方法/协议",
+      "status": "阶段及固定快照见code/docs/README",
+      "protected": false,
+      "sha256": "31e2f1d781ac963628bcef6a9692c76e8282ce8ac5da4117dc1546bac145d77d"
+    },
+    {
+      "path": "20261017/code/docs/PREDICTION_MECHANISM_DIAGNOSTIC_ZH.md",
+      "title": "远处误检预测机制诊断",
+      "h1_count": 1,
+      "category": "方法/协议",
+      "status": "阶段及固定快照见code/docs/README",
+      "protected": false,
+      "sha256": "d8e5381a47a56c486993ce5627011e45073364c30d6b3715ec4fc1a1b736a9ad"
+    },
+    {
+      "path": "20261017/code/docs/README.md",
+      "title": "方法与执行文档",
+      "h1_count": 1,
+      "category": "方法导航",
+      "status": "当前方法索引",
+      "protected": false,
+      "sha256": "34baefa5e7d70d8c4c98e1ac8de160b47e9c55146658a15602f858316df3962f"
+    },
+    {
+      "path": "20261017/code/docs/STUDY_PROTOCOL.md",
+      "title": "HipMRI research protocol — data-first revision",
+      "h1_count": 1,
+      "category": "方法/协议",
+      "status": "阶段及固定快照见code/docs/README",
+      "protected": false,
+      "sha256": "8cd4cbb8116836036776847ecdae46773a0e54b0e9ef327e0178bb774aa161a1"
+    },
+    {
+      "path": "20261017/code/docs/V2_TRAINING.md",
+      "title": "Improved v2 independent-supervision run",
+      "h1_count": 1,
+      "category": "方法/协议",
+      "status": "阶段及固定快照见code/docs/README",
+      "protected": true,
+      "sha256": "d27cc65b523733a06e4747a481b8a050690f392d09f8dacec164a1bbd730354c"
+    },
+    {
+      "path": "20261017/code/docs/V3_TRAINING.md",
+      "title": "Improved v3 GN1 experiment",
+      "h1_count": 1,
+      "category": "方法/协议",
+      "status": "阶段及固定快照见code/docs/README",
+      "protected": true,
+      "sha256": "2c942e3e997bc4e4a5ed313b74cdb29bc0db0a8fba0543fe9493da69b1d4c44e"
+    },
+    {
+      "path": "20261017/code/docs/V4_Paired_Training_ZH.md",
+      "title": "V4 A0/A1 配对训练协议",
+      "h1_count": 1,
+      "category": "方法/协议",
+      "status": "阶段及固定快照见code/docs/README",
+      "protected": true,
+      "sha256": "4c68f79e411d8e2ebc996fa435f994abb31f661944fe471a20231c590f60e029"
+    },
+    {
+      "path": "20261017/code/README.md",
+      "title": "Code and Methods",
+      "h1_count": 1,
+      "category": "项目/目录入口",
+      "status": "导航及分类规则",
+      "protected": false,
+      "sha256": "8380214b641d4c17ae9d12609e6042c0f6624a4a3e11c10db3291450ba5c2aad"
+    },
+    {
+      "path": "20261017/DOCUMENTATION_INDEX.md",
+      "title": "HipMRI 文档导航",
+      "h1_count": 1,
+      "category": "项目/目录入口",
+      "status": "导航及分类规则",
+      "protected": false,
+      "sha256": "17e921c1c21626dcc4d22719890250bb0789ba737a445cd17516b3e1dcd5cdd2"
+    },
+    {
+      "path": "20261017/logs/README.md",
+      "title": "Experiment Logs",
+      "h1_count": 1,
+      "category": "原始记录说明",
+      "status": "不改写原始实验JSON",
+      "protected": false,
+      "sha256": "f1606b07df1024c2662e79a630eb8f83d2c96d4cf4daf076fbcac13322a0d148"
+    },
+    {
+      "path": "20261017/logs/validation/README.md",
+      "title": "Validation 诊断原始记录",
+      "h1_count": 1,
+      "category": "原始记录说明",
+      "status": "不改写原始实验JSON",
+      "protected": false,
+      "sha256": "9a760ded2a4f5a00ee932d756ae93f0f8dc590a2494dc979c166e3cb084a4559"
+    },
+    {
+      "path": "20261017/PROJECT_MAP.md",
+      "title": "Project File Map / 项目文件总览",
+      "h1_count": 1,
+      "category": "自动索引",
+      "status": "自动生成，不手改",
+      "protected": false,
+      "sha256": "259db5bb2b7247bf45251664301b87cdeb440891d0e17a2cdeac28090d32575c"
+    },
+    {
+      "path": "20261017/README.md",
+      "title": "HipMRI Segmentation Research",
+      "h1_count": 1,
+      "category": "项目/目录入口",
+      "status": "导航及分类规则",
+      "protected": false,
+      "sha256": "976ee952af74d978009a9c89e87c9c0b62b01dc127b178783f5ca4d4fff9a47e"
+    },
+    {
+      "path": "20261017/results/case_studies/comparisons/README.md",
+      "title": "分割案例索引",
+      "h1_count": 1,
+      "category": "分割案例",
+      "status": "按split/主题组织；历史Standard/v1为主",
+      "protected": false,
+      "sha256": "e5d9fed9abaf3651e3f2fe78bf4bf03abae65ed129ce993bd118cc7e3914c89c"
+    },
+    {
+      "path": "20261017/results/case_studies/comparisons/test/body/README.md",
+      "title": "Test Body 边界",
+      "h1_count": 1,
+      "category": "分割案例",
+      "status": "按split/主题组织；历史Standard/v1为主",
+      "protected": false,
+      "sha256": "1a0cbffc480a9137c0f0a287fbe320cec740018edf63edc0507a895e1fa9ecef"
+    },
+    {
+      "path": "20261017/results/case_studies/comparisons/test/small_organs/README.md",
+      "title": "Test 小器官案例",
+      "h1_count": 1,
+      "category": "分割案例",
+      "status": "按split/主题组织；历史Standard/v1为主",
+      "protected": false,
+      "sha256": "30ca9ef7ad184a3471e2991a21e8b60650199baf939af0881415d5d0170b4d22"
+    },
+    {
+      "path": "20261017/results/case_studies/comparisons/validation/body/README.md",
+      "title": "Validation Body 边界",
+      "h1_count": 1,
+      "category": "分割案例",
+      "status": "按split/主题组织；历史Standard/v1为主",
+      "protected": false,
+      "sha256": "dea77dead2540713383eccdb1b7331ff8851fe4d0566aacf5a5a6209f3973b14"
+    },
+    {
+      "path": "20261017/results/case_studies/comparisons/validation/small_organs/README.md",
+      "title": "Validation 小器官案例",
+      "h1_count": 1,
+      "category": "分割案例",
+      "status": "按split/主题组织；历史Standard/v1为主",
+      "protected": false,
+      "sha256": "d1fa96f3dd7779ad50a178d9e65acf7708b2adaec4359fa0b602e4de0122d3a5"
+    },
+    {
+      "path": "20261017/results/data_analysis/boundary_sampling_audit/README.md",
+      "title": "Boundary Sampling Feasibility",
+      "h1_count": 1,
+      "category": "Train数据审计",
+      "status": "图片/审计说明就近存放",
+      "protected": false,
+      "sha256": "346120bf4d068737d6b995f9db791bf1c68650456ebc846ac581e77150f6b1c9"
+    },
+    {
+      "path": "20261017/results/data_analysis/label_component_review/README.md",
+      "title": "Bladder Label Component Review",
+      "h1_count": 1,
+      "category": "Train数据审计",
+      "status": "图片/审计说明就近存放",
+      "protected": false,
+      "sha256": "95678e48ed7ce6d1b109137fbf971f83b887a223b25340a67f402314be764a0f"
+    },
+    {
+      "path": "20261017/results/data_analysis/legacy_training_statistics/README.md",
+      "title": "Historical Train statistics",
+      "h1_count": 1,
+      "category": "Train数据审计",
+      "status": "图片/审计说明就近存放",
+      "protected": false,
+      "sha256": "46565d2731d7c75bf43021af595053b1210fcca94e08d77c4dc04eebeb8e2f07"
+    },
+    {
+      "path": "20261017/results/data_analysis/patient_alignment_screening/README.md",
+      "title": "Cohort-Wide MRI–Label Alignment",
+      "h1_count": 1,
+      "category": "Train数据审计",
+      "status": "图片/审计说明就近存放",
+      "protected": false,
+      "sha256": "6c00b6eac68c9c28dfa2ed4546c66ca0af4853234417d5fe2f7b0a9569bcb793"
+    },
+    {
+      "path": "20261017/results/data_analysis/patient_balanced_sampling/README.md",
+      "title": "Patient-Balanced Sampling Exposure",
+      "h1_count": 1,
+      "category": "Train数据审计",
+      "status": "图片/审计说明就近存放",
+      "protected": false,
+      "sha256": "5601dd5d726d171366f24745f2da0be7fce40dc86d0ac60f783999625eeb99e6"
+    },
+    {
+      "path": "20261017/results/data_analysis/preprocessing_validation/README.md",
+      "title": "Preprocessing and Sampling Validation",
+      "h1_count": 1,
+      "category": "Train数据审计",
+      "status": "图片/审计说明就近存放",
+      "protected": false,
+      "sha256": "19b65ad007a10aa7134496d057e51ee5050b3a009e9464c908e39ceca5d9ce00"
+    },
+    {
+      "path": "20261017/results/data_analysis/README.md",
+      "title": "Train数据质量与分布分析",
+      "h1_count": 1,
+      "category": "Train数据审计",
+      "status": "图片/审计说明就近存放",
+      "protected": false,
+      "sha256": "0e3a16979dfaa3073096d6b741d02939dd936412376e3264a4d38498b0d8218f"
+    },
+    {
+      "path": "20261017/results/data_analysis/representative_alignment_review/README.md",
+      "title": "Representative MRI–Label Alignment",
+      "h1_count": 1,
+      "category": "Train数据审计",
+      "status": "图片/审计说明就近存放",
+      "protected": false,
+      "sha256": "93d7a3c36566a8ea4d60109efdf42e41435ebe399d69592f2cba5a76f9b6a495"
+    },
+    {
+      "path": "20261017/results/data_analysis/training_distribution/README.md",
+      "title": "Training Data Distribution",
+      "h1_count": 1,
+      "category": "Train数据审计",
+      "status": "图片/审计说明就近存放",
+      "protected": false,
+      "sha256": "3871770dc12bfd0512eb428ed3621aa6582f6d8e1c8f10b3a6cf01205d989834"
+    },
+    {
+      "path": "20261017/results/diagnostics/inference_context/context_sensitivity_20261020/CONTEXT_SENSITIVITY_REVIEW_ZH.md",
+      "title": "推理范围敏感性：固定权重诊断结果",
+      "h1_count": 1,
+      "category": "固定权重诊断",
+      "status": "图片就近解读；正控失败不做因果归因",
+      "protected": false,
+      "sha256": "f7ff82375b6ac4928f4e3fa4c122c3c731816abcf9e09837e00adc44fc28a2bd"
+    },
+    {
+      "path": "20261017/results/diagnostics/inference_context/context_sensitivity_20261020/README.md",
+      "title": "P2 fixed-weight Validation diagnostic",
+      "h1_count": 1,
+      "category": "固定权重诊断",
+      "status": "图片就近解读；正控失败不做因果归因",
+      "protected": true,
+      "sha256": "282d1747e363b152936907e33669cb3d532b79f581928ca52cdc750bd6f42e7d"
+    },
+    {
+      "path": "20261017/results/diagnostics/inference_context/prediction_mechanisms_20261020/NUMERICAL_REPLAY_REVIEW_ZH.md",
+      "title": "数值回放审查：正控失败与解释边界",
+      "h1_count": 1,
+      "category": "固定权重诊断",
+      "status": "图片就近解读；正控失败不做因果归因",
+      "protected": false,
+      "sha256": "04114b9731576e999962a74f37e12d74fcbd6cc49603fdeb5db90f2fe3ff909d"
+    },
+    {
+      "path": "20261017/results/diagnostics/inference_context/prediction_mechanisms_20261020/README.md",
+      "title": "预测机制审查：远处误检的现有证据",
+      "h1_count": 1,
+      "category": "固定权重诊断",
+      "status": "图片就近解读；正控失败不做因果归因",
+      "protected": false,
+      "sha256": "37a30c5be1f83e035432207738344846e74fa83ba63fa0e9e7252e3fed4b6f11"
+    },
+    {
+      "path": "20261017/results/diagnostics/inference_context/README.md",
+      "title": "推理范围与预测机制诊断",
+      "h1_count": 1,
+      "category": "固定权重诊断",
+      "status": "图片就近解读；正控失败不做因果归因",
+      "protected": false,
+      "sha256": "9dea0348edb4e7eb8aa145bc7b6e82a6bb4801857042fc38e4410518be027de2"
+    },
+    {
+      "path": "20261017/results/documentation_audit/README.md",
+      "title": "项目去重、合并与完整性审查",
+      "h1_count": 1,
+      "category": "文档治理",
+      "status": "本轮文件组织/链接核查",
+      "protected": false,
+      "sha256": "5a7b320c497c7070f5e97b03ac97419bde701001960e4a51831c3cc77f85bcc4"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v2/case_studies/validation/review_45_50/README.md",
+      "title": "四例Validation图片审阅",
+      "h1_count": 2,
+      "category": "v2独立实验",
+      "status": "训练完成；方案与结果分列",
+      "protected": false,
+      "sha256": "22de83caa2a88bce43f05fd0fef41e38642c1222d9373fdd379749413580d5fd"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v2/figures/README.md",
+      "title": "v2分析图",
+      "h1_count": 1,
+      "category": "v2独立实验",
+      "status": "训练完成；方案与结果分列",
+      "protected": false,
+      "sha256": "ecfd489546dde64d5c0836cc55e7c47e648b3f8bef0e4a0f3692a263c2f115b2"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v2/README.md",
+      "title": "Improved 3D v2 独立实验区",
+      "h1_count": 1,
+      "category": "v2独立实验",
+      "status": "训练完成；方案与结果分列",
+      "protected": false,
+      "sha256": "9fe57c874b72f30ea863438ee575bbcd1ef5928ade4827f7d02dbbe3e70b8d5f"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md",
+      "title": "V2研究报告：设计、实验结果与局限",
+      "h1_count": 1,
+      "category": "v2独立实验",
+      "status": "训练完成；方案与结果分列",
+      "protected": false,
+      "sha256": "ae0836e83339cee9770149eeaa5b60fa9a7133be8fb8f6d9212f242e493ec6a9"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/README.md",
+      "title": "Improved 3D v3独立实验区",
+      "h1_count": 1,
+      "category": "v3模型实验",
+      "status": "训练完成；跨模型比较位于model_evaluation",
+      "protected": false,
+      "sha256": "e1432c8f6f88ed2083c5bbb45b46626cd0b3c05e9966a560dc5535f1a5ce6055"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md",
+      "title": "V3系统研究报告：设计、验证、泛化与方法审查",
+      "h1_count": 1,
+      "category": "v3模型实验",
+      "status": "训练完成；跨模型比较位于model_evaluation",
+      "protected": false,
+      "sha256": "2a01a9606711b3a4d240899c3eaed90ed57ca969be00c0309e3be1ef45148a96"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/augmentation_audit_20261020/README.md",
+      "title": "V4 Train配对增强预览",
+      "h1_count": 1,
+      "category": "v4独立实验",
+      "status": "训练已提交；审计已完成；模型结果待核实",
+      "protected": true,
+      "sha256": "3c8c7c8dcb025b2c4562c3d21726c8cf8f8f64507d08e38e137c7d558cadd8de"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/paired_analysis/README.md",
+      "title": "V4 Train增强审计复核",
+      "h1_count": 1,
+      "category": "v4独立实验",
+      "status": "训练已提交；审计已完成；模型结果待核实",
+      "protected": false,
+      "sha256": "626a981dc3bf1266ed66c1428858c3559d845ef21846f3b9950aef4b72eea9c0"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/README.md",
+      "title": "V4 A0/A1配对训练",
+      "h1_count": 1,
+      "category": "v4独立实验",
+      "status": "训练已提交；审计已完成；模型结果待核实",
+      "protected": false,
+      "sha256": "5d6d64b0e0e12ffe8bfc62994fd35b71c09ae8005dff61c6bb15c9d796bc12f0"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/reports/OPTIMIZATION_REVIEW_ZH.md",
+      "title": "常用优化方法补充审查与 v4 训练方案建议",
+      "h1_count": 2,
+      "category": "v4独立实验",
+      "status": "训练已提交；审计已完成；模型结果待核实",
+      "protected": false,
+      "sha256": "acec301edd99573bcf0287abc7a920453bed1ee968ceb7020a8300478242302e"
+    },
+    {
+      "path": "20261017/results/figures/baseline_2d/README.md",
+      "title": "Supplementary 2D Validation figure",
+      "h1_count": 1,
+      "category": "历史图表/指标",
+      "status": "保留来源；最新跨版本比较另见v3/analysis",
+      "protected": false,
+      "sha256": "e1ca51c3aeaa6289924ef4e919c80c47c3a934840267f9c3aef4dd1b5a85e798"
+    },
+    {
+      "path": "20261017/results/figures/comparisons/README.md",
+      "title": "模型对比图索引",
+      "h1_count": 1,
+      "category": "历史图表/指标",
+      "status": "保留来源；最新跨版本比较另见v3/analysis",
+      "protected": false,
+      "sha256": "f665ed5aa2be6fa9c9240cad9dc888a49a86697ad04364e31147a15303ab1b26"
+    },
+    {
+      "path": "20261017/results/figures/comparisons/test/README.md",
+      "title": "固定 Test 结果",
+      "h1_count": 1,
+      "category": "历史图表/指标",
+      "status": "保留来源；最新跨版本比较另见v3/analysis",
+      "protected": false,
+      "sha256": "71c56a1b7b2f3ce5675b1228b5871a736ae1bd3f30655af22599fd9a470890b4"
+    },
+    {
+      "path": "20261017/results/figures/comparisons/training/README.md",
+      "title": "三模型训练过程",
+      "h1_count": 1,
+      "category": "历史图表/指标",
+      "status": "保留来源；最新跨版本比较另见v3/analysis",
+      "protected": false,
+      "sha256": "c5776c237f8cb5eb30502e92435dd6eb2ceaa1ed1f3c96f292979a4b4e44ee6a"
+    },
+    {
+      "path": "20261017/results/figures/comparisons/validation/README.md",
+      "title": "Validation 六类指标与边界诊断",
+      "h1_count": 1,
+      "category": "历史图表/指标",
+      "status": "保留来源；最新跨版本比较另见v3/analysis",
+      "protected": false,
+      "sha256": "0d756b9b21aee3b40c7bb533077f869c220792bc296e6eb0882019b6991e0f29"
+    },
+    {
+      "path": "20261017/results/model_evaluation/best_checkpoint_comparison/assessment_required/README.md",
+      "title": "课程要求相关指标与图表",
+      "h1_count": 1,
+      "category": "跨模型性能与泛化评估",
+      "status": "统一best选模；课程指标与补充指标分区",
+      "protected": false,
+      "sha256": "5b97f2a344b7751a13504fb91dbe88b64a9e8f4459bf1f273fbc6ff0d13c0768"
+    },
+    {
+      "path": "20261017/results/model_evaluation/best_checkpoint_comparison/README.md",
+      "title": "最佳模型分析入口",
+      "h1_count": 1,
+      "category": "跨模型性能与泛化评估",
+      "status": "统一best选模；课程指标与补充指标分区",
+      "protected": false,
+      "sha256": "b06c0e04c1a85888e1105ca93696397e85002a443991ac207bcee9aa102ae67b"
+    },
+    {
+      "path": "20261017/results/model_evaluation/best_checkpoint_comparison/supplementary_research/README.md",
+      "title": "补充研究指标",
+      "h1_count": 1,
+      "category": "跨模型性能与泛化评估",
+      "status": "统一best选模；课程指标与补充指标分区",
+      "protected": false,
+      "sha256": "40232d85928d3cc7588813a7b48c4b2d3d233cba505dd3d3df5fbf557315d605"
+    },
+    {
+      "path": "20261017/results/model_evaluation/generalization_diagnostics/README.md",
+      "title": "泛化与失败机制复核",
+      "h1_count": 1,
+      "category": "跨模型性能与泛化评估",
+      "status": "统一best选模；课程指标与补充指标分区",
+      "protected": false,
+      "sha256": "db71085aa07769a762353f5b84422f5347c407b278b2cbebbc260e60519a481c"
+    },
+    {
+      "path": "20261017/results/README.md",
+      "title": "结果与分析产物",
+      "h1_count": 1,
+      "category": "项目/目录入口",
+      "status": "导航及分类规则",
+      "protected": false,
+      "sha256": "14a98a8e03593e62527dc8188f7eef67dd25545dfbe1c4075fa9073e51a3bf21"
+    },
+    {
+      "path": "20261017/results/reports/DATA_AND_METHODS_REVIEW_ZH.md",
+      "title": "前期数据与独立研究审查：完整阶段记录",
+      "h1_count": 1,
+      "category": "综合研究/治理",
+      "status": "研究过程材料；不是实时执行命令",
+      "protected": false,
+      "sha256": "272cede59b78a8e1b72765960a415e9b8fc855e8a00235ac1001bbfbfd641579"
+    },
+    {
+      "path": "20261017/results/reports/README.md",
+      "title": "研究报告与治理材料",
+      "h1_count": 1,
+      "category": "综合研究/治理",
+      "status": "研究过程材料；不是实时执行命令",
+      "protected": false,
+      "sha256": "d4f1a670318f29b238fa0717beb014007042892d57d08af8708ec409f4d1b820"
+    },
+    {
+      "path": "20261017/results/reports/RESEARCH_GOVERNANCE_ZH.md",
+      "title": "研究治理与实验设计指令",
+      "h1_count": 11,
+      "category": "综合研究/治理",
+      "status": "研究过程材料；不是实时执行命令",
+      "protected": false,
+      "sha256": "7c94aaab967965d3f170a0f7b2ded3890b381037bec828a9b93b1fd5eccbe21b"
+    },
+    {
+      "path": "20261017/results/reports/RESEARCH_REPORT.md",
+      "title": "HipMRI Research Report",
+      "h1_count": 1,
+      "category": "综合研究/治理",
+      "status": "研究过程材料；不是实时执行命令",
+      "protected": false,
+      "sha256": "f60f116caff8e9b019140a49d17f4278679b24f380b078287c87a9a9745e97d0"
+    },
+    {
+      "path": "20261017/results/STORAGE_GUIDE.md",
+      "title": "文件存储规则",
+      "h1_count": 1,
+      "category": "项目/目录入口",
+      "status": "导航及分类规则",
+      "protected": false,
+      "sha256": "bbd85b98de8da345631d5bb60a1d999a68bf92c438206dce8b78cfea097a12f4"
+    },
+    {
+      "path": "20261017/results/tables/comparisons/README.md",
+      "title": "Held-out Test comparison",
+      "h1_count": 1,
+      "category": "历史图表/指标",
+      "status": "保留来源；最新跨版本比较另见v3/analysis",
+      "protected": false,
+      "sha256": "ac0e3503e76512b2e3489c61895e3a71efb3c1275c183801c3d46267303ef06a"
+    },
+    {
+      "path": "feasibility review.md",
+      "title": "Feasibility Review — HipMRI Segmentation",
+      "h1_count": 1,
+      "category": "项目可行性",
+      "status": "保留用户指定英文文件名；含历史阶段说明",
+      "protected": false,
+      "sha256": "d73aa1f0a9cd132196bd4388f6c4137b343cbc42780d6f6d3013f6b537719cbc"
+    }
+  ]
+}

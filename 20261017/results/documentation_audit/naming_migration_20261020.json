@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "moves": [
+    {
+      "old": "results/data_analysis/g1_selected_cases",
+      "new": "results/data_analysis/representative_alignment_review",
+      "type": "directory"
+    },
+    {
+      "old": "results/data_analysis/g1_bladder_review",
+      "new": "results/data_analysis/label_component_review",
+      "type": "directory"
+    },
+    {
+      "old": "results/data_analysis/g1_patient_screen",
+      "new": "results/data_analysis/patient_alignment_screening",
+      "type": "directory"
+    },
+    {
+      "old": "results/data_analysis/g2_train_summary",
+      "new": "results/data_analysis/training_distribution",
+      "type": "directory"
+    },
+    {
+      "old": "results/data_analysis/g3_pipeline",
+      "new": "results/data_analysis/preprocessing_validation",
+      "type": "directory"
+    },
+    {
+      "old": "results/data_analysis/g4_patient_sampling",
+      "new": "results/data_analysis/patient_balanced_sampling",
+      "type": "directory"
+    },
+    {
+      "old": "results/data_analysis/g7_edge_sampling",
+      "new": "results/data_analysis/boundary_sampling_audit",
+      "type": "directory"
+    },
+    {
+      "old": "results/data_analysis/historical_train",
+      "new": "results/data_analysis/legacy_training_statistics",
+      "type": "directory"
+    },
+    {
+      "old": "results/diagnostics/inference_context/p2_four_cases_20261020",
+      "new": "results/diagnostics/inference_context/context_sensitivity_20261020",
+      "type": "directory"
+    },
+    {
+      "old": "results/diagnostics/inference_context/p2_mechanism_evidence_20261020",
+      "new": "results/diagnostics/inference_context/prediction_mechanisms_20261020",
+      "type": "directory"
+    },
+    {
+      "old": "results/experiments/improved_3d_v3/analysis",
+      "new": "results/model_evaluation/best_checkpoint_comparison",
+      "type": "directory"
+    },
+    {
+      "old": "results/experiments/improved_3d_v3/generalization_review",
+      "new": "results/model_evaluation/generalization_diagnostics",
+      "type": "directory"
+    },
+    {
+      "old": "code/docs/P2_INFERENCE_CONTEXT.md",
+      "new": "code/docs/INFERENCE_CONTEXT_DIAGNOSTIC_ZH.md",
+      "type": "file"
+    },
+    {
+      "old": "code/docs/P2B_PREDICTION_MECHANISMS.md",
+      "new": "code/docs/PREDICTION_MECHANISM_DIAGNOSTIC_ZH.md",
+      "type": "file"
+    },
+    {
+      "old": "results/reports/HipMRI_Research_Report.md",
+      "new": "results/reports/RESEARCH_REPORT.md",
+      "type": "file"
+    },
+    {
+      "old": "results/reports/Research_Review_History_ZH.md",
+      "new": "results/reports/DATA_AND_METHODS_REVIEW_ZH.md",
+      "type": "file"
+    },
+    {
+      "old": "results/reports/HipMRI_规划和codex指令_ZH.md",
+      "new": "results/reports/RESEARCH_GOVERNANCE_ZH.md",
+      "type": "file"
+    },
+    {
+      "old": "results/experiments/improved_3d_v2/reports/V2_Research_Report_ZH.md",
+      "new": "results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md",
+      "type": "file"
+    },
+    {
+      "old": "results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md",
+      "new": "results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md",
+      "type": "file"
+    },
+    {
+      "old": "results/experiments/improved_3d_v4/reports/V4_Optimization_Methods_Review_ZH.md",
+      "new": "results/experiments/improved_3d_v4/reports/OPTIMIZATION_REVIEW_ZH.md",
+      "type": "file"
+    },
+    {
+      "old": "results/diagnostics/inference_context/p2_four_cases_20261020/P2_review_ZH.md",
+      "new": "results/diagnostics/inference_context/context_sensitivity_20261020/CONTEXT_SENSITIVITY_REVIEW_ZH.md",
+      "type": "file"
+    },
+    {
+      "old": "results/diagnostics/inference_context/p2_mechanism_evidence_20261020/P2B_numerical_failure_ZH.md",
+      "new": "results/diagnostics/inference_context/prediction_mechanisms_20261020/NUMERICAL_REPLAY_REVIEW_ZH.md",
+      "type": "file"
+    }
+  ],
+  "updated_consumers": [
+    "code/tools/audit_g2_train_slices.py",
+    "code/tools/audit_g5_train_patch_geometry.py",
+    "code/tools/audit_local_generalization.py",
+    "code/tools/build_best_checkpoint_review.py",
+    "code/tools/package_transfer.py",
+    "code/tools/summarize_best_checkpoint_audit.py",
+    "code/tools/summarize_g2_slice_detail.py",
+    "code/tools/summarize_g2_train_audit.py",
+    "code/tools/summarize_g3_candidate_sampling.py",
+    "code/tools/summarize_g3_pipeline.py",
+    "code/tools/summarize_g4_patient_sampling.py",
+    "code/tools/summarize_g7_edge_sampling.py",
+    "code/tools/summarize_p2b_prediction_mechanisms.py",
+    "code/tools/summarize_p2_inference_context.py"
+  ],
+  "protected_files_unchanged": 55,
+  "active_training_paths_unchanged": true,
+  "statistical_links_switched_to_svg": 21,
+  "temporary_executors_removed": true,
+  "statistical_figure_renames": {
+    "results/data_analysis/boundary_sampling_audit/g7_exposure_and_geometry.png": "results/data_analysis/boundary_sampling_audit/sampling_exposure_and_geometry.png",
+    "results/data_analysis/boundary_sampling_audit/g7_exposure_and_geometry.svg": "results/data_analysis/boundary_sampling_audit/sampling_exposure_and_geometry.svg",
+    "results/data_analysis/boundary_sampling_audit/g7_crop_origins.png": "results/data_analysis/boundary_sampling_audit/crop_origin_distribution.png",
+    "results/data_analysis/boundary_sampling_audit/g7_crop_origins.svg": "results/data_analysis/boundary_sampling_audit/crop_origin_distribution.svg"
+  }
+}

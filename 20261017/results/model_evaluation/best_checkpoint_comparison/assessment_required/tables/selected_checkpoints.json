@@ -1,0 +1,107 @@
+{
+  "2D": {
+    "epoch": 50,
+    "validation_score": 0.7756883536430682,
+    "candidate_epochs": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "record_sha256": "364c40ebb8c5e460ca99787e242653bc8a39e4868af439cf266be004ce2d6587",
+    "learning_rates_observed": [
+      0.001
+    ],
+    "policy": "highest patient-equal small-organ Validation Dice; earliest tie; no Test selection"
+  },
+  "Standard": {
+    "epoch": 50,
+    "validation_score": 0.8502228594450512,
+    "candidate_epochs": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "record_sha256": "2d2714b66e2b0d72026f081ce06fbc7416b51f547dc24602b88103a8e4d70497",
+    "learning_rates_observed": [
+      0.001
+    ],
+    "policy": "highest patient-equal small-organ Validation Dice; earliest tie; no Test selection"
+  },
+  "v1": {
+    "epoch": 50,
+    "validation_score": 0.8419960108142014,
+    "candidate_epochs": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "record_sha256": "f6fb40e72a56abff0b1c8c63527a24ad4b4a48b37b309369ffdb53e2625d025d",
+    "learning_rates_observed": [
+      0.001
+    ],
+    "policy": "highest patient-equal small-organ Validation Dice; earliest tie; no Test selection"
+  },
+  "v2": {
+    "epoch": 45,
+    "validation_score": 0.8361992336753422,
+    "candidate_epochs": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "record_sha256": "f913a2cf443c14606e7f40ba12d692aca0a8e1eccd1bca00e0817556e8951bc6",
+    "learning_rates_observed": [
+      0.001
+    ],
+    "policy": "highest patient-equal small-organ Validation Dice; earliest tie; no Test selection"
+  },
+  "v3": {
+    "epoch": 50,
+    "validation_score": 0.8563563984705311,
+    "candidate_epochs": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "record_sha256": "5901abd105dfc2e82670966bdd24661f57fbb886ce4cb4cb3342c3a34f7a04d0",
+    "learning_rates_observed": [
+      0.001
+    ],
+    "policy": "highest patient-equal small-organ Validation Dice; earliest tie; no Test selection"
+  }
+}

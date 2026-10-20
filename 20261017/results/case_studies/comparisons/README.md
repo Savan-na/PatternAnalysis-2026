@@ -5,7 +5,7 @@
 
 JSON 中原服务器输出路径保持不变，本地按文件名在对应子目录查找。
 
-# Selected segmentation overlays
+## Selected segmentation overlays
 
 The four `g5_validation_*.png` panels compare the two selected epoch-50
 checkpoints against Validation ground truth. Cyan is ground truth; orange is

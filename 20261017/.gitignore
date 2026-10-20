@@ -1,17 +1,27 @@
 # Local medical-derived audits, weights, predictions, and run artefacts.
 !logs/
-logs/*/
-!logs/README.md
-results/*/
-!results/README.md
-!results/data_analysis/
-results/data_analysis/historical_train/*.bak
-results/data_analysis/g1_selected_cases/*.png
-results/data_analysis/g1_bladder_review/*.png
-results/data_analysis/g1_patient_screen/*.png
-!results/reports/
-results/reports/*
-!results/reports/*.md
+logs/**
+!logs/**/
+!logs/**/*.md
+# Publish documentation and statistical summaries; keep clinical overlays and
+# raw machine artifacts local. Directory exceptions permit nested Markdown.
+results/**
+!results/**/
+!results/**/*.md
+!results/documentation_audit/*.json
+!results/data_analysis/**/*.csv
+!results/data_analysis/**/*.svg
+!results/data_analysis/boundary_sampling_audit/sampling_exposure_and_geometry.png
+!results/data_analysis/boundary_sampling_audit/crop_origin_distribution.png
+!results/data_analysis/boundary_sampling_audit/verification.json
+!results/data_analysis/patient_balanced_sampling/g5_train_patch_geometry.json
+!results/data_analysis/legacy_training_statistics/historical_train_statistics.json
+!results/diagnostics/inference_context/context_sensitivity_20261020/six_class_*
+!results/diagnostics/inference_context/prediction_mechanisms_20261020/same_voxel_logit_evidence.*
+!results/diagnostics/inference_context/prediction_mechanisms_20261020/spatial_logit_evidence.csv
+!results/model_evaluation/**/figures/*.svg
+!results/model_evaluation/**/tables/*.csv
+!results/model_evaluation/best_checkpoint_comparison/assessment_required/tables/selected_checkpoints.json
 code/transfer/*.zip
 artifacts/
 checkpoints/

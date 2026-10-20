@@ -11,6 +11,7 @@ import json
 import os
 import re
 import argparse
+import subprocess
 
 PROJECT = Path(__file__).resolve().parents[2]
 ROOT = PROJECT.parent
@@ -55,10 +56,16 @@ def classify(relative):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--inventory',action='store_true',help='Optionally generate a separate Markdown inventory; PROJECT_MAP is the default file index')
+    parser.add_argument('--repository-only',action='store_true',help='Check published files, reporting deliberately ignored local artifacts separately')
     args=parser.parse_args()
     OUT.mkdir(exist_ok=True)
     docs = sorted(p for p in ROOT.rglob('*.md') if not set(p.parts)&{'.git','node_modules','.venv','venv'})
-    broken, damaged, records = [], [], []
+    broken, damaged, records, local_only = [], [], [], []
+    versioned=set()
+    if args.repository_only:
+        versioned={str((ROOT/n.decode('utf-8')).resolve()) for n in subprocess.check_output(
+            ['git','ls-files','-z'],cwd=ROOT).split(b'\0') if n}
+        docs=[p for p in docs if str(p.resolve()) in versioned]
     protected = {}
     snapshot = OUT/'before_20261020.json'
     if snapshot.exists():
@@ -91,6 +98,16 @@ def main():
             if urlsplit(target).scheme or target.startswith('#'):
                 continue
             local = unquote(target.split('#')[0])
+            location=(path.parent/local).resolve()
+            if args.repository_only and local and str(location) not in versioned:
+                if not location.is_relative_to(ROOT):
+                    local_only.append({'file':relative,'target':target,'status':'external local source; outside published repository'})
+                    continue
+                ignored=subprocess.run(['git','check-ignore','-q','--',str(location)],cwd=ROOT,
+                                       stderr=subprocess.DEVNULL).returncode==0
+                if ignored:
+                    local_only.append({'file':relative,'target':target,'status':'intentionally local artifact; excluded from publication'})
+                    continue
             if local and not (path.parent/local).exists():
                 broken.append({'file':relative,'target':target})
         category,status = classify(relative)
@@ -101,8 +118,11 @@ def main():
     result = {'markdown_count':len(records),'local_link_scope':'Markdown inline relative links; excludes fenced code, URLs and fragment validation',
               'broken_local_links':broken,'encoding_flags':damaged,
               'protected_count':len(protected),'approved_protected_retirements':approved,
+              'publication_scope':'repository' if args.repository_only else 'full local workspace',
+              'intentionally_local_links':local_only,
               'changed_protected_files':changed,'files':records}
-    (OUT/'audit_20261020.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    audit_name='publication_audit_20261020.json' if args.repository_only else 'audit_20261020.json'
+    (OUT/audit_name).write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     lines=['# 全部Markdown分类清单','','自动生成；每个文件的类别、标题、位置与阶段用途如下。历史README及哈希锁定文件保留原名，当前状态从对应索引读取。','',
            '| 文档 | 标题 | 分类 | 阶段与用途 | 固定字节 |','|---|---|---|---|---|']
     for row in records:

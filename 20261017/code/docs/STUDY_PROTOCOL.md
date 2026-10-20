@@ -1,5 +1,15 @@
 # HipMRI research protocol — data-first revision
 
+## Current execution scope — 20 October 2026
+
+The G/P labels below describe the study's evidence history, not multiple current
+training queues. The current controlled comparison is the [frozen v4 A0/A1
+protocol](V4_Paired_Training_ZH.md): the same GN network, AdamW/cosine and budget,
+with spatial augmentation as the only between-arm change. The two jobs were
+last confirmed running. Use each model's best predeclared Validation candidate
+for quality comparisons; do not force the final epoch or use Test to select it.
+The earlier staged rationale remains below as historical methodology.
+
 ## Research question and evidence order
 
 The project asks whether raw data integrity, class imbalance, patient
@@ -70,7 +80,7 @@ units and deep supervision for the selected Hard 3D Improved U-Net option.
 Any final candidate must retain these mechanisms; an output-fusion ablation
 can use separately supervised auxiliary losses with a main inference head.
 The complete requirement mapping and source identity are in the
-[P1 review](../../results/reports/HipMRI_P1_独立研究审查_ZH.md).
+[P1 review](../../results/reports/DATA_AND_METHODS_REVIEW_ZH.md#p1).
 G7 passed its Train exposure gates, but this does not establish a causal
 explanation for the Body errors. First compare fixed-weight full-volume and
 training-sized window inference on predefined Validation cases, together

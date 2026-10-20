@@ -1,7 +1,0 @@
-﻿class,present_slices,total_slices,slice_hit_pct,median_present_slices_per_volume,min_present_slices_per_volume,max_present_slices_per_volume
-Background,18320,18320,100.0,128,128,144
-Body,18170,18320,99.18122270742359,127,120,143
-Bones,18170,18320,99.18122270742359,127,120,143
-Bladder,5317,18320,29.02292576419214,35,19,74
-Rectum,7680,18320,41.92139737991266,53,39,77
-Prostate,3852,18320,21.026200873362445,26,18,41

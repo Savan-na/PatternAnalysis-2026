@@ -1,0 +1,609 @@
+{
+  "date": "2026-10-20",
+  "authorization": "Keep unique historical evidence; remove only confirmed duplicate/superseded files",
+  "merged_sections": [
+    {
+      "source": "results/experiments/improved_3d_v2/reports/V2_Literature_Redesign_ZH.md",
+      "destination": "results/experiments/improved_3d_v2/reports/V2_Research_Report_ZH.md",
+      "anchor": "design",
+      "source_sha256": "64318d390c5564a25c48dae7e62166a5561b94e7fa631be984cb30418b7a614d",
+      "source_lines": 107,
+      "retained_body_lines": 107,
+      "retained_body_sha256": "0a72c751474f9f5ae0169b7cb17181bb154411ce02d1c159ef9c71c578684b77",
+      "retained_body_current_sha256": "0a72c751474f9f5ae0169b7cb17181bb154411ce02d1c159ef9c71c578684b77"
+    },
+    {
+      "source": "results/experiments/improved_3d_v2/reports/V2_Validation_Analysis_ZH.md",
+      "destination": "results/experiments/improved_3d_v2/reports/V2_Research_Report_ZH.md",
+      "anchor": "results",
+      "source_sha256": "201a2947b7d13338822f52eea5aaae31b9b8625f6953c8a99551c7af69d21be7",
+      "source_lines": 90,
+      "retained_body_lines": 90,
+      "retained_body_sha256": "e23880b9371189440745169a94906f8b4c8521b96550f544b4c67e1152f73775",
+      "retained_body_current_sha256": "0072b4bfc75a17a25b6ec2e23c90740681f796a5c760f4b05a9179bf2dbbd77c"
+    },
+    {
+      "source": "results/experiments/improved_3d_v3/reports/V3_Research_Plan_ZH.md",
+      "destination": "results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md",
+      "anchor": "design",
+      "source_sha256": "f43b7929b98cffad0b927c94e89ecb2d6d74ed377c1b069e226a6411bb5e398a",
+      "source_lines": 127,
+      "retained_body_lines": 127,
+      "retained_body_sha256": "23caebc9e0515543eff22b645b3dfca5e80014e800f06d6eb2e8e216b474ae7f",
+      "retained_body_current_sha256": "e892ae02b0c44958643f2b4612755e3a7348aeae2d2639d6e1b663046560e00e"
+    },
+    {
+      "source": "results/experiments/improved_3d_v3/reports/V3_Validation_Analysis_ZH.md",
+      "destination": "results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md",
+      "anchor": "validation",
+      "source_sha256": "85cd2e8fe18323731039410309e0917fc6e60e05fdde31703703682b7e0f011e",
+      "source_lines": 100,
+      "retained_body_lines": 100,
+      "retained_body_sha256": "1d16c4d1cf5737e471273cbd9e54f814be03cd3cb50151bbbbe8cd2ccd3f9733",
+      "retained_body_current_sha256": "c3a0f4efe0da6025da2d49dd35f218db83b5bd460f587fd67476719d7a9d40ba"
+    },
+    {
+      "source": "results/experiments/improved_3d_v3/reports/Generalization_Review_and_V4_ZH.md",
+      "destination": "results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md",
+      "anchor": "generalization",
+      "source_sha256": "440f0fa6cfc4ecb2ef27ec45f2a54c91202047eebc8a7f2f58f3d2ff38785455",
+      "source_lines": 92,
+      "retained_body_lines": 92,
+      "retained_body_sha256": "88b363718e32d066b36930b322ff2d53287f2cc9253e5a851f88e11f62706103",
+      "retained_body_current_sha256": "f1f5050e071aedd5fd1acad6f224caf8e50446ba54c1f6ff2c56ac9ea0f05114"
+    },
+    {
+      "source": "results/experiments/improved_3d_v3/reports/Best_Checkpoint_Methods_and_Assessment_Review_ZH.md",
+      "destination": "results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md",
+      "anchor": "methods",
+      "source_sha256": "7bd29f4f331f0d6ae1caf934c51070694c03bf3d22a8d77640c51842a1e9b269",
+      "source_lines": 95,
+      "retained_body_lines": 95,
+      "retained_body_sha256": "b4c902dd9d214fd32c28635a37e482c716d1bfcdc4ad19fbe80ec7e45439d769",
+      "retained_body_current_sha256": "b4c902dd9d214fd32c28635a37e482c716d1bfcdc4ad19fbe80ec7e45439d769"
+    },
+    {
+      "source": "results/reports/HipMRI_Pretraining_Data_Analysis.md",
+      "destination": "results/reports/Research_Review_History_ZH.md",
+      "anchor": "train-data",
+      "source_sha256": "d9ded2e9a41b855b2a6db9bc70d460f638c2587919382b43704408c4ccfbbfaf",
+      "source_lines": 110,
+      "retained_body_lines": 110,
+      "retained_body_sha256": "8c4057f6fac773259eeaea233857a2f431a7615efc06d52387a55af1d511e2e6",
+      "retained_body_current_sha256": "8c4057f6fac773259eeaea233857a2f431a7615efc06d52387a55af1d511e2e6"
+    },
+    {
+      "source": "results/reports/HipMRI_P1_Independent_Review_20261020_ZH.md",
+      "destination": "results/reports/Research_Review_History_ZH.md",
+      "anchor": "p1",
+      "source_sha256": "83b6a03d031215c2ed1b567fd3d91370ffc60ccca3705d02c5163201157e2e3f",
+      "source_lines": 92,
+      "retained_body_lines": 92,
+      "retained_body_sha256": "c36da752c20e93244d3a8f6738741d2557e88116c5d4e5cd1ed1daebeb261e12",
+      "retained_body_current_sha256": "c36da752c20e93244d3a8f6738741d2557e88116c5d4e5cd1ed1daebeb261e12"
+    },
+    {
+      "source": "results/reports/HipMRI_P3_Sampling_Review_ZH.md",
+      "destination": "results/reports/Research_Review_History_ZH.md",
+      "anchor": "p3",
+      "source_sha256": "effdd7b2dc03c37caf11b6793d40ae094fa325264b387d2306db713293d62767",
+      "source_lines": 54,
+      "retained_body_lines": 54,
+      "retained_body_sha256": "059bee402664e7e376223ca9b6033b0379e7313bc4bf53b11ec6cb4fbde94055",
+      "retained_body_current_sha256": "059bee402664e7e376223ca9b6033b0379e7313bc4bf53b11ec6cb4fbde94055"
+    },
+    {
+      "source": "code/docs/SOURCE_DECISIONS.md",
+      "destination": "code/docs/METHODS_EXECUTION_HISTORY.md",
+      "anchor": "sources",
+      "source_sha256": "4245d32f08c55e98e617eb48978d375bb5c1ae55264b762a7cf4105172626019",
+      "source_lines": 78,
+      "retained_body_lines": 78,
+      "retained_body_sha256": "2a5d92fee569dad871bc5f1cae4f29cc27916b95e4a07d9269438c5a0b425012",
+      "retained_body_current_sha256": "2a5d92fee569dad871bc5f1cae4f29cc27916b95e4a07d9269438c5a0b425012"
+    },
+    {
+      "source": "code/docs/EXECUTION.md",
+      "destination": "code/docs/METHODS_EXECUTION_HISTORY.md",
+      "anchor": "evidence",
+      "source_sha256": "690881d59d42e37e1e8beac6962ec6d3bf60882d339b06ed2337592528f6a457",
+      "source_lines": 142,
+      "retained_body_lines": 142,
+      "retained_body_sha256": "9a340bab8f15f9b3dad6b6649cd7fe62943b6862d4aa29a6c6878a8b93ba55b6",
+      "retained_body_current_sha256": "9a340bab8f15f9b3dad6b6649cd7fe62943b6862d4aa29a6c6878a8b93ba55b6"
+    },
+    {
+      "source": "code/docs/RANGPUR_COMMANDS.md",
+      "destination": "code/docs/METHODS_EXECUTION_HISTORY.md",
+      "anchor": "commands",
+      "source_sha256": "a773eda781e030e407eb504b979e6e3e830b0b15ae5825225c49ea1271374574",
+      "source_lines": 679,
+      "retained_body_lines": 679,
+      "retained_body_sha256": "c1e43331001ebbc3c484ed3b394e64d1d68c248e73f39174aba592ad50171350",
+      "retained_body_current_sha256": "c1e43331001ebbc3c484ed3b394e64d1d68c248e73f39174aba592ad50171350"
+    }
+  ],
+  "retired_files": [
+    {
+      "path": "20261017/results/experiments/improved_3d_v2/reports/V2_Literature_Redesign_ZH.md",
+      "sha256": "64318d390c5564a25c48dae7e62166a5561b94e7fa631be984cb30418b7a614d",
+      "bytes": 10913,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/results/experiments/improved_3d_v2/reports/V2_Research_Report_ZH.md#design"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v2/reports/V2_Validation_Analysis_ZH.md",
+      "sha256": "201a2947b7d13338822f52eea5aaae31b9b8625f6953c8a99551c7af69d21be7",
+      "bytes": 8838,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/results/experiments/improved_3d_v2/reports/V2_Research_Report_ZH.md#results"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Plan_ZH.md",
+      "sha256": "f43b7929b98cffad0b927c94e89ecb2d6d74ed377c1b069e226a6411bb5e398a",
+      "bytes": 12857,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md#design"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/reports/V3_Validation_Analysis_ZH.md",
+      "sha256": "85cd2e8fe18323731039410309e0917fc6e60e05fdde31703703682b7e0f011e",
+      "bytes": 7922,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md#validation"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/reports/Generalization_Review_and_V4_ZH.md",
+      "sha256": "440f0fa6cfc4ecb2ef27ec45f2a54c91202047eebc8a7f2f58f3d2ff38785455",
+      "bytes": 9019,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md#generalization"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/reports/Best_Checkpoint_Methods_and_Assessment_Review_ZH.md",
+      "sha256": "7bd29f4f331f0d6ae1caf934c51070694c03bf3d22a8d77640c51842a1e9b269",
+      "bytes": 10095,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md#methods"
+    },
+    {
+      "path": "20261017/results/reports/HipMRI_Pretraining_Data_Analysis.md",
+      "sha256": "d9ded2e9a41b855b2a6db9bc70d460f638c2587919382b43704408c4ccfbbfaf",
+      "bytes": 15455,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/results/reports/Research_Review_History_ZH.md#train-data"
+    },
+    {
+      "path": "20261017/results/reports/HipMRI_P1_Independent_Review_20261020_ZH.md",
+      "sha256": "83b6a03d031215c2ed1b567fd3d91370ffc60ccca3705d02c5163201157e2e3f",
+      "bytes": 15121,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/results/reports/Research_Review_History_ZH.md#p1"
+    },
+    {
+      "path": "20261017/results/reports/HipMRI_P3_Sampling_Review_ZH.md",
+      "sha256": "effdd7b2dc03c37caf11b6793d40ae094fa325264b387d2306db713293d62767",
+      "bytes": 5616,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/results/reports/Research_Review_History_ZH.md#p3"
+    },
+    {
+      "path": "20261017/code/docs/SOURCE_DECISIONS.md",
+      "sha256": "4245d32f08c55e98e617eb48978d375bb5c1ae55264b762a7cf4105172626019",
+      "bytes": 5787,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/code/docs/METHODS_EXECUTION_HISTORY.md#sources"
+    },
+    {
+      "path": "20261017/code/docs/EXECUTION.md",
+      "sha256": "690881d59d42e37e1e8beac6962ec6d3bf60882d339b06ed2337592528f6a457",
+      "bytes": 8516,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/code/docs/METHODS_EXECUTION_HISTORY.md#evidence"
+    },
+    {
+      "path": "20261017/code/docs/RANGPUR_COMMANDS.md",
+      "sha256": "a773eda781e030e407eb504b979e6e3e830b0b15ae5825225c49ea1271374574",
+      "bytes": 33785,
+      "reason": "Full analysis merged without body reduction",
+      "replacement": "20261017/code/docs/METHODS_EXECUTION_HISTORY.md#commands"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v2/reports/README.md",
+      "sha256": "76d796fec5e9c12a9ff734f87fc261596aee4e78bf8b13deb551cd1b099ab357",
+      "bytes": 505,
+      "reason": "Redundant navigation or superseded unexecuted protocol; authoritative replacement retained",
+      "replacement": "20261017/results/experiments/improved_3d_v2/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/reports/README.md",
+      "sha256": "9b23775cc7cdef92a7b09922e966fb1abe73942d8dde28ab0012c5cff1fe27fe",
+      "bytes": 831,
+      "reason": "Redundant navigation or superseded unexecuted protocol; authoritative replacement retained",
+      "replacement": "20261017/results/experiments/improved_3d_v3/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/reports/README.md",
+      "sha256": "5365ca4576381cc132adacf062b4ea5ba23fb4c96434a5eed1f592725087759e",
+      "bytes": 901,
+      "reason": "Redundant navigation or superseded unexecuted protocol; authoritative replacement retained",
+      "replacement": "20261017/results/experiments/improved_3d_v4/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/a0_control/README.md",
+      "sha256": "886e9bb213d83212ce858fe4927920a8532ac2406abd16b07fb32756b81ced13",
+      "bytes": 345,
+      "reason": "Redundant navigation or superseded unexecuted protocol; authoritative replacement retained",
+      "replacement": "20261017/results/experiments/improved_3d_v4/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/a1_spatial/README.md",
+      "sha256": "2da343650a8962d4baebd39418ed6fc82e3ef8fc422f725d251e84c5a347ad7e",
+      "bytes": 348,
+      "reason": "Redundant navigation or superseded unexecuted protocol; authoritative replacement retained",
+      "replacement": "20261017/results/experiments/improved_3d_v4/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/paired_analysis/Train_Augmentation_Review_ZH.md",
+      "sha256": "626a981dc3bf1266ed66c1428858c3559d845ef21846f3b9950aef4b72eea9c0",
+      "bytes": 1169,
+      "reason": "Redundant navigation or superseded unexecuted protocol; authoritative replacement retained",
+      "replacement": "20261017/results/experiments/improved_3d_v4/paired_analysis/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/reports/V4_Pretest_Plan_ZH.md",
+      "sha256": "0220c685ade2bd25f29c1cf21b215ecab107f8871baf10bb375b6d7364590a1f",
+      "bytes": 4598,
+      "reason": "Redundant navigation or superseded unexecuted protocol; authoritative replacement retained",
+      "replacement": "20261017/code/docs/BEST_AUDIT_V4_PLAN_ZH.md"
+    },
+    {
+      "path": "20261017/code/docs/V4_PRETEST_PLAN_ZH.md",
+      "sha256": "8c02bbd66681ee065a6b198989a8f1e4740a6ed72df0d24940b2e42381c2bfb1",
+      "bytes": 4277,
+      "reason": "Redundant navigation or superseded unexecuted protocol; authoritative replacement retained",
+      "replacement": "20261017/code/docs/BEST_AUDIT_V4_PLAN_ZH.md"
+    },
+    {
+      "path": "20261017/code/docs/V3_GENERALIZATION_AUDIT.md",
+      "sha256": "3868b9bb1853ccc01fd81860d60db85c41b394390ac9b09494837b7314868ccf",
+      "bytes": 2635,
+      "reason": "Redundant navigation or superseded unexecuted protocol; authoritative replacement retained",
+      "replacement": "20261017/code/docs/BEST_CHECKPOINT_AUDIT.md"
+    },
+    {
+      "path": "20261017/code/tools/audit_v3_generalization.py",
+      "sha256": "3aa56dc852efd42336108c0c3313305efeaea906ab1ae425a7161cea52424620",
+      "bytes": 14107,
+      "reason": "Superseded unexecuted diagnostic or completed one-off generator",
+      "replacement": "20261017/code/tools/audit_best_checkpoints.py"
+    },
+    {
+      "path": "20261017/code/tools/submit_v3_generalization.sh",
+      "sha256": "ebe5e318cb23973980fa6ffa81dd9015e695e3cdaeebea97a94391489b82b9dd",
+      "bytes": 1803,
+      "reason": "Superseded unexecuted diagnostic or completed one-off generator",
+      "replacement": "20261017/code/tools/audit_best_checkpoints.py"
+    },
+    {
+      "path": "20261017/code/config/v3_generalization_audit.json",
+      "sha256": "570f525ae5c5a73d21b89bb0520b117d8cad6739047a08d24556294fde18da44",
+      "bytes": 1163,
+      "reason": "Superseded unexecuted diagnostic or completed one-off generator",
+      "replacement": "20261017/code/tools/audit_best_checkpoints.py"
+    },
+    {
+      "path": "20261017/code/config/v3_generalization_transfer_checksums.json",
+      "sha256": "7de1268cb60a5b447e560e34f1fcd7669b4236af7e74cc035efd6ca09129d1a2",
+      "bytes": 638,
+      "reason": "Superseded unexecuted diagnostic or completed one-off generator",
+      "replacement": "20261017/code/tools/audit_best_checkpoints.py"
+    },
+    {
+      "path": "20261017/code/tests/test_generalization_audit.py",
+      "sha256": "b20396b406c2579ec49ce9acd857a012a0aeb7e4ea67204e2693a042de0b497d",
+      "bytes": 1357,
+      "reason": "Superseded unexecuted diagnostic or completed one-off generator",
+      "replacement": "20261017/code/tools/audit_best_checkpoints.py"
+    },
+    {
+      "path": "20261017/code/tools/review_v3_validation.py",
+      "sha256": "9a04517e47b3c0be3adabe11b795ce2f46c83dccc350d180a2fbd6445a49428f",
+      "bytes": 8095,
+      "reason": "Superseded unexecuted diagnostic or completed one-off generator",
+      "replacement": "20261017/code/tools/audit_best_checkpoints.py"
+    },
+    {
+      "path": "20261017/code/tools/prepare_v4_sources.py",
+      "sha256": "12ec8501797f768b1fe8c7ff4e50f9af0bafa8fac1d3756f7dd007184a652d9a",
+      "bytes": 5705,
+      "reason": "Superseded unexecuted diagnostic or completed one-off generator",
+      "replacement": null
+    },
+    {
+      "path": "20261017/code/tools/organize_markdown_20261020.py",
+      "sha256": "40077e98f7fa5b5c68109e4fe19b52b75ba6e19a3eadc5121c63d3453e930699",
+      "bytes": 4181,
+      "reason": "Superseded unexecuted diagnostic or completed one-off generator",
+      "replacement": null
+    },
+    {
+      "path": "20261017/code/transfer/g7_edge_audit_20261019.zip",
+      "sha256": "95553ad1350f2d664f35a88973f3f0a16929dd880d60c75bdf3afceef2b88999",
+      "bytes": 10348,
+      "reason": "Completed transfer wrapper; every member verified identical to retained source",
+      "replacement": null
+    },
+    {
+      "path": "20261017/code/transfer/p2b_prediction_mechanisms_20261020.zip",
+      "sha256": "cb761c04ccc2767abd77efe0882e1dfdfba3ec4621bbeb7fb92a45b42223ca6d",
+      "bytes": 19374,
+      "reason": "Completed transfer wrapper; every member verified identical to retained source",
+      "replacement": null
+    },
+    {
+      "path": "20261017/code/transfer/p2_inference_context_20261020.zip",
+      "sha256": "f2be32ee23808ef33b25d60271fa1c27c8520b811abab7f8139b321c1cbcbe76",
+      "bytes": 14241,
+      "reason": "Completed transfer wrapper; every member verified identical to retained source",
+      "replacement": null
+    },
+    {
+      "path": "20261017/code/transfer/v2_independent_supervision_20261020.zip",
+      "sha256": "0361ad8b015e5980fb943c09645ba048f08c1cf9d4186ca589943eb08930e984",
+      "bytes": 15744,
+      "reason": "Completed transfer wrapper; every member verified identical to retained source",
+      "replacement": null
+    },
+    {
+      "path": "20261017/code/transfer/v3_gn1_20261020.zip",
+      "sha256": "79cacd6835b3436ab00acfbeae95dc87987f2703e8557a73a21d131812bb9953",
+      "bytes": 16096,
+      "reason": "Completed transfer wrapper; every member verified identical to retained source",
+      "replacement": null
+    },
+    {
+      "path": "20261017/code/transfer/v3_generalization_audit_20261020.zip",
+      "sha256": "3c1b4f468966d49d69c6b0237ca94a640cc1c4aab2868a4c598f333cb1951ebe",
+      "bytes": 13429,
+      "reason": "Never executed; fully superseded by current five-model audit package",
+      "replacement": null
+    }
+  ],
+  "removed_transfer_members": {
+    "g7_edge_audit_20261019.zip": {
+      "code/hipmri_rewrite/sampling_edges.py": "fba5693c10074b09d797f478d49e33dc86defec08d5a5a7f453ed579a1819688",
+      "code/tools/audit_g7_edge_sampling.py": "fcde7600c491a3c9c406fa1cd8a34356e76769be795136463ab5bf2e319c880d",
+      "code/tools/submit_g7_edge_audit.sh": "9e1cae34fc45ce288bb8759003ff0130d1aab1a2844b21b253db4f9d59371399",
+      "code/config/g7_edge_sampling_candidate.json": "b7300d34ac4df54649a3c0023131f71ec5d91532c10aee369cef8a3e88c767c0",
+      "code/tests/test_sampling_edges.py": "c64cc1e29e3c2781e1bb36f8f790ed8f449db68206e6012409d18aed36b27f82"
+    },
+    "p2b_prediction_mechanisms_20261020.zip": {
+      "code/hipmri_rewrite/prediction_diagnostics.py": "1d2657e336c4980db2a455ed3e8836b309e621ef04885089834ac72810dc2e51",
+      "code/tests/test_prediction_diagnostics.py": "7b8b6a5c72b01c6a767a26e9b011a6a1b43f9c1634c232efe04d2515b2d49e39",
+      "code/config/p2b_prediction_mechanisms.json": "9365f53c475e67891cec2bea1d2ab73b26ff3ede8f4c370e8fe0f9911867a8ac",
+      "code/tools/audit_p2b_prediction_mechanisms.py": "77f322226f4f16d727c4b08f8d2dd50a5b5cd8279603e5646a4721509c4be6b3",
+      "code/tools/submit_p2b_prediction_mechanisms.sh": "d7eae166eda37bcf34f5a0c67c661b400745be3fe58240c5000214607730f25f",
+      "code/tools/summarize_p2b_prediction_mechanisms.py": "994f8a71a80755ba3d12135a41dc002e1cdf3338a812b8669e29ec6f56cc912f"
+    },
+    "p2_inference_context_20261020.zip": {
+      "code/hipmri_rewrite/inference_context.py": "4401fb00f1a6036b34b9b11c9ccf1b3f41a53d4650d74ec09f6d287704d9de16",
+      "code/tests/test_inference_context.py": "121650b54c7f3ca79879e53ecaeb70f2931b1941144ae45f1e5eeac3bb0d099f",
+      "code/config/p2_inference_context.json": "1599bcfcb1de6db8504c953c35ad5ab258f1ab4eb928e55bd6797faab0f4043d",
+      "code/tools/audit_p2_inference_context.py": "3413dbcddfdd95cf86c509215d4dd37ef785e14bd89073ba4882a2c37ec01c28",
+      "code/tools/submit_p2_inference_context.sh": "b570397a848a4f7c853012a0626bc833c3d4e091d58a6875790e93fda87538a1",
+      "code/tools/summarize_p2_inference_context.py": "b7ff01ff4515ceb297abe6f5ba6a2dcba71eee53f5ece972c5e57c8d1571d0e7"
+    },
+    "v2_independent_supervision_20261020.zip": {
+      "code/hipmri_rewrite/improved_v2.py": "6795562eaae3eedfe163fb53282b23008058259887f76d04f2225fc801634500",
+      "code/tools/train_v2_cohort.py": "8ca3c59144464355d56f65fa4595dcafebe6f5ea9f670fcc11a0d088f3c19071",
+      "code/config/v2_independent_supervision_frozen.json": "8a356408aef80b5041a0cca4caf2b64c0be0e726a1049cc42945196324d73712",
+      "code/tests/test_improved_v2.py": "456da9f07e696a0bc15f6f90ccbf4608ca5f0c8a8b66ace1b447b10a0ad817ae",
+      "code/tools/submit_v2_50.sh": "943c2c7dc5828faa5a4f6ac87c0f7de91e7104efaaebf51d54042a8092357be1",
+      "code/docs/V2_TRAINING.md": "d27cc65b523733a06e4747a481b8a050690f392d09f8dacec164a1bbd730354c",
+      "code/config/v2_transfer_checksums.json": "1ac65c77c802dc14e274607258b9be1f06ca0a60615164262913e04b95f867bf"
+    },
+    "v3_gn1_20261020.zip": {
+      "code/hipmri_rewrite/improved_v3.py": "2c296808ed79c849503242c1f861ef29738da4d768c47ccba7cc6cdea88ee63a",
+      "code/tools/train_v3_cohort.py": "d169c4f45d3343d6be050ba6b88fca58a2646eb8869107e0f990a85bd9dd69a1",
+      "code/config/v3_gn1_frozen.json": "1bb71bbedcba0580cc2b5b3939aef92949580f4f8f4dc6f3008e09ab1a5ac5c2",
+      "code/tests/test_improved_v3.py": "a1567921d307de6381e00e3e687db36e0e5d6fc2015f6b8676994fa9afe74497",
+      "code/tools/submit_v3_50.sh": "d80a8eb828dd83a0d41b81094000cf75ae7f2b827d3ad07f58ed48bc8fa4800c",
+      "code/docs/V3_TRAINING.md": "2c942e3e997bc4e4a5ed313b74cdb29bc0db0a8fba0543fe9493da69b1d4c44e",
+      "code/config/v3_transfer_checksums.json": "91e30138e68ec8a80858aa7eb8b30ccbc2d88966b92e2ff4c4fabfb5482fc0f8"
+    }
+  },
+  "redirects": {
+    "20261017/results/experiments/improved_3d_v2/reports/V2_Literature_Redesign_ZH.md": "20261017/results/experiments/improved_3d_v2/reports/V2_Research_Report_ZH.md#design",
+    "20261017/results/experiments/improved_3d_v2/reports/V2_Validation_Analysis_ZH.md": "20261017/results/experiments/improved_3d_v2/reports/V2_Research_Report_ZH.md#results",
+    "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Plan_ZH.md": "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md#design",
+    "20261017/results/experiments/improved_3d_v3/reports/V3_Validation_Analysis_ZH.md": "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md#validation",
+    "20261017/results/experiments/improved_3d_v3/reports/Generalization_Review_and_V4_ZH.md": "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md#generalization",
+    "20261017/results/experiments/improved_3d_v3/reports/Best_Checkpoint_Methods_and_Assessment_Review_ZH.md": "20261017/results/experiments/improved_3d_v3/reports/V3_Research_Report_ZH.md#methods",
+    "20261017/results/reports/HipMRI_Pretraining_Data_Analysis.md": "20261017/results/reports/Research_Review_History_ZH.md#train-data",
+    "20261017/results/reports/HipMRI_P1_Independent_Review_20261020_ZH.md": "20261017/results/reports/Research_Review_History_ZH.md#p1",
+    "20261017/results/reports/HipMRI_P3_Sampling_Review_ZH.md": "20261017/results/reports/Research_Review_History_ZH.md#p3",
+    "20261017/code/docs/SOURCE_DECISIONS.md": "20261017/code/docs/METHODS_EXECUTION_HISTORY.md#sources",
+    "20261017/code/docs/EXECUTION.md": "20261017/code/docs/METHODS_EXECUTION_HISTORY.md#evidence",
+    "20261017/code/docs/RANGPUR_COMMANDS.md": "20261017/code/docs/METHODS_EXECUTION_HISTORY.md#commands",
+    "20261017/results/experiments/improved_3d_v2/reports/README.md": "20261017/results/experiments/improved_3d_v2/README.md",
+    "20261017/results/experiments/improved_3d_v3/reports/README.md": "20261017/results/experiments/improved_3d_v3/README.md",
+    "20261017/results/experiments/improved_3d_v4/reports/README.md": "20261017/results/experiments/improved_3d_v4/README.md",
+    "20261017/results/experiments/improved_3d_v4/a0_control/README.md": "20261017/results/experiments/improved_3d_v4/README.md",
+    "20261017/results/experiments/improved_3d_v4/a1_spatial/README.md": "20261017/results/experiments/improved_3d_v4/README.md",
+    "20261017/results/experiments/improved_3d_v4/paired_analysis/Train_Augmentation_Review_ZH.md": "20261017/results/experiments/improved_3d_v4/paired_analysis/README.md",
+    "20261017/results/experiments/improved_3d_v4/reports/V4_Pretest_Plan_ZH.md": "20261017/code/docs/BEST_AUDIT_V4_PLAN_ZH.md",
+    "20261017/code/docs/V4_PRETEST_PLAN_ZH.md": "20261017/code/docs/BEST_AUDIT_V4_PLAN_ZH.md",
+    "20261017/code/docs/V3_GENERALIZATION_AUDIT.md": "20261017/code/docs/BEST_CHECKPOINT_AUDIT.md"
+  },
+  "active_v4_checksums_preserved": true,
+  "preserved_legacy_archive_sha256": "ffb0edaaa74bce69ea47d1474baa13a1b512f443bd8a65f182b93f3697acd88c",
+  "approved_protected_retirements": {
+    "20261017/code/docs/V4_PRETEST_PLAN_ZH.md": "8c02bbd66681ee065a6b198989a8f1e4740a6ed72df0d24940b2e42381c2bfb1",
+    "20261017/code/docs/V3_GENERALIZATION_AUDIT.md": "3868b9bb1853ccc01fd81860d60db85c41b394390ac9b09494837b7314868ccf",
+    "20261017/code/docs/BEST_AUDIT_V4_PLAN_ZH.md": "8c02bbd66681ee065a6b198989a8f1e4740a6ed72df0d24940b2e42381c2bfb1"
+  },
+  "retired_derived_artifacts": [
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/figures/all_six_classes.png",
+      "sha256": "033a76d3854e2d75e2bd511273be712b59a8388f2ade768e5479775158ad9008",
+      "bytes": 140830,
+      "reason": "Numerically verified best-checkpoint subset replaced by canonical five-model analysis",
+      "replacement": "20261017/results/experiments/improved_3d_v3/analysis/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/figures/all_six_classes.svg",
+      "sha256": "42470945d3c7591a5015036ff20c61c88649548c85238e70fd4764737dc8b1e6",
+      "bytes": 85975,
+      "reason": "Numerically verified best-checkpoint subset replaced by canonical five-model analysis",
+      "replacement": "20261017/results/experiments/improved_3d_v3/analysis/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/figures/patient_comparison.png",
+      "sha256": "e6f66c1ffe57c5f6b915fe84a985d3cb53af094035d0537d58d51ef4ee8f8dad",
+      "bytes": 76609,
+      "reason": "Numerically verified best-checkpoint subset replaced by canonical five-model analysis",
+      "replacement": "20261017/results/experiments/improved_3d_v3/analysis/supplementary_research/figures/patient_small_organ_dice.png"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/figures/patient_comparison.svg",
+      "sha256": "3c0935a88c2ab2c500e9564706655066ba4fc8a1f7f271797acd34a82fdd138e",
+      "bytes": 42374,
+      "reason": "Numerically verified best-checkpoint subset replaced by canonical five-model analysis",
+      "replacement": "20261017/results/experiments/improved_3d_v3/analysis/supplementary_research/figures/patient_small_organ_dice.png"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/figures/body_all_cases_and_far_errors.png",
+      "sha256": "de81acef0617a4415b40cae52895789b205bc3c4da30b3448b42a4843eb48c7b",
+      "bytes": 352966,
+      "reason": "Numerically verified best-checkpoint subset replaced by canonical five-model analysis",
+      "replacement": "20261017/results/experiments/improved_3d_v3/analysis/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/figures/body_all_cases_and_far_errors.svg",
+      "sha256": "f90a38e521389b3895b98e43a710af0501c3b177c908732e3807ee48e10aa31a",
+      "bytes": 109740,
+      "reason": "Numerically verified best-checkpoint subset replaced by canonical five-model analysis",
+      "replacement": "20261017/results/experiments/improved_3d_v3/analysis/README.md"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/figures/training_and_boundary_trajectory.png",
+      "sha256": "645ec175a9439775f3664fbe3d1f58925771304aefbe8216a3227e2b87f000bf",
+      "bytes": 199797,
+      "reason": "Numerically verified best-checkpoint subset replaced by canonical five-model analysis",
+      "replacement": "20261017/results/experiments/improved_3d_v3/analysis/assessment_required/figures/learning_curves_and_lr.png"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/figures/training_and_boundary_trajectory.svg",
+      "sha256": "666c82844d1aa9522b9a2c89bf4f0e801373d5d8406ed58663e89cc31385f504",
+      "bytes": 78072,
+      "reason": "Numerically verified best-checkpoint subset replaced by canonical five-model analysis",
+      "replacement": "20261017/results/experiments/improved_3d_v3/analysis/assessment_required/figures/learning_curves_and_lr.png"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v3/figures/README.md",
+      "sha256": "7a17b96cd0a780fdfb4b6dc940de5063157da2ff4db8425297946064e6a86f95",
+      "bytes": 618,
+      "reason": "All corresponding duplicated figures retired; guide replaced by canonical analysis README",
+      "replacement": "20261017/results/experiments/improved_3d_v3/analysis/README.md"
+    }
+  ],
+  "derived_replacement_verification": {
+    "class_rows": 24,
+    "class_metrics_tolerance": 1e-12,
+    "patients": "all four-model rows matched canonical best values",
+    "body": "all four-model volume HD95 and far FP values matched",
+    "trajectory": "canonical learning_curves_and_lr now also plots original v2/v3 Body HD95 at every recorded Validation epoch"
+  },
+  "image_review_merge": {
+    "source": "20261017/results/experiments/improved_3d_v2/case_studies/validation/review_45_50/REVIEW_ZH.md",
+    "destination": "20261017/results/experiments/improved_3d_v2/case_studies/validation/review_45_50/README.md",
+    "source_sha256": "f8aea1a93d190eecf132723167dea0339c6be70e89cae6a097d15956b3b80698",
+    "source_lines": 32,
+    "full_body_preserved": true,
+    "previous_directory_note": "# v2 Validation对照\n\n四个预先指定病例，分别覆盖S022后期退步、K018远处误报、M030患者边界改善和J026残余困难。每图四行：Standard、v1、v2第45及50轮；六列覆盖全部类别。每类固定在GT面积最大的轴向切片，四模型使用相同切片。青色GT、橙色预测、红色FP、蓝色FN。像素索引用于同网格对照，不是毫米距离，也不是完整三维边界证据。图仅用于描述病例；整体结论使用全部38卷、六患者结果。四模型混淆矩阵复现后才绘图，不读取Test。\n"
+  },
+  "additional_retirements": [
+    {
+      "path": "20261017/results/experiments/improved_3d_v2/case_studies/validation/review_45_50/REVIEW_ZH.md",
+      "sha256": "f8aea1a93d190eecf132723167dea0339c6be70e89cae6a097d15956b3b80698",
+      "bytes": 3218,
+      "reason": "Complete local image review merged into its image-group README"
+    },
+    {
+      "path": "20261017/results/documentation_audit/INVENTORY_ZH.md",
+      "sha256": "b7d7800573b4859bd7c81136371b4cee9810abbe7240708842f31420509b96c9",
+      "bytes": 15075,
+      "reason": "Redundant generated Markdown file list; complete JSON inventory and PROJECT_MAP retained"
+    },
+    {
+      "path": "20261017/code/docs/BEST_AUDIT_V4_PLAN_ZH.md",
+      "sha256": "8c02bbd66681ee065a6b198989a8f1e4740a6ed72df0d24940b2e42381c2bfb1",
+      "bytes": 4277,
+      "reason": "Obsolete proposal body preserved in v4 report; current audit now locks actual frozen A0/A1 protocol",
+      "replacement": "20261017/results/experiments/improved_3d_v4/reports/V4_Optimization_Methods_Review_ZH.md#historical-loss-plan"
+    },
+    {
+      "path": "20261017/code/transfer/best_checkpoint_audit_20261020.zip",
+      "sha256": "2856f0c212b7254d51beea252874d94da4b16d1485e0cb9bd8afd63d8ed215b1",
+      "bytes": 14186,
+      "reason": "Unexecuted package replaced to lock actual A0/A1 protocol rather than abandoned loss plan",
+      "replacement": "20261017/code/transfer/best_checkpoint_audit_current_20261020.zip"
+    }
+  ],
+  "additional_preserved_protocol": {
+    "source": "20261017/code/docs/BEST_AUDIT_V4_PLAN_ZH.md",
+    "source_sha256": "8c02bbd66681ee065a6b198989a8f1e4740a6ed72df0d24940b2e42381c2bfb1",
+    "source_lines": 54,
+    "destination": "20261017/results/experiments/improved_3d_v4/reports/V4_Optimization_Methods_Review_ZH.md#historical-loss-plan",
+    "full_body_preserved": true
+  },
+  "current_best_audit_package": {
+    "path": "20261017/code/transfer/best_checkpoint_audit_current_20261020.zip",
+    "sha256": "be5ff989b9ab8ead4b409785017274d8e6e8d89b7349fb90eee033ebf459d390",
+    "changed_scope": "Protocol identity only; five selected models and evaluation metrics unchanged; not executed",
+    "active_v4_unchanged": true
+  },
+  "temporary_maintenance_scripts_removed": [
+    {
+      "path": "20261017/code/tools/consolidate_current_project.py",
+      "sha256": "c981d64f3577a6fc105beadfebca3ff51ebf9611c7ef47011ecf608404acf7f0"
+    },
+    {
+      "path": "20261017/code/tools/finalize_project_cleanup.py",
+      "sha256": "226a1965f4490aed747ed29bccc50772bb74cdcf9641878762157c53abf80a69"
+    },
+    {
+      "path": "20261017/code/tools/complete_markdown_cleanup.py",
+      "sha256": "00b50e1d7cc7e850fb6b684dc2a2a44bc1dcb251d6419113c33e7c92f981444c"
+    },
+    {
+      "path": "20261017/code/tools/update_current_audit_package.py",
+      "sha256": "df286c50389a5bdd4839ca3146dc55693ea54b005db9d5220551c18bffe29559"
+    },
+    {
+      "path": "20261017/code/tools/update_cleanup_notes.py",
+      "sha256": "ecf1ef1762814b7a7184a0376185e34b9cc6485d0e177441b4fb6fcd7e2ed35a"
+    },
+    {
+      "path": "20261017/code/tools/verify_cleanup_transaction.py",
+      "sha256": "10f40869776461b4bcc02946ffcab4aa25d0db8b9dc9bfc6f18f947cb0668d78"
+    }
+  ],
+  "validation": {
+    "python_ast_files_before_temporary_executor_removal": 103,
+    "current_markdown_files": 62,
+    "exact_duplicate_markdown_groups": 0,
+    "original_suite_tests_passed": 53,
+    "post_audit_update_targeted_tests_passed": 2,
+    "active_v4_source_hashes_match": true,
+    "active_v4_zip_unchanged": true,
+    "unique_legacy_archive_unchanged": true,
+    "new_audit_package_matches_sources": true,
+    "packaging_excludes_nested_zip_and_refuses_overwrite": true,
+    "full_merged_body_line_counts_preserved": true,
+    "python_cache_directories_removed": 4,
+    "remote_jobs_modified": false,
+    "remote_evaluation_executed": false
+  }
+}
