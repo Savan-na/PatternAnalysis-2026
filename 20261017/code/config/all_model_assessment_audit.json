@@ -1,0 +1,44 @@
+{
+  "status": "best_recorded_Validation_checkpoints_not_final_by_default",
+  "selected": {
+    "2D": {
+      "epoch": 50,
+      "manifest_sha256": "f34deddbf59b4b688464033e4301e99b605637e5fae6e564fc0ba89c09fb5ff9",
+      "record_sha256": "364c40ebb8c5e460ca99787e242653bc8a39e4868af439cf266be004ce2d6587"
+    },
+    "Standard": {
+      "epoch": 50,
+      "manifest_sha256": "c819e7548821f0f43289cab3b5022f200cf0c0c78fed04f36eae3735359b9126",
+      "record_sha256": "2d2714b66e2b0d72026f081ce06fbc7416b51f547dc24602b88103a8e4d70497"
+    },
+    "v1": {
+      "epoch": 50,
+      "manifest_sha256": "2b281ef9789f04d7880e9e2e8b1bc9ddfefaa36fb3be69848fb6134c2cb2d04b",
+      "record_sha256": "f6fb40e72a56abff0b1c8c63527a24ad4b4a48b37b309369ffdb53e2625d025d"
+    },
+    "v2": {
+      "epoch": 45,
+      "manifest_sha256": "6862a9aacc7bd341ca8b20c4905eaec7358f8ef069ca3adbe613401dc237d85b",
+      "record_sha256": "f913a2cf443c14606e7f40ba12d692aca0a8e1eccd1bca00e0817556e8951bc6"
+    },
+    "v3": {
+      "epoch": 50,
+      "manifest_sha256": "921cdb398ccde5c077c9e0a115ff8975b5c23bf7301aa2b19be40a0abcfda0e4",
+      "record_sha256": "5901abd105dfc2e82670966bdd24661f57fbb886ce4cb4cb3342c3a34f7a04d0"
+    },
+    "A0": {
+      "epoch": 45,
+      "manifest_sha256": "fd528a607d3e9bf7f5ac2490cd092df4678ef1dd1580e99368c73d5579bb8835",
+      "record_sha256": "525e217975c762bd23b8d80929270c3c3c0f5491f7c8275d8f9a003a485c452d"
+    },
+    "A1": {
+      "epoch": 45,
+      "manifest_sha256": "0cd1446ac113125b578690cbecdb1c17f6a2a62644f216677c4ae8c9d4d97165",
+      "record_sha256": "29249a6b64ebcb1b08bf939a71d86c0bda31b860777d0b13f21e0a1df2fd4759"
+    }
+  },
+  "v4_pretest_plan_sha256": "4c68f79e411d8e2ebc996fa435f994abb31f661944fe471a20231c590f60e029",
+  "historical_test_sha256": "21ce5e2eb53e3bf758478fd7c9fd95b887d82031b7a66ed77c7ef3168adc3e2f",
+  "v4_pretest_plan_path": "code/docs/V4_Paired_Training_ZH.md",
+  "evaluation_policy": "All seven best recorded Validation checkpoints fixed; Test descriptive only; no new training or tuning"
+}
