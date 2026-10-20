@@ -1,0 +1,5 @@
+# Preserve byte-level SHA contracts across Windows, GitHub and Rangpur.
+# This disables newline conversion without marking source files as binary.
+20261017/code/** -text
+20261017/results/diagnostics/inference_context/context_sensitivity_20261020/README.md -text
+20261017/results/experiments/improved_3d_v4/augmentation_audit_20261020/README.md -text

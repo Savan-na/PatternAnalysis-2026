@@ -1,0 +1,10 @@
+{
+  "hipmri_rewrite/augmentation_v4.py": "6b1f695b7ca573b3fb8c5e0287ab57159b8ccb81a68499a1f57a14e62e2f7d3f",
+  "tools/train_v4_cohort.py": "d3cfd43be398a6075689f8d6dd3f41f59ddc9b909f95cc30a66524cf6a87007e",
+  "tools/audit_v4_augmentation.py": "9d3d089c53c73bd1f26a6720170ccb5bcc558caaeb0a6959aade32f831db96fe",
+  "tests/test_v4_training.py": "fda6cdc8bae55e0dd105ed91c33eb5a588c80124c44689674dbd4c8e6ff609b7",
+  "config/v4_a0_frozen.json": "cb576b195f6a05e6fc1ab72c39dc8c0e975568d10a8e790a14f0d4fc9b3802f9",
+  "config/v4_a1_frozen.json": "20a6dcdb27c3a16c21f2301784ca0984ca15c75554209850381c66f47514193e",
+  "tools/submit_v4_paired.sh": "95bb068118bbf17c6f3d436690b11959b33a278195ab05d5f1d17e8958da1342",
+  "docs/V4_Paired_Training_ZH.md": "4c68f79e411d8e2ebc996fa435f994abb31f661944fe471a20231c590f60e029"
+}
