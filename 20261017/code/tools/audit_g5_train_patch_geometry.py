@@ -21,7 +21,7 @@ from hipmri_rewrite.sampling import PATCH_XYZ, crop_origin  # noqa: E402
 
 G1 = PROJECT / "logs/audits/train_full_20261018_job671208.json"
 RUNS = PROJECT / "logs/training"
-OUTPUT = PROJECT / "results/data_analysis/g4_patient_sampling/g5_train_patch_geometry.json"
+OUTPUT = PROJECT / "results/data_analysis/patient_balanced_sampling/g5_train_patch_geometry.json"
 
 
 def digest(path: Path) -> str:

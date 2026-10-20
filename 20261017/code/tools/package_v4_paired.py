@@ -1,4 +1,4 @@
-﻿from pathlib import Path
+from pathlib import Path
 import ast,hashlib,json,zipfile
 r=Path(__file__).resolve().parents[2]; code=r/'code'
 package=code/'transfer/v4_paired_spatial_20261020.zip'

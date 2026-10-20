@@ -39,7 +39,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset-root", required=True, type=Path)
     parser.add_argument("--audit", type=Path, default=PROJECT / "logs/audits/train_full_20261018_job671208.json")
-    parser.add_argument("--output-dir", type=Path, default=PROJECT / "results/data_analysis/g2_train_summary")
+    parser.add_argument("--output-dir", type=Path, default=PROJECT / "results/data_analysis/training_distribution")
     parser.add_argument("--limit", type=int, default=None, help="Smoke run only; never use as the full G2 result")
     args = parser.parse_args()
 

@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 G1 = ROOT / "logs/audits/train_full_20261018_job671208.json"
 G3 = ROOT / "logs/audits/g3_existing_pipeline_full_20261018_job671892.json"
-OUTPUT = ROOT / "results/data_analysis/g3_pipeline"
+OUTPUT = ROOT / "results/data_analysis/preprocessing_validation"
 ORGANS = ("Bladder", "Rectum", "Prostate")
 G1_SHA = "6a4c674564a0364f5f56730cbc31e67b3ff9a8ffeae7d9d3dd18b198bbd0e1a1"
 G3_SHA = "319973a8759265521870f831e7b17eb7249f4130b6a9e9634fe993f22bf687e9"

@@ -31,7 +31,7 @@ def write_csv(path: Path, rows: list[dict], columns: list[str]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--audit", type=Path, default=ROOT / "logs/audits/train_full_20261018_job671208.json")
-    parser.add_argument("--output-dir", type=Path, default=ROOT / "results/data_analysis/g2_train_summary")
+    parser.add_argument("--output-dir", type=Path, default=ROOT / "results/data_analysis/training_distribution")
     args = parser.parse_args()
 
     source = args.audit.resolve()

@@ -14,7 +14,7 @@ PROJECT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT / "code"))
 
 SOURCE = PROJECT / "logs/audits/g4_patient_full_20261018"
-OUTPUT = PROJECT / "results/data_analysis/g4_patient_sampling"
+OUTPUT = PROJECT / "results/data_analysis/patient_balanced_sampling"
 G3 = PROJECT / "logs/audits/g3_existing_pipeline_full_20261018_job671892.json"
 MANIFEST_SHA = "cafd3593efa5880a4a61b6281bac5d177f58cd713e734cf8dad422d191f0b90c"
 PATCHES_SHA = "04a6822f15940b658f0c3eb062528aa4fa17721552030dc5dc6d45ce5c441968"

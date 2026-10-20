@@ -39,7 +39,7 @@ def existing():
     if sha(source) != "a21a38f6bd2c312768c923138da25190ce4346b202dea9a1a61563c6d7acad68":
         raise ValueError("Existing P2 manifest differs from remote receipt")
     data = checked(source)
-    output = PROJECT / "results/diagnostics/inference_context/p2_mechanism_evidence_20261020"
+    output = PROJECT / "results/diagnostics/inference_context/prediction_mechanisms_20261020"
     if output.exists():
         raise FileExistsError("Evidence folder exists; inspect before regenerating")
     output.mkdir(parents=True)
@@ -131,7 +131,7 @@ def existing():
               "当前不把 G7 视为最佳下一项训练的已定结论。先用统计回放区分 H4；按 P1 预设机制判据决定是否支持归一化因素，再决定单因素训练，禁止扫描窗口或过滤阈值。", "",
               "## 查看与复现", "",
               "[同体素 margin 图](same_voxel_logit_evidence.png) · [空间/logit 明细](spatial_logit_evidence.csv)",
-              "代表性 MRI：[K018 Body](../p2_four_cases_20261020/K018_Week4_improved_3d_body.png)、[B040 Body](../p2_four_cases_20261020/B040_Week4_improved_3d_body.png)、[J026 head](../p2_four_cases_20261020/J026_Week4_head_margins.png)。原图只展示已记录的病例，不从截图估算指标。", "",
+              "代表性 MRI：[K018 Body](../context_sensitivity_20261020/K018_Week4_improved_3d_body.png)、[B040 Body](../context_sensitivity_20261020/B040_Week4_improved_3d_body.png)、[J026 head](../context_sensitivity_20261020/J026_Week4_head_margins.png)。原图只展示已记录的病例，不从截图估算指标。", "",
               "复现：`python -B code/tools/summarize_p2b_prediction_mechanisms.py --phase existing`；为防覆盖，已有输出目录时拒绝重建。",
               f"原始 manifest SHA-256：`{sha(source)}`。"]
     (output / "README.md").write_text("\n".join(lines)+"\n", encoding="utf-8")

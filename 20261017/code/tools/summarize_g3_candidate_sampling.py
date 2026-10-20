@@ -16,7 +16,7 @@ from pathlib import Path
 
 PROJECT = Path(__file__).resolve().parents[2]
 SOURCE = PROJECT / "logs/audits/g3_patch_candidate_full_20261018"
-OUTPUT = PROJECT / "results/data_analysis/g3_pipeline"
+OUTPUT = PROJECT / "results/data_analysis/preprocessing_validation"
 G3 = PROJECT / "logs/audits/g3_existing_pipeline_full_20261018_job671892.json"
 CLASSES = ("Background", "Body", "Bones", "Bladder", "Rectum", "Prostate")
 ORGANS = ("Bladder", "Rectum", "Prostate")

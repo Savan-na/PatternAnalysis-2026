@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 PROJECT = Path(__file__).resolve().parents[2]
-OUTPUT = PROJECT / "results/data_analysis/g2_train_summary"
+OUTPUT = PROJECT / "results/data_analysis/training_distribution"
 AUDIT = PROJECT / "logs/audits/train_full_20261018_job671208.json"
 CLASSES = ("Background", "Body", "Bones", "Bladder", "Rectum", "Prostate")
 ORGANS = ("Bladder", "Rectum", "Prostate")

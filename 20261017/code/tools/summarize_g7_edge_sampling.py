@@ -21,7 +21,7 @@ from hipmri_rewrite.sampling import CLASS_NAMES  # noqa: E402
 from hipmri_rewrite.sampling_edges import boundary_hits  # noqa: E402
 
 SOURCE = ROOT / "logs/audits/g7_edge_sampling_full_20261019"
-OUTPUT = ROOT / "results/data_analysis/g7_edge_sampling"
+OUTPUT = ROOT / "results/data_analysis/boundary_sampling_audit"
 EXPECTED = {"manifest.json": "50d26679437bd876182156431b578ca36789657944435268bbf13f67187b1a48",
             "patches.csv": "86a7e72227ac7101432b62336f9d70d6d418d0fad152ab67746ce833b36ad4de"}
 POLICIES = ("original_uniform", "nine_uniform_one_edge")
@@ -206,8 +206,8 @@ def main() -> None:
         ax.spines[["top", "right"]].set_visible(False)
     handles, labels = axes[1].get_legend_handles_labels()
     fig.legend(handles, labels, frameon=False, loc="outside lower center", ncol=2)
-    fig.suptitle("G7 Train-only CPU audit · 26 patients · 50 epochs · 13,000 crops per policy")
-    save(fig, "g7_exposure_and_geometry")
+    fig.suptitle("Boundary sampling audit · 26 patients · 50 epochs · 13,000 crops per policy")
+    save(fig, "sampling_exposure_and_geometry")
     fig, axes = plt.subplots(2, 3, figsize=(11, 7), layout="constrained")
     for row_i, selected in enumerate(([r for r in rows if r["policy"] == POLICIES[0]], edge)):
         points = np.array([[int(r[f"origin_{axis}"]) / (shapes[r["case"]][i] - patch[i])
@@ -219,7 +219,7 @@ def main() -> None:
                    xlabel=f"{'XYZ'[a]} origin / allowable extent", ylabel=f"{'XYZ'[b]} origin / allowable extent")
             ax.set_title("Original: all 13,000" if row_i == 0 else "Treatment: 1,300 edge draws only")
     fig.suptitle("Crop-start positions · normalized to each volume's allowable crop origins")
-    save(fig, "g7_crop_origins")
+    save(fig, "crop_origin_distribution")
     receipt = {"kind": "G7_local_CSV_verification", "source_hashes": EXPECTED,
                "csv_rows": len(rows), "preserved_draw_pairs": 11700,
                "baseline_epochs_reproduced": 50, "accepted_edge_draws": len(edge),

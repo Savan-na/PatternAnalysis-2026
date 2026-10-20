@@ -39,9 +39,10 @@ def main():
     if (sha256(PROJECT / "code/config/p2_inference_context.json") != data["config_sha256"]
             or any(sha256(PROJECT / name) != digest for name, digest in data["sources"].items())):
         raise ValueError("P2 local sources differ from the measured protocol")
-    output = PROJECT / "results/diagnostics/inference_context" / data["config"]["experiment_id"]
+    # Keep the immutable measured run ID in logs; presentation uses a topic name.
+    output = PROJECT / "results/diagnostics/inference_context/context_sensitivity_20261020"
     output.mkdir(parents=True, exist_ok=True)
-    if (output / "P2_review_ZH.md").exists():
+    if (output / "CONTEXT_SENSITIVITY_REVIEW_ZH.md").exists():
         raise FileExistsError("P2 summary already exists; inspect before regenerating")
     fields = ("model", "case", "protocol", "class", "dice", "iou", "precision", "recall")
     with (output / "six_class_metrics.csv").open("w", newline="", encoding="utf-8") as stream:
@@ -92,8 +93,8 @@ def main():
               "- 若改善很弱或小器官受损，按 P1 转向已有审计的 G7 单因素训练；不继续扫描滑窗参数。",
               "- 需要逐例检查对照病例和失败病例，不用四例总体均值掩盖损伤。", "",
               f"来源：`{manifest.relative_to(PROJECT)}`；SHA-256 `{sha256(manifest)}`。"]
-    (output / "P2_review_ZH.md").write_text("\n".join(lines)+"\n", encoding="utf-8")
-    print(output / "P2_review_ZH.md")
+    (output / "CONTEXT_SENSITIVITY_REVIEW_ZH.md").write_text("\n".join(lines)+"\n", encoding="utf-8")
+    print(output / "CONTEXT_SENSITIVITY_REVIEW_ZH.md")
 
 
 if __name__ == "__main__":
