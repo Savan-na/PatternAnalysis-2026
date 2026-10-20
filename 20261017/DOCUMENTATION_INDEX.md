@@ -1,6 +1,6 @@
 # HipMRI 文档导航
 
-更新：2026-10-20。本文区分当前执行、历史方案、实验结果与固定证据；全部文件清单见[PROJECT_MAP](PROJECT_MAP.md)，逐Markdown审查见[整理记录](results/documentation_audit/README.md)。
+更新：2026-10-21。本文区分当前执行、历史方案、实验结果与固定证据；全部文件清单见[PROJECT_MAP](PROJECT_MAP.md)，逐Markdown审查见[整理记录](results/documentation_audit/README.md)。
 
 ## 1. 建议阅读顺序
 
@@ -13,12 +13,12 @@
 | 方法与预测机制诊断 | 课程、论文、推理范围和输出行为审查 | diagnostics及方法审查报告 |
 | 训练与性能评估 | 初始2D/Standard/v1训练和既有Test评估 | 原始run证据与当前best比较分开 |
 | v2/v3 | 独立监督、GN等实际受控训练 | 保留完整版本报告和真实结果 |
-| v4 A0/A1 | 当前AdamW/cosine下空间增强配对实验 | 当前实际执行；完成后才有质量结论 |
+| v4 A0/A1 | AdamW/cosine下空间增强配对实验及七模型统一评估 | 两组50轮及评估完成；最新结论见v4系统报告 |
 
 | 问题 | 文档 |
 |---|---|
 | 项目现在进展到哪里 | [项目入口](README.md)、[v4执行状态](results/experiments/improved_3d_v4/README.md) |
-| 各模型最好的结果如何比较 | [best分析](results/model_evaluation/best_checkpoint_comparison/README.md)、[选模/课程/论文复核](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#methods) |
+| 各模型最好的结果如何比较 | [七模型最新系统报告](results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md)、[选模/课程/论文历史复核](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#methods) |
 | v2为什么没有达到目标 | [v2结果](results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md#results)、[真实图像审阅](results/experiments/improved_3d_v2/case_studies/validation/review_45_50/README.md) |
 | v3改善和代价是什么 | [v3结果](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#validation)、[泛化复核](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#generalization) |
 | 当前v4到底改什么 | [冻结配对协议](code/docs/V4_Paired_Training_ZH.md)、[Train增强复核](results/experiments/improved_3d_v4/paired_analysis/README.md) |
@@ -43,7 +43,7 @@
 
 ## 3. 当前、历史与固定快照
 
-训练最佳比较：2D50、Standard50、v1-50、v2-45、v3-50，均按相同已记录Validation候选规则；v4尚未完成，不列入已得结果。
+当前训练最佳比较：2D50、Standard50、v1-50、v2-45、v3-50、A0-45、A1-45，均按相同已记录Validation候选规则。七模型原始评估与最新分析保存在v4专区；旧五模型表作为历史快照保留，不回写原始来源。
 
 早期数据审查、机制诊断及旧v4单loss预案属于研究过程记录。其“下一步”可能已被后续方案替代，应从索引确认状态，不能直接照抄历史命令重复提交。
 

@@ -12,13 +12,15 @@
 | v2/v3下载记录 | 各自`results/experiments/<version>/training_records/`，不再搬移来源 |
 | Train问题与解释图 | `results/data_analysis/<topic>/` |
 | 机制诊断 | `logs/validation/inference_context/<run>/`和`results/diagnostics/inference_context/<run>/` |
-| 当前五模型best图与表 | `results/model_evaluation/best_checkpoint_comparison/`，分课程要求/补充研究 |
-| v4分组及共同分析 | `results/experiments/improved_3d_v4/{a0_control,a1_spatial,paired_analysis}/`；有结果时创建分组目录 |
+| 五模型best历史图与表 | `results/model_evaluation/best_checkpoint_comparison/`，作为旧阶段快照保留 |
+| v4分组及共同分析 | `results/experiments/improved_3d_v4/{a0,a1,paired_analysis}/`；分组内training_records是下载原始记录 |
+| 当前七模型评估与分析 | v4专区内`comprehensive_audit_20261021/`保留原始输出，`assessment_analysis/{assessment_required,supplementary_research}/`分表格与图表 |
+| 本地完整权重备份 | `archives/remote_training_backups/`；Git忽略，清理远端前逐文件SHA核验，不随统计结果优劣删除 |
 | 真实案例图片 | `case_studies/<split>/<topic>/`或版本专属案例目录，README与图同组 |
 | 完整分析报告 | 综合报告`results/reports/`，版本报告`experiments/<version>/reports/` |
 | 文件清理台账 | `results/documentation_audit/`，保留删除SHA、替代来源和合并行数 |
 | 唯一旧项目压缩包 | 外围`experiment_store.zip`，保留，不混入新实验比较 |
 
-基底/尖端、连续性及公平资源测量有代码和预留设计，但完整新测量尚未完成，不用空表或0替代。机器记录JSON、MRI、权重、来源SHA不能被简短报告取代。只删除已确认重复或被完整替代的派生产物。
+七模型基底/尖端、连续性及统一资源测量已完成，结果及局限见v4系统报告。机器记录JSON、MRI、权重、来源SHA不能被简短报告取代。只删除已确认重复或被完整替代的派生产物。
 
 从旧远端工具下载的平铺comparisons结果，可运行`python code/tools/organize_result_artifacts.py`分类；同名冲突会停止。新v4直接按版本输出，不混入旧comparisons。

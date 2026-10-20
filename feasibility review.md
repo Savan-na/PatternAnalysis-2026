@@ -1,6 +1,6 @@
 # Feasibility Review — HipMRI Segmentation
 
-> Status note — 20 October 2026: the review below records an earlier P1/P2 decision point. Subsequent v2 and v3 training is complete; the current v4 A0/A1 paired training jobs have been submitted. The G7 intervention proposed below was not adopted for these runs. Use the [current documentation index](20261017/DOCUMENTATION_INDEX.md) for current evidence and execution status.
+> Status note — 21 October 2026: the review below preserves the earlier feasibility decision. All seven model runs and the fixed-checkpoint assessment audit are now complete. The latest [seven-model report](20261017/results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md) identifies v3 as the Validation-selected candidate, documents boundary failures and separates completed metrics from outstanding submission work. The G7 intervention below was not adopted. Historical body text remains unchanged.
 
 **COMP3710 | 20 October 2026 | Status: feasible, with outstanding validation and submission work**
 

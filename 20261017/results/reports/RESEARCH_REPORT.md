@@ -1,6 +1,6 @@
 # HipMRI Research Report
 
-> 文档状态：这是按阶段累积的研究记录，包含当时的决策和待办。最新各模型best分析与当前v4训练入口见[文档导航](../../DOCUMENTATION_INDEX.md)。不要把早期“下一步”直接当作当前执行命令；历史指标和阶段结论保留。
+> 文档状态：这是按阶段累积的研究记录，包含当时的决策和待办。2026-10-21七模型评估已完成，最新结论见[v4七模型报告](../experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md)及[文档导航](../../DOCUMENTATION_INDEX.md)。不要把早期“下一步”直接当作当前执行命令；历史指标和阶段结论保留。
 
 ## Dataset Characteristics
 

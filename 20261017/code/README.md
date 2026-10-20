@@ -1,5 +1,12 @@
 # Code and Methods
 
+Latest completed workflow (2026-10-21): `tools/audit_all_models.py` evaluates
+seven locked Validation-best checkpoints; `tools/summarize_all_model_audit.py`
+verifies downloaded evidence and generates the assessment/research tables and
+figures. See the [current report](../results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md).
+The earlier five-model audit remains a historical, unexecuted alternative; do
+not submit it merely to regenerate results already covered by the seven-model run.
+
 ## Task-oriented entry points
 
 Use the purpose column to choose a workflow. Some executable names retain

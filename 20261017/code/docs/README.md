@@ -4,6 +4,7 @@
 
 | 文档 | 独立用途 |
 |---|---|
+| [ALL_MODEL_ASSESSMENT_AUDIT](ALL_MODEL_ASSESSMENT_AUDIT.md) | 已完成的七模型固定best评估方法；当前数值、失败图及课程结论见v4系统报告 |
 | [STUDY_PROTOCOL](STUDY_PROTOCOL.md) | 患者隔离、Train/Validation/Test信息边界及研究规则 |
 | [METHODS_EXECUTION_HISTORY](METHODS_EXECUTION_HISTORY.md) | 完整保留三篇论文实现决策、G1–G7证据门槛和历史命令；按sources/evidence/commands分节，不自动重跑 |
 | [P2_INFERENCE_CONTEXT](INFERENCE_CONTEXT_DIAGNOSTIC_ZH.md) | 固定权重上下文诊断设计，已有结果在results/diagnostics |

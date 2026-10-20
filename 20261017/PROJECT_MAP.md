@@ -1,17 +1,126 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-20 23:30:04 AEST**
+Updated / 更新时间: **2026-10-21 07:06:44 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **91** · Files / 文件: **703**
+Directories / 目录: **110** · Files / 文件: **1013**
 
 ## Directory Tree / 目录树
 
 ```text
 20261017/
+├── archives/
+│   └── remote_training_backups/
+│       ├── improved_3d_v2_ds_20261020/
+│       │   ├── best.pt
+│       │   ├── config_frozen.json
+│       │   ├── epoch_001.json
+│       │   ├── epoch_001.pt
+│       │   ├── epoch_002.json
+│       │   ├── epoch_002.pt
+│       │   ├── epoch_003.json
+│       │   ├── epoch_003.pt
+│       │   ├── epoch_004.json
+│       │   ├── epoch_004.pt
+│       │   ├── epoch_005.json
+│       │   ├── epoch_005.pt
+│       │   ├── epoch_006.json
+│       │   ├── epoch_006.pt
+│       │   ├── epoch_007.json
+│       │   ├── epoch_007.pt
+│       │   ├── epoch_008.json
+│       │   ├── epoch_008.pt
+│       │   ├── epoch_009.json
+│       │   ├── epoch_009.pt
+│       │   ├── epoch_010.json
+│       │   ├── epoch_010.pt
+│       │   ├── epoch_011.json
+│       │   ├── epoch_011.pt
+│       │   ├── epoch_012.json
+│       │   ├── epoch_012.pt
+│       │   ├── epoch_013.json
+│       │   ├── epoch_013.pt
+│       │   ├── epoch_014.json
+│       │   ├── epoch_014.pt
+│       │   ├── epoch_015.json
+│       │   ├── epoch_015.pt
+│       │   ├── epoch_016.json
+│       │   ├── epoch_016.pt
+│       │   ├── epoch_017.json
+│       │   ├── epoch_017.pt
+│       │   ├── epoch_018.json
+│       │   ├── epoch_018.pt
+│       │   ├── epoch_019.json
+│       │   ├── epoch_019.pt
+│       │   ├── epoch_020.json
+│       │   ├── epoch_020.pt
+│       │   ├── epoch_021.json
+│       │   ├── epoch_021.pt
+│       │   ├── epoch_022.json
+│       │   ├── epoch_022.pt
+│       │   ├── epoch_023.json
+│       │   ├── epoch_023.pt
+│       │   ├── epoch_024.json
+│       │   ├── epoch_024.pt
+│       │   ├── epoch_025.json
+│       │   ├── epoch_025.pt
+│       │   ├── epoch_026.json
+│       │   ├── epoch_026.pt
+│       │   ├── epoch_027.json
+│       │   ├── epoch_027.pt
+│       │   ├── epoch_028.json
+│       │   ├── epoch_028.pt
+│       │   ├── epoch_029.json
+│       │   ├── epoch_029.pt
+│       │   ├── epoch_030.json
+│       │   ├── epoch_030.pt
+│       │   ├── epoch_031.json
+│       │   ├── epoch_031.pt
+│       │   ├── epoch_032.json
+│       │   ├── epoch_032.pt
+│       │   ├── epoch_033.json
+│       │   ├── epoch_033.pt
+│       │   ├── epoch_034.json
+│       │   ├── epoch_034.pt
+│       │   ├── epoch_035.json
+│       │   ├── epoch_035.pt
+│       │   ├── epoch_036.json
+│       │   ├── epoch_036.pt
+│       │   ├── epoch_037.json
+│       │   ├── epoch_037.pt
+│       │   ├── epoch_038.json
+│       │   ├── epoch_038.pt
+│       │   ├── epoch_039.json
+│       │   ├── epoch_039.pt
+│       │   ├── epoch_040.json
+│       │   ├── epoch_040.pt
+│       │   ├── epoch_041.json
+│       │   ├── epoch_041.pt
+│       │   ├── epoch_042.json
+│       │   ├── epoch_042.pt
+│       │   ├── epoch_043.json
+│       │   ├── epoch_043.pt
+│       │   ├── epoch_044.json
+│       │   ├── epoch_044.pt
+│       │   ├── epoch_045.json
+│       │   ├── epoch_045.pt
+│       │   ├── epoch_046.json
+│       │   ├── epoch_046.pt
+│       │   ├── epoch_047.json
+│       │   ├── epoch_047.pt
+│       │   ├── epoch_048.json
+│       │   ├── epoch_048.pt
+│       │   ├── epoch_049.json
+│       │   ├── epoch_049.pt
+│       │   ├── epoch_050.json
+│       │   ├── epoch_050.pt
+│       │   ├── initial.pt
+│       │   ├── latest.pt
+│       │   └── manifest.json
+│       └── improved_3d_v2_ds_20261020.sha256
 ├── code/
 │   ├── config/
 │   │   ├── arms/
@@ -21,6 +130,8 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │   │   │   └── arm.json
 │   │   │   └── improved_3d/
 │   │   │       └── arm.json
+│   │   ├── all_model_assessment_audit.json
+│   │   ├── all_model_audit_checksums.json
 │   │   ├── artifact_paths.json
 │   │   ├── best_checkpoint_audit.json
 │   │   ├── best_checkpoint_transfer_checksums.json
@@ -41,6 +152,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │   ├── v4_a1_frozen.json
 │   │   └── v4_transfer_checksums.json
 │   ├── docs/
+│   │   ├── ALL_MODEL_ASSESSMENT_AUDIT.md
 │   │   ├── BEST_CHECKPOINT_AUDIT.md
 │   │   ├── INFERENCE_CONTEXT_DIAGNOSTIC_ZH.md
 │   │   ├── METHODS_EXECUTION_HISTORY.md
@@ -76,6 +188,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │   ├── splits.py
 │   │   └── training.py
 │   ├── tests/
+│   │   ├── test_all_model_audit.py
 │   │   ├── test_best_checkpoint_audit.py
 │   │   ├── test_boundaries.py
 │   │   ├── test_data.py
@@ -96,6 +209,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │   ├── test_training_selection.py
 │   │   └── test_v4_training.py
 │   ├── tools/
+│   │   ├── audit_all_models.py
 │   │   ├── audit_best_checkpoints.py
 │   │   ├── audit_g2_train_slices.py
 │   │   ├── audit_g3_candidate_sampling.py
@@ -128,6 +242,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │   ├── review_g6_body_boundaries.py
 │   │   ├── review_g6_test_cases.py
 │   │   ├── review_v2_validation.py
+│   │   ├── submit_all_model_audit.sh
 │   │   ├── submit_best_checkpoint_audit.sh
 │   │   ├── submit_g5_2d.sh
 │   │   ├── submit_g5_2d_extend_50.sh
@@ -141,6 +256,8 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │   ├── submit_v3_50.sh
 │   │   ├── submit_v4_paired.sh
 │   │   ├── summarize_all_class_review.py
+│   │   ├── summarize_all_model_audit.py
+│   │   ├── summarize_all_model_validation.py
 │   │   ├── summarize_best_checkpoint_audit.py
 │   │   ├── summarize_g2_slice_detail.py
 │   │   ├── summarize_g2_train_audit.py
@@ -156,6 +273,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │   ├── summarize_p2b_prediction_mechanisms.py
 │   │   ├── summarize_v2_results.py
 │   │   ├── summarize_v3_results.py
+│   │   ├── summarize_v4_pair.py
 │   │   ├── tiny_overfit_g5.py
 │   │   ├── train_g5_2d.py
 │   │   ├── train_g5_cohort.py
@@ -165,6 +283,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │   └── update_project_map.py
 │   ├── transfer/
 │   │   ├── 20261017_source.zip
+│   │   ├── all_model_assessment_20261021.zip
 │   │   ├── best_checkpoint_audit_current_20261020.zip
 │   │   └── v4_paired_spatial_20261020.zip
 │   ├── README.md
@@ -694,6 +813,156 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │   │   │   └── manifest.json
 │   │   │   └── README.md
 │   │   └── improved_3d_v4/
+│   │       ├── a0/
+│   │       │   └── training_records/
+│   │       │       ├── config_frozen.json
+│   │       │       ├── epoch_001.json
+│   │       │       ├── epoch_002.json
+│   │       │       ├── epoch_003.json
+│   │       │       ├── epoch_004.json
+│   │       │       ├── epoch_005.json
+│   │       │       ├── epoch_006.json
+│   │       │       ├── epoch_007.json
+│   │       │       ├── epoch_008.json
+│   │       │       ├── epoch_009.json
+│   │       │       ├── epoch_010.json
+│   │       │       ├── epoch_011.json
+│   │       │       ├── epoch_012.json
+│   │       │       ├── epoch_013.json
+│   │       │       ├── epoch_014.json
+│   │       │       ├── epoch_015.json
+│   │       │       ├── epoch_016.json
+│   │       │       ├── epoch_017.json
+│   │       │       ├── epoch_018.json
+│   │       │       ├── epoch_019.json
+│   │       │       ├── epoch_020.json
+│   │       │       ├── epoch_021.json
+│   │       │       ├── epoch_022.json
+│   │       │       ├── epoch_023.json
+│   │       │       ├── epoch_024.json
+│   │       │       ├── epoch_025.json
+│   │       │       ├── epoch_026.json
+│   │       │       ├── epoch_027.json
+│   │       │       ├── epoch_028.json
+│   │       │       ├── epoch_029.json
+│   │       │       ├── epoch_030.json
+│   │       │       ├── epoch_031.json
+│   │       │       ├── epoch_032.json
+│   │       │       ├── epoch_033.json
+│   │       │       ├── epoch_034.json
+│   │       │       ├── epoch_035.json
+│   │       │       ├── epoch_036.json
+│   │       │       ├── epoch_037.json
+│   │       │       ├── epoch_038.json
+│   │       │       ├── epoch_039.json
+│   │       │       ├── epoch_040.json
+│   │       │       ├── epoch_041.json
+│   │       │       ├── epoch_042.json
+│   │       │       ├── epoch_043.json
+│   │       │       ├── epoch_044.json
+│   │       │       ├── epoch_045.json
+│   │       │       ├── epoch_046.json
+│   │       │       ├── epoch_047.json
+│   │       │       ├── epoch_048.json
+│   │       │       ├── epoch_049.json
+│   │       │       ├── epoch_050.json
+│   │       │       └── manifest.json
+│   │       ├── a1/
+│   │       │   └── training_records/
+│   │       │       ├── config_frozen.json
+│   │       │       ├── epoch_001.json
+│   │       │       ├── epoch_002.json
+│   │       │       ├── epoch_003.json
+│   │       │       ├── epoch_004.json
+│   │       │       ├── epoch_005.json
+│   │       │       ├── epoch_006.json
+│   │       │       ├── epoch_007.json
+│   │       │       ├── epoch_008.json
+│   │       │       ├── epoch_009.json
+│   │       │       ├── epoch_010.json
+│   │       │       ├── epoch_011.json
+│   │       │       ├── epoch_012.json
+│   │       │       ├── epoch_013.json
+│   │       │       ├── epoch_014.json
+│   │       │       ├── epoch_015.json
+│   │       │       ├── epoch_016.json
+│   │       │       ├── epoch_017.json
+│   │       │       ├── epoch_018.json
+│   │       │       ├── epoch_019.json
+│   │       │       ├── epoch_020.json
+│   │       │       ├── epoch_021.json
+│   │       │       ├── epoch_022.json
+│   │       │       ├── epoch_023.json
+│   │       │       ├── epoch_024.json
+│   │       │       ├── epoch_025.json
+│   │       │       ├── epoch_026.json
+│   │       │       ├── epoch_027.json
+│   │       │       ├── epoch_028.json
+│   │       │       ├── epoch_029.json
+│   │       │       ├── epoch_030.json
+│   │       │       ├── epoch_031.json
+│   │       │       ├── epoch_032.json
+│   │       │       ├── epoch_033.json
+│   │       │       ├── epoch_034.json
+│   │       │       ├── epoch_035.json
+│   │       │       ├── epoch_036.json
+│   │       │       ├── epoch_037.json
+│   │       │       ├── epoch_038.json
+│   │       │       ├── epoch_039.json
+│   │       │       ├── epoch_040.json
+│   │       │       ├── epoch_041.json
+│   │       │       ├── epoch_042.json
+│   │       │       ├── epoch_043.json
+│   │       │       ├── epoch_044.json
+│   │       │       ├── epoch_045.json
+│   │       │       ├── epoch_046.json
+│   │       │       ├── epoch_047.json
+│   │       │       ├── epoch_048.json
+│   │       │       ├── epoch_049.json
+│   │       │       ├── epoch_050.json
+│   │       │       └── manifest.json
+│   │       ├── assessment_analysis/
+│   │       │   ├── assessment_required/
+│   │       │   │   ├── figures/
+│   │       │   │   │   ├── body_boundary_distribution.png
+│   │       │   │   │   ├── body_boundary_distribution.svg
+│   │       │   │   │   ├── prostate_base_apex.png
+│   │       │   │   │   ├── prostate_base_apex.svg
+│   │       │   │   │   ├── prostate_boundary_tails.png
+│   │       │   │   │   ├── prostate_boundary_tails.svg
+│   │       │   │   │   ├── prostate_oar_tradeoff.png
+│   │       │   │   │   ├── prostate_oar_tradeoff.svg
+│   │       │   │   │   ├── resource_profile.png
+│   │       │   │   │   ├── resource_profile.svg
+│   │       │   │   │   ├── six_class_validation_test.png
+│   │       │   │   │   ├── six_class_validation_test.svg
+│   │       │   │   │   ├── validation_test_generalization.png
+│   │       │   │   │   └── validation_test_generalization.svg
+│   │       │   │   └── tables/
+│   │       │   │       ├── boundary_errors.csv
+│   │       │   │       ├── model_summary.csv
+│   │       │   │       ├── per_case_inference.csv
+│   │       │   │       ├── prostate_regions.csv
+│   │       │   │       ├── resources.csv
+│   │       │   │       ├── six_class_metrics.csv
+│   │       │   │       └── surface_summary.csv
+│   │       │   ├── supplementary_research/
+│   │       │   │   ├── figures/
+│   │       │   │   │   ├── distant_body_false_positives.png
+│   │       │   │   │   ├── distant_body_false_positives.svg
+│   │       │   │   │   ├── patient_variability.png
+│   │       │   │   │   ├── patient_variability.svg
+│   │       │   │   │   ├── prostate_continuity.png
+│   │       │   │   │   └── prostate_continuity.svg
+│   │       │   │   └── tables/
+│   │       │   │       ├── continuity.csv
+│   │       │   │       ├── paired_patient_sensitivity.csv
+│   │       │   │       ├── per_case_class_metrics.csv
+│   │       │   │       ├── per_case_regions.csv
+│   │       │   │       ├── per_patient.csv
+│   │       │   │       └── surface_distances.csv
+│   │       │   ├── coverage.json
+│   │       │   └── integrity_verification.json
 │   │       ├── augmentation_audit_20261020/
 │   │       │   ├── audit.json
 │   │       │   ├── checksums.json
@@ -704,10 +973,70 @@ Directories / 目录: **91** · Files / 文件: **703**
 │   │       │   ├── preview_05_R039_Week2.png
 │   │       │   ├── preview_06_R039_Week2.png
 │   │       │   └── README.md
-│   │       ├── paired_analysis/
+│   │       ├── comprehensive_audit_20261021/
+│   │       │   ├── images/
+│   │       │   │   ├── test/
+│   │       │   │   │   ├── M015_Week7_Bladder.png
+│   │       │   │   │   ├── M020_Week1_Prostate.png
+│   │       │   │   │   ├── M020_Week1_Prostate_base_apex.png
+│   │       │   │   │   ├── README.md
+│   │       │   │   │   ├── W029_Week6_Body.png
+│   │       │   │   │   ├── W029_Week6_Bones.png
+│   │       │   │   │   ├── W029_Week6_Prostate.png
+│   │       │   │   │   └── W029_Week6_Prostate_base_apex.png
+│   │       │   │   └── validation/
+│   │       │   │       ├── B040_Week1_Background.png
+│   │       │   │       ├── B040_Week1_Bladder.png
+│   │       │   │       ├── B040_Week1_Body.png
+│   │       │   │       ├── B040_Week1_Body_three_planes.png
+│   │       │   │       ├── B040_Week1_Bones.png
+│   │       │   │       ├── B040_Week1_Prostate.png
+│   │       │   │       ├── B040_Week1_Prostate_base_apex.png
+│   │       │   │       ├── B040_Week1_Rectum.png
+│   │       │   │       ├── J026_Week4_Body_three_planes.png
+│   │       │   │       ├── J026_Week4_Rectum.png
+│   │       │   │       ├── K008_Week0_Bladder.png
+│   │       │   │       ├── K008_Week0_Body_three_planes.png
+│   │       │   │       ├── K008_Week0_Prostate.png
+│   │       │   │       ├── K008_Week0_Prostate_base_apex.png
+│   │       │   │       ├── K018_Week4_Background.png
+│   │       │   │       ├── K018_Week4_Body.png
+│   │       │   │       ├── K018_Week4_Body_three_planes.png
+│   │       │   │       ├── M030_Week4_Body.png
+│   │       │   │       ├── M030_Week4_Body_three_planes.png
+│   │       │   │       ├── M030_Week4_Bones.png
+│   │       │   │       ├── README.md
+│   │       │   │       ├── S022_Week2_Bladder.png
+│   │       │   │       ├── S022_Week2_Body_three_planes.png
+│   │       │   │       ├── S022_Week2_Prostate.png
+│   │       │   │       └── S022_Week2_Prostate_base_apex.png
+│   │       │   ├── checksums.json
+│   │       │   ├── input_provenance.json
+│   │       │   ├── metrics.json
+│   │       │   ├── metrics_partial.json
 │   │       │   └── README.md
+│   │       ├── paired_analysis/
+│   │       │   ├── all_models/
+│   │       │   │   ├── selection.csv
+│   │       │   │   ├── seven_model_selection.png
+│   │       │   │   ├── seven_model_selection.svg
+│   │       │   │   ├── seven_model_six_class_dice.png
+│   │       │   │   ├── seven_model_six_class_dice.svg
+│   │       │   │   ├── six_class_validation.csv
+│   │       │   │   └── source_checksums.json
+│   │       │   ├── learning_curves.csv
+│   │       │   ├── learning_curves.png
+│   │       │   ├── learning_curves.svg
+│   │       │   ├── patient_metrics.csv
+│   │       │   ├── README.md
+│   │       │   ├── record_checksums.json
+│   │       │   ├── six_class_dice.png
+│   │       │   ├── six_class_dice.svg
+│   │       │   ├── six_class_metrics.csv
+│   │       │   └── summary.json
 │   │       ├── reports/
-│   │       │   └── OPTIMIZATION_REVIEW_ZH.md
+│   │       │   ├── OPTIMIZATION_REVIEW_ZH.md
+│   │       │   └── RESEARCH_REPORT_ZH.md
 │   │       └── README.md
 │   ├── figures/
 │   │   ├── baseline_2d/
@@ -812,7 +1141,115 @@ Directories / 目录: **91** · Files / 文件: **703**
 
 | File / 文件 | English content overview | 中文内容概览 |
 |---|---|---|
-| `.gitignore` | Git rules for local artifacts; UTF-8 text with 32 lines; 1,340 bytes | 本地运行产物的 Git 规则；UTF-8 文本，32 行；1,340 字节 |
+| `.gitignore` | Git rules for local artifacts; UTF-8 text with 42 lines; 2,019 bytes | 本地运行产物的 Git 规则；UTF-8 文本，42 行；2,019 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/best.pt` | Binary or large file; 28,547,995 bytes | 二进制或大文件；28,547,995 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/config_frozen.json` | JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_001.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_001.pt` | Binary or large file; 28,529,051 bytes | 二进制或大文件；28,529,051 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_002.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_002.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_003.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_003.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_004.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_004.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_005.json` | Binary or large file; 141,022 bytes | 二进制或大文件；141,022 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_005.pt` | Binary or large file; 28,548,315 bytes | 二进制或大文件；28,548,315 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_006.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_006.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_007.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_007.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_008.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_008.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_009.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_009.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_010.json` | Binary or large file; 140,803 bytes | 二进制或大文件；140,803 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_010.pt` | Binary or large file; 28,548,187 bytes | 二进制或大文件；28,548,187 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_011.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_011.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_012.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_012.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_013.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_013.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_014.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_014.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_015.json` | Binary or large file; 140,483 bytes | 二进制或大文件；140,483 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_015.pt` | Binary or large file; 28,548,123 bytes | 二进制或大文件；28,548,123 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_016.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_016.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_017.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_017.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_018.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_018.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_019.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_019.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_020.json` | Binary or large file; 140,535 bytes | 二进制或大文件；140,535 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_020.pt` | Binary or large file; 28,548,123 bytes | 二进制或大文件；28,548,123 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_021.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_021.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_022.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_022.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_023.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_023.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_024.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_024.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_025.json` | Binary or large file; 140,871 bytes | 二进制或大文件；140,871 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_025.pt` | Binary or large file; 28,548,251 bytes | 二进制或大文件；28,548,251 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_026.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_026.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_027.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_027.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_028.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_028.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_029.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_029.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_030.json` | Binary or large file; 140,249 bytes | 二进制或大文件；140,249 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_030.pt` | Binary or large file; 28,548,059 bytes | 二进制或大文件；28,548,059 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_031.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_031.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_032.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_032.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_033.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_033.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_034.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_034.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_035.json` | Binary or large file; 140,084 bytes | 二进制或大文件；140,084 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_035.pt` | Binary or large file; 28,548,059 bytes | 二进制或大文件；28,548,059 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_036.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_036.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_037.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_037.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_038.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_038.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_039.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_039.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_040.json` | Binary or large file; 140,292 bytes | 二进制或大文件；140,292 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_040.pt` | Binary or large file; 28,548,059 bytes | 二进制或大文件；28,548,059 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_041.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_041.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_042.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_042.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_043.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_043.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_044.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_044.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_045.json` | Binary or large file; 140,101 bytes | 二进制或大文件；140,101 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_045.pt` | Binary or large file; 28,547,995 bytes | 二进制或大文件；28,547,995 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_046.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_046.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_047.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_047.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_048.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_048.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_049.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_049.pt` | Binary or large file; 28,528,987 bytes | 二进制或大文件；28,528,987 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_050.json` | Binary or large file; 140,261 bytes | 二进制或大文件；140,261 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/epoch_050.pt` | Binary or large file; 28,548,059 bytes | 二进制或大文件；28,548,059 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/initial.pt` | Binary or large file; 9,504,373 bytes | 二进制或大文件；9,504,373 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/latest.pt` | Binary or large file; 28,548,059 bytes | 二进制或大文件；28,548,059 字节 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020/manifest.json` | JSON fields: boundaries_sha256, config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, initial_state_sha256, initialization_evidence, job_id_initial, kind, loss_sha256 | JSON 字段：boundaries_sha256, config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, initial_state_sha256, initialization_evidence, job_id_initial, kind, loss_sha256 |
+| `archives/remote_training_backups/improved_3d_v2_ds_20261020.sha256` | UTF-8 text with 105 lines; 8,497 bytes | UTF-8 文本，105 行；8,497 字节 |
+| `code/config/all_model_assessment_audit.json` | JSON fields: status, selected, v4_pretest_plan_sha256, historical_test_sha256, v4_pretest_plan_path, evaluation_policy | JSON 字段：status, selected, v4_pretest_plan_sha256, historical_test_sha256, v4_pretest_plan_path, evaluation_policy |
+| `code/config/all_model_audit_checksums.json` | JSON fields: tools/audit_all_models.py, tools/submit_all_model_audit.sh, tests/test_all_model_audit.py, config/all_model_assessment_audit.json, docs/ALL_MODEL_ASSESSMENT_AUDIT.md | JSON 字段：tools/audit_all_models.py, tools/submit_all_model_audit.sh, tests/test_all_model_audit.py, config/all_model_assessment_audit.json, docs/ALL_MODEL_ASSESSMENT_AUDIT.md |
 | `code/config/arms/baseline_2d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/baseline_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
 | `code/config/arms/improved_3d/arm.json` | Reserved model-arm identity and training state; JSON fields: arm_id, role, model_import, training_status, training_config_status | 预留的模型分组标识及训练状态；JSON 字段：arm_id, role, model_import, training_status, training_config_status |
@@ -835,6 +1272,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `code/config/v4_a0_frozen.json` | JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
 | `code/config/v4_a1_frozen.json` | JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
 | `code/config/v4_transfer_checksums.json` | JSON fields: hipmri_rewrite/augmentation_v4.py, tools/train_v4_cohort.py, tools/audit_v4_augmentation.py, tests/test_v4_training.py, config/v4_a0_frozen.json, config/v4_a1_frozen.json, tools/submit_v4_paired.sh, docs/V4_Paired_Training_ZH.md | JSON 字段：hipmri_rewrite/augmentation_v4.py, tools/train_v4_cohort.py, tools/audit_v4_augmentation.py, tests/test_v4_training.py, config/v4_a0_frozen.json, config/v4_a1_frozen.json, tools/submit_v4_paired.sh, docs/V4_Paired_Training_ZH.md |
+| `code/docs/ALL_MODEL_ASSESSMENT_AUDIT.md` | Sections: Seven-model fixed-checkpoint assessment audit; Measurements; Execution and storage; Assessment limitations | 章节标题：Seven-model fixed-checkpoint assessment audit; Measurements; Execution and storage; Assessment limitations |
 | `code/docs/BEST_CHECKPOINT_AUDIT.md` | Sections: Best-checkpoint assessment audit | 章节标题：Best-checkpoint assessment audit |
 | `code/docs/INFERENCE_CONTEXT_DIAGNOSTIC_ZH.md` | Sections: 固定权重推理范围诊断; 当前状态; 固定设计; 运行与输出; 结果解释关口 | 章节标题：固定权重推理范围诊断; 当前状态; 固定设计; 运行与输出; 结果解释关口 |
 | `code/docs/METHODS_EXECUTION_HISTORY.md` | Sections: Methods and execution history — reference, not a submission queue; 原文：SOURCE_DECISIONS.md; Paper and assignment decision register; 原文：EXECUTION.md; Execution and evidence checklist | 章节标题：Methods and execution history — reference, not a submission queue; 原文：SOURCE_DECISIONS.md; Paper and assignment decision register; 原文：EXECUTION.md; Execution and evidence checklist |
@@ -869,6 +1307,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `code/hipmri_rewrite/training.py` | Predeclared equal-patient Validation selection score; Definitions: patient_small_organ_score | 预先定义患者等权的验证集模型选择指标；定义：patient_small_organ_score |
 | `code/README.md` | Entry point or directory guide; Sections: Code and Methods; Task-oriented entry points; Current documentation entry points — 20 October 2026 | 项目入口或目录说明；章节标题：Code and Methods; Task-oriented entry points; Current documentation entry points — 20 October 2026 |
 | `code/requirements.txt` | Python dependency ranges; UTF-8 text with 5 lines; 79 bytes | Python 依赖版本范围；UTF-8 文本，5 行；79 字节 |
+| `code/tests/test_all_model_audit.py` | Definitions: GeneralizationAuditTests | 定义：GeneralizationAuditTests |
 | `code/tests/test_best_checkpoint_audit.py` | Definitions: GeneralizationAuditTests | 定义：GeneralizationAuditTests |
 | `code/tests/test_boundaries.py` | Physical direction and empty-surface tests; Definitions: BoundaryTests, SurfaceTests | 物理方向及空表面测试；定义：BoundaryTests, SurfaceTests |
 | `code/tests/test_data.py` | NIfTI alignment, downsampling and label tests; Definitions: DataContractTests, DownsamplingGeometryTests, NiftiPairTests | NIfTI 对齐、降采样与标签测试；定义：DataContractTests, DownsamplingGeometryTests, NiftiPairTests |
@@ -888,6 +1327,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `code/tests/test_training_recovery.py` | Check atomic batch checkpoints and recovery after an interrupted epoch pointer; Definitions: RecoveryTests | 核验原子批次权重及轮次指针中断后的恢复；定义：RecoveryTests |
 | `code/tests/test_training_selection.py` | Check patient-balanced small-organ checkpoint selection; Definitions: PatientSelectionTests | 核验患者等权的小器官权重选择规则；定义：PatientSelectionTests |
 | `code/tests/test_v4_training.py` | Definitions: V4Tests | 定义：V4Tests |
+| `code/tools/audit_all_models.py` | Definitions: sha, write, geometry, diagnostics, load_model, panel, body_three_planes, main | 定义：sha, write, geometry, diagnostics, load_model, panel, body_three_planes, main |
 | `code/tools/audit_best_checkpoints.py` | Definitions: sha, write, geometry, diagnostics, load_model, panel, main | 定义：sha, write, geometry, diagnostics, load_model, panel, main |
 | `code/tools/audit_g2_train_slices.py` | Measure Train axial label coverage and MRI intensity bins on Rangpur CPU; Definitions: sha256_file, write_csv, main | 在 Rangpur CPU 测量训练集逐切片标签覆盖与 MRI 强度分箱；定义：sha256_file, write_csv, main |
 | `code/tools/audit_g3_candidate_sampling.py` | Compare fixed Train-only uniform and organ-aware candidate crops; Definitions: sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main | 比较固定的训练集均匀与器官感知候选裁剪；定义：sha256_file, fixed_rng, uniform_origin, target_origin, patch_counts, main |
@@ -920,6 +1360,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `code/tools/review_g6_body_boundaries.py` | Reproduce selected Test cases and draw Body boundary errors; Definitions: planes, draw, main | 复现选定测试案例并绘制 Body 边界错误；定义：planes, draw, main |
 | `code/tools/review_g6_test_cases.py` | Reproduce selected held-out Test 3D predictions and draw descriptive overlays; Definitions: axial_slice, render, main | 复现选定独立测试样本的 3D 预测并绘制描述性叠加图；定义：axial_slice, render, main |
 | `code/tools/review_v2_validation.py` | Definitions: sha, main | 定义：sha, main |
+| `code/tools/submit_all_model_audit.sh` | UTF-8 text with 19 lines; 1,932 bytes | UTF-8 文本，19 行；1,932 字节 |
 | `code/tools/submit_best_checkpoint_audit.sh` | UTF-8 text with 26 lines; 1,820 bytes | UTF-8 文本，26 行；1,820 字节 |
 | `code/tools/submit_g5_2d.sh` | UTF-8 text with 77 lines; 3,122 bytes | UTF-8 文本，77 行；3,122 字节 |
 | `code/tools/submit_g5_2d_extend_50.sh` | Verify and queue a frozen 2D continuation to epoch 50; UTF-8 text with 81 lines; 2,914 bytes | 核验并排队固定配置的 2D 模型续训至 50 轮；UTF-8 文本，81 行；2,914 字节 |
@@ -933,6 +1374,8 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `code/tools/submit_v3_50.sh` | UTF-8 text with 34 lines; 2,140 bytes | UTF-8 文本，34 行；2,140 字节 |
 | `code/tools/submit_v4_paired.sh` | UTF-8 text with 35 lines; 2,672 bytes | UTF-8 文本，35 行；2,672 字节 |
 | `code/tools/summarize_all_class_review.py` | Verify selected records and draw six-class, training and failure figures; Definitions: save, paired_bars, validation_figures, test_figures_and_table, three_arm_validation_figures, main | 核验选定记录并绘制六类、训练及失误图；定义：save, paired_bars, validation_figures, test_figures_and_table, three_arm_validation_figures, main |
+| `code/tools/summarize_all_model_audit.py` | Definitions: sha, read, write, verify, table, save, main | 定义：sha, read, write, verify, table, save, main |
+| `code/tools/summarize_all_model_validation.py` | Definitions: main | 定义：main |
 | `code/tools/summarize_best_checkpoint_audit.py` | Definitions: main | 定义：main |
 | `code/tools/summarize_g2_slice_detail.py` | Reconcile G2 slice and intensity CSVs with G1 and draw local plots; Definitions: read_csv, write_csv, check_hash, main | 将 G2 切片及强度 CSV 与 G1 核对并绘制本地图；定义：read_csv, write_csv, check_hash, main |
 | `code/tools/summarize_g2_train_audit.py` | Summarize verified raw Train audit into G2 tables and plots; Definitions: write_csv, main | 将已核验的训练集原始审计汇总为 G2 表格与图；定义：write_csv, main |
@@ -948,6 +1391,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `code/tools/summarize_p2b_prediction_mechanisms.py` | Definitions: sha, checked, existing, replay | 定义：sha, checked, existing, replay |
 | `code/tools/summarize_v2_results.py` | Definitions: read, metrics, patient_matrices, score, table, save, main | 定义：read, metrics, patient_matrices, score, table, save, main |
 | `code/tools/summarize_v3_results.py` | Definitions: read, metrics, patient_matrices, score, table, main | 定义：read, metrics, patient_matrices, score, table, main |
+| `code/tools/summarize_v4_pair.py` | Definitions: write_csv, main | 定义：write_csv, main |
 | `code/tools/tiny_overfit_g5.py` | Check both 3D models can learn two fixed Train patches on GPU; Definitions: sha256_file, measure, main | 检查两个 3D 模型能否在 GPU 上学习两个固定训练 Patch；定义：sha256_file, measure, main |
 | `code/tools/train_g5_2d.py` | Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
 | `code/tools/train_g5_cohort.py` | Train a frozen 3D arm with patient-balanced exposure, Validation selection and resumable checkpoints; Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main | 按固定方案训练 3D 模型，记录患者均衡曝光、验证集选择及可恢复权重；定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, main |
@@ -956,6 +1400,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `code/tools/train_v4_cohort.py` | Definitions: sha256_file, atomic_json, atomic_checkpoint, load_durable_state, exclusive_run_lock, main | 定义：sha256_file, atomic_json, atomic_checkpoint, load_durable_state, exclusive_run_lock, main |
 | `code/tools/update_project_map.py` | Generate and watch this bilingual inventory; Definitions: _files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main | 生成并持续更新本双语目录；定义：_files_and_dirs, _tree, _read_text, _content, _escape, render, refresh, _fingerprint, main |
 | `code/transfer/20261017_source.zip` | Generated source-only transfer package; ZIP archive with 66 members; 52,512 bytes | 生成的仅含源码传输包；ZIP 压缩包，含 66 个成员；52,512 字节 |
+| `code/transfer/all_model_assessment_20261021.zip` | ZIP archive with 6 members; 12,984 bytes | ZIP 压缩包，含 6 个成员；12,984 字节 |
 | `code/transfer/best_checkpoint_audit_current_20261020.zip` | ZIP archive with 7 members; 14,111 bytes | ZIP 压缩包，含 7 个成员；14,111 字节 |
 | `code/transfer/v4_paired_spatial_20261020.zip` | ZIP archive with 9 members; 22,875 bytes | ZIP 压缩包，含 9 个成员；22,875 字节 |
 | `DOCUMENTATION_INDEX.md` | Sections: HipMRI 文档导航; 1. 建议阅读顺序; 2. 分类与命名规则; 3. 当前、历史与固定快照; 4. 更新方式 | 章节标题：HipMRI 文档导航; 1. 建议阅读顺序; 2. 分类与命名规则; 3. 当前、历史与固定快照; 4. 更新方式 |
@@ -1145,7 +1590,7 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `logs/validation/inference_context/p2_four_cases_20261020/manifest.json` | Binary or large file; 244,703 bytes | 二进制或大文件；244,703 字节 |
 | `logs/validation/README.md` | Entry point or directory guide; Sections: Validation 诊断原始记录 | 项目入口或目录说明；章节标题：Validation 诊断原始记录 |
 | `PROJECT_MAP.md` | Generated bilingual tree and file content index; Self-entry; regenerated from current tree and file structure | 自动生成的双语文件树与内容索引；本文件条目；根据当前文件树和文件结构重新生成 |
-| `README.md` | Entry point or directory guide; Sections: HipMRI Segmentation Research; 当前进度; 阅读入口; GitHub中的内容 | 项目入口或目录说明；章节标题：HipMRI Segmentation Research; 当前进度; 阅读入口; GitHub中的内容 |
+| `README.md` | Entry point or directory guide; Sections: HipMRI Segmentation Research; 当前进度; 阅读入口; GitHub中的内容; Artificial Intelligence Usage Disclosure | 项目入口或目录说明；章节标题：HipMRI Segmentation Research; 当前进度; 阅读入口; GitHub中的内容; Artificial Intelligence Usage Disclosure |
 | `results/case_studies/comparisons/README.md` | Entry point or directory guide; Sections: 分割案例索引; Selected segmentation overlays | 项目入口或目录说明；章节标题：分割案例索引; Selected segmentation overlays |
 | `results/case_studies/comparisons/test/body/g6_body_L011_Week5.png` | Binary or large file; 218,157 bytes | 二进制或大文件；218,157 字节 |
 | `results/case_studies/comparisons/test/body/g6_body_M015_Week3.png` | Binary or large file; 266,760 bytes | 二进制或大文件；266,760 字节 |
@@ -1432,6 +1877,145 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `results/experiments/improved_3d_v3/training_records/epoch_049.json` | JSON fields: best_epoch, best_score, epoch, job_id, selected_cases, train, validation | JSON 字段：best_epoch, best_score, epoch, job_id, selected_cases, train, validation |
 | `results/experiments/improved_3d_v3/training_records/epoch_050.json` | Binary or large file; 119,973 bytes | 二进制或大文件；119,973 字节 |
 | `results/experiments/improved_3d_v3/training_records/manifest.json` | JSON fields: boundaries_sha256, config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, initial_state_sha256, initialization_evidence, job_id_initial, kind, loss_sha256 | JSON 字段：boundaries_sha256, config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, initial_state_sha256, initialization_evidence, job_id_initial, kind, loss_sha256 |
+| `results/experiments/improved_3d_v4/a0/training_records/config_frozen.json` | JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_001.json` | Binary or large file; 251,886 bytes | 二进制或大文件；251,886 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_002.json` | Binary or large file; 251,868 bytes | 二进制或大文件；251,868 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_003.json` | Binary or large file; 251,923 bytes | 二进制或大文件；251,923 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_004.json` | Binary or large file; 252,071 bytes | 二进制或大文件；252,071 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_005.json` | Binary or large file; 320,836 bytes | 二进制或大文件；320,836 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_006.json` | Binary or large file; 252,011 bytes | 二进制或大文件；252,011 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_007.json` | Binary or large file; 251,862 bytes | 二进制或大文件；251,862 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_008.json` | Binary or large file; 252,132 bytes | 二进制或大文件；252,132 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_009.json` | Binary or large file; 252,009 bytes | 二进制或大文件；252,009 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_010.json` | Binary or large file; 320,724 bytes | 二进制或大文件；320,724 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_011.json` | Binary or large file; 252,214 bytes | 二进制或大文件；252,214 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_012.json` | Binary or large file; 252,007 bytes | 二进制或大文件；252,007 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_013.json` | Binary or large file; 252,074 bytes | 二进制或大文件；252,074 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_014.json` | Binary or large file; 251,881 bytes | 二进制或大文件；251,881 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_015.json` | Binary or large file; 320,319 bytes | 二进制或大文件；320,319 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_016.json` | Binary or large file; 251,978 bytes | 二进制或大文件；251,978 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_017.json` | Binary or large file; 252,118 bytes | 二进制或大文件；252,118 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_018.json` | Binary or large file; 251,861 bytes | 二进制或大文件；251,861 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_019.json` | Binary or large file; 251,858 bytes | 二进制或大文件；251,858 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_020.json` | Binary or large file; 320,260 bytes | 二进制或大文件；320,260 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_021.json` | Binary or large file; 251,982 bytes | 二进制或大文件；251,982 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_022.json` | Binary or large file; 252,024 bytes | 二进制或大文件；252,024 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_023.json` | Binary or large file; 252,146 bytes | 二进制或大文件；252,146 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_024.json` | Binary or large file; 252,102 bytes | 二进制或大文件；252,102 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_025.json` | Binary or large file; 319,947 bytes | 二进制或大文件；319,947 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_026.json` | Binary or large file; 252,069 bytes | 二进制或大文件；252,069 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_027.json` | Binary or large file; 252,273 bytes | 二进制或大文件；252,273 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_028.json` | Binary or large file; 252,097 bytes | 二进制或大文件；252,097 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_029.json` | Binary or large file; 252,196 bytes | 二进制或大文件；252,196 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_030.json` | Binary or large file; 320,297 bytes | 二进制或大文件；320,297 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_031.json` | Binary or large file; 252,311 bytes | 二进制或大文件；252,311 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_032.json` | Binary or large file; 252,182 bytes | 二进制或大文件；252,182 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_033.json` | Binary or large file; 252,185 bytes | 二进制或大文件；252,185 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_034.json` | Binary or large file; 252,323 bytes | 二进制或大文件；252,323 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_035.json` | Binary or large file; 320,131 bytes | 二进制或大文件；320,131 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_036.json` | Binary or large file; 252,121 bytes | 二进制或大文件；252,121 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_037.json` | Binary or large file; 252,481 bytes | 二进制或大文件；252,481 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_038.json` | Binary or large file; 252,297 bytes | 二进制或大文件；252,297 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_039.json` | Binary or large file; 252,160 bytes | 二进制或大文件；252,160 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_040.json` | Binary or large file; 320,341 bytes | 二进制或大文件；320,341 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_041.json` | Binary or large file; 252,029 bytes | 二进制或大文件；252,029 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_042.json` | Binary or large file; 252,100 bytes | 二进制或大文件；252,100 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_043.json` | Binary or large file; 252,009 bytes | 二进制或大文件；252,009 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_044.json` | Binary or large file; 252,119 bytes | 二进制或大文件；252,119 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_045.json` | Binary or large file; 319,920 bytes | 二进制或大文件；319,920 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_046.json` | Binary or large file; 252,386 bytes | 二进制或大文件；252,386 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_047.json` | Binary or large file; 252,223 bytes | 二进制或大文件；252,223 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_048.json` | Binary or large file; 252,300 bytes | 二进制或大文件；252,300 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_049.json` | Binary or large file; 252,157 bytes | 二进制或大文件；252,157 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/epoch_050.json` | Binary or large file; 319,956 bytes | 二进制或大文件；319,956 字节 |
+| `results/experiments/improved_3d_v4/a0/training_records/manifest.json` | JSON fields: augmentation_sha256, boundaries_sha256, config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, initial_state_sha256, initialization_evidence, job_id_initial, kind | JSON 字段：augmentation_sha256, boundaries_sha256, config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, initial_state_sha256, initialization_evidence, job_id_initial, kind |
+| `results/experiments/improved_3d_v4/a1/training_records/config_frozen.json` | JSON fields: status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling | JSON 字段：status, purpose, split_sha256, train_cases, train_patients, validation_cases, validation_patients, models, model_defaults, seed, preprocessing, sampling |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_001.json` | Binary or large file; 256,444 bytes | 二进制或大文件；256,444 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_002.json` | Binary or large file; 256,445 bytes | 二进制或大文件；256,445 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_003.json` | Binary or large file; 256,674 bytes | 二进制或大文件；256,674 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_004.json` | Binary or large file; 256,651 bytes | 二进制或大文件；256,651 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_005.json` | Binary or large file; 325,373 bytes | 二进制或大文件；325,373 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_006.json` | Binary or large file; 257,104 bytes | 二进制或大文件；257,104 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_007.json` | Binary or large file; 257,302 bytes | 二进制或大文件；257,302 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_008.json` | Binary or large file; 257,561 bytes | 二进制或大文件；257,561 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_009.json` | Binary or large file; 257,060 bytes | 二进制或大文件；257,060 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_010.json` | Binary or large file; 326,278 bytes | 二进制或大文件；326,278 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_011.json` | Binary or large file; 256,958 bytes | 二进制或大文件；256,958 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_012.json` | Binary or large file; 257,405 bytes | 二进制或大文件；257,405 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_013.json` | Binary or large file; 257,466 bytes | 二进制或大文件；257,466 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_014.json` | Binary or large file; 256,929 bytes | 二进制或大文件；256,929 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_015.json` | Binary or large file; 325,225 bytes | 二进制或大文件；325,225 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_016.json` | Binary or large file; 256,960 bytes | 二进制或大文件；256,960 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_017.json` | Binary or large file; 256,635 bytes | 二进制或大文件；256,635 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_018.json` | Binary or large file; 256,667 bytes | 二进制或大文件；256,667 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_019.json` | Binary or large file; 256,900 bytes | 二进制或大文件；256,900 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_020.json` | Binary or large file; 324,921 bytes | 二进制或大文件；324,921 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_021.json` | Binary or large file; 257,975 bytes | 二进制或大文件；257,975 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_022.json` | Binary or large file; 257,226 bytes | 二进制或大文件；257,226 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_023.json` | Binary or large file; 257,148 bytes | 二进制或大文件；257,148 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_024.json` | Binary or large file; 256,458 bytes | 二进制或大文件；256,458 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_025.json` | Binary or large file; 325,068 bytes | 二进制或大文件；325,068 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_026.json` | Binary or large file; 257,689 bytes | 二进制或大文件；257,689 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_027.json` | Binary or large file; 257,344 bytes | 二进制或大文件；257,344 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_028.json` | Binary or large file; 257,279 bytes | 二进制或大文件；257,279 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_029.json` | Binary or large file; 257,875 bytes | 二进制或大文件；257,875 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_030.json` | Binary or large file; 325,005 bytes | 二进制或大文件；325,005 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_031.json` | Binary or large file; 258,156 bytes | 二进制或大文件；258,156 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_032.json` | Binary or large file; 256,616 bytes | 二进制或大文件；256,616 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_033.json` | Binary or large file; 256,941 bytes | 二进制或大文件；256,941 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_034.json` | Binary or large file; 257,207 bytes | 二进制或大文件；257,207 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_035.json` | Binary or large file; 325,126 bytes | 二进制或大文件；325,126 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_036.json` | Binary or large file; 257,410 bytes | 二进制或大文件；257,410 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_037.json` | Binary or large file; 258,078 bytes | 二进制或大文件；258,078 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_038.json` | Binary or large file; 257,680 bytes | 二进制或大文件；257,680 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_039.json` | Binary or large file; 257,172 bytes | 二进制或大文件；257,172 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_040.json` | Binary or large file; 324,949 bytes | 二进制或大文件；324,949 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_041.json` | Binary or large file; 256,446 bytes | 二进制或大文件；256,446 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_042.json` | Binary or large file; 257,486 bytes | 二进制或大文件；257,486 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_043.json` | Binary or large file; 257,085 bytes | 二进制或大文件；257,085 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_044.json` | Binary or large file; 258,174 bytes | 二进制或大文件；258,174 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_045.json` | Binary or large file; 325,467 bytes | 二进制或大文件；325,467 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_046.json` | Binary or large file; 257,776 bytes | 二进制或大文件；257,776 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_047.json` | Binary or large file; 257,103 bytes | 二进制或大文件；257,103 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_048.json` | Binary or large file; 257,249 bytes | 二进制或大文件；257,249 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_049.json` | Binary or large file; 257,537 bytes | 二进制或大文件；257,537 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/epoch_050.json` | Binary or large file; 325,217 bytes | 二进制或大文件；325,217 字节 |
+| `results/experiments/improved_3d_v4/a1/training_records/manifest.json` | JSON fields: augmentation_sha256, boundaries_sha256, config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, initial_state_sha256, initialization_evidence, job_id_initial, kind | JSON 字段：augmentation_sha256, boundaries_sha256, config_sha256, data_sha256, dataset_root, g1_sha256, gpu, inference_sha256, initial_state_sha256, initialization_evidence, job_id_initial, kind |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/body_boundary_distribution.png` | Binary or large file; 63,151 bytes | 二进制或大文件；63,151 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/body_boundary_distribution.svg` | UTF-8 text with 1863 lines; 56,274 bytes | UTF-8 文本，1863 行；56,274 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/prostate_base_apex.png` | Binary or large file; 194,073 bytes | 二进制或大文件；194,073 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/prostate_base_apex.svg` | UTF-8 text with 1699 lines; 57,641 bytes | UTF-8 文本，1699 行；57,641 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/prostate_boundary_tails.png` | Binary or large file; 76,023 bytes | 二进制或大文件；76,023 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/prostate_boundary_tails.svg` | UTF-8 text with 1905 lines; 60,294 bytes | UTF-8 文本，1905 行；60,294 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/prostate_oar_tradeoff.png` | Binary or large file; 129,656 bytes | 二进制或大文件；129,656 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/prostate_oar_tradeoff.svg` | UTF-8 text with 2179 lines; 75,879 bytes | UTF-8 文本，2179 行；75,879 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/resource_profile.png` | Binary or large file; 65,807 bytes | 二进制或大文件；65,807 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/resource_profile.svg` | UTF-8 text with 1859 lines; 56,251 bytes | UTF-8 文本，1859 行；56,251 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/six_class_validation_test.png` | Binary or large file; 404,073 bytes | 二进制或大文件；404,073 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/six_class_validation_test.svg` | Binary or large file; 180,229 bytes | 二进制或大文件；180,229 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/validation_test_generalization.png` | Binary or large file; 63,476 bytes | 二进制或大文件；63,476 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/figures/validation_test_generalization.svg` | UTF-8 text with 1635 lines; 47,405 bytes | UTF-8 文本，1635 行；47,405 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/tables/boundary_errors.csv` | Table with 14 data rows; columns: model, split, far_background_to_body_voxels, far_body_fp_per_100000_background_voxels, prostate_predictions_in_true_bladder, prostate_predictions_in_true_rectum, prostate_in_OAR_per_100000_predicted_prostate, missed_true_prostate_fraction, mean_missed_GT_positive_slices_per_volume, mean_predicted_slices_outside_GT_extent | 表格含 14 条数据行；列：model, split, far_background_to_body_voxels, far_body_fp_per_100000_background_voxels, prostate_predictions_in_true_bladder, prostate_predictions_in_true_rectum, prostate_in_OAR_per_100000_predicted_prostate, missed_true_prostate_fraction, mean_missed_GT_positive_slices_per_volume, mean_predicted_slices_outside_GT_extent |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/tables/model_summary.csv` | Table with 14 data rows; columns: model, split, epoch, small_organ_dice, prostate_dice, foreground_macro_dice, six_class_macro_dice | 表格含 14 条数据行；列：model, split, epoch, small_organ_dice, prostate_dice, foreground_macro_dice, six_class_macro_dice |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/tables/per_case_inference.csv` | Table with 476 data rows; columns: model, split, case, seconds_single_pass, peak_allocated_GiB | 表格含 476 条数据行；列：model, split, case, seconds_single_pass, peak_allocated_GiB |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/tables/prostate_regions.csv` | Table with 42 data rows; columns: model, split, region, patient_equal_slice_mean_dice, available_volumes | 表格含 42 条数据行；列：model, split, region, patient_equal_slice_mean_dice, available_volumes |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/tables/resources.csv` | Table with 7 data rows; columns: model, epoch, gpu, parameters, reference_median_seconds, reference_peak_allocated_GiB, reference_peak_reserved_GiB, test_median_seconds, test_p95_seconds, test_max_peak_allocated_GiB | 表格含 7 条数据行；列：model, epoch, gpu, parameters, reference_median_seconds, reference_peak_allocated_GiB, reference_peak_reserved_GiB, test_median_seconds, test_p95_seconds, test_max_peak_allocated_GiB |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/tables/six_class_metrics.csv` | Table with 84 data rows; columns: model, split, class, patient_equal_dice, patient_equal_iou, patient_equal_precision, patient_equal_recall, voxel_pooled_dice, voxel_pooled_iou, voxel_pooled_precision, voxel_pooled_recall | 表格含 84 条数据行；列：model, split, class, patient_equal_dice, patient_equal_iou, patient_equal_precision, patient_equal_recall, voxel_pooled_dice, voxel_pooled_iou, voxel_pooled_precision, voxel_pooled_recall |
+| `results/experiments/improved_3d_v4/assessment_analysis/assessment_required/tables/surface_summary.csv` | Table with 70 data rows; columns: model, split, class, volume_median_hd95_mm, volume_p95_hd95_mm, volume_max_hd95_mm, patient_equal_mean_hd95_mm, patient_equal_mean_assd_mm, both_present, one_empty, both_empty | 表格含 70 条数据行；列：model, split, class, volume_median_hd95_mm, volume_p95_hd95_mm, volume_max_hd95_mm, patient_equal_mean_hd95_mm, patient_equal_mean_assd_mm, both_present, one_empty, both_empty |
+| `results/experiments/improved_3d_v4/assessment_analysis/coverage.json` | JSON fields: verified, surface_status, prostate_region_observations, models, test_is_fresh_blind, one_seed_per_recipe, anatomical_autopsy_requires_manual_image_review, clinical_dose_or_safety_evidence | JSON 字段：verified, surface_status, prostate_region_observations, models, test_is_fresh_blind, one_seed_per_recipe, anatomical_autopsy_requires_manual_image_review, clinical_dose_or_safety_evidence |
+| `results/experiments/improved_3d_v4/assessment_analysis/integrity_verification.json` | JSON fields: job, complete, verified_files, metrics_sha256, script_sha256, lock_sha256, models, model_volume_comparisons, validation_matrices_reproduced_locally, historical_test_matrices_reproduced_locally, exact_cross_split_file_duplicates, test_status | JSON 字段：job, complete, verified_files, metrics_sha256, script_sha256, lock_sha256, models, model_volume_comparisons, validation_matrices_reproduced_locally, historical_test_matrices_reproduced_locally, exact_cross_split_file_duplicates, test_status |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/figures/distant_body_false_positives.png` | Binary or large file; 88,100 bytes | 二进制或大文件；88,100 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/figures/distant_body_false_positives.svg` | UTF-8 text with 2083 lines; 63,559 bytes | UTF-8 文本，2083 行；63,559 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/figures/patient_variability.png` | Binary or large file; 218,478 bytes | 二进制或大文件；218,478 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/figures/patient_variability.svg` | UTF-8 text with 1846 lines; 62,201 bytes | UTF-8 文本，1846 行；62,201 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/figures/prostate_continuity.png` | Binary or large file; 127,314 bytes | 二进制或大文件；127,314 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/figures/prostate_continuity.svg` | UTF-8 text with 2354 lines; 76,941 bytes | UTF-8 文本，2354 行；76,941 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/tables/continuity.csv` | Binary or large file; 198,343 bytes | 二进制或大文件；198,343 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/tables/paired_patient_sensitivity.csv` | Table with 18 data rows; columns: split, model, reference, mean_difference, patients_improved, patients_worse, leave_one_patient_out_min_difference, leave_one_patient_out_max_difference, difference_without_M015_descriptive_only | 表格含 18 条数据行；列：split, model, reference, mean_difference, patients_improved, patients_worse, leave_one_patient_out_min_difference, leave_one_patient_out_max_difference, difference_without_M015_descriptive_only |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/tables/per_case_class_metrics.csv` | Binary or large file; 353,246 bytes | 二进制或大文件；353,246 字节 |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/tables/per_case_regions.csv` | Table with 1428 data rows; columns: model, split, case, patient, region, dice | 表格含 1428 条数据行；列：model, split, case, patient, region, dice |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/tables/per_patient.csv` | Table with 84 data rows; columns: model, split, patient, Background_dice, Body_dice, Bones_dice, Bladder_dice, Rectum_dice, Prostate_dice, small_organ_dice | 表格含 84 条数据行；列：model, split, patient, Background_dice, Body_dice, Bones_dice, Bladder_dice, Rectum_dice, Prostate_dice, small_organ_dice |
+| `results/experiments/improved_3d_v4/assessment_analysis/supplementary_research/tables/surface_distances.csv` | Binary or large file; 198,845 bytes | 二进制或大文件；198,845 字节 |
 | `results/experiments/improved_3d_v4/augmentation_audit_20261020/audit.json` | Binary or large file; 135,066 bytes | 二进制或大文件；135,066 字节 |
 | `results/experiments/improved_3d_v4/augmentation_audit_20261020/checksums.json` | JSON fields: preview_06_R039_Week2.png, preview_02_O025_Week6.png, README.md, audit.json, preview_03_O025_Week6.png, preview_05_R039_Week2.png, preview_04_O025_Week6.png, preview_01_O025_Week6.png | JSON 字段：preview_06_R039_Week2.png, preview_02_O025_Week6.png, README.md, audit.json, preview_03_O025_Week6.png, preview_05_R039_Week2.png, preview_04_O025_Week6.png, preview_01_O025_Week6.png |
 | `results/experiments/improved_3d_v4/augmentation_audit_20261020/preview_01_O025_Week6.png` | Binary or large file; 47,441 bytes | 二进制或大文件；47,441 字节 |
@@ -1441,9 +2025,64 @@ Directories / 目录: **91** · Files / 文件: **703**
 | `results/experiments/improved_3d_v4/augmentation_audit_20261020/preview_05_R039_Week2.png` | Binary or large file; 50,437 bytes | 二进制或大文件；50,437 字节 |
 | `results/experiments/improved_3d_v4/augmentation_audit_20261020/preview_06_R039_Week2.png` | Binary or large file; 49,937 bytes | 二进制或大文件；49,937 字节 |
 | `results/experiments/improved_3d_v4/augmentation_audit_20261020/README.md` | Entry point or directory guide; Sections: V4 Train配对增强预览 | 项目入口或目录说明；章节标题：V4 Train配对增强预览 |
-| `results/experiments/improved_3d_v4/paired_analysis/README.md` | Entry point or directory guide; Sections: V4 Train增强审计复核 | 项目入口或目录说明；章节标题：V4 Train增强审计复核 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/checksums.json` | JSON fields: input_provenance.json, README.md, metrics_partial.json, metrics.json, images/test/W029_Week6_Prostate.png, images/test/W029_Week6_Prostate_base_apex.png, images/test/M015_Week7_Bladder.png, images/test/M020_Week1_Prostate_base_apex.png, images/test/README.md, images/test/W029_Week6_Bones.png, images/test/M020_Week1_Prostate.png, images/test/W029_Week6_Body.png | JSON 字段：input_provenance.json, README.md, metrics_partial.json, metrics.json, images/test/W029_Week6_Prostate.png, images/test/W029_Week6_Prostate_base_apex.png, images/test/M015_Week7_Bladder.png, images/test/M020_Week1_Prostate_base_apex.png, images/test/README.md, images/test/W029_Week6_Bones.png, images/test/M020_Week1_Prostate.png, images/test/W029_Week6_Body.png |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/test/M015_Week7_Bladder.png` | Binary or large file; 319,382 bytes | 二进制或大文件；319,382 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/test/M020_Week1_Prostate.png` | Binary or large file; 240,944 bytes | 二进制或大文件；240,944 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/test/M020_Week1_Prostate_base_apex.png` | Binary or large file; 332,188 bytes | 二进制或大文件；332,188 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/test/README.md` | Entry point or directory guide; Sections: 固定best权重诊断图 | 项目入口或目录说明；章节标题：固定best权重诊断图 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/test/W029_Week6_Body.png` | Binary or large file; 522,140 bytes | 二进制或大文件；522,140 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/test/W029_Week6_Bones.png` | Binary or large file; 440,480 bytes | 二进制或大文件；440,480 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/test/W029_Week6_Prostate.png` | Binary or large file; 249,345 bytes | 二进制或大文件；249,345 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/test/W029_Week6_Prostate_base_apex.png` | Binary or large file; 344,564 bytes | 二进制或大文件；344,564 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/B040_Week1_Background.png` | Binary or large file; 413,867 bytes | 二进制或大文件；413,867 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/B040_Week1_Bladder.png` | Binary or large file; 259,937 bytes | 二进制或大文件；259,937 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/B040_Week1_Body.png` | Binary or large file; 505,366 bytes | 二进制或大文件；505,366 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/B040_Week1_Body_three_planes.png` | Binary or large file; 857,633 bytes | 二进制或大文件；857,633 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/B040_Week1_Bones.png` | Binary or large file; 431,797 bytes | 二进制或大文件；431,797 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/B040_Week1_Prostate.png` | Binary or large file; 233,093 bytes | 二进制或大文件；233,093 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/B040_Week1_Prostate_base_apex.png` | Binary or large file; 331,204 bytes | 二进制或大文件；331,204 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/B040_Week1_Rectum.png` | Binary or large file; 237,351 bytes | 二进制或大文件；237,351 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/J026_Week4_Body_three_planes.png` | Binary or large file; 756,421 bytes | 二进制或大文件；756,421 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/J026_Week4_Rectum.png` | Binary or large file; 236,291 bytes | 二进制或大文件；236,291 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/K008_Week0_Bladder.png` | Binary or large file; 253,829 bytes | 二进制或大文件；253,829 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/K008_Week0_Body_three_planes.png` | Binary or large file; 761,859 bytes | 二进制或大文件；761,859 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/K008_Week0_Prostate.png` | Binary or large file; 241,403 bytes | 二进制或大文件；241,403 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/K008_Week0_Prostate_base_apex.png` | Binary or large file; 345,403 bytes | 二进制或大文件；345,403 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/K018_Week4_Background.png` | Binary or large file; 513,035 bytes | 二进制或大文件；513,035 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/K018_Week4_Body.png` | Binary or large file; 507,334 bytes | 二进制或大文件；507,334 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/K018_Week4_Body_three_planes.png` | Binary or large file; 833,347 bytes | 二进制或大文件；833,347 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/M030_Week4_Body.png` | Binary or large file; 595,199 bytes | 二进制或大文件；595,199 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/M030_Week4_Body_three_planes.png` | Binary or large file; 791,274 bytes | 二进制或大文件；791,274 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/M030_Week4_Bones.png` | Binary or large file; 394,878 bytes | 二进制或大文件；394,878 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/README.md` | Entry point or directory guide; Sections: 固定best权重诊断图 | 项目入口或目录说明；章节标题：固定best权重诊断图 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/S022_Week2_Bladder.png` | Binary or large file; 282,046 bytes | 二进制或大文件；282,046 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/S022_Week2_Body_three_planes.png` | Binary or large file; 701,295 bytes | 二进制或大文件；701,295 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/S022_Week2_Prostate.png` | Binary or large file; 254,753 bytes | 二进制或大文件；254,753 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/S022_Week2_Prostate_base_apex.png` | Binary or large file; 359,628 bytes | 二进制或大文件；359,628 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/input_provenance.json` | JSON fields: hashes, exact_cross_split_mri_duplicates, note | JSON 字段：hashes, exact_cross_split_mri_duplicates, note |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/metrics.json` | Binary or large file; 3,611,934 bytes | 二进制或大文件；3,611,934 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/metrics_partial.json` | Binary or large file; 3,611,914 bytes | 二进制或大文件；3,611,914 字节 |
+| `results/experiments/improved_3d_v4/comprehensive_audit_20261021/README.md` | Entry point or directory guide; Sections: 最佳checkpoint泛化审计 | 项目入口或目录说明；章节标题：最佳checkpoint泛化审计 |
+| `results/experiments/improved_3d_v4/paired_analysis/all_models/selection.csv` | Table with 7 data rows; columns: model, epoch, patient_equal_small_organ_dice | 表格含 7 条数据行；列：model, epoch, patient_equal_small_organ_dice |
+| `results/experiments/improved_3d_v4/paired_analysis/all_models/seven_model_selection.png` | Binary or large file; 65,772 bytes | 二进制或大文件；65,772 字节 |
+| `results/experiments/improved_3d_v4/paired_analysis/all_models/seven_model_selection.svg` | UTF-8 text with 1410 lines; 41,443 bytes | UTF-8 文本，1410 行；41,443 字节 |
+| `results/experiments/improved_3d_v4/paired_analysis/all_models/seven_model_six_class_dice.png` | Binary or large file; 140,928 bytes | 二进制或大文件；140,928 字节 |
+| `results/experiments/improved_3d_v4/paired_analysis/all_models/seven_model_six_class_dice.svg` | UTF-8 text with 1900 lines; 71,380 bytes | UTF-8 文本，1900 行；71,380 字节 |
+| `results/experiments/improved_3d_v4/paired_analysis/all_models/six_class_validation.csv` | Table with 42 data rows; columns: model, epoch, class, dice, iou, precision, recall | 表格含 42 条数据行；列：model, epoch, class, dice, iou, precision, recall |
+| `results/experiments/improved_3d_v4/paired_analysis/all_models/source_checksums.json` | JSON fields: logs\training\baseline_2d\epoch_001.json, logs\training\baseline_2d\epoch_002.json, logs\training\baseline_2d\epoch_003.json, logs\training\baseline_2d\epoch_004.json, logs\training\baseline_2d\epoch_005.json, logs\training\baseline_2d\epoch_006.json, logs\training\baseline_2d\epoch_007.json, logs\training\baseline_2d\epoch_008.json, logs\training\baseline_2d\epoch_009.json, logs\training\baseline_2d\epoch_010.json, logs\training\baseline_2d\epoch_011.json, logs\training\baseline_2d\epoch_012.json | JSON 字段：logs\training\baseline_2d\epoch_001.json, logs\training\baseline_2d\epoch_002.json, logs\training\baseline_2d\epoch_003.json, logs\training\baseline_2d\epoch_004.json, logs\training\baseline_2d\epoch_005.json, logs\training\baseline_2d\epoch_006.json, logs\training\baseline_2d\epoch_007.json, logs\training\baseline_2d\epoch_008.json, logs\training\baseline_2d\epoch_009.json, logs\training\baseline_2d\epoch_010.json, logs\training\baseline_2d\epoch_011.json, logs\training\baseline_2d\epoch_012.json |
+| `results/experiments/improved_3d_v4/paired_analysis/learning_curves.csv` | Table with 100 data rows; columns: arm, epoch, train_loss, validation_score | 表格含 100 条数据行；列：arm, epoch, train_loss, validation_score |
+| `results/experiments/improved_3d_v4/paired_analysis/learning_curves.png` | Binary or large file; 116,954 bytes | 二进制或大文件；116,954 字节 |
+| `results/experiments/improved_3d_v4/paired_analysis/learning_curves.svg` | UTF-8 text with 1878 lines; 56,781 bytes | UTF-8 文本，1878 行；56,781 字节 |
+| `results/experiments/improved_3d_v4/paired_analysis/patient_metrics.csv` | Table with 12 data rows; columns: arm, patient, Background_dice, Body_dice, Bones_dice, Bladder_dice, Rectum_dice, Prostate_dice, Background_iou, Body_iou, Bones_iou, Bladder_iou | 表格含 12 条数据行；列：arm, patient, Background_dice, Body_dice, Bones_dice, Bladder_dice, Rectum_dice, Prostate_dice, Background_iou, Body_iou, Bones_iou, Bladder_iou |
+| `results/experiments/improved_3d_v4/paired_analysis/README.md` | Entry point or directory guide; Sections: V4 配对实验分析; 完成记录与选模; 解释与限制; 已生成与下一步; 七模型统一复核与课程覆盖（2026-10-21） | 项目入口或目录说明；章节标题：V4 配对实验分析; 完成记录与选模; 解释与限制; 已生成与下一步; 七模型统一复核与课程覆盖（2026-10-21） |
+| `results/experiments/improved_3d_v4/paired_analysis/record_checksums.json` | JSON fields: results\experiments\improved_3d_v4\a0\training_records\config_frozen.json, results\experiments\improved_3d_v4\a0\training_records\epoch_001.json, results\experiments\improved_3d_v4\a0\training_records\epoch_002.json, results\experiments\improved_3d_v4\a0\training_records\epoch_003.json, results\experiments\improved_3d_v4\a0\training_records\epoch_004.json, results\experiments\improved_3d_v4\a0\training_records\epoch_005.json, results\experiments\improved_3d_v4\a0\training_records\epoch_006.json, results\experiments\improved_3d_v4\a0\training_records\epoch_007.json, results\experiments\improved_3d_v4\a0\training_records\epoch_008.json, results\experiments\improved_3d_v4\a0\training_records\epoch_009.json, results\experiments\improved_3d_v4\a0\training_records\epoch_010.json, results\experiments\improved_3d_v4\a0\training_records\epoch_011.json | JSON 字段：results\experiments\improved_3d_v4\a0\training_records\config_frozen.json, results\experiments\improved_3d_v4\a0\training_records\epoch_001.json, results\experiments\improved_3d_v4\a0\training_records\epoch_002.json, results\experiments\improved_3d_v4\a0\training_records\epoch_003.json, results\experiments\improved_3d_v4\a0\training_records\epoch_004.json, results\experiments\improved_3d_v4\a0\training_records\epoch_005.json, results\experiments\improved_3d_v4\a0\training_records\epoch_006.json, results\experiments\improved_3d_v4\a0\training_records\epoch_007.json, results\experiments\improved_3d_v4\a0\training_records\epoch_008.json, results\experiments\improved_3d_v4\a0\training_records\epoch_009.json, results\experiments\improved_3d_v4\a0\training_records\epoch_010.json, results\experiments\improved_3d_v4\a0\training_records\epoch_011.json |
+| `results/experiments/improved_3d_v4/paired_analysis/six_class_dice.png` | Binary or large file; 48,660 bytes | 二进制或大文件；48,660 字节 |
+| `results/experiments/improved_3d_v4/paired_analysis/six_class_dice.svg` | UTF-8 text with 1321 lines; 36,309 bytes | UTF-8 文本，1321 行；36,309 字节 |
+| `results/experiments/improved_3d_v4/paired_analysis/six_class_metrics.csv` | Table with 12 data rows; columns: arm, class, dice, iou, precision, recall, volume_median_hd95_mm | 表格含 12 条数据行；列：arm, class, dice, iou, precision, recall, volume_median_hd95_mm |
+| `results/experiments/improved_3d_v4/paired_analysis/summary.json` | JSON fields: a0, a1 | JSON 字段：a0, a1 |
 | `results/experiments/improved_3d_v4/README.md` | Entry point or directory guide; Sections: V4 A0/A1配对训练; 执行身份与最近状态; 本区内容 | 项目入口或目录说明；章节标题：V4 A0/A1配对训练; 执行身份与最近状态; 本区内容 |
 | `results/experiments/improved_3d_v4/reports/OPTIMIZATION_REVIEW_ZH.md` | Sections: 常用优化方法补充审查与 v4 训练方案建议; 1. 当前真正遗漏了什么; 2. 常用方法清单：收益、风险与优先级; 3. 三篇参考论文给出的直接提醒; 4. 修订 v4：先优化训练配方，再考虑加网络模块 | 章节标题：常用优化方法补充审查与 v4 训练方案建议; 1. 当前真正遗漏了什么; 2. 常用方法清单：收益、风险与优先级; 3. 三篇参考论文给出的直接提醒; 4. 修订 v4：先优化训练配方，再考虑加网络模块 |
+| `results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md` | Sections: 七模型最佳权重统一评估与 v4 配对实验结论; 1. 结论与模型选择; 2. 数据来源、完整性与评估规则; 3. 七模型总体表现; 4. A1改善什么，又退步什么 | 章节标题：七模型最佳权重统一评估与 v4 配对实验结论; 1. 结论与模型选择; 2. 数据来源、完整性与评估规则; 3. 七模型总体表现; 4. A1改善什么，又退步什么 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.png` | Binary or large file; 58,445 bytes | 二进制或大文件；58,445 字节 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.svg` | UTF-8 text with 1331 lines; 38,132 bytes | UTF-8 文本，1331 行；38,132 字节 |
 | `results/figures/baseline_2d/README.md` | Entry point or directory guide; Sections: Supplementary 2D Validation figure | 项目入口或目录说明；章节标题：Supplementary 2D Validation figure |

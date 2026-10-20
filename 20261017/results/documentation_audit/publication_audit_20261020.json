@@ -1,5 +1,5 @@
 {
-  "markdown_count": 62,
+  "markdown_count": 67,
   "local_link_scope": "Markdown inline relative links; excludes fenced code, URLs and fragment validation",
   "broken_local_links": [],
   "encoding_flags": [],
@@ -99,6 +99,41 @@
     {
       "file": "20261017/results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md",
       "target": "../../../model_evaluation/generalization_diagnostics/tables/audit.json",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../comprehensive_audit_20261021/images/validation/K018_Week4_Body_three_planes.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../comprehensive_audit_20261021/images/test/M015_Week7_Bladder.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../comprehensive_audit_20261021/images/test/W029_Week6_Prostate.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../comprehensive_audit_20261021/images/test/W029_Week6_Prostate_base_apex.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../comprehensive_audit_20261021/images/validation/J026_Week4_Rectum.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../comprehensive_audit_20261021/images/validation/B040_Week1_Bones.png",
+      "status": "intentionally local artifact; excluded from publication"
+    },
+    {
+      "file": "20261017/results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md",
+      "target": "../comprehensive_audit_20261021/images/test/M020_Week1_Prostate_base_apex.png",
       "status": "intentionally local artifact; excluded from publication"
     },
     {
@@ -270,6 +305,15 @@
   "changed_protected_files": [],
   "files": [
     {
+      "path": "20261017/code/docs/ALL_MODEL_ASSESSMENT_AUDIT.md",
+      "title": "Seven-model fixed-checkpoint assessment audit",
+      "h1_count": 1,
+      "category": "方法/协议",
+      "status": "阶段及固定快照见code/docs/README",
+      "protected": false,
+      "sha256": "5f0a5f1e93fdb4e18856b40432c7239875580d5ca96c55572f7a5294d3de3ce8"
+    },
+    {
       "path": "20261017/code/docs/BEST_CHECKPOINT_AUDIT.md",
       "title": "Best-checkpoint assessment audit",
       "h1_count": 1,
@@ -312,7 +356,7 @@
       "category": "方法导航",
       "status": "当前方法索引",
       "protected": false,
-      "sha256": "34baefa5e7d70d8c4c98e1ac8de160b47e9c55146658a15602f858316df3962f"
+      "sha256": "29c340f0d30145693262c90994333c29d4be92a8de88fd31f58aacb5a4764d4f"
     },
     {
       "path": "20261017/code/docs/STUDY_PROTOCOL.md",
@@ -357,7 +401,7 @@
       "category": "项目/目录入口",
       "status": "导航及分类规则",
       "protected": false,
-      "sha256": "8380214b641d4c17ae9d12609e6042c0f6624a4a3e11c10db3291450ba5c2aad"
+      "sha256": "8939a5a6ac5a98a5e4658cfd47b871731b39d80032a06f558a3c3d7225e7dccf"
     },
     {
       "path": "20261017/DOCUMENTATION_INDEX.md",
@@ -366,7 +410,7 @@
       "category": "项目/目录入口",
       "status": "导航及分类规则",
       "protected": false,
-      "sha256": "17e921c1c21626dcc4d22719890250bb0789ba737a445cd17516b3e1dcd5cdd2"
+      "sha256": "04f0a912caf471130ab10efc693e5f9538f8d47ef69d5a2ee8dcbfb2c61ec55b"
     },
     {
       "path": "20261017/logs/README.md",
@@ -393,7 +437,7 @@
       "category": "自动索引",
       "status": "自动生成，不手改",
       "protected": false,
-      "sha256": "259db5bb2b7247bf45251664301b87cdeb440891d0e17a2cdeac28090d32575c"
+      "sha256": "3e0fc72c3b7ac4db0403432d14212be9cd2a346789c39d8a3b49a0c64d2875e5"
     },
     {
       "path": "20261017/README.md",
@@ -402,7 +446,7 @@
       "category": "项目/目录入口",
       "status": "导航及分类规则",
       "protected": false,
-      "sha256": "976ee952af74d978009a9c89e87c9c0b62b01dc127b178783f5ca4d4fff9a47e"
+      "sha256": "9b9164b7552b70a83c376cc552ca91cd1d325960ca1cc8adff0119ee4e95b609"
     },
     {
       "path": "20261017/results/case_studies/comparisons/README.md",
@@ -643,36 +687,72 @@
       "title": "V4 Train配对增强预览",
       "h1_count": 1,
       "category": "v4独立实验",
-      "status": "训练已提交；审计已完成；模型结果待核实",
+      "status": "50轮及七模型评估完成；当前结论见v4系统报告",
       "protected": true,
       "sha256": "3c8c7c8dcb025b2c4562c3d21726c8cf8f8f64507d08e38e137c7d558cadd8de"
     },
     {
-      "path": "20261017/results/experiments/improved_3d_v4/paired_analysis/README.md",
-      "title": "V4 Train增强审计复核",
+      "path": "20261017/results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/test/README.md",
+      "title": "固定best权重诊断图",
       "h1_count": 1,
       "category": "v4独立实验",
-      "status": "训练已提交；审计已完成；模型结果待核实",
+      "status": "50轮及七模型评估完成；当前结论见v4系统报告",
       "protected": false,
-      "sha256": "626a981dc3bf1266ed66c1428858c3559d845ef21846f3b9950aef4b72eea9c0"
+      "sha256": "67e002200d74154ff7e4e014a2ce277d6fde3c0c832ae7ccb818d096fc93e126"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/comprehensive_audit_20261021/images/validation/README.md",
+      "title": "固定best权重诊断图",
+      "h1_count": 1,
+      "category": "v4独立实验",
+      "status": "50轮及七模型评估完成；当前结论见v4系统报告",
+      "protected": false,
+      "sha256": "67e002200d74154ff7e4e014a2ce277d6fde3c0c832ae7ccb818d096fc93e126"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/comprehensive_audit_20261021/README.md",
+      "title": "最佳checkpoint泛化审计",
+      "h1_count": 1,
+      "category": "v4独立实验",
+      "status": "50轮及七模型评估完成；当前结论见v4系统报告",
+      "protected": false,
+      "sha256": "cc79996c7ee4afa490627e324118225dcf4588ec4e6f20f077bcd9830b078bd0"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/paired_analysis/README.md",
+      "title": "V4 配对实验分析",
+      "h1_count": 1,
+      "category": "v4独立实验",
+      "status": "50轮及七模型评估完成；当前结论见v4系统报告",
+      "protected": false,
+      "sha256": "b6203b7adc4b75c6f299cd048d428c63719b36ec05a8b965ea5d864de0cc5e4c"
     },
     {
       "path": "20261017/results/experiments/improved_3d_v4/README.md",
       "title": "V4 A0/A1配对训练",
       "h1_count": 1,
       "category": "v4独立实验",
-      "status": "训练已提交；审计已完成；模型结果待核实",
+      "status": "50轮及七模型评估完成；当前结论见v4系统报告",
       "protected": false,
-      "sha256": "5d6d64b0e0e12ffe8bfc62994fd35b71c09ae8005dff61c6bb15c9d796bc12f0"
+      "sha256": "bf5276df73ec1142e52735de92fd43a81c07775a1ad738073475ed176e725559"
     },
     {
       "path": "20261017/results/experiments/improved_3d_v4/reports/OPTIMIZATION_REVIEW_ZH.md",
       "title": "常用优化方法补充审查与 v4 训练方案建议",
       "h1_count": 2,
       "category": "v4独立实验",
-      "status": "训练已提交；审计已完成；模型结果待核实",
+      "status": "50轮及七模型评估完成；当前结论见v4系统报告",
       "protected": false,
       "sha256": "acec301edd99573bcf0287abc7a920453bed1ee968ceb7020a8300478242302e"
+    },
+    {
+      "path": "20261017/results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md",
+      "title": "七模型最佳权重统一评估与 v4 配对实验结论",
+      "h1_count": 1,
+      "category": "v4独立实验",
+      "status": "50轮及七模型评估完成；当前结论见v4系统报告",
+      "protected": false,
+      "sha256": "e62390346d31c31df090fb6825f076559a9cccc73efa2fedcedd7fc6a4eb7c7a"
     },
     {
       "path": "20261017/results/figures/baseline_2d/README.md",
@@ -735,7 +815,7 @@
       "category": "跨模型性能与泛化评估",
       "status": "统一best选模；课程指标与补充指标分区",
       "protected": false,
-      "sha256": "b06c0e04c1a85888e1105ca93696397e85002a443991ac207bcee9aa102ae67b"
+      "sha256": "d86978945a81533d3a28d25d3f0fd7d371b61e455a80b40f5a98f8366e4f67b1"
     },
     {
       "path": "20261017/results/model_evaluation/best_checkpoint_comparison/supplementary_research/README.md",
@@ -780,7 +860,7 @@
       "category": "综合研究/治理",
       "status": "研究过程材料；不是实时执行命令",
       "protected": false,
-      "sha256": "d4f1a670318f29b238fa0717beb014007042892d57d08af8708ec409f4d1b820"
+      "sha256": "acbbfecd1de030fb315d3ae49331a58f3205bf5f88dfdc3f0a5d92984ac717ff"
     },
     {
       "path": "20261017/results/reports/RESEARCH_GOVERNANCE_ZH.md",
@@ -798,7 +878,7 @@
       "category": "综合研究/治理",
       "status": "研究过程材料；不是实时执行命令",
       "protected": false,
-      "sha256": "f60f116caff8e9b019140a49d17f4278679b24f380b078287c87a9a9745e97d0"
+      "sha256": "1c02014f497209d222d093fc6a3a0a3a6418c8f646d9b9540d233b6f0a45d3a2"
     },
     {
       "path": "20261017/results/STORAGE_GUIDE.md",
@@ -807,7 +887,7 @@
       "category": "项目/目录入口",
       "status": "导航及分类规则",
       "protected": false,
-      "sha256": "bbd85b98de8da345631d5bb60a1d999a68bf92c438206dce8b78cfea097a12f4"
+      "sha256": "961c79b14d5f2e7b57f4971fb3b4c90a60fdf786e869c0a77683c17ef4a8f83e"
     },
     {
       "path": "20261017/results/tables/comparisons/README.md",
@@ -825,7 +905,7 @@
       "category": "项目可行性",
       "status": "保留用户指定英文文件名；含历史阶段说明",
       "protected": false,
-      "sha256": "d73aa1f0a9cd132196bd4388f6c4137b343cbc42780d6f6d3013f6b537719cbc"
+      "sha256": "b1bd821767b4877aaf557137c4910b44b2a5ae3503ef61c2aee8e399f52162c4"
     }
   ]
 }

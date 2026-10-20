@@ -31,7 +31,7 @@ def classify(relative):
     if relative.endswith('feasibility review.md'):
         return '项目可行性', '保留用户指定英文文件名；含历史阶段说明'
     if '/experiments/improved_3d_v4/' in relative:
-        return 'v4独立实验', '训练已提交；审计已完成；模型结果待核实'
+        return 'v4独立实验', '50轮及七模型评估完成；当前结论见v4系统报告'
     if '/experiments/improved_3d_v3/' in relative:
         return 'v3模型实验', '训练完成；跨模型比较位于model_evaluation'
     if '/model_evaluation/' in relative:
