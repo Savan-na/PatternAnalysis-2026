@@ -2,7 +2,7 @@
 
 ## 状态与研究问题
 
-现有记录的 [空间/logit 证据](../../results/diagnostics/inference_context/p2_mechanism_evidence_20261020/README.md) 已生成，原始记录和图像没有修改。新 P2B 程序及五项本地测试已准备；**真实统计回放、六分类置信度和过滤诊断尚未运行**。
+现有记录的 [空间/logit 证据](../../results/diagnostics/inference_context/p2_mechanism_evidence_20261020/README.md) 已生成。P2B 真实作业 `677509` 的五项测试通过，但首例数值正控失败，尚无合格的机制比较、置信度或过滤结果。保留失败目录、阈值及原始程序；先做 [单例数值定位](../../results/diagnostics/inference_context/p2_mechanism_evidence_20261020/P2B_numerical_failure_ZH.md)，不直接重复提交下列 P2B 作业。
 
 本阶段不训练模型。先区分“推理范围敏感”与“归一化统计来源的作用”，再考虑 G7 采样或其他单因素训练，不预设哪种一定胜出。
 

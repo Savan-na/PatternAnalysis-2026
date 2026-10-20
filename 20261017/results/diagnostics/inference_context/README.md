@@ -8,4 +8,4 @@
 
 P2 已完成：[四例结果与中文分析](p2_four_cases_20261020/P2_review_ZH.md)。上下文敏感性得到支持，但有小器官损伤，未采用滑窗作为替代协议。
 
-本轮 [同体素空间/logit 证据](p2_mechanism_evidence_20261020/README.md) 已从原始记录生成。按独立 P1 复审，下一项先做 [P2B 统计回放、置信度与几何诊断](../../../code/docs/P2B_PREDICTION_MECHANISMS.md)，真实 GPU 测量尚未运行，不自动进入 G7 训练。
+本轮 [同体素空间/logit 证据](p2_mechanism_evidence_20261020/README.md) 已从原始记录生成。[P2B](../../../code/docs/P2B_PREDICTION_MECHANISMS.md) 作业 677509 在首例数值正控失败后停止；先按 [数值定位方案](p2_mechanism_evidence_20261020/P2B_numerical_failure_ZH.md) 检查回放实现，不放宽阈值、不自动进入 G7 训练。

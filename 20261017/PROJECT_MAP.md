@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-20 09:48:38 AEST**
+Updated / 更新时间: **2026-10-20 10:17:14 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **59** · Files / 文件: **463**
+Directories / 目录: **59** · Files / 文件: **465**
 
 ## Directory Tree / 目录树
 
@@ -88,6 +88,7 @@ Directories / 目录: **59** · Files / 文件: **463**
 │   │   ├── audit_g7_edge_sampling.py
 │   │   ├── audit_p2_inference_context.py
 │   │   ├── audit_p2b_prediction_mechanisms.py
+│   │   ├── audit_p2b_replay_numerics.py
 │   │   ├── audit_train_raw.py
 │   │   ├── evaluate_g6_test.py
 │   │   ├── organize_result_artifacts.py
@@ -482,6 +483,7 @@ Directories / 目录: **59** · Files / 文件: **463**
 │   │       │   ├── six_class_context_comparison.svg
 │   │       │   └── six_class_metrics.csv
 │   │       ├── p2_mechanism_evidence_20261020/
+│   │       │   ├── P2B_numerical_failure_ZH.md
 │   │       │   ├── README.md
 │   │       │   ├── same_voxel_logit_evidence.png
 │   │       │   ├── same_voxel_logit_evidence.svg
@@ -607,6 +609,7 @@ Directories / 目录: **59** · Files / 文件: **463**
 | `code/tools/audit_g7_edge_sampling.py` | Replay frozen Train epochs and compare 9+1 edge sampling exposure on CPU; Definitions: sha, main | 在 CPU 重放固定训练轮次并比较 9+1 边缘采样曝光；定义：sha, main |
 | `code/tools/audit_p2_inference_context.py` | Definitions: stats, xyz_logits, border_distance, components, measure, margin_comparison, draw, main | 定义：stats, xyz_logits, border_distance, components, measure, margin_comparison, draw, main |
 | `code/tools/audit_p2b_prediction_mechanisms.py` | Definitions: dump, filter_figure, main | 定义：dump, filter_figure, main |
+| `code/tools/audit_p2b_replay_numerics.py` | Definitions: replay_layer, inspect_layer, capture_layers, replay_layers, differences, main, null_context | 定义：replay_layer, inspect_layer, capture_layers, replay_layers, differences, main, null_context |
 | `code/tools/audit_train_raw.py` | Train-only raw MRI/mask integrity audit; Definitions: train_inventory, sha256_file, audit_case, main | 仅对训练集原始 MRI/Mask 做完整性审计；定义：train_inventory, sha256_file, audit_case, main |
 | `code/tools/evaluate_g6_test.py` | Definitions: sha256, selected_model, boundary_summary, main | 定义：sha256, selected_model, boundary_summary, main |
 | `code/tools/organize_result_artifacts.py` | Definitions: destination, main | 定义：destination, main |
@@ -963,6 +966,7 @@ Directories / 目录: **59** · Files / 文件: **463**
 | `results/diagnostics/inference_context/p2_four_cases_20261020/six_class_context_comparison.png` | Binary or large file; 105,674 bytes | 二进制或大文件；105,674 字节 |
 | `results/diagnostics/inference_context/p2_four_cases_20261020/six_class_context_comparison.svg` | UTF-8 text with 1834 lines; 58,935 bytes | UTF-8 文本，1834 行；58,935 字节 |
 | `results/diagnostics/inference_context/p2_four_cases_20261020/six_class_metrics.csv` | Table with 96 data rows; columns: model, case, protocol, class, dice, iou, precision, recall | 表格含 96 条数据行；列：model, case, protocol, class, dice, iou, precision, recall |
+| `results/diagnostics/inference_context/p2_mechanism_evidence_20261020/P2B_numerical_failure_ZH.md` | Sections: P2B 数值正控失败：保留结果，暂停机制归因; 实际观察; 待检验的数值解释; 最小下一项：只做数值定位 | 章节标题：P2B 数值正控失败：保留结果，暂停机制归因; 实际观察; 待检验的数值解释; 最小下一项：只做数值定位 |
 | `results/diagnostics/inference_context/p2_mechanism_evidence_20261020/README.md` | Entry point or directory guide; Sections: P2：远处误检与预测机制——现有证据; A. 推理等价性; B–D. 同体素 logits、几何与辅助头; 根因证据排序; E. 下一项与后处理边界 | 项目入口或目录说明；章节标题：P2：远处误检与预测机制——现有证据; A. 推理等价性; B–D. 同体素 logits、几何与辅助头; 根因证据排序; E. 下一项与后处理边界 |
 | `results/diagnostics/inference_context/p2_mechanism_evidence_20261020/same_voxel_logit_evidence.png` | Binary or large file; 135,181 bytes | 二进制或大文件；135,181 字节 |
 | `results/diagnostics/inference_context/p2_mechanism_evidence_20261020/same_voxel_logit_evidence.svg` | UTF-8 text with 2443 lines; 86,786 bytes | UTF-8 文本，2443 行；86,786 字节 |
