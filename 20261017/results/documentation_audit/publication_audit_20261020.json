@@ -1,5 +1,5 @@
 {
-  "markdown_count": 69,
+  "markdown_count": 70,
   "local_link_scope": "Markdown inline relative links; excludes fenced code, URLs and fragment validation",
   "broken_local_links": [],
   "encoding_flags": [],
@@ -410,7 +410,7 @@
       "category": "项目/目录入口",
       "status": "导航及分类规则",
       "protected": false,
-      "sha256": "54a2b2a68d0d54bb84bb049325c6893d2b3f5210d619adf6f38044d55f46b9fc"
+      "sha256": "f19282e62812b58e1c17f652addc61041c59bdd64c0ed3b4289d0bdf7417afed"
     },
     {
       "path": "20261017/logs/README.md",
@@ -437,7 +437,7 @@
       "category": "自动索引",
       "status": "自动生成，不手改",
       "protected": false,
-      "sha256": "4f9f833eee07febc98c8ebcd3e60fc43155d0a7e656c33084dc194abd5af5339"
+      "sha256": "a1bdfd8760edbdc6ef094d2b42f2b1baca7c52b678ff03bf9c9a1233b720d2fc"
     },
     {
       "path": "20261017/README.md",
@@ -755,6 +755,15 @@
       "sha256": "e62390346d31c31df090fb6825f076559a9cccc73efa2fedcedd7fc6a4eb7c7a"
     },
     {
+      "path": "20261017/results/experiments/improved_3d_v5/reports/RESEARCH_PLAN_ZH.md",
+      "title": "下一次模型提升方案：从 v3 出发，检验过分割与异常连通预测",
+      "h1_count": 1,
+      "category": "项目/目录入口",
+      "status": "导航及分类规则",
+      "protected": false,
+      "sha256": "03a245bf15a428e5eecf1554854e2052afd517a75f68131c9061370510f302ba"
+    },
+    {
       "path": "20261017/results/figures/baseline_2d/README.md",
       "title": "Supplementary 2D Validation figure",
       "h1_count": 1,
@@ -860,7 +869,7 @@
       "category": "综合研究/治理",
       "status": "研究过程材料；不是实时执行命令",
       "protected": false,
-      "sha256": "2602546bb66d6c63bff8ee07f4680cc390d1adf1054804f2e28d7d5d175524fb"
+      "sha256": "161f76a61122d95d6053aa7dfac7d08dd6b33ed9e233c0774ca4a484e6095866"
     },
     {
       "path": "20261017/results/reports/RESEARCH_GOVERNANCE_ZH.md",

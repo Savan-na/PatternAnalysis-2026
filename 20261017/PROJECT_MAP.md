@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-21 09:16:01 AEST**
+Updated / 更新时间: **2026-10-21 09:33:01 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **110** · Files / 文件: **1015**
+Directories / 目录: **112** · Files / 文件: **1016**
 
 ## Directory Tree / 目录树
 
@@ -812,232 +812,235 @@ Directories / 目录: **110** · Files / 文件: **1015**
 │   │   │   │   ├── epoch_050.json
 │   │   │   │   └── manifest.json
 │   │   │   └── README.md
-│   │   └── improved_3d_v4/
-│   │       ├── a0/
-│   │       │   └── training_records/
-│   │       │       ├── config_frozen.json
-│   │       │       ├── epoch_001.json
-│   │       │       ├── epoch_002.json
-│   │       │       ├── epoch_003.json
-│   │       │       ├── epoch_004.json
-│   │       │       ├── epoch_005.json
-│   │       │       ├── epoch_006.json
-│   │       │       ├── epoch_007.json
-│   │       │       ├── epoch_008.json
-│   │       │       ├── epoch_009.json
-│   │       │       ├── epoch_010.json
-│   │       │       ├── epoch_011.json
-│   │       │       ├── epoch_012.json
-│   │       │       ├── epoch_013.json
-│   │       │       ├── epoch_014.json
-│   │       │       ├── epoch_015.json
-│   │       │       ├── epoch_016.json
-│   │       │       ├── epoch_017.json
-│   │       │       ├── epoch_018.json
-│   │       │       ├── epoch_019.json
-│   │       │       ├── epoch_020.json
-│   │       │       ├── epoch_021.json
-│   │       │       ├── epoch_022.json
-│   │       │       ├── epoch_023.json
-│   │       │       ├── epoch_024.json
-│   │       │       ├── epoch_025.json
-│   │       │       ├── epoch_026.json
-│   │       │       ├── epoch_027.json
-│   │       │       ├── epoch_028.json
-│   │       │       ├── epoch_029.json
-│   │       │       ├── epoch_030.json
-│   │       │       ├── epoch_031.json
-│   │       │       ├── epoch_032.json
-│   │       │       ├── epoch_033.json
-│   │       │       ├── epoch_034.json
-│   │       │       ├── epoch_035.json
-│   │       │       ├── epoch_036.json
-│   │       │       ├── epoch_037.json
-│   │       │       ├── epoch_038.json
-│   │       │       ├── epoch_039.json
-│   │       │       ├── epoch_040.json
-│   │       │       ├── epoch_041.json
-│   │       │       ├── epoch_042.json
-│   │       │       ├── epoch_043.json
-│   │       │       ├── epoch_044.json
-│   │       │       ├── epoch_045.json
-│   │       │       ├── epoch_046.json
-│   │       │       ├── epoch_047.json
-│   │       │       ├── epoch_048.json
-│   │       │       ├── epoch_049.json
-│   │       │       ├── epoch_050.json
-│   │       │       └── manifest.json
-│   │       ├── a1/
-│   │       │   └── training_records/
-│   │       │       ├── config_frozen.json
-│   │       │       ├── epoch_001.json
-│   │       │       ├── epoch_002.json
-│   │       │       ├── epoch_003.json
-│   │       │       ├── epoch_004.json
-│   │       │       ├── epoch_005.json
-│   │       │       ├── epoch_006.json
-│   │       │       ├── epoch_007.json
-│   │       │       ├── epoch_008.json
-│   │       │       ├── epoch_009.json
-│   │       │       ├── epoch_010.json
-│   │       │       ├── epoch_011.json
-│   │       │       ├── epoch_012.json
-│   │       │       ├── epoch_013.json
-│   │       │       ├── epoch_014.json
-│   │       │       ├── epoch_015.json
-│   │       │       ├── epoch_016.json
-│   │       │       ├── epoch_017.json
-│   │       │       ├── epoch_018.json
-│   │       │       ├── epoch_019.json
-│   │       │       ├── epoch_020.json
-│   │       │       ├── epoch_021.json
-│   │       │       ├── epoch_022.json
-│   │       │       ├── epoch_023.json
-│   │       │       ├── epoch_024.json
-│   │       │       ├── epoch_025.json
-│   │       │       ├── epoch_026.json
-│   │       │       ├── epoch_027.json
-│   │       │       ├── epoch_028.json
-│   │       │       ├── epoch_029.json
-│   │       │       ├── epoch_030.json
-│   │       │       ├── epoch_031.json
-│   │       │       ├── epoch_032.json
-│   │       │       ├── epoch_033.json
-│   │       │       ├── epoch_034.json
-│   │       │       ├── epoch_035.json
-│   │       │       ├── epoch_036.json
-│   │       │       ├── epoch_037.json
-│   │       │       ├── epoch_038.json
-│   │       │       ├── epoch_039.json
-│   │       │       ├── epoch_040.json
-│   │       │       ├── epoch_041.json
-│   │       │       ├── epoch_042.json
-│   │       │       ├── epoch_043.json
-│   │       │       ├── epoch_044.json
-│   │       │       ├── epoch_045.json
-│   │       │       ├── epoch_046.json
-│   │       │       ├── epoch_047.json
-│   │       │       ├── epoch_048.json
-│   │       │       ├── epoch_049.json
-│   │       │       ├── epoch_050.json
-│   │       │       └── manifest.json
-│   │       ├── assessment_analysis/
-│   │       │   ├── assessment_required/
-│   │       │   │   ├── figures/
-│   │       │   │   │   ├── body_boundary_distribution.png
-│   │       │   │   │   ├── body_boundary_distribution.svg
-│   │       │   │   │   ├── prostate_base_apex.png
-│   │       │   │   │   ├── prostate_base_apex.svg
-│   │       │   │   │   ├── prostate_boundary_tails.png
-│   │       │   │   │   ├── prostate_boundary_tails.svg
-│   │       │   │   │   ├── prostate_oar_tradeoff.png
-│   │       │   │   │   ├── prostate_oar_tradeoff.svg
-│   │       │   │   │   ├── resource_profile.png
-│   │       │   │   │   ├── resource_profile.svg
-│   │       │   │   │   ├── six_class_validation_test.png
-│   │       │   │   │   ├── six_class_validation_test.svg
-│   │       │   │   │   ├── validation_test_generalization.png
-│   │       │   │   │   └── validation_test_generalization.svg
-│   │       │   │   └── tables/
-│   │       │   │       ├── boundary_errors.csv
-│   │       │   │       ├── model_summary.csv
-│   │       │   │       ├── per_case_inference.csv
-│   │       │   │       ├── prostate_regions.csv
-│   │       │   │       ├── resources.csv
-│   │       │   │       ├── six_class_metrics.csv
-│   │       │   │       └── surface_summary.csv
-│   │       │   ├── supplementary_research/
-│   │       │   │   ├── figures/
-│   │       │   │   │   ├── distant_body_false_positives.png
-│   │       │   │   │   ├── distant_body_false_positives.svg
-│   │       │   │   │   ├── patient_variability.png
-│   │       │   │   │   ├── patient_variability.svg
-│   │       │   │   │   ├── prostate_continuity.png
-│   │       │   │   │   └── prostate_continuity.svg
-│   │       │   │   └── tables/
-│   │       │   │       ├── continuity.csv
-│   │       │   │       ├── paired_patient_sensitivity.csv
-│   │       │   │       ├── per_case_class_metrics.csv
-│   │       │   │       ├── per_case_regions.csv
-│   │       │   │       ├── per_patient.csv
-│   │       │   │       └── surface_distances.csv
-│   │       │   ├── coverage.json
-│   │       │   └── integrity_verification.json
-│   │       ├── augmentation_audit_20261020/
-│   │       │   ├── audit.json
-│   │       │   ├── checksums.json
-│   │       │   ├── preview_01_O025_Week6.png
-│   │       │   ├── preview_02_O025_Week6.png
-│   │       │   ├── preview_03_O025_Week6.png
-│   │       │   ├── preview_04_O025_Week6.png
-│   │       │   ├── preview_05_R039_Week2.png
-│   │       │   ├── preview_06_R039_Week2.png
-│   │       │   └── README.md
-│   │       ├── comprehensive_audit_20261021/
-│   │       │   ├── images/
-│   │       │   │   ├── test/
-│   │       │   │   │   ├── M015_Week7_Bladder.png
-│   │       │   │   │   ├── M020_Week1_Prostate.png
-│   │       │   │   │   ├── M020_Week1_Prostate_base_apex.png
-│   │       │   │   │   ├── README.md
-│   │       │   │   │   ├── W029_Week6_Body.png
-│   │       │   │   │   ├── W029_Week6_Bones.png
-│   │       │   │   │   ├── W029_Week6_Prostate.png
-│   │       │   │   │   └── W029_Week6_Prostate_base_apex.png
-│   │       │   │   └── validation/
-│   │       │   │       ├── B040_Week1_Background.png
-│   │       │   │       ├── B040_Week1_Bladder.png
-│   │       │   │       ├── B040_Week1_Body.png
-│   │       │   │       ├── B040_Week1_Body_three_planes.png
-│   │       │   │       ├── B040_Week1_Bones.png
-│   │       │   │       ├── B040_Week1_Prostate.png
-│   │       │   │       ├── B040_Week1_Prostate_base_apex.png
-│   │       │   │       ├── B040_Week1_Rectum.png
-│   │       │   │       ├── J026_Week4_Body_three_planes.png
-│   │       │   │       ├── J026_Week4_Rectum.png
-│   │       │   │       ├── K008_Week0_Bladder.png
-│   │       │   │       ├── K008_Week0_Body_three_planes.png
-│   │       │   │       ├── K008_Week0_Prostate.png
-│   │       │   │       ├── K008_Week0_Prostate_base_apex.png
-│   │       │   │       ├── K018_Week4_Background.png
-│   │       │   │       ├── K018_Week4_Body.png
-│   │       │   │       ├── K018_Week4_Body_three_planes.png
-│   │       │   │       ├── M030_Week4_Body.png
-│   │       │   │       ├── M030_Week4_Body_three_planes.png
-│   │       │   │       ├── M030_Week4_Bones.png
-│   │       │   │       ├── README.md
-│   │       │   │       ├── S022_Week2_Bladder.png
-│   │       │   │       ├── S022_Week2_Body_three_planes.png
-│   │       │   │       ├── S022_Week2_Prostate.png
-│   │       │   │       └── S022_Week2_Prostate_base_apex.png
-│   │       │   ├── checksums.json
-│   │       │   ├── input_provenance.json
-│   │       │   ├── metrics.json
-│   │       │   ├── metrics_partial.json
-│   │       │   └── README.md
-│   │       ├── paired_analysis/
-│   │       │   ├── all_models/
-│   │       │   │   ├── selection.csv
-│   │       │   │   ├── seven_model_selection.png
-│   │       │   │   ├── seven_model_selection.svg
-│   │       │   │   ├── seven_model_six_class_dice.png
-│   │       │   │   ├── seven_model_six_class_dice.svg
-│   │       │   │   ├── six_class_validation.csv
-│   │       │   │   └── source_checksums.json
-│   │       │   ├── learning_curves.csv
-│   │       │   ├── learning_curves.png
-│   │       │   ├── learning_curves.svg
-│   │       │   ├── patient_metrics.csv
-│   │       │   ├── README.md
-│   │       │   ├── record_checksums.json
-│   │       │   ├── six_class_dice.png
-│   │       │   ├── six_class_dice.svg
-│   │       │   ├── six_class_metrics.csv
-│   │       │   └── summary.json
-│   │       ├── reports/
-│   │       │   ├── OPTIMIZATION_REVIEW_ZH.md
-│   │       │   └── RESEARCH_REPORT_ZH.md
-│   │       └── README.md
+│   │   ├── improved_3d_v4/
+│   │   │   ├── a0/
+│   │   │   │   └── training_records/
+│   │   │   │       ├── config_frozen.json
+│   │   │   │       ├── epoch_001.json
+│   │   │   │       ├── epoch_002.json
+│   │   │   │       ├── epoch_003.json
+│   │   │   │       ├── epoch_004.json
+│   │   │   │       ├── epoch_005.json
+│   │   │   │       ├── epoch_006.json
+│   │   │   │       ├── epoch_007.json
+│   │   │   │       ├── epoch_008.json
+│   │   │   │       ├── epoch_009.json
+│   │   │   │       ├── epoch_010.json
+│   │   │   │       ├── epoch_011.json
+│   │   │   │       ├── epoch_012.json
+│   │   │   │       ├── epoch_013.json
+│   │   │   │       ├── epoch_014.json
+│   │   │   │       ├── epoch_015.json
+│   │   │   │       ├── epoch_016.json
+│   │   │   │       ├── epoch_017.json
+│   │   │   │       ├── epoch_018.json
+│   │   │   │       ├── epoch_019.json
+│   │   │   │       ├── epoch_020.json
+│   │   │   │       ├── epoch_021.json
+│   │   │   │       ├── epoch_022.json
+│   │   │   │       ├── epoch_023.json
+│   │   │   │       ├── epoch_024.json
+│   │   │   │       ├── epoch_025.json
+│   │   │   │       ├── epoch_026.json
+│   │   │   │       ├── epoch_027.json
+│   │   │   │       ├── epoch_028.json
+│   │   │   │       ├── epoch_029.json
+│   │   │   │       ├── epoch_030.json
+│   │   │   │       ├── epoch_031.json
+│   │   │   │       ├── epoch_032.json
+│   │   │   │       ├── epoch_033.json
+│   │   │   │       ├── epoch_034.json
+│   │   │   │       ├── epoch_035.json
+│   │   │   │       ├── epoch_036.json
+│   │   │   │       ├── epoch_037.json
+│   │   │   │       ├── epoch_038.json
+│   │   │   │       ├── epoch_039.json
+│   │   │   │       ├── epoch_040.json
+│   │   │   │       ├── epoch_041.json
+│   │   │   │       ├── epoch_042.json
+│   │   │   │       ├── epoch_043.json
+│   │   │   │       ├── epoch_044.json
+│   │   │   │       ├── epoch_045.json
+│   │   │   │       ├── epoch_046.json
+│   │   │   │       ├── epoch_047.json
+│   │   │   │       ├── epoch_048.json
+│   │   │   │       ├── epoch_049.json
+│   │   │   │       ├── epoch_050.json
+│   │   │   │       └── manifest.json
+│   │   │   ├── a1/
+│   │   │   │   └── training_records/
+│   │   │   │       ├── config_frozen.json
+│   │   │   │       ├── epoch_001.json
+│   │   │   │       ├── epoch_002.json
+│   │   │   │       ├── epoch_003.json
+│   │   │   │       ├── epoch_004.json
+│   │   │   │       ├── epoch_005.json
+│   │   │   │       ├── epoch_006.json
+│   │   │   │       ├── epoch_007.json
+│   │   │   │       ├── epoch_008.json
+│   │   │   │       ├── epoch_009.json
+│   │   │   │       ├── epoch_010.json
+│   │   │   │       ├── epoch_011.json
+│   │   │   │       ├── epoch_012.json
+│   │   │   │       ├── epoch_013.json
+│   │   │   │       ├── epoch_014.json
+│   │   │   │       ├── epoch_015.json
+│   │   │   │       ├── epoch_016.json
+│   │   │   │       ├── epoch_017.json
+│   │   │   │       ├── epoch_018.json
+│   │   │   │       ├── epoch_019.json
+│   │   │   │       ├── epoch_020.json
+│   │   │   │       ├── epoch_021.json
+│   │   │   │       ├── epoch_022.json
+│   │   │   │       ├── epoch_023.json
+│   │   │   │       ├── epoch_024.json
+│   │   │   │       ├── epoch_025.json
+│   │   │   │       ├── epoch_026.json
+│   │   │   │       ├── epoch_027.json
+│   │   │   │       ├── epoch_028.json
+│   │   │   │       ├── epoch_029.json
+│   │   │   │       ├── epoch_030.json
+│   │   │   │       ├── epoch_031.json
+│   │   │   │       ├── epoch_032.json
+│   │   │   │       ├── epoch_033.json
+│   │   │   │       ├── epoch_034.json
+│   │   │   │       ├── epoch_035.json
+│   │   │   │       ├── epoch_036.json
+│   │   │   │       ├── epoch_037.json
+│   │   │   │       ├── epoch_038.json
+│   │   │   │       ├── epoch_039.json
+│   │   │   │       ├── epoch_040.json
+│   │   │   │       ├── epoch_041.json
+│   │   │   │       ├── epoch_042.json
+│   │   │   │       ├── epoch_043.json
+│   │   │   │       ├── epoch_044.json
+│   │   │   │       ├── epoch_045.json
+│   │   │   │       ├── epoch_046.json
+│   │   │   │       ├── epoch_047.json
+│   │   │   │       ├── epoch_048.json
+│   │   │   │       ├── epoch_049.json
+│   │   │   │       ├── epoch_050.json
+│   │   │   │       └── manifest.json
+│   │   │   ├── assessment_analysis/
+│   │   │   │   ├── assessment_required/
+│   │   │   │   │   ├── figures/
+│   │   │   │   │   │   ├── body_boundary_distribution.png
+│   │   │   │   │   │   ├── body_boundary_distribution.svg
+│   │   │   │   │   │   ├── prostate_base_apex.png
+│   │   │   │   │   │   ├── prostate_base_apex.svg
+│   │   │   │   │   │   ├── prostate_boundary_tails.png
+│   │   │   │   │   │   ├── prostate_boundary_tails.svg
+│   │   │   │   │   │   ├── prostate_oar_tradeoff.png
+│   │   │   │   │   │   ├── prostate_oar_tradeoff.svg
+│   │   │   │   │   │   ├── resource_profile.png
+│   │   │   │   │   │   ├── resource_profile.svg
+│   │   │   │   │   │   ├── six_class_validation_test.png
+│   │   │   │   │   │   ├── six_class_validation_test.svg
+│   │   │   │   │   │   ├── validation_test_generalization.png
+│   │   │   │   │   │   └── validation_test_generalization.svg
+│   │   │   │   │   └── tables/
+│   │   │   │   │       ├── boundary_errors.csv
+│   │   │   │   │       ├── model_summary.csv
+│   │   │   │   │       ├── per_case_inference.csv
+│   │   │   │   │       ├── prostate_regions.csv
+│   │   │   │   │       ├── resources.csv
+│   │   │   │   │       ├── six_class_metrics.csv
+│   │   │   │   │       └── surface_summary.csv
+│   │   │   │   ├── supplementary_research/
+│   │   │   │   │   ├── figures/
+│   │   │   │   │   │   ├── distant_body_false_positives.png
+│   │   │   │   │   │   ├── distant_body_false_positives.svg
+│   │   │   │   │   │   ├── patient_variability.png
+│   │   │   │   │   │   ├── patient_variability.svg
+│   │   │   │   │   │   ├── prostate_continuity.png
+│   │   │   │   │   │   └── prostate_continuity.svg
+│   │   │   │   │   └── tables/
+│   │   │   │   │       ├── continuity.csv
+│   │   │   │   │       ├── paired_patient_sensitivity.csv
+│   │   │   │   │       ├── per_case_class_metrics.csv
+│   │   │   │   │       ├── per_case_regions.csv
+│   │   │   │   │       ├── per_patient.csv
+│   │   │   │   │       └── surface_distances.csv
+│   │   │   │   ├── coverage.json
+│   │   │   │   └── integrity_verification.json
+│   │   │   ├── augmentation_audit_20261020/
+│   │   │   │   ├── audit.json
+│   │   │   │   ├── checksums.json
+│   │   │   │   ├── preview_01_O025_Week6.png
+│   │   │   │   ├── preview_02_O025_Week6.png
+│   │   │   │   ├── preview_03_O025_Week6.png
+│   │   │   │   ├── preview_04_O025_Week6.png
+│   │   │   │   ├── preview_05_R039_Week2.png
+│   │   │   │   ├── preview_06_R039_Week2.png
+│   │   │   │   └── README.md
+│   │   │   ├── comprehensive_audit_20261021/
+│   │   │   │   ├── images/
+│   │   │   │   │   ├── test/
+│   │   │   │   │   │   ├── M015_Week7_Bladder.png
+│   │   │   │   │   │   ├── M020_Week1_Prostate.png
+│   │   │   │   │   │   ├── M020_Week1_Prostate_base_apex.png
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   ├── W029_Week6_Body.png
+│   │   │   │   │   │   ├── W029_Week6_Bones.png
+│   │   │   │   │   │   ├── W029_Week6_Prostate.png
+│   │   │   │   │   │   └── W029_Week6_Prostate_base_apex.png
+│   │   │   │   │   └── validation/
+│   │   │   │   │       ├── B040_Week1_Background.png
+│   │   │   │   │       ├── B040_Week1_Bladder.png
+│   │   │   │   │       ├── B040_Week1_Body.png
+│   │   │   │   │       ├── B040_Week1_Body_three_planes.png
+│   │   │   │   │       ├── B040_Week1_Bones.png
+│   │   │   │   │       ├── B040_Week1_Prostate.png
+│   │   │   │   │       ├── B040_Week1_Prostate_base_apex.png
+│   │   │   │   │       ├── B040_Week1_Rectum.png
+│   │   │   │   │       ├── J026_Week4_Body_three_planes.png
+│   │   │   │   │       ├── J026_Week4_Rectum.png
+│   │   │   │   │       ├── K008_Week0_Bladder.png
+│   │   │   │   │       ├── K008_Week0_Body_three_planes.png
+│   │   │   │   │       ├── K008_Week0_Prostate.png
+│   │   │   │   │       ├── K008_Week0_Prostate_base_apex.png
+│   │   │   │   │       ├── K018_Week4_Background.png
+│   │   │   │   │       ├── K018_Week4_Body.png
+│   │   │   │   │       ├── K018_Week4_Body_three_planes.png
+│   │   │   │   │       ├── M030_Week4_Body.png
+│   │   │   │   │       ├── M030_Week4_Body_three_planes.png
+│   │   │   │   │       ├── M030_Week4_Bones.png
+│   │   │   │   │       ├── README.md
+│   │   │   │   │       ├── S022_Week2_Bladder.png
+│   │   │   │   │       ├── S022_Week2_Body_three_planes.png
+│   │   │   │   │       ├── S022_Week2_Prostate.png
+│   │   │   │   │       └── S022_Week2_Prostate_base_apex.png
+│   │   │   │   ├── checksums.json
+│   │   │   │   ├── input_provenance.json
+│   │   │   │   ├── metrics.json
+│   │   │   │   ├── metrics_partial.json
+│   │   │   │   └── README.md
+│   │   │   ├── paired_analysis/
+│   │   │   │   ├── all_models/
+│   │   │   │   │   ├── selection.csv
+│   │   │   │   │   ├── seven_model_selection.png
+│   │   │   │   │   ├── seven_model_selection.svg
+│   │   │   │   │   ├── seven_model_six_class_dice.png
+│   │   │   │   │   ├── seven_model_six_class_dice.svg
+│   │   │   │   │   ├── six_class_validation.csv
+│   │   │   │   │   └── source_checksums.json
+│   │   │   │   ├── learning_curves.csv
+│   │   │   │   ├── learning_curves.png
+│   │   │   │   ├── learning_curves.svg
+│   │   │   │   ├── patient_metrics.csv
+│   │   │   │   ├── README.md
+│   │   │   │   ├── record_checksums.json
+│   │   │   │   ├── six_class_dice.png
+│   │   │   │   ├── six_class_dice.svg
+│   │   │   │   ├── six_class_metrics.csv
+│   │   │   │   └── summary.json
+│   │   │   ├── reports/
+│   │   │   │   ├── OPTIMIZATION_REVIEW_ZH.md
+│   │   │   │   └── RESEARCH_REPORT_ZH.md
+│   │   │   └── README.md
+│   │   └── improved_3d_v5/
+│   │       └── reports/
+│   │           └── RESEARCH_PLAN_ZH.md
 │   ├── figures/
 │   │   ├── baseline_2d/
 │   │   │   ├── g5_2d_validation_all_classes.png
@@ -2085,6 +2088,7 @@ Directories / 目录: **110** · Files / 文件: **1015**
 | `results/experiments/improved_3d_v4/README.md` | Entry point or directory guide; Sections: V4 A0/A1配对训练; 执行身份与最近状态; 本区内容 | 项目入口或目录说明；章节标题：V4 A0/A1配对训练; 执行身份与最近状态; 本区内容 |
 | `results/experiments/improved_3d_v4/reports/OPTIMIZATION_REVIEW_ZH.md` | Sections: 常用优化方法补充审查与 v4 训练方案建议; 1. 当前真正遗漏了什么; 2. 常用方法清单：收益、风险与优先级; 3. 三篇参考论文给出的直接提醒; 4. 修订 v4：先优化训练配方，再考虑加网络模块 | 章节标题：常用优化方法补充审查与 v4 训练方案建议; 1. 当前真正遗漏了什么; 2. 常用方法清单：收益、风险与优先级; 3. 三篇参考论文给出的直接提醒; 4. 修订 v4：先优化训练配方，再考虑加网络模块 |
 | `results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md` | Sections: 七模型最佳权重统一评估与 v4 配对实验结论; 1. 结论与模型选择; 2. 数据来源、完整性与评估规则; 3. 七模型总体表现; 4. A1改善什么，又退步什么 | 章节标题：七模型最佳权重统一评估与 v4 配对实验结论; 1. 结论与模型选择; 2. 数据来源、完整性与评估规则; 3. 七模型总体表现; 4. A1改善什么，又退步什么 |
+| `results/experiments/improved_3d_v5/reports/RESEARCH_PLAN_ZH.md` | Sections: 下一次模型提升方案：从 v3 出发，检验过分割与异常连通预测; 1. 建议摘要; 2. 七模型告诉了我们什么; 3. 当前证据支持优先处理什么; 4. 文献如何支持这个优先级 | 章节标题：下一次模型提升方案：从 v3 出发，检验过分割与异常连通预测; 1. 建议摘要; 2. 七模型告诉了我们什么; 3. 当前证据支持优先处理什么; 4. 文献如何支持这个优先级 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.png` | Binary or large file; 58,445 bytes | 二进制或大文件；58,445 字节 |
 | `results/figures/baseline_2d/g5_2d_validation_all_classes.svg` | UTF-8 text with 1331 lines; 38,132 bytes | UTF-8 文本，1331 行；38,132 字节 |
 | `results/figures/baseline_2d/README.md` | Entry point or directory guide; Sections: Supplementary 2D Validation figure | 项目入口或目录说明；章节标题：Supplementary 2D Validation figure |

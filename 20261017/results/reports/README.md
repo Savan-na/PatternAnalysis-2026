@@ -13,5 +13,6 @@
 | [v3系统报告](../experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md) | v3设计、结果、泛化复核和课程/论文/选模方法的完整分析 |
 | [v4优化方法审查](../experiments/improved_3d_v4/reports/OPTIMIZATION_REVIEW_ZH.md) | 候选方法与选择理由；实际执行条件引用冻结协议 |
 | [七模型与v4最终评估](../experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md) | 当前最新：真实Test/Validation、六类/边界/资源、五例失败和课程达标局限 |
+| [下一次模型提升建议](../experiments/improved_3d_v5/reports/RESEARCH_PLAN_ZH.md) | 未执行的v5-L单因素loss方案、机制依据、文献、预算和可证伪条件 |
 
 最新图表在[v4七模型分析](../experiments/improved_3d_v4/assessment_analysis/assessment_required/)，五模型目录保留历史快照。历史阶段间会引用相同数据，但不再保留同一份长分析的多个独立副本；合并没有删去正文，来源SHA与原文行数见[清理台账](../documentation_audit/README.md)。
