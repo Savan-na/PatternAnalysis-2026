@@ -1,5 +1,5 @@
 {
-  "markdown_count": 68,
+  "markdown_count": 69,
   "local_link_scope": "Markdown inline relative links; excludes fenced code, URLs and fragment validation",
   "broken_local_links": [],
   "encoding_flags": [],
@@ -410,7 +410,7 @@
       "category": "项目/目录入口",
       "status": "导航及分类规则",
       "protected": false,
-      "sha256": "6477daaf506e510f4645205bc4764d979f349fe83ae3313a9e6638cd8691e2cb"
+      "sha256": "54a2b2a68d0d54bb84bb049325c6893d2b3f5210d619adf6f38044d55f46b9fc"
     },
     {
       "path": "20261017/logs/README.md",
@@ -437,7 +437,7 @@
       "category": "自动索引",
       "status": "自动生成，不手改",
       "protected": false,
-      "sha256": "fff27c62c674d443100d1509a5ea91d08f965869146e00048f0fd03ea403a101"
+      "sha256": "4f9f833eee07febc98c8ebcd3e60fc43155d0a7e656c33084dc194abd5af5339"
     },
     {
       "path": "20261017/README.md",
@@ -860,7 +860,7 @@
       "category": "综合研究/治理",
       "status": "研究过程材料；不是实时执行命令",
       "protected": false,
-      "sha256": "47210cc7f309a5e9b35902e38ffd080784f72dfdb4dc546ddfa884159839fa8e"
+      "sha256": "2602546bb66d6c63bff8ee07f4680cc390d1adf1054804f2e28d7d5d175524fb"
     },
     {
       "path": "20261017/results/reports/RESEARCH_GOVERNANCE_ZH.md",
@@ -879,6 +879,15 @@
       "status": "研究过程材料；不是实时执行命令",
       "protected": false,
       "sha256": "1c02014f497209d222d093fc6a3a0a3a6418c8f646d9b9540d233b6f0a45d3a2"
+    },
+    {
+      "path": "20261017/results/reports/SUPERVISOR_PROGRESS_BRIEF_EN.md",
+      "title": "HipMRI Segmentation: Research Progress and Questions for Guidance",
+      "h1_count": 1,
+      "category": "综合研究/治理",
+      "status": "研究过程材料；不是实时执行命令",
+      "protected": false,
+      "sha256": "371e10eba19886ee9056b4530dec92e1f46547955b02eddd0d1ea4686349c055"
     },
     {
       "path": "20261017/results/reports/SUPERVISOR_PROGRESS_BRIEF_ZH.md",

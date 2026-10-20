@@ -1,12 +1,12 @@
 # Project File Map / 项目文件总览
 
-Updated / 更新时间: **2026-10-21 07:15:11 AEST**
+Updated / 更新时间: **2026-10-21 09:16:01 AEST**
 
 **English:** This generated index lists every directory and file under `20261017`, including local logs and generated artifacts. The content column summarizes structure (headings, code definitions, fields or file type) rather than copying another document's prose. Run `python code/tools/update_project_map.py --watch` to keep it current while the watcher is active.
 
 **中文：** 本自动目录列出 `20261017` 下的全部目录和文件，包括本地日志及生成产物。内容栏概述章节、代码定义、字段或文件类型，不重复抄录其他文档。运行 `python code/tools/update_project_map.py --watch`，并保持进程运行，即可持续更新。
 
-Directories / 目录: **110** · Files / 文件: **1014**
+Directories / 目录: **110** · Files / 文件: **1015**
 
 ## Directory Tree / 目录树
 
@@ -1121,6 +1121,7 @@ Directories / 目录: **110** · Files / 文件: **1014**
 │   │   ├── README.md
 │   │   ├── RESEARCH_GOVERNANCE_ZH.md
 │   │   ├── RESEARCH_REPORT.md
+│   │   ├── SUPERVISOR_PROGRESS_BRIEF_EN.md
 │   │   └── SUPERVISOR_PROGRESS_BRIEF_ZH.md
 │   ├── tables/
 │   │   └── comparisons/
@@ -2148,6 +2149,7 @@ Directories / 目录: **110** · Files / 文件: **1014**
 | `results/reports/README.md` | Entry point or directory guide; Sections: 研究报告与治理材料 | 项目入口或目录说明；章节标题：研究报告与治理材料 |
 | `results/reports/RESEARCH_GOVERNANCE_ZH.md` | Sections: 研究治理与实验设计指令; P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么 | 章节标题：研究治理与实验设计指令; P1：HipMRI 研究与课程交付独立审查; 1. 课程约束已核对，交付仍有明确缺口; 2. 源码复核带来的主要新判断; 3. G7 已完成什么，尚未证明什么 |
 | `results/reports/RESEARCH_REPORT.md` | Sections: HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results | 章节标题：HipMRI Research Report; Dataset Characteristics; Problems Identified; Interventions; Experimental Results |
+| `results/reports/SUPERVISOR_PROGRESS_BRIEF_EN.md` | Sections: HipMRI Segmentation: Research Progress and Questions for Guidance; 1. What I Hope to Clarify; 2. Data and Common Evaluation Method; 3. What Changed Across the Seven Formal Runs?; 4. Main Results: Each Model's Best Validation Checkpoint | 章节标题：HipMRI Segmentation: Research Progress and Questions for Guidance; 1. What I Hope to Clarify; 2. Data and Common Evaluation Method; 3. What Changed Across the Seven Formal Runs?; 4. Main Results: Each Model's Best Validation Checkpoint |
 | `results/reports/SUPERVISOR_PROGRESS_BRIEF_ZH.md` | Sections: HipMRI 分割研究阶段汇报与指导讨论; 一、我希望本次沟通确认什么; 二、数据与统一评估方法; 三、七组正式训练分别改变了什么; 四、关键性能结果：各自最佳Validation checkpoint | 章节标题：HipMRI 分割研究阶段汇报与指导讨论; 一、我希望本次沟通确认什么; 二、数据与统一评估方法; 三、七组正式训练分别改变了什么; 四、关键性能结果：各自最佳Validation checkpoint |
 | `results/STORAGE_GUIDE.md` | Sections: 文件存储规则 | 章节标题：文件存储规则 |
 | `results/tables/comparisons/g5_validation_aux_logits.json` | JSON fields: kind, split, interpretation, checkpoint, body_audit_sha256, cases, summary | JSON 字段：kind, split, interpretation, checkpoint, body_audit_sha256, cases, summary |

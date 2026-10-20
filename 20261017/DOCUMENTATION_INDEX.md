@@ -17,7 +17,7 @@
 
 | 问题 | 文档 |
 |---|---|
-| 向导师或助教汇报当前研究 | [中文版阶段沟通报告](results/reports/SUPERVISOR_PROGRESS_BRIEF_ZH.md) |
+| 向导师或助教汇报当前研究 | [中文版阶段沟通报告](results/reports/SUPERVISOR_PROGRESS_BRIEF_ZH.md)、[English progress brief](results/reports/SUPERVISOR_PROGRESS_BRIEF_EN.md) |
 | 项目现在进展到哪里 | [项目入口](README.md)、[v4执行状态](results/experiments/improved_3d_v4/README.md) |
 | 各模型最好的结果如何比较 | [七模型最新系统报告](results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md)、[选模/课程/论文历史复核](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#methods) |
 | v2为什么没有达到目标 | [v2结果](results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md#results)、[真实图像审阅](results/experiments/improved_3d_v2/case_studies/validation/review_45_50/README.md) |
