@@ -30,6 +30,10 @@ archives/remote_training_backups/
 !results/experiments/improved_3d_v4/paired_analysis/summary.json
 !results/experiments/improved_3d_v4/paired_analysis/record_checksums.json
 !results/experiments/improved_3d_v4/paired_analysis/all_models/source_checksums.json
+!results/experiments/improved_3d_v4/assessment_analysis/**/tables/*.csv
+!results/experiments/improved_3d_v4/assessment_analysis/**/figures/*.svg
+!results/experiments/improved_3d_v4/assessment_analysis/integrity_verification.json
+!results/experiments/improved_3d_v4/assessment_analysis/coverage.json
 checkpoints/
 predictions/
 *.nii
