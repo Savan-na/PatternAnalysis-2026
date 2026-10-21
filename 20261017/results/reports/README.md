@@ -4,6 +4,7 @@
 
 | 材料 | 独立内容 |
 |---|---|
+| [全部10模型图表对比](model_performance_comparison/README.md) | 各自最佳Validation轮次；21组Dice/IoU/precision/recall、边界、患者、训练和资源图；既有Test单列 |
 | [导师／助教阶段沟通报告（中文）](SUPERVISOR_PROGRESS_BRIEF_ZH.md) | 可单独用于沟通：七组训练差异、关键结果、作业达标状态与待指导问题 |
 | [Supervisor / TA Progress Brief (English)](SUPERVISOR_PROGRESS_BRIEF_EN.md) | 上述沟通报告的完整英文译本，表格数据及研究局限保持一致 |
 | [HipMRI Research Report](RESEARCH_REPORT.md) | G1起累积的完整研究记录与阶段性解释；原始分析正文保留 |
@@ -13,6 +14,7 @@
 | [v3系统报告](../experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md) | v3设计、结果、泛化复核和课程/论文/选模方法的完整分析 |
 | [v4优化方法审查](../experiments/improved_3d_v4/reports/OPTIMIZATION_REVIEW_ZH.md) | 候选方法与选择理由；实际执行条件引用冻结协议 |
 | [七模型与v4最终评估](../experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md) | 当前最新：真实Test/Validation、六类/边界/资源、五例失败和课程达标局限 |
-| [下一次模型提升建议](../experiments/improved_3d_v5/reports/RESEARCH_PLAN_ZH.md) | 未执行的v5-L单因素loss方案、机制依据、文献、预算和可证伪条件 |
+| [v5三分支分析与病例审阅](../experiments/improved_3d_v5/reports/VALIDATION_SCREEN_ZH.md) | C/L/S均完成50轮；比较各自best及真实Validation错误，包含记录/图像校验 |
+| [v5最初研究建议](../experiments/improved_3d_v5/reports/RESEARCH_PLAN_ZH.md) | 保留最初loss方案依据与可证伪条件；实际三分支结果以上述报告为准 |
 
 最新图表在[v4七模型分析](../experiments/improved_3d_v4/assessment_analysis/assessment_required/)，五模型目录保留历史快照。历史阶段间会引用相同数据，但不再保留同一份长分析的多个独立副本；合并没有删去正文，来源SHA与原文行数见[清理台账](../documentation_audit/README.md)。

@@ -20,6 +20,7 @@
 | 向导师或助教汇报当前研究 | [中文版阶段沟通报告](results/reports/SUPERVISOR_PROGRESS_BRIEF_ZH.md)、[English progress brief](results/reports/SUPERVISOR_PROGRESS_BRIEF_EN.md) |
 | 项目现在进展到哪里 | [项目入口](README.md)、[v4执行状态](results/experiments/improved_3d_v4/README.md) |
 | 各模型最好的结果如何比较 | [七模型最新系统报告](results/experiments/improved_3d_v4/reports/RESEARCH_REPORT_ZH.md)、[选模/课程/论文历史复核](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#methods) |
+| 全部10模型的最新图表在哪里 | [模型性能对比图库](results/reports/model_performance_comparison/README.md)：最佳Validation轮次、六类和边界；v5 Test尚未评估 |
 | v2为什么没有达到目标 | [v2结果](results/experiments/improved_3d_v2/reports/RESEARCH_REPORT_ZH.md#results)、[真实图像审阅](results/experiments/improved_3d_v2/case_studies/validation/review_45_50/README.md) |
 | v3改善和代价是什么 | [v3结果](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#validation)、[泛化复核](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#generalization) |
 | 当前v4到底改什么 | [冻结配对协议](code/docs/V4_Paired_Training_ZH.md)、[Train增强复核](results/experiments/improved_3d_v4/paired_analysis/README.md) |
