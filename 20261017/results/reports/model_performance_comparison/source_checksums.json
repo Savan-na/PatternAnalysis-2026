@@ -13,6 +13,9 @@
   },
   "input_sha256": {
     "results\\experiments\\improved_3d_v4\\comprehensive_audit_20261021\\metrics.json": "74c298b956b684be3c377e495f70d6deb03445a9f5782663b189c33cdc6dbbc2",
+    "results\\experiments\\improved_3d_v5\\comparisons\\test_assessment_20261021\\metrics.json": "454a8080d1ecff3fb0bfe0d675af420cad5a26f69f236458e0036ed56e511986",
+    "code/tools/evaluate_v5_missing.py": "08643aa61d8a83861d1ef9dd30f13fb3e62fada2ff0775c30467365b78984c04",
+    "results\\experiments\\improved_3d_v5\\case_studies\\validation\\best_cls_review\\provenance.json": "9c1ba4987c37c7f0eff8184f7c71d8a23e2686162512bd2e3a1886d69a3fbd1b",
     "results\\experiments\\improved_3d_v5\\comparisons\\validation_analysis\\remote_record_hashes.json": "10babd5fefb2c2e13e9bc0cda59d74f32c7e1654ad5f4fdcd0e2ad228bce162e",
     "logs\\training\\baseline_2d\\epoch_001.json": "b42d4e83d7652d0ff868dcb77793e55f410581608c2ce154264f5c73ddc44ea4",
     "logs\\training\\baseline_2d\\epoch_002.json": "399fea57c92eb6480f63c43378f29b8026a292b179b937a4b8130a03c3c4fb18",
@@ -515,6 +518,6 @@
     "results\\experiments\\improved_3d_v5\\s\\training_records\\epoch_049.json": "8e42547b873159cde301b8c82487659cc24ec9fc3cf3aeb12decd2b3ef81a3b0",
     "results\\experiments\\improved_3d_v5\\s\\training_records\\epoch_050.json": "7a3ed43280a87e6d9c326279093bba9122621670ba36b8fd0b211e19b8eac8b2"
   },
-  "script_sha256": "077446d1e4270a47dcb5308fdbfc535779f88da17f18a487ebfbea61ad882af2",
-  "test_scope": "Existing previously inspected cohort; v5 Test missing"
+  "script_sha256": "0e05e0b7f6eaebfffaea30848128087ae491975be58000b9ff000e3168485a67",
+  "test_scope": "All 10 models; existing previously inspected cohort; descriptive only"
 }

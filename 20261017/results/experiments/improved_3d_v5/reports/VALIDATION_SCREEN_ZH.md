@@ -20,7 +20,7 @@
 
 学习率校验允许极小浮点容差（相对1e−13、绝对1e−18），用于Windows/Linux余弦函数最后几位差异，不允许改动训练曲线。
 
-**校验与复现范围：**本地结构、源码和数值核对通过；用户提供的远端三组聚合SHA与本地完全一致，覆盖156份JSON，校验回执见分析目录的 `remote_record_hashes.json`。绘图作业682157成功完成，重新载入C50/L45/S45，在四个共同Validation病例复现全部12个原始混淆矩阵，生成9张PNG，下载后逐张SHA校验通过并完成目视审阅。复现范围不是全部38卷，也未独立重算表面距离；表面指标仍来自原始完整Validation记录。指标不从截图估计。本轮没有新增Test结果。
+**校验与复现范围：**本地结构、源码和数值核对通过；用户提供的远端三组聚合SHA与本地完全一致，覆盖156份JSON，校验回执见分析目录的 `remote_record_hashes.json`。绘图作业682157成功完成，重新载入C50/L45/S45，在四个共同Validation病例复现全部12个原始混淆矩阵，生成9张PNG，下载后逐张SHA校验通过并完成目视审阅。复现范围不是全部38卷，也未独立重算表面距离；表面指标仍来自原始完整Validation记录。指标不从截图估计。该阶段未使用Test选模；后续固定checkpoint的Test补齐结果见第9节。
 
 ## 3. 六类覆盖
 
@@ -107,3 +107,20 @@ PNG、原始训练JSON及病例图保留在本地研究目录；Git中发布分�
 - [K018前列腺漏分改善对照](../case_studies/validation/best_cls_review/K018_Week2_Prostate_three_planes.png)
 - [J026六类对照](../case_studies/validation/best_cls_review/J026_Week6_six_classes.png)
 - [病例指标明细](../comparisons/validation_analysis/tables/selected_case_evidence.csv)；[图像与复现校验回执](../comparisons/validation_analysis/visual_review_verification.json)。
+
+## 9. 固定checkpoint的Test补齐（后续描述性评估）
+
+作业682322正常完成（0:0，6分钟）。C50/L45/S45全部沿用已固定的Validation最佳权重，额外复现K008_Week0的Validation混淆矩阵后，在既有6患者30个Test volume进行评估。原始结果的SHA-256与服务器一致，输入文件哈希与旧七模型Test审计一致。此阶段没有重新训练、挑选轮次或调参。
+
+| 模型 | Validation主要Dice | 既有Test主要Dice | Test前列腺Dice | Test远处Body FP | Test Body HD95中位数 mm |
+|---|---:|---:|---:|---:|---:|
+| 历史v3 | 0.85636 | 0.81448 | 0.74850 | 81,145 | 4.50 |
+| C50 | 0.85424 | 0.80400 | **0.76327** | 33,341 | **3.36** |
+| L45 | 0.84256 | 0.78578 | 0.73615 | 39,115 | 5.64 |
+| S45 | 0.84649 | 0.77884 | 0.72810 | **5,919** | 4.70 |
+
+这次Test描述没有推翻Validation判断：L/S的整体Dice仍低于同期C。S显著减少此队列的远处Body误报，但牺牲小器官表现，不能据此认定全面更好。C前列腺Dice高于历史v3，但整体Dice较低，进一步说明单一平均或单个类别都不能代表所有性能。
+
+历史Standard的Test主要Dice为0.78510；L仅高约0.00068，不应解读为稳定提升。历史v3与C配方相同，Test主要Dice相差约0.01047，这种轨迹差异更应促使我们控制重复种子与患者不确定性，而非依据既有Test反复优化配方。
+
+Test已被多次查看，只能作为描述性结果，不是外部验证或新盲测。后续优化依旧基于Train/Validation；当前不启动新模型。全部十模型最新图表见[统一对比图库](../../../reports/model_performance_comparison/README.md)。

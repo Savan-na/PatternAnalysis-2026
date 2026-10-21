@@ -1,10 +1,10 @@
 # 全部模型性能对比图表
 
-本目录汇总当前10个模型的最佳Validation记录、已有7模型Test审计和相关统计图。新图表独立存放，不覆盖历史实验结果。重建脚本：[build_model_comparison_gallery.py](../../../code/tools/build_model_comparison_gallery.py)。
+本目录汇总当前10个模型的最佳Validation记录、已有10模型Test审计（7模型原审计＋v5补齐）和相关统计图。新图表独立存放，不覆盖历史实验结果。重建脚本：[build_model_comparison_gallery.py](../../../code/tools/build_model_comparison_gallery.py)。
 
 ## 先看这三组图
 
-1. [所有模型主要 Dice 对比](figures/all_models_primary_dice.png)：Validation覆盖10模型；已有Test覆盖7模型。v5-C/L/S的Test位置标记“No Test”，不是0分。
+1. [所有模型主要 Dice 对比](figures/all_models_primary_dice.png)：Validation覆盖10模型；已有Test已补齐10模型，所有轮次仍由Validation固定。
 2. [六类 Validation Dice](figures/validation_dice_six_classes.png)：包含Background、Body、Bones、Bladder、Rectum、Prostate。
 3. [Validation HD95极端值](figures/validation_hd95_max_mm.png)：检查高平均Dice掩盖的异常边界错误。应与[中位数](figures/validation_hd95_median_mm.png)和[P95](figures/validation_hd95_p95_mm.png)一起看。
 
@@ -19,9 +19,9 @@
 | v3 | v1基础上改用GN1 | 50 | **0.85636** | 0.81448 |
 | A0 | v4优化器/学习率配方对照 | 45 | 0.84500 | 0.78365 |
 | A1 | A0加配对3D空间增强 | 45 | 0.82976 | 0.78012 |
-| v5-C | 原始v3同期重跑对照 | 50 | 0.85424 | 未评估 |
-| v5-L | C基础上压缩小器官CE权重 | 45 | 0.84256 | 未评估 |
-| v5-S | C基础上仅使用余弦学习率 | 45 | 0.84649 | 未评估 |
+| v5-C | 原始v3同期重跑对照 | 50 | 0.85424 | 0.80400 |
+| v5-L | C基础上压缩小器官CE权重 | 45 | 0.84256 | 0.78578 |
+| v5-S | C基础上仅使用余弦学习率 | 45 | 0.84649 | 0.77884 |
 
 选模只根据原先规定的Validation患者均衡三个小器官Dice，每5轮测量一次，共10个候选，同分保留更早轮次。不是强制对比第50轮，也不是根据Test选择轮次。图中e45/e50表示所选轮次。
 
@@ -29,7 +29,7 @@
 
 共21组图，每组同时生成PNG和SVG。PNG便于本机查看，SVG便于放大、排版与导出。
 
-| 分析内容 | Validation：10模型 | 已有Test：7模型 |
+| 分析内容 | Validation：10模型 | 已有Test：10模型 |
 |---|---|---|
 | 六类Dice | [PNG](figures/validation_dice_six_classes.png) / [SVG](figures/validation_dice_six_classes.svg) | [PNG](figures/test_dice_six_classes.png) / [SVG](figures/test_dice_six_classes.svg) |
 | 六类IoU | [PNG](figures/validation_iou_six_classes.png) / [SVG](figures/validation_iou_six_classes.svg) | [PNG](figures/test_iou_six_classes.png) / [SVG](figures/test_iou_six_classes.svg) |
@@ -49,13 +49,13 @@
 - Validation为6患者38卷，Test为另一组6患者30卷。逐患者图用于显示平均数掩盖的个体差异；重复visit不等于新增独立患者。
 - HD95/ASSD：单位mm，越低越好。本目录为各volume统计的中位数、P95或最大值，不是患者等权；图上明确标出汇总方式。HD95图的P95是“38/30个volume各自HD95的第95百分位”，不是另算一种表面HD95。边界热图使用对数颜色刻度，格内数字为原始mm。
 - Background不计算表面指标；五个前景类全部覆盖。本次记录中的这些表面比较均为GT与预测同时存在，脚本会拒绝将空掩码异常默默当作正常距离。
-- 训练总loss因目标权重、监督和采样不同不能作为跨模型质量排名。资源图只有已有7模型同一参考病例的基准；v5未做同协议推理基准，因此不补造延迟或显存数值。GPU负载等因素仍可影响耗时。
+- 训练总loss因目标权重、监督和采样不同不能作为跨模型质量排名。资源图包含10模型同一参考病例的基准，旧7模型与v5分开作业测量；相同输入和warmup/repeats不消除GPU负载、内核与跨作业差异，不能仅凭时延差异宣称架构更快。
 
 ## 证据与解释边界
 
-每个模型读取全部50份epoch记录重新选择best；从所选Validation混淆计数重新计算指标。旧7模型的表面数据来自固定checkpoint统一审计，并先核对与选模记录的混淆矩阵完全一致。v5来自其原始完整Validation记录，三组52份JSON的聚合SHA已与Rangpur输出一致。输入文件和选模轮次校验值保存在[source_checksums.json](source_checksums.json)。
+每个模型读取全部50份epoch记录重新选择best；从所选Validation混淆计数重新计算指标。旧7模型的表面数据来自固定checkpoint统一审计，并先核对与选模记录的混淆矩阵完全一致。v5 Validation来自其原始完整记录，三组52份JSON的聚合SHA已与Rangpur输出一致；新增Test来自作业682322的固定权重评估，metrics.json的SHA-256为 `454a8080d1ecff3fb0bfe0d675af420cad5a26f69f236458e0036ed56e511986`，本地与远端一致。三组Test均为相同6患者30卷，病例和MRI/mask哈希与旧审计一致，权重哈希与先前Validation病例复现一致；没有重新选模。输入文件和选模轮次校验值保存在[source_checksums.json](source_checksums.json)。
 
-本目录只读取已有记录，不训练、不重新执行Test推理、不改变历史结果。既有Test已被多轮查看，只能描述当前队列表现，不能称为新的盲测或独立外部泛化验证。v5没有Test成绩，不能据此宣称在Test优于其他模型。
+本目录只读取已有记录，不训练、不重新执行Test推理、不改变历史结果。既有Test已被多轮查看，只能描述当前队列表现，不能称为新的盲测或独立外部泛化验证。v5 Test已补齐：C=0.80400、L=0.78578、S=0.77884。与Validation一致，L/S没有整体优于同期C；L相对Standard仅高约0.00068，不构成稳定优势证据。历史v3为0.81448、同期C为0.80400，重复配方差异也提示随机轨迹和小患者集的不确定性。
 
 大部分是单种子、固定小患者集实验；2D与3D配方也不完全相同。图表不附伪精确的显著性或不适当的独立扫描置信区间。历史v3与v5-C配方相同但结果略有差异，提示不可将每个小数差异全部解释为单个设计因素的因果效果。
 

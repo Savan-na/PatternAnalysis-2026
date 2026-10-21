@@ -67,6 +67,16 @@ def main():
     raw = json.loads(raw_path.read_text())
     assert raw['complete']
     sources[str(raw_path.relative_to(ROOT))] = sha(raw_path)
+    v5_test_path = ROOT/'results/experiments/improved_3d_v5/comparisons/test_assessment_20261021/metrics.json'
+    assert sha(v5_test_path) == '454a8080d1ecff3fb0bfe0d675af420cad5a26f69f236458e0036ed56e511986'
+    v5_test = json.loads(v5_test_path.read_text())
+    assert v5_test['complete'] and set(v5_test['arms']) == set('CLS')
+    assert v5_test['script_sha256'] == sha(ROOT/'code/tools/evaluate_v5_missing.py')
+    sources[str(v5_test_path.relative_to(ROOT))] = sha(v5_test_path)
+    sources['code/tools/evaluate_v5_missing.py'] = sha(ROOT/'code/tools/evaluate_v5_missing.py')
+    image_receipt_path = ROOT/'results/experiments/improved_3d_v5/case_studies/validation/best_cls_review/provenance.json'
+    image_receipt = json.loads(image_receipt_path.read_text())
+    sources[str(image_receipt_path.relative_to(ROOT))] = sha(image_receipt_path)
     v5_receipt_path = ROOT/'results/experiments/improved_3d_v5/comparisons/validation_analysis/remote_record_hashes.json'
     v5_receipt = json.loads(v5_receipt_path.read_text())
     sources[str(v5_receipt_path.relative_to(ROOT))] = sha(v5_receipt_path)
@@ -87,6 +97,23 @@ def main():
             aggregate = hashlib.sha256(''.join(p.name+' '+sha(p)+'\n' for p in sorted(directory.glob('*.json'))).encode()).hexdigest()
             assert aggregate == v5_receipt['hashes'][model[-1]]
         splits = {'validation': best['validation']['cases']}
+        if model.startswith('v5-'):
+            arm = model[-1]
+            test_arm = v5_test['arms'][arm]
+            assert test_arm['selected']['epoch'] == best['epoch']
+            assert test_arm['selected']['record_sha256'] == aggregate
+            assert test_arm['selected']['checkpoint_sha256'] == image_receipt['checkpoints'][arm]['checkpoint_sha256']
+            assert test_arm['selected']['validation_replay_case'] == 'K008_Week0'
+            assert abs(test_arm['selected']['validation_score']-best['validation']['selection_score']) < 1e-12
+            splits['test'] = test_arm['cases']
+            old_cases = {c['case']: c for c in raw['arms']['Standard']['splits']['test']}
+            assert {c['case'] for c in splits['test']} == set(old_cases)
+            for c in splits['test']:
+                assert all(c[key] == old_cases[c['case']][key] for key in ('mri_sha256', 'mask_sha256', 'patient'))
+            benchmark = test_arm['benchmark']
+            resource_rows.append(dict(model=model, parameters=test_arm['selected']['parameters'],
+                                      peak_allocated_gib=benchmark['peak_allocated_bytes']/1024**3,
+                                      median_reference_case_seconds=benchmark['median_seconds'], reference_case=benchmark['case']))
         if model in raw['arms']:
             assert raw['arms'][model]['selected']['epoch'] == best['epoch']
             audited = {r['case']: r for r in raw['arms'][model]['splits']['validation']}
@@ -109,6 +136,8 @@ def main():
             score, _ = patient_small_organ_score(matrices)
             if split == 'validation':
                 assert abs(score-best['validation']['selection_score']) < 1e-12
+            elif model.startswith('v5-'):
+                assert abs(score-test_arm['summary']['patient_equal_small_organ_dice']) < 1e-12
             for patient, matrix in sorted(matrices.items()):
                 metrics = overlap(matrix)
                 patient_rows.append(dict(model=model, split=split, patient=patient,
@@ -131,9 +160,9 @@ def main():
                        ('patient_scores', patient_rows), ('training_curves', curves), ('available_resource_benchmarks', resource_rows)]:
         table(name, rows)
     for split in ('validation', 'test'):
-        models = MODELS if split == 'validation' else list(OLD_DIRS)
+        models = MODELS
         labels = [f'{m} (e{selected[m]})' for m in models]
-        scope = 'Validation: 10 models, 6 patients / 38 volumes' if split == 'validation' else 'Existing Test: 7 models, 6 patients / 30 volumes; descriptive only'
+        scope = 'Validation: 10 models, 6 patients / 38 volumes' if split == 'validation' else 'Existing Test: 10 models, 6 patients / 30 volumes; descriptive only'
         for metric in ('dice', 'iou', 'precision', 'recall'):
             data = np.array([[next(r[metric] for r in metric_rows if r['model']==m and r['split']==split and r['label']==c) for c in NAMES] for m in models])
             heat(f'{split}_{metric}_six_classes', data, labels, NAMES, scope+'\nPatient-equal '+metric+'; each model at its own Validation-best checkpoint')
@@ -151,10 +180,8 @@ def main():
         for bar, val in zip(bars, vals):
             if np.isfinite(val):
                 ax.text(bar.get_x()+bar.get_width()/2, val+.008, f'{val:.4f}', ha='center', va='bottom', fontsize=8, rotation=30)
-    for i in range(7, 10):
-        ax.text(i+.18, .05, 'No Test', rotation=90, ha='center', fontsize=8, color='#777777')
     ax.set_xticks(x, [f'{m}\ne{selected[m]}' for m in MODELS])
-    ax.set(ylim=(0, 1.06), ylabel='Patient-equal small-organ Dice', title='All selected checkpoints: Validation and existing descriptive Test\nNo Test evaluation for v5-C/L/S; no missing score replaced with zero')
+    ax.set(ylim=(0, 1.06), ylabel='Patient-equal small-organ Dice', title='All 10 selected checkpoints: Validation and existing descriptive Test\nEach checkpoint fixed by Validation; Test is not a new blind evaluation')
     ax.legend(loc='upper left')
     save('all_models_primary_dice', fig)
     fig, axes = plt.subplots(2, 1, figsize=(12, 9))
@@ -174,10 +201,11 @@ def main():
                               ['Parameter count', 'Peak allocated GPU memory (GiB)', 'Reference-case inference median (s)']):
         ax.bar([r['model'] for r in resource_rows], [r[key] for r in resource_rows])
         ax.set_title(title, fontsize=10)
-    fig.suptitle('Available historical fixed-case benchmarks only; v5 not benchmarked\nSame prepared case, warmup/repeats; excludes preprocessing/IO; timing may depend on GPU load', fontsize=11)
+        ax.tick_params(axis='x', labelrotation=40)
+    fig.suptitle('Fixed-case benchmarks: 7 historical models plus v5 completion\nSame prepared case, warmup/repeats; separate jobs/GPU load can affect timing', fontsize=11)
     save('available_resource_benchmarks', fig)
     (OUT/'source_checksums.json').write_text(json.dumps(dict(selected_epochs=selected, input_sha256=sources,
-                                                           script_sha256=sha(Path(__file__)), test_scope='Existing previously inspected cohort; v5 Test missing'), indent=2)+'\n')
+                                                           script_sha256=sha(Path(__file__)), test_scope='All 10 models; existing previously inspected cohort; descriptive only'), indent=2)+'\n')
     print(f'Generated {len(list((OUT/"figures").glob("*.png")))} figures (PNG + SVG), six CSV tables; selected={selected}')
 
 
