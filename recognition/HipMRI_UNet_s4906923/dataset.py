@@ -1,11 +1,12 @@
-"""Standalone patient-disjoint HipMRI data pipeline and deterministic paired sampling.
-Adapted from this project's verified research implementation; no augmentation
-is applied in the selected Standard/v3 recipe. XYZ arrays become CDHW only at
-the model boundary. Source files are never modified.
+"""Load paired HipMRI scans, check their geometry and sample training patches.
+
+Patients stay in one split throughout the experiment. Images and masks share
+the same spatial transformations. Arrays use XYZ voxel order until conversion
+to channel/depth/height/width for the model. Standard and v3 use no augmentation.
+Source MRI and mask files are never modified.
 """
 from __future__ import annotations
-"""Frozen patient-level discovery. Listing files does not decode any NIfTI arrays."""
-
+# Patient-level file discovery. Listing files does not load MRI or mask arrays.
 
 
 import json
@@ -32,7 +33,7 @@ class Case:
 
 
 def read_split(path: str | Path = DEFAULT_SPLIT) -> dict:
-    """Reject duplicate patients and silently changed approved cohort sizes."""
+    """Read the fixed patient lists and reject overlap or unexpected cohort sizes."""
     record = json.loads(Path(path).read_text(encoding="utf-8"))
     groups = ("train", "validation", "test")
     expected = (26, 6, 6)
@@ -54,7 +55,7 @@ def read_split(path: str | Path = DEFAULT_SPLIT) -> dict:
 
 
 def discover(root: str | Path, split_path: str | Path = DEFAULT_SPLIT) -> dict[str, tuple[Case, ...]]:
-    """Match all 211 source files by patient and week; preserve patient grouping."""
+    """Pair all 211 MRI/mask cases by patient and visit, then assign their splits."""
     root = Path(root)
     record = read_split(split_path)
     reverse = {name: group for group in ("train", "validation", "test") for name in record[group]}
@@ -89,12 +90,10 @@ def discover(root: str | Path, split_path: str | Path = DEFAULT_SPLIT) -> dict[s
             raise ValueError(f"{group} has {len(cases[group])}, expected {expected_count} volumes")
     return {group: tuple(items) for group, items in cases.items()}
 
-"""Paired geometry-aware NIfTI handling and shared downsampling.
-
-All arrays use NIfTI voxel order (X, Y, Z) until the model input adapter
-explicitly transposes them. This module never modifies source files.
-"""
-
+# Paired geometry-aware NIfTI handling and shared downsampling.
+#
+# All arrays use NIfTI voxel order (X, Y, Z) until the model input adapter
+# explicitly transposes them. This module never modifies source files.
 
 
 from dataclasses import dataclass
@@ -102,7 +101,6 @@ from dataclasses import dataclass
 import numpy as np
 
 NUM_CLASSES = 6
-
 
 
 @dataclass(frozen=True)
@@ -222,13 +220,11 @@ def from_3d_model_prediction(prediction_dhw: np.ndarray, shape_xyz: tuple[int, i
     cropped = prediction_dhw[tuple(slice(0, size) for size in shape_dhw)]
     return np.transpose(cropped, (2, 1, 0))
 
-"""Train-only patient-balanced patch selection and measured class exposure.
-
-Coordinates remain XYZ until ``crop_for_3d_model`` converts them to DHW.
-No source MRI or mask is modified. Call the exposure recorder on the exact
-mask returned with each model input, after any later spatial augmentation.
-"""
-
+# Train-only patient-balanced patch selection and measured class exposure.
+#
+# Coordinates remain XYZ until ``crop_for_3d_model`` converts them to DHW.
+# No source MRI or mask is modified. Call the exposure recorder on the exact
+# mask returned with each model input, after any later spatial augmentation.
 
 
 import hashlib
@@ -236,10 +232,6 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 
 import numpy as np
-
-
-
-
 
 
 CLASS_NAMES = ("Background", "Body", "Bones", "Bladder", "Rectum", "Prostate")
@@ -255,7 +247,7 @@ def _rng(*parts: object) -> np.random.Generator:
 
 
 def epoch_cases(cases: tuple[Case, ...], epoch: int, seed: int) -> tuple[Case, ...]:
-    """Choose one Train visit per patient; cycle through shuffled visits."""
+    """Choose one visit per training patient, cycling through a shuffled visit list."""
     if epoch < 0:
         raise ValueError("epoch must be nonnegative")
     grouped: dict[str, list[Case]] = defaultdict(list)
@@ -278,7 +270,7 @@ def epoch_cases(cases: tuple[Case, ...], epoch: int, seed: int) -> tuple[Case, .
 def crop_origin(mask: np.ndarray, patch_xyz: tuple[int, int, int],
                 target: str, *, seed: int, epoch: int, case_id: str,
                 draw: int) -> tuple[int, int, int]:
-    """Return a valid origin; target policy guarantees one target voxel."""
+    """Choose a crop origin uniformly, or choose one that includes the target organ."""
     if mask.ndim != 3 or mask.dtype.kind not in "iu":
         raise ValueError("Expected integer XYZ mask")
     if len(patch_xyz) != 3 or any(size < 1 or size > n
@@ -320,7 +312,7 @@ def crop_for_3d_model(volume: Volume, origin: tuple[int, int, int],
 
 @dataclass
 class ExposureRecorder:
-    """Accumulate exact post-transform patch labels supplied to a model."""
+    """Record class counts and organ presence in the patches actually used for training."""
 
     patches: int = 0
 

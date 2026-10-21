@@ -1,6 +1,6 @@
 {
   "status": "Local/remote backups, CPU component parity and standalone GPU Validation replay verified",
-  "modules_sha256": "710c0ae79faedfe9c9fa1d2e8e5d1ac80091c9ceb967c86dcd87d10d793f99dc",
+  "modules_sha256": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
   "torch": "2.13.0+cpu",
   "models": {
     "Standard": {

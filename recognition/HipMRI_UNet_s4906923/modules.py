@@ -1,11 +1,11 @@
-"""Two self-contained HipMRI models; PyTorch-only, with historical state_dict keys.
+"""Standard and Improved v3 HipMRI networks, implemented entirely in PyTorch.
 
 Standard follows the volumetric U-Net baseline. Improved v3 uses residual context,
 GN(1,C), dropout and additive multi-scale supervision. This is the project's
 independent HipMRI adaptation of U-Net / 3D U-Net / Isensee-style designs:
 Ronneberger et al., arXiv:1505.04597; Cicek et al., arXiv:1606.06650;
 Isensee et al., arXiv:1802.10508. No claim of exact paper reproduction.
-Historical code remains unchanged; checkpoint replay must precede retirement.
+Parameter names match the original training code so saved weights load directly.
 """
 from __future__ import annotations
 import torch
@@ -26,7 +26,7 @@ class _DoubleConv(nn.Sequential):
 
 
 class StandardUNet3D(nn.Module):
-    """Four-level 3D U-Net, base width 8; frozen baseline key names preserved."""
+    """Standard 3D U-Net with four downsampling steps and eight initial channels."""
     def __init__(self, base_channels: int = 8):
         super().__init__()
         if base_channels < 2:
@@ -89,10 +89,10 @@ class _Localization(nn.Module):
 
 
 class ImprovedUNet3DV3(nn.Module):
-    """GN1 residual 3D U-Net with additive deep supervision, matching the frozen v3.
+    """Residual 3D U-Net with one-group GroupNorm and three segmentation heads.
 
     Auxiliary segmentation logits are upsampled and summed. This is an
-    independent HipMRI implementation, not a direct port of author code.
+    HipMRI adaptation of the cited methods, rather than a copy of author code.
     """
 
     def __init__(self, base_channels: int = 8, dropout: float = 0.3):

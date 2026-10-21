@@ -1,9 +1,10 @@
-"""Verified overlap, loss, geometry and inference helpers extracted unchanged.
-Evaluation is on the downsampled physical grid with padding removed.
+"""Shared loss functions, segmentation metrics, inference and file utilities.
+
+Metrics use the downsampled physical grid after model padding is removed.
+Patient-level scores combine visits before averaging across patients.
 """
 from __future__ import annotations
-"""Integer-count overlap metrics, reusable for patient and pooled aggregation."""
-
+# Integer-count overlap metrics, reusable for patient and pooled aggregation.
 
 
 import numpy as np
@@ -39,8 +40,7 @@ def overlap(matrix: np.ndarray) -> dict[str, list[float | None]]:
         result["recall"].append(ratio(tp[c], truth[c]))
     return result
 
-"""Explicit six-class objectives; objective choice must be fixed per run."""
-
+# Explicit six-class objectives; objective choice must be fixed per run.
 
 
 import torch
@@ -73,7 +73,7 @@ def foreground_soft_dice_loss(logits: torch.Tensor, target: torch.Tensor, epsilo
 
 def ce_dice_loss(logits: torch.Tensor, target: torch.Tensor, *, ce_weight: float = 0.5,
                  class_weights: torch.Tensor | None = None) -> torch.Tensor:
-    """Shared architecture-control objective; paper-loss studies stay separate."""
+    """Combine weighted cross-entropy and foreground soft Dice with the given weight."""
     _check(logits, target)
     if not 0 <= ce_weight <= 1:
         raise ValueError("ce_weight must be in [0,1]")
@@ -81,8 +81,7 @@ def ce_dice_loss(logits: torch.Tensor, target: torch.Tensor, *, ce_weight: float
     dice = foreground_soft_dice_loss(logits, target)
     return ce_weight * ce + (1 - ce_weight) * dice
 
-"""Geometry-aware prostate boundary diagnostics for full XYZ volumes."""
-
+# Geometry-aware prostate boundary diagnostics for full XYZ volumes.
 
 
 import numpy as np
@@ -163,13 +162,10 @@ def prostate_organ_confusion(truth_xyz: np.ndarray, prediction_xyz: np.ndarray) 
             "prostate_pred_in_true_rectum": int(((prediction_xyz == 5) & (truth_xyz == 4)).sum()),
             "true_prostate_pred_other": int(((truth_xyz == 5) & (prediction_xyz != 5)).sum())}
 
-"""Predeclared patient-balanced Validation checkpoint score for G5."""
-
+# Original checkpoint selection score, with equal weight for each patient.
 
 
 import numpy as np
-
-
 
 
 SMALL_ORGAN_IDS = (3, 4, 5)
@@ -199,8 +195,7 @@ def patient_small_organ_score(matrices: dict[str, np.ndarray]) -> tuple[float, d
         patient_scores.append(float(np.mean(available)))
     return float(np.mean(patient_scores)), details
 
-"""Common-grid 2D/3D inference without changing the source NIfTI files."""
-
+# Common-grid 2D/3D inference without changing the source NIfTI files.
 
 
 import numpy as np
@@ -212,7 +207,7 @@ from dataset import Volume, from_3d_model_prediction, to_3d_model_arrays
 @torch.inference_mode()
 def predict_volume(model: torch.nn.Module, volume: Volume, *, mode: str,
                    device: torch.device | str, slice_batch: int = 8) -> np.ndarray:
-    """Return XYZ integer labels on the supplied volume's physical grid.
+    """Return class labels in the input volume's XYZ voxel order.
 
     2D and 3D arms use the same prepared MRI, padding and inverse mapping.
     Peak VRAM and latency are measured outside this function so preprocessing
@@ -292,7 +287,7 @@ def load_model(name, checkpoint, device):
 
 
 def aggregate_cases(rows):
-    """Pool visits within patient, then average patient metrics (not volume means)."""
+    """Combine each patient's visit counts, then give every patient equal weight."""
     grouped = {}
     for row in rows:
         patient = row["patient"]
@@ -335,7 +330,7 @@ def spatial_diagnostics(volume, prediction):
 
 
 def evaluate(model, cases, device, *, detailed=False):
-    """Fixed full-volume inference. Does not choose or update checkpoints."""
+    """Evaluate a fixed model on complete volumes without changing its weights."""
     from dataset import load_case, downsample, zscore_nonzero
     from time import perf_counter
     rows = []

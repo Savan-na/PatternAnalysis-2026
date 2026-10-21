@@ -1,8 +1,8 @@
-"""Load trusted saved weights and export one real case, metrics and six-class overlays.
+"""Run saved model weights on one MRI case and export the result.
 
-Inference uses only MRI. The paired mask is used afterwards for evaluation and
-figure slice selection, never to filter predictions. Saved NIfTI uses the
-DOWNSAMPLED evaluation affine, not the original-resolution affine.
+The MRI alone determines the prediction. The paired mask is used afterwards
+for metrics and illustration. Exported labels use the downsampled spatial grid
+and its affine; they must not be treated as original-resolution predictions.
 """
 from __future__ import annotations
 import argparse
@@ -23,7 +23,7 @@ def make_panel(volume, prediction, output):
     fig, axes = plt.subplots(5, 4, figsize=(14, 16))
     for k in range(1, 6):
         truth = volume.mask == k; predicted = prediction == k
-        # Deterministic GT centre and maximum-error positions are both disclosed.
+        # Show both the largest labelled cross-section and the slice with most errors.
         areas = truth.sum(axis=(0, 1)); errors = (truth != predicted).sum(axis=(0, 1))
         zs = (int(areas.argmax()), int(errors.argmax()))
         for j, z in enumerate(zs):

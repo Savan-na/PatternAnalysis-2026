@@ -1,8 +1,9 @@
-"""Train/validate the frozen Standard or v3 recipe; explicitly evaluate fixed weights.
+"""Train Standard or v3 with the recorded settings, or evaluate saved weights.
 
-New runs only; historical mid-batch files are not silently converted. New-format
-latest.pt restores optimizer, RNG, batch position and completed epoch history.
-Test is only available through the separate evaluate command, never train.
+Use the train command for a new run or to resume a run created by this script.
+Recovery restores the optimizer, random states and next batch. Historical
+research checkpoints can be evaluated but are not accepted for training resume.
+The evaluate command can read Test; the train command only reads Train/Validation.
 """
 from __future__ import annotations
 import argparse

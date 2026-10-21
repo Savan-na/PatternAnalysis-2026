@@ -17,7 +17,7 @@
     "original_clinical_panels": 5
   },
   "pdf": {
-    "pages": 11,
+    "pages": 12,
     "feasibility_review_page": 2,
     "rendered_and_visually_checked": true
   },
@@ -31,22 +31,23 @@
   "files": {
     ".gitattributes": "5158557f20b2da1093eb8b472c5a9fbf0d558d07b97fe26ac49f75f2d186ad6e",
     ".gitignore": "cc5af417577cc25132e7780171cdf8e4fa32d132e6958e9dd866b6ba0d5a231f",
-    "dataset.py": "e3dafd726737c2efe8e8f8271484adf390e348b368a46c0766812063dde4fb71",
-    "export_report.py": "185b01a5fc9a9ac25e330bdfb273f19f39eaba39bfd5b25f723b5c2ff0ffbee0",
-    "modules.py": "710c0ae79faedfe9c9fa1d2e8e5d1ac80091c9ceb967c86dcd87d10d793f99dc",
-    "predict.py": "20d71df3c1fc54e0c19f5b67af9943b6bc59b4f87dbfe1657aa561b362fd1e03",
-    "preparation_verification.json": "a1b719470c4161dd292658ed98d5aa93a5a7a758bf15cab6aecbe4cc74ff5c12",
-    "README.md": "d53837bda998b42ae866a5173783309e34917a3a0c2c35c7a0d357abb9ad50a3",
+    "dataset.py": "c1da546f98f2cd6978ac69cf1af487edd86d4efd342d17b3d36296ce3dc50c92",
+    "export_report.py": "c7f547c78f302175ed09dddac0575c054797c6da145f0f72b0954c308fa37361",
+    "modules.py": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
+    "predict.py": "a884b452fc9f0d2179f23c765c4a2b7ab9e42f1405427fae233ee4a78c0dc2c8",
+    "preparation_verification.json": "a75a6ccef49720410d8c8ae0feadda2b7ed03d18f2df43293918f66014c73a9b",
+    "README.md": "9852222bc2bf5a4ce024d840aff38060e3b0daaf23401302bd6a0c25c39b8370",
     "remote_backup_verification.json": "9adb10b0ee21e6fc14b501b168f7e7b39d05ea1ef0c88eeb78d55f730911fc4e",
-    "REPORT.pdf": "31f7e800ecc21effce8b4673e47e9376ba9138f61cff800684766379b89930d4",
+    "REPORT.pdf": "e6763f7ffa7aeb1b75d1eb020d81808d5e88b2fd6f66e74388c213bec9e8b213",
     "requirements.txt": "d7f725c5d46fb71e99a36f97936d34caffde0956168d9bf45c7d67e6e8b661bc",
-    "train.py": "e8881bf928c5204ac5c2086b5229568b12b30f2cee3d9755470fe8588d9233e1",
-    "utils.py": "c691ec2a1feb9c7282e7da723684027e4423598dd8ada868aebea25d2eefe9da",
-    "verify_evidence.py": "bac9a3112254eee3290367187e94d748031964f85c79996761855eab29c702d7",
-    "verify_replay.py": "285044a92129b4f70e121c7dc72f4608ecadae82ecdc940b0fbaf8205b40bb11",
+    "train.py": "94457f69cd7f5e019f35ba0625940bc4d13c19696996cff9f850fc7de1c3cb63",
+    "utils.py": "6c87662c9271f04d96bbcac71e90bbd2a00ba4004dc2e231906e6d33491388b8",
+    "verify_evidence.py": "61e4fe730456d6ad38baf01310ad27e7f3780380550e2be8d6cf6a0088192de5",
+    "verify_replay.py": "1202d635b639b92e5873df45801d7cade8663aac001f9ee8b8bdbad0361784d5",
     "config\\patient_split.json": "81531ec7cb84ef58c41393ff23e1105e7cf03aa97828fb12853ce8624fcb8900",
     "config\\training.json": "19cb240dd25b8d8769bd1531f8871c37dd2d70e0f33f7d86ecc24c7f4f3795e7",
     "evidence\\available_resource_benchmarks.csv": "29352904f030a24c6fe85d713f428aca9bb3669ed8a300ed94fd31714055923a",
+    "evidence\\editorial_source_equivalence.json": "b444fcbcfc695124f37860a366e6e6440ae94a1476e2720d50a6c4ce12f720d4",
     "evidence\\experiments.json": "80047fcb5ebcf0522ab216b3e0adff2674386c2229216c9eeacb1001fe35aa87",
     "evidence\\foreground_metrics.csv": "c78e889ad16c21ee837e222993db9b9c99464fc63ff4bb60f847919ecaf11eeb",
     "evidence\\migration_receipt.json": "14936ed27162acd63209f8ab34dec9fc05192f30746b80111e520c94abaa38fc",
@@ -75,6 +76,14 @@
     "all_confusions_inputs_weights_and_runtime_sources_match": true,
     "receipt_sha256": "14936ed27162acd63209f8ab34dec9fc05192f30746b80111e520c94abaa38fc",
     "test_decoded": false,
-    "retrained": false
+    "retrained": false,
+    "runtime_source_status": "Exact source hashes verified at replay time; current prose-only changes have identical executable ASTs"
+  },
+  "editorial_review": {
+    "report_and_comments_reviewed": true,
+    "numerical_table_rows_unchanged": true,
+    "replayed_runtime_executable_ast_unchanged": true,
+    "proof": "evidence/editorial_source_equivalence.json",
+    "notes": "Readability edits only in model/data/inference/replay runtime; verification tools also accept the documented editorial equivalence; PDF tables remain on single pages."
   }
 }

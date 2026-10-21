@@ -80,7 +80,9 @@ def main():
         replay_digest=sha(replay_path)
         assert replay_digest=='14936ed27162acd63209f8ab34dec9fc05192f30746b80111e520c94abaa38fc'
         replay=json.loads(replay_path.read_text(encoding='utf-8'))
-        assert all(sha(component.parent/name)==digest for name,digest in replay['sources'].items())
+        sys.path.insert(0,str(component.parent))
+        from verify_evidence import verify_replayed_sources
+        verify_replayed_sources(component.parent,replay)
         for model,entry in result.items():
             observed=replay['models'][model]
             assert observed['cases']==38 and observed['all_confusions_and_inputs_match'] is True

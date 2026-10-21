@@ -1,7 +1,8 @@
-"""Read-only migration gate: replay the two selected models on Validation only.
+"""Check that the standalone models reproduce the original Validation predictions.
 
-Compares all 76 confusion matrices to the previous fixed-weight audit and checks
-input/weight hashes. Does not train, tune, read Test arrays or replace evidence.
+Compare all 76 confusion matrices with the earlier evaluation and check
+input and weight hashes. This script does not train, tune, read Test images
+or overwrite the recorded results.
 """
 import argparse,json
 from pathlib import Path

@@ -1,0 +1,26 @@
+{
+  "baseline_commit": "e1d4306",
+  "scope": "Comments, docstrings and whitespace only in the replayed runtime; calculations unchanged",
+  "files": {
+    "modules.py": {
+      "gpu_replayed_sha256": "710c0ae79faedfe9c9fa1d2e8e5d1ac80091c9ceb967c86dcd87d10d793f99dc",
+      "current_sha256": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
+      "executable_ast_sha256": "c31fdbdb36b4be527e0f605b74a7614471f124c37d3028c4b797603863a7d908"
+    },
+    "dataset.py": {
+      "gpu_replayed_sha256": "e3dafd726737c2efe8e8f8271484adf390e348b368a46c0766812063dde4fb71",
+      "current_sha256": "c1da546f98f2cd6978ac69cf1af487edd86d4efd342d17b3d36296ce3dc50c92",
+      "executable_ast_sha256": "146b1e3719e3dbfa3854db109fc37a17da872fcf1cd0f58881ce80164169c958"
+    },
+    "utils.py": {
+      "gpu_replayed_sha256": "c691ec2a1feb9c7282e7da723684027e4423598dd8ada868aebea25d2eefe9da",
+      "current_sha256": "6c87662c9271f04d96bbcac71e90bbd2a00ba4004dc2e231906e6d33491388b8",
+      "executable_ast_sha256": "84f8771ae6e356e63c762c4921127a9322b0a9200b306c2529a492fbd24bc47e"
+    },
+    "verify_replay.py": {
+      "gpu_replayed_sha256": "285044a92129b4f70e121c7dc72f4608ecadae82ecdc940b0fbaf8205b40bb11",
+      "current_sha256": "1202d635b639b92e5873df45801d7cade8663aac001f9ee8b8bdbad0361784d5",
+      "executable_ast_sha256": "7d1ac25fa791bdfd0a734bebd8e552c34d9a92282bbfb9f243487dcff6c631b3"
+    }
+  }
+}

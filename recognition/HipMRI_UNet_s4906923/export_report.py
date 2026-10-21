@@ -1,8 +1,8 @@
-"""Export this README to a typeset PDF (optional reportlab==5.0.1).
+"""Create REPORT.pdf from the README (requires reportlab==5.0.1).
 
-Supports the report's headings, paragraphs, lists, fenced code, pipe tables,
-links and embedded PNG figures. The exported text/images come from README;
-this script does not maintain a second analysis report.
+Render the report's headings, paragraphs, lists, code blocks, Markdown tables,
+links and PNG figures. Text and figures come directly from the README;
+there is no separate report text to keep in sync.
 """
 import argparse,html,re,textwrap
 from pathlib import Path
@@ -63,7 +63,7 @@ def main():
                 if not all(re.fullmatch(r":?-+:?",cell.replace(" ","")) for cell in row):
                     rows.append([Paragraph(inline(cell),styles["Cell"]) for cell in row])
                 i+=1
-            n=len(rows[0]);tab=Table(rows,colWidths=[width/n]*n,repeatRows=1,hAlign="LEFT")
+            n=len(rows[0]);tab=Table(rows,colWidths=[width/n]*n,repeatRows=1,hAlign="LEFT",splitByRow=0,splitInRow=0)
             tab.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.HexColor("#e7edf3")),
                 ("VALIGN",(0,0),(-1,-1),"TOP"),("GRID",(0,0),(-1,-1),.3,colors.HexColor("#c9d0d8")),
                 ("TOPPADDING",(0,0),(-1,-1),5),("BOTTOMPADDING",(0,0),(-1,-1),5)]))
@@ -85,7 +85,10 @@ def main():
         paragraph=[line];i+=1
         while i<len(lines) and lines[i].strip() and not re.match(r"^(#|\||```|!\[)",lines[i].strip()):
             paragraph.append(lines[i].strip());i+=1
-        story.append(Paragraph(inline(" ".join(paragraph)),styles["Text"]))
+        content = Paragraph(inline(" ".join(paragraph)), styles["Text"])
+        if paragraph[0].startswith(("Every model in the table", "These unchanged historical", "Ordinary panels show")):
+            content.keepWithNext = True
+        story.append(content)
     # Keep each clinical heading, figure and autopsy together on a page.
     grouped=[];block=[];in_case=False;in_references=False
     for flow in story:
