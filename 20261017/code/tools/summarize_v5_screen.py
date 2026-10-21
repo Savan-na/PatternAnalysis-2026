@@ -39,6 +39,35 @@ def save_figure(name, fig):
     plt.close(fig)
 
 
+def verify_case_panels(selected):
+    directory = BASE/'case_studies/validation/best_cls_review'
+    receipt = json.loads((directory/'provenance.json').read_text())
+    checks = json.loads((directory/'checksums.json').read_text())
+    assert receipt['script_sha256'] == sha(ROOT/'code/tools/review_v5_validation.py')
+    assert len(checks) == 9 and all(sha(directory/n) == h for n, h in checks.items())
+    assert len(receipt['cases']) == 4 and all(c['all_three_confusions_reproduced'] for c in receipt['cases'])
+    rows = []
+    for arm, checkpoint in receipt['checkpoints'].items():
+        assert selected[arm]['epoch'] == checkpoint['epoch']
+        record = BASE/arm.lower()/f'training_records/epoch_{checkpoint["epoch"]:03d}.json'
+        assert sha(record) == checkpoint['record_sha256']
+        for case in receipt['cases']:
+            saved = next(c for c in selected[arm]['validation']['cases'] if c['case'] == case['case'])
+            metrics = overlap(np.asarray(saved['confusion']))
+            for plane in case['planes']:
+                name = plane['label']
+                k = NAMES.index(name)
+                rows.append(dict(arm=arm, case=case['case'], label=name,
+                                 **{m: values[k] for m, values in metrics.items()},
+                                 **saved['surfaces'][name], far_body_fp=saved['far_background_to_body_voxels']))
+    save_table('selected_case_evidence', rows)
+    (OUT/'visual_review_verification.json').write_text(json.dumps(dict(
+        status='Nine PNG file hashes and four-case/three-model replay receipt verified locally',
+        replay_scope='12 case confusion matrices; not all 38 volumes and not a surface-distance replay',
+        provenance_sha256=sha(directory/'provenance.json'), png_checksums=checks,
+        receipt=receipt), indent=2)+'\n')
+
+
 def main():
     for name in ('tables', 'figures'):
         (OUT/name).mkdir(parents=True, exist_ok=True)
@@ -134,6 +163,8 @@ def main():
     assert {a: p['aggregate_sha256'] for a, p in provenance.items()} == receipt['hashes']
     (OUT/'integrity.json').write_text(json.dumps(dict(status='local structural/source/numerical checks and user-reported remote aggregate SHA comparison passed',
                                                      provenance=provenance), indent=2)+'\n')
+    if (BASE/'case_studies/validation/best_cls_review/provenance.json').is_file():
+        verify_case_panels(selected)
     fig, axes = plt.subplots(2, 2, figsize=(11, 7))
     for arm in 'CLS':
         r = [x for x in curves if x['arm'] == arm]

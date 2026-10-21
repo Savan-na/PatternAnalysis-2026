@@ -20,7 +20,7 @@
 
 学习率校验允许极小浮点容差（相对1e−13、绝对1e−18），用于Windows/Linux余弦函数最后几位差异，不允许改动训练曲线。
 
-**状态限制：**本地结构、源码和数值核对通过；用户提供的远端三组聚合SHA与本地完全一致，覆盖156份JSON，校验回执见分析目录的 `remote_record_hashes.json`。尚未重新载入三组best权重生成真实分割图，也未做独立推理复现。此报告依据记录中的Validation混淆计数与物理表面距离，不从截图估计性能。本轮没有新增Test结果。
+**校验与复现范围：**本地结构、源码和数值核对通过；用户提供的远端三组聚合SHA与本地完全一致，覆盖156份JSON，校验回执见分析目录的 `remote_record_hashes.json`。绘图作业682157成功完成，重新载入C50/L45/S45，在四个共同Validation病例复现全部12个原始混淆矩阵，生成9张PNG，下载后逐张SHA校验通过并完成目视审阅。复现范围不是全部38卷，也未独立重算表面距离；表面指标仍来自原始完整Validation记录。指标不从截图估计。本轮没有新增Test结果。
 
 ## 3. 六类覆盖
 
@@ -68,7 +68,7 @@ L只在K018、S022超过C；S只在K008、S022超过C。样本单位是6名患�
 ## 6. 下一步
 
 1. 远端聚合SHA核对已完成，三组记录一致；保留全部权重，不因分数下降丢弃证据。
-2. 从38例Validation的逐类Dice/HD95尾部和分支差异确定少量共同病例，对C50、L45、S45生成同病例、同切片的六类图与FP/FN图；必须先重现原混淆计数。尤其查看L直肠/前列腺异常、L膀胱改善、S前列腺收益以及Body误报。此步骤尚未完成。
+2. 四个共同病例图已生成和审阅，覆盖L直肠/前列腺异常、L膀胱改善、S前列腺收益以及Body误报，详见下节。暂不增加无明确问题的GPU诊断。
 3. 当前保留历史v3作为既有候选，C作为新同期对照；L、S均不晋级为最终模型。没有必要为了寻找Test上偶然的胜出而立即再次遍历Test。
 4. 不把本次结果推广为“学习率衰减无用”或“类别加权无用”。能否改用不同衰减时机、强度增强或目标采样，须结合真实图像和Train曝光证据另立单因素假设；本轮没有足够证据直接冻结下一套复杂配方。
 
@@ -80,4 +80,30 @@ L只在K018、S022超过C；S只在K008、S022超过C。样本单位是6名患�
 - [汇总表](../comparisons/validation_analysis/tables/summary.csv)、[六类指标](../comparisons/validation_analysis/tables/six_class_patient_equal.csv)、[表面指标](../comparisons/validation_analysis/tables/surface_metrics.csv)
 - [逐病例六类指标](../comparisons/validation_analysis/tables/case_metrics.csv)、[逐患者指标](../comparisons/validation_analysis/tables/patient_scores.csv)、[全部训练曲线](../comparisons/validation_analysis/tables/training_curves.csv)
 
-PNG、原始训练JSON及病例图保留在本地研究目录；Git中发布分析代码、统计CSV、SVG与本报告。病例图尚未生成，不将统计图冒充实际MRI分割可视化。
+PNG、原始训练JSON及病例图保留在本地研究目录；Git中发布分析代码、统计CSV、SVG、病例复现校验回执与本报告。
+
+## 8. 已完成的真实图像审阅
+
+四个病例按干预差异和异常尾部选择，属于有目的的案例解释，不代表总体发生率。每图固定相同病例/切片；青线GT，橙线预测，红色FP，蓝色FN。图中标示的是NIfTI网格XY/XZ/YZ及实际spacing比例，未把网格轴直接命名为经独立验证的解剖方向。六类图标题Dice来自完整三维volume，不是所展示切片的Dice。
+
+| 病例/类别 | C Dice / HD95 mm | L Dice / HD95 mm | S Dice / HD95 mm | 目视审阅与数值支持的判断 |
+|---|---:|---:|---:|---|
+| S022_Week6 Bladder | 0.594 / 88.68 | **0.925 / 3.36** | 0.826 / 76.65 | 三平面图中C、S存在与主目标分离的红色误报；L明显减少这些可见误报。L的precision从C的0.431提高到0.890，recall基本保留 |
+| S022_Week6 Rectum | 0.874 / 3.36 | 0.785 / 175.48 | **0.877 / 3.36** | L在展示平面上局部轮廓也有偏差，但这些中心平面没有充分显示导致175mm尾部的远处错误；不能用中心切片看似接近来否定全volume错误 |
+| J026_Week6 Prostate | **0.810 / 4.75** | 0.646 / 112.51 | 0.761 / 6.76 | L目标附近的橙线外扩，precision从0.702降至0.486、recall均约0.96。当前中心平面不足以定位112mm误差源，尚不能断言具体连通结构或成因 |
+| K018_Week4 Body | **0.976 / 4.58** | 0.938 / 40.71 | 0.974 / 6.24 | 共用远处FP位置平面显示L在真实Body轮廓之外形成大片红色区域。远处Body误报C/L/S分别313/19,913/710体素，与完整记录一致 |
+| K018_Week2 Prostate | 0.782 / 7.41 | **0.894 / 3.36** | 0.882 / 3.36 | C有较明显蓝色漏分；L、S更完整覆盖GT。C recall为0.672，L/S为0.921/0.872，同时precision由0.934降至0.869/0.893，体现覆盖与误报取舍 |
+
+**从图像得到的新增认识：**C也会出现严重的类别特异性远处误报，不能将“主要选模指标最高”解释为所有类别和病例都稳健。L在同一S022扫描中改善Bladder却损害Rectum，说明一个全局权重调整不能被简化为所有小器官共同受益。S在特定病例修复漏分，但不足以抵消全患者的回退。
+
+**尚未证明的机制：**上述图像确认预测错误的存在和形态，不证明这些误报由特定归一化统计、训练边界曝光或某一输出头造成。中心平面未显示的极端尾部也不能凭空解释为连通组件；本次没有进行新的全volume连通组件测量或临床专家判读。当前证据足以决定L/S不替换v3，不必继续扩大本轮诊断。
+
+建议将下一轮优先级从继续整体压缩类别权重，转向明确的类别特异误报/漏分问题；任何新的采样、loss或后处理规则须先用Train/Validation证据定义，并与同期C配方匹配比较。目前仅提出方向，尚未冻结或启动新训练。
+
+本地可直接打开：
+
+- [S022膀胱成功与失败对照](../case_studies/validation/best_cls_review/S022_Week6_Bladder_three_planes.png)
+- [K018 Body远处误报对照](../case_studies/validation/best_cls_review/K018_Week4_Body_three_planes.png)
+- [K018前列腺漏分改善对照](../case_studies/validation/best_cls_review/K018_Week2_Prostate_three_planes.png)
+- [J026六类对照](../case_studies/validation/best_cls_review/J026_Week6_six_classes.png)
+- [病例指标明细](../comparisons/validation_analysis/tables/selected_case_evidence.csv)；[图像与复现校验回执](../comparisons/validation_analysis/visual_review_verification.json)。
