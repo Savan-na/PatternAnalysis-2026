@@ -36,6 +36,8 @@ archives/remote_training_backups/
 !results/experiments/improved_3d_v4/assessment_analysis/coverage.json
 checkpoints/
 predictions/
+!results/experiments/improved_3d_v5/comparisons/validation_analysis/tables/*.csv
+!results/experiments/improved_3d_v5/comparisons/validation_analysis/figures/*.svg
 *.nii
 *.nii.gz
 *.pt
