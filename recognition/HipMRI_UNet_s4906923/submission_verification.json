@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-21",
+  "status": "Code, report and local checks prepared; standalone real-MRI GPU replay pending",
+  "required_five_files_present": true,
+  "runtime_imports_old_research_package": false,
+  "raw_datasets_or_weight_files_present": false,
+  "markdown_asset_links_resolve": true,
+  "local_tests": {
+    "standalone": 7,
+    "historical_model_parity": 4,
+    "passed": true
+  },
+  "evidence": {
+    "epoch_entries": 500,
+    "case_entries": 680,
+    "foreground_metric_checks": 400,
+    "original_clinical_panels": 5
+  },
+  "pdf": {
+    "pages": 11,
+    "feasibility_review_page": 2,
+    "rendered_and_visually_checked": true
+  },
+  "synthetic_predict_cli": "passed; synthetic NIfTI fixture, not clinical evidence",
+  "remaining": [
+    "Standalone GPU Validation replay",
+    "Student confirmation of tutor check-off",
+    "Upstream PR",
+    "Turnitin upload",
+    "Later code-review response"
+  ],
+  "files": {
+    ".gitattributes": "2902b64fa6ff073d019abf970c60eac4843f73c56b16be2c9f79ccb93757446a",
+    ".gitignore": "da0aab9ede7600ca17b0401972812aa537ef1ebc1aa0d28a90d944c3906e4a3c",
+    "dataset.py": "064b7070e7aaa413fe0a3560a5fb9f689707166c0b9d6e614e4dadbff159dbae",
+    "export_report.py": "aaf63f1d28a38397b07e3bf10b5d6e6d65a0de3499ad75d888e173acd291309f",
+    "modules.py": "710c0ae79faedfe9c9fa1d2e8e5d1ac80091c9ceb967c86dcd87d10d793f99dc",
+    "predict.py": "bee3f768d153a6388196d01048043f576e2de3856089234fceea2f3afe244e14",
+    "preparation_verification.json": "5200b18ff209dd518ca7d6f089ac866eae959a56747bfacbccfccf540e1ab894",
+    "README.md": "05e93d0b4372993183d13d4e70893f3ab5edcf2813d75cf9df70134eab606d04",
+    "remote_backup_verification.json": "aae68d0070e6496097371df52e18dc4249420df059e42858664c832a5d590b81",
+    "REPORT.pdf": "9dda6071980819b0a99469293234e305e770d086f538f1a242d19eb4cb50a313",
+    "requirements.txt": "5438db7058f412bf5490cb80603cbbed168e903b8be88a17ac7af905a5fcaee8",
+    "train.py": "25cf753f9a7a78ac2a43d001c5165f2c9b08020b9350de3a43cb96e85dfcfa0f",
+    "utils.py": "bbcc3fd2097c54c3b5e57a02aa8f96d453545e6e08df6eb17a7c3c8adf6a8e15",
+    "verify_evidence.py": "ae81dbcc311bc735ab567dc6ef7d9c5c64581b6cdfddf7df4de50063759202f4",
+    "verify_replay.py": "5f98840e6d87603a11e02673229e2082b9e55f02486ef46a32eb5425ab79fa71",
+    "config\\patient_split.json": "81531ec7cb84ef58c41393ff23e1105e7cf03aa97828fb12853ce8624fcb8900",
+    "config\\training.json": "549c9084e73f9bee1acbaab326de866bfade03d7aa6459f2c40593cdb8739d00",
+    "evidence\\available_resource_benchmarks.csv": "3afb3fa408383ec7985aa82b18b51358595880e08d7510e3cf6e40f6aa3c4d41",
+    "evidence\\experiments.json": "7e302d1b08c63e67c6c7eebbfc0c077bfd221871c492814b56c88bffd531fb5e",
+    "evidence\\foreground_metrics.csv": "73a87ce53854823cc0c8135ec4d4956818c31a20ee49eb757f8353b26e6b5883",
+    "evidence\\model_summary.csv": "10f608d04e8378a502925f5f4c5be0fc325cbacc77b88d4f5b778ff7ac0cf2d5",
+    "evidence\\patient_scores.csv": "3bd37b448b76d25e85266a635225ece46e8a3f91459ddf0a5d41c291baabad7d",
+    "evidence\\provenance.json": "1b79579a8c27d59cc9021d0bdec930791e40e104863e940ef428e28bf0ec7cc5",
+    "evidence\\surface_metrics.csv": "16c52bbb3351673142946e68dc1bc41b8763405b52413047dabad6656ab55ea4",
+    "evidence\\training_curves.csv": "86a6c851ad8f65bbe9ce00ed83197f97b8dbded8303acc5f00df5dff40d9b8f1",
+    "figures\\failure_bladder.png": "b19326f250acf041371b0699fc7dfc45fc5a686375c58bc9e94d76e9b4ca080b",
+    "figures\\failure_body.png": "cd16b47656440fbb8284b9283633afb9eec11d059e4e99e81f311685ac5bb258",
+    "figures\\failure_bones.png": "a56b42acf1ed0836a560eb1b63dc6d7bd64c618f7316f821552a9f7a72baa9a1",
+    "figures\\failure_prostate_ends.png": "8559ab25d0fbe53e9037283c554ec32613b2b154704f7da7ed8d1f6e7f154ae3",
+    "figures\\failure_rectum.png": "801ae7f9ea9a7b38e7eb2f021250505eed847b38d16766537c5d4446e7114e72",
+    "figures\\foreground_comparison.png": "238d9c8acc02f243ee250120318ef265554a6dc39999052a3492b755cc2dbff5",
+    "figures\\method.png": "eaf65a540f844d9d8d460bf0110da9a03f1c7dff5d8e5fc66bd5ee78be8ef927",
+    "figures\\training_and_selection.png": "3dcdb132abbd9c7a66fd3a216ea9bf51803a9c741fb12f35e03fa9e3737614b0",
+    "tests\\test_submission.py": "5a74b3ee08e388bef037d2d39dce987b31b4b35124baed8a192f02f8f5af8523"
+  }
+}
