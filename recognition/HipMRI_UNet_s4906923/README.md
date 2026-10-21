@@ -32,8 +32,12 @@ Re-run the local backup/weight check from the workspace root:
 python -B 20261017/code/tools/verify_final_model_backups.py
 ```
 
-**Pending:** compare complete local file manifests against the server, replay
-real MRI predictions after migration on the GPU, and implement/verify the final
+On 21 October 2026, server-side `sha256sum -c` confirmed all 208 files
+(103 Standard and 105 v3) against the local manifests. See
+[remote verification receipt](remote_backup_verification.json). Weights are
+private research backups, not coursework GitHub deliverables.
+
+**Pending:** replay real MRI predictions after migration on the GPU, and implement/verify the final
 `dataset.py`, `train.py`, and `predict.py` entry points. This page is a staging
 record, not a claim that all course submission requirements are complete.
 

@@ -62,7 +62,19 @@ def main():
                            real_image_gpu_replay_after_migration='pending',
                            complete_remote_file_manifest_comparison='pending',
                            checksum_list_sha256=sha(manifest))
-    receipt=dict(status='Local backup and component parity verified; remote full-file verification pending',
+    remote_path=component.parent/'remote_backup_verification.json'
+    if remote_path.exists():
+        remote=json.loads(remote_path.read_text(encoding='utf-8'))
+        for model, entry in result.items():
+            evidence=remote['models'].get(model,{})
+            if (evidence.get('all_files_passed') is True
+                    and evidence.get('files')==entry['files']
+                    and evidence.get('checksum_list_sha256')==entry['checksum_list_sha256']):
+                entry['complete_remote_file_manifest_comparison']=True
+    status=('Local backups, complete remote file comparisons and CPU component parity verified'
+            if all(v['complete_remote_file_manifest_comparison'] is True for v in result.values())
+            else 'Local backup and component parity verified; remote full-file verification pending')
+    receipt=dict(status=status,
                  modules_sha256=sha(component),torch=str(torch.__version__),models=result,
                  limitation='CPU random-tensor parity is not real MRI/GPU confusion replay')
     out=WORKSPACE/'recognition/HipMRI_UNet_s4906923/preparation_verification.json'
