@@ -2,6 +2,8 @@
 
 主报告：[作业指标与全部模型简明分析](ASSESSMENT_FOREGROUND_PROSTATE_ZH.md)。
 
+收尾前决定与交付缺口：[v3独立审查](PRE_FINAL_READINESS_REVIEW_ZH.md)；[机器审查回执](pre_final_audit.json)。本轮只审查，未开始归档或最终打包。
+
 本目录只保留4张核心PNG：
 
 1. [五前景Dice与前列腺50%加权Dice](figures/01_foreground_and_prostate_priority.png)

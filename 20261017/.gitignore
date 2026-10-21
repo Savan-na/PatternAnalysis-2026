@@ -43,6 +43,7 @@ predictions/
 !results/reports/model_performance_comparison/tables/*.csv
 !results/reports/model_performance_comparison/figures/*.png
 !results/reports/model_performance_comparison/source_checksums.json
+!results/reports/model_performance_comparison/pre_final_audit.json
 *.nii
 *.nii.gz
 *.pt
