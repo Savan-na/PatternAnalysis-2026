@@ -74,11 +74,26 @@ def main():
     status=('Local backups, complete remote file comparisons and CPU component parity verified'
             if all(v['complete_remote_file_manifest_comparison'] is True for v in result.values())
             else 'Local backup and component parity verified; remote full-file verification pending')
+    replay_path=component.parent/'evidence/migration_receipt.json'
+    replay_digest=None
+    if replay_path.exists():
+        replay_digest=sha(replay_path)
+        assert replay_digest=='14936ed27162acd63209f8ab34dec9fc05192f30746b80111e520c94abaa38fc'
+        replay=json.loads(replay_path.read_text(encoding='utf-8'))
+        assert all(sha(component.parent/name)==digest for name,digest in replay['sources'].items())
+        for model,entry in result.items():
+            observed=replay['models'][model]
+            assert observed['cases']==38 and observed['all_confusions_and_inputs_match'] is True
+            assert observed['checkpoint_sha256']==entry['checkpoint_sha256']
+            entry['real_image_gpu_replay_after_migration']=True
+        status='Local/remote backups, CPU component parity and standalone GPU Validation replay verified'
     receipt=dict(status=status,
                  modules_sha256=sha(component),torch=str(torch.__version__),models=result,
-                 limitation='CPU random-tensor parity is not real MRI/GPU confusion replay')
+                 limitation=('Migration equivalence verified on Validation; no fresh Test, retraining or clinical safety validation'
+                             if replay_digest else 'CPU random-tensor parity is not real MRI/GPU confusion replay'))
+    if replay_digest: receipt['gpu_migration_receipt_sha256']=replay_digest
     out=WORKSPACE/'recognition/HipMRI_UNet_s4906923/preparation_verification.json'
-    out.write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+    out.write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(receipt,indent=2))
 
 

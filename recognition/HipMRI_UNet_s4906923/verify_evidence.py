@@ -34,6 +34,15 @@ def main():
     provenance=json.loads((ROOT/"evidence/provenance.json").read_text())
     for filename,digest in provenance["clinical_figures"].items():
         assert sha256_file(ROOT/"figures"/filename)==digest
+    replay_path=ROOT/"evidence/migration_receipt.json"
+    assert sha256_file(replay_path)=="14936ed27162acd63209f8ab34dec9fc05192f30746b80111e520c94abaa38fc"
+    replay=json.loads(replay_path.read_text())
+    for filename,digest in replay["sources"].items():
+        assert sha256_file(ROOT/filename)==digest,filename
+    for name,record in replay["models"].items():
+        assert record["cases"]==38 and record["all_confusions_and_inputs_match"] is True
+        assert record["checkpoint_sha256"]==bundle["models"][name]["selected"]["checkpoint_sha256"]
+    print("PASS: standalone GPU replay receipt and runtime source identities; 76 Validation matrices")
     print("PASS: 500 epoch entries; Validation-selected checkpoints; 680 case counts; 400 foreground metrics; five original clinical figures")
 
 
