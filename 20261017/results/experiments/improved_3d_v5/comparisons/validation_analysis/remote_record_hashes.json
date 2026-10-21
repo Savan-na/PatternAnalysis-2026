@@ -1,0 +1,9 @@
+{
+  "source": "User-provided Rangpur aggregate SHA-256 command output; sorted JSON basenames and file SHA-256, LF separators",
+  "expected_json_files_per_arm": 52,
+  "hashes": {
+    "C": "72f8dae5a36f00779d01f58e224c02a2e7e01a0d1ae304e405bf6a96728bd791",
+    "L": "91cdfd9e0fe2998948b513c1db14ac4ad782f659d3ab880d6571f98e974ed56c",
+    "S": "c6895035ab4dc0c89a345fa9527e4d6bd903e32da9350d2b6aeccdd61449583b"
+  }
+}

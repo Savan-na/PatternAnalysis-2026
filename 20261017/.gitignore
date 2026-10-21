@@ -38,6 +38,7 @@ checkpoints/
 predictions/
 !results/experiments/improved_3d_v5/comparisons/validation_analysis/tables/*.csv
 !results/experiments/improved_3d_v5/comparisons/validation_analysis/figures/*.svg
+!results/experiments/improved_3d_v5/comparisons/validation_analysis/remote_record_hashes.json
 *.nii
 *.nii.gz
 *.pt

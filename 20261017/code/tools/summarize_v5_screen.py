@@ -128,7 +128,11 @@ def main():
     for name, rows in [('summary', summary), ('six_class_patient_equal', classes), ('surface_metrics', surfaces),
                        ('patient_scores', patients), ('case_metrics', case_metrics), ('training_curves', curves)]:
         save_table(name, rows)
-    (OUT/'integrity.json').write_text(json.dumps(dict(status='local structural/source/numerical checks passed; remote aggregate hash pending',
+    receipt_path = OUT/'remote_record_hashes.json'
+    receipt = json.loads(receipt_path.read_text())
+    assert receipt['expected_json_files_per_arm'] == 52
+    assert {a: p['aggregate_sha256'] for a, p in provenance.items()} == receipt['hashes']
+    (OUT/'integrity.json').write_text(json.dumps(dict(status='local structural/source/numerical checks and user-reported remote aggregate SHA comparison passed',
                                                      provenance=provenance), indent=2)+'\n')
     fig, axes = plt.subplots(2, 2, figsize=(11, 7))
     for arm in 'CLS':
