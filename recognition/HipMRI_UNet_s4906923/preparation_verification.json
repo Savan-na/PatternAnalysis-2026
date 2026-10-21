@@ -1,0 +1,34 @@
+{
+  "status": "Local backup and component parity verified; remote full-file verification pending",
+  "modules_sha256": "710c0ae79faedfe9c9fa1d2e8e5d1ac80091c9ceb967c86dcd87d10d793f99dc",
+  "torch": "2.13.0+cpu",
+  "models": {
+    "Standard": {
+      "folder": "20261017\\archives\\remote_training_backups\\g5_standard_20261018",
+      "files": 103,
+      "epoch_weights": 50,
+      "best_epoch": 50,
+      "checkpoint_sha256": "8baafdcbcb0a0bcfc79483dcb212cb4c42d3b39ed09576efdb6c7f0fe2196675",
+      "manifest_sha256": "c819e7548821f0f43289cab3b5022f200cf0c0c78fed04f36eae3735359b9126",
+      "all_epoch_json_match_previous_verified_records": true,
+      "standalone_strict_load_and_cpu_logits_exact": true,
+      "real_image_gpu_replay_after_migration": "pending",
+      "complete_remote_file_manifest_comparison": "pending",
+      "checksum_list_sha256": "b8634730d6833e585b0b18a415787e42fd022230f5cdd3a29daefb94dec1e3c5"
+    },
+    "v3": {
+      "folder": "20261017\\archives\\remote_training_backups\\improved_3d_v3_gn1_20261020",
+      "files": 105,
+      "epoch_weights": 50,
+      "best_epoch": 50,
+      "checkpoint_sha256": "2225787d9371f34b3d8976d9119b9669fe4111f090a5ee6a0cef90941ed0bf1e",
+      "manifest_sha256": "921cdb398ccde5c077c9e0a115ff8975b5c23bf7301aa2b19be40a0abcfda0e4",
+      "all_epoch_json_match_previous_verified_records": true,
+      "standalone_strict_load_and_cpu_logits_exact": true,
+      "real_image_gpu_replay_after_migration": "pending",
+      "complete_remote_file_manifest_comparison": "pending",
+      "checksum_list_sha256": "12820374e03a20cd3410764c8cedb1b3d0d1de4198383c8b16cd4742ba6da0c5"
+    }
+  },
+  "limitation": "CPU random-tensor parity is not real MRI/GPU confusion replay"
+}
