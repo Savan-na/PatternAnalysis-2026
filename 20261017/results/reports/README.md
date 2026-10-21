@@ -4,7 +4,7 @@
 
 | 材料 | 独立内容 |
 |---|---|
-| [全部10模型图表对比](model_performance_comparison/README.md) | 各自最佳Validation轮次；21组Dice/IoU/precision/recall、边界、患者、训练和资源图；既有Test单列 |
+| [全部10模型简明对比](model_performance_comparison/README.md) | 排除Background；前列腺重点加权、五前景Dice/IoU及边界风险，精简为4张核心图 |
 | [导师／助教阶段沟通报告（中文）](SUPERVISOR_PROGRESS_BRIEF_ZH.md) | 可单独用于沟通：七组训练差异、关键结果、作业达标状态与待指导问题 |
 | [Supervisor / TA Progress Brief (English)](SUPERVISOR_PROGRESS_BRIEF_EN.md) | 上述沟通报告的完整英文译本，表格数据及研究局限保持一致 |
 | [HipMRI Research Report](RESEARCH_REPORT.md) | G1起累积的完整研究记录与阶段性解释；原始分析正文保留 |

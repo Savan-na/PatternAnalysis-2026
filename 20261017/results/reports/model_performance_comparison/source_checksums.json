@@ -1,16 +1,4 @@
 {
-  "selected_epochs": {
-    "2D": 50,
-    "Standard": 50,
-    "v1": 50,
-    "v2": 45,
-    "v3": 50,
-    "A0": 45,
-    "A1": 45,
-    "v5-C": 50,
-    "v5-L": 45,
-    "v5-S": 45
-  },
   "input_sha256": {
     "results\\experiments\\improved_3d_v4\\comprehensive_audit_20261021\\metrics.json": "74c298b956b684be3c377e495f70d6deb03445a9f5782663b189c33cdc6dbbc2",
     "results\\experiments\\improved_3d_v5\\comparisons\\test_assessment_20261021\\metrics.json": "454a8080d1ecff3fb0bfe0d675af420cad5a26f69f236458e0036ed56e511986",
@@ -518,6 +506,35 @@
     "results\\experiments\\improved_3d_v5\\s\\training_records\\epoch_049.json": "8e42547b873159cde301b8c82487659cc24ec9fc3cf3aeb12decd2b3ef81a3b0",
     "results\\experiments\\improved_3d_v5\\s\\training_records\\epoch_050.json": "7a3ed43280a87e6d9c326279093bba9122621670ba36b8fd0b211e19b8eac8b2"
   },
-  "script_sha256": "0e05e0b7f6eaebfffaea30848128087ae491975be58000b9ff000e3168485a67",
-  "test_scope": "All 10 models; existing previously inspected cohort; descriptive only"
+  "selected_epochs": {
+    "2D": 50,
+    "Standard": 50,
+    "v1": 50,
+    "v2": 45,
+    "v3": 50,
+    "A0": 45,
+    "A1": 45,
+    "v5-C": 50,
+    "v5-L": 45,
+    "v5-S": 45
+  },
+  "score_definition": {
+    "class_order": [
+      "Body",
+      "Bones",
+      "Bladder",
+      "Rectum",
+      "Prostate"
+    ],
+    "weights": [
+      0.125,
+      0.125,
+      0.125,
+      0.125,
+      0.5
+    ],
+    "scope": "Post-hoc descriptive analysis, not official criterion or training loss"
+  },
+  "reader_sha256": "dcab3d8ddc2b1e9210c288cccfcc1d1f2051d7849098b4afa0f995f949d70251",
+  "renderer_sha256": "96594a33824c2093bb272a9fc018a157749ce151a500a6bc70996225a2431d84"
 }

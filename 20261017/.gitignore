@@ -41,7 +41,7 @@ predictions/
 !results/experiments/improved_3d_v5/comparisons/validation_analysis/remote_record_hashes.json
 !results/experiments/improved_3d_v5/comparisons/validation_analysis/visual_review_verification.json
 !results/reports/model_performance_comparison/tables/*.csv
-!results/reports/model_performance_comparison/figures/*.svg
+!results/reports/model_performance_comparison/figures/*.png
 !results/reports/model_performance_comparison/source_checksums.json
 *.nii
 *.nii.gz
