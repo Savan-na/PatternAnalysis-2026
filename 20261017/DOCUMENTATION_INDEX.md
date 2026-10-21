@@ -24,7 +24,7 @@
 | v3改善和代价是什么 | [v3结果](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#validation)、[泛化复核](results/experiments/improved_3d_v3/reports/RESEARCH_REPORT_ZH.md#generalization) |
 | 当前v4到底改什么 | [冻结配对协议](code/docs/V4_Paired_Training_ZH.md)、[Train增强复核](results/experiments/improved_3d_v4/paired_analysis/README.md) |
 | 还有哪些优化值得考虑 | [v4优化方法综述](results/experiments/improved_3d_v4/reports/OPTIMIZATION_REVIEW_ZH.md)，候选不等于已实施 |
-| 下一次实验具体如何选择 | [v5-L研究建议](results/experiments/improved_3d_v5/reports/RESEARCH_PLAN_ZH.md)：从七模型证据出发，方案未冻结、未训练 |
+| 下一次实验具体如何选择 | [v5研究依据](results/experiments/improved_3d_v5/reports/RESEARCH_PLAN_ZH.md)、[C/L/S 三分支执行协议](code/docs/V5_PARALLEL_SCREEN_ZH.md)：已准备，未提交训练 |
 | 查看课程要求、原始研究治理 | [综合报告索引](results/reports/README.md)、[方法文档索引](code/docs/README.md) |
 | 查原始数据问题和推理机制 | [Train审计](results/data_analysis/README.md)、[推理与预测机制诊断](results/diagnostics/inference_context/README.md) |
 | 文件应该放在哪里 | [存储指南](results/STORAGE_GUIDE.md) |
