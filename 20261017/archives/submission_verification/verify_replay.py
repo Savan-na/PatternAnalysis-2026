@@ -6,10 +6,14 @@ or overwrite the recorded results.
 """
 import argparse,json
 from pathlib import Path
+import os
+import sys
+ROOT = (Path(os.environ["HIPMRI_SUBMISSION_ROOT"]) if "HIPMRI_SUBMISSION_ROOT" in os.environ
+        else Path(__file__).resolve().parents[3] / "recognition/HipMRI_UNet_s4906923")
+sys.path.insert(0, str(ROOT))
 import torch
 from dataset import discover
 from utils import load_model,evaluate,sha256_file,atomic_json
-ROOT=Path(__file__).resolve().parent
 
 
 def main():
@@ -24,7 +28,8 @@ def main():
     bundle=json.loads((ROOT/"evidence/experiments.json").read_text())
     cases=discover(a.dataset_root)["validation"]
     receipt={"kind":"standalone_migration_validation_replay","torch":str(torch.__version__),
-             "sources":{n:sha256_file(ROOT/n) for n in ("modules.py","dataset.py","utils.py","verify_replay.py")},"models":{}}
+             "sources":{n:sha256_file(ROOT/n) for n in ("modules.py","dataset.py","utils.py")},
+             "driver_sha256":sha256_file(Path(__file__)),"models":{}}
     for name,arm,path in [("standard","Standard",a.standard_checkpoint),("v3","v3",a.v3_checkpoint)]:
         historical=bundle["models"][arm]
         assert sha256_file(path)==historical["selected"]["checkpoint_sha256"],"Weight identity changed"

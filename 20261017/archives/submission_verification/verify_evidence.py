@@ -2,8 +2,11 @@
 import csv,json
 from pathlib import Path
 import numpy as np
-from utils import aggregate_cases,sha256_file
-ROOT=Path(__file__).resolve().parent
+import sys
+ARCHIVE = Path(__file__).resolve().parent
+ROOT = ARCHIVE.parents[2] / "recognition/HipMRI_UNet_s4906923"
+sys.path.insert(0, str(ROOT))
+from utils import aggregate_cases, sha256_file
 
 
 def verify_replayed_sources(root, replay):
@@ -17,9 +20,18 @@ def verify_replayed_sources(root, replay):
                 return None
             return self.generic_visit(node)
 
-    proof_path = root / "evidence/editorial_source_equivalence.json"
+    proof_path = ARCHIVE / "editorial_source_equivalence.json"
     proof = json.loads(proof_path.read_text()) if proof_path.exists() else {"files": {}}
     for filename, original_digest in replay["sources"].items():
+        if filename == "verify_replay.py":
+            # The original driver is preserved in Git; it is no longer submitted.
+            import subprocess
+            original = subprocess.check_output([
+                "git", "show", proof["baseline_commit"] +
+                ":recognition/HipMRI_UNet_s4906923/verify_replay.py"
+            ], cwd=ROOT.parents[1])
+            assert hashlib.sha256(original).hexdigest() == original_digest
+            continue
         path = root / filename
         if sha256_file(path) == original_digest:
             continue
@@ -59,7 +71,7 @@ def main():
     provenance=json.loads((ROOT/"evidence/provenance.json").read_text())
     for filename,digest in provenance["clinical_figures"].items():
         assert sha256_file(ROOT/"figures"/filename)==digest
-    replay_path=ROOT/"evidence/migration_receipt.json"
+    replay_path=ARCHIVE/"migration_receipt.json"
     assert sha256_file(replay_path)=="14936ed27162acd63209f8ab34dec9fc05192f30746b80111e520c94abaa38fc"
     replay=json.loads(replay_path.read_text())
     verify_replayed_sources(ROOT, replay)

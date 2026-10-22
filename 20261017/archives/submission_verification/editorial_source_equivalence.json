@@ -22,5 +22,6 @@
       "current_sha256": "1202d635b639b92e5873df45801d7cade8663aac001f9ee8b8bdbad0361784d5",
       "executable_ast_sha256": "7d1ac25fa791bdfd0a734bebd8e552c34d9a92282bbfb9f243487dcff6c631b3"
     }
-  }
+  },
+  "driver_relocation": "verify_replay.py moved to the research archive; original GPU driver is retained in baseline Git commit e1d4306. Core model/data/metric source equivalence remains checked."
 }

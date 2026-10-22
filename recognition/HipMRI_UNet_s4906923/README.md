@@ -8,7 +8,7 @@ This project segments HipMRI volumes into Background, Body, Bones, Bladder, Rect
 
 The final runnable models are an implemented Standard 3D U-Net and residual Improved v3. v3 has the highest score under the original Validation selection rule and improves average overlap on the existing Test cohort. It does not dominate Standard for every patient, precision or extreme boundary error. The result supports a qualified research recommendation, not deployment.
 
-**Current status.** The code, experiment records and report are prepared. The standalone implementation reproduced both selected models on all 38 Validation volumes: 76 model/case comparisons in total. Input files, selected weights, confusion matrices and surface measurements matched the original evaluation. See [the verification record](evidence/migration_receipt.json). Tutor check-off, the course pull request and Turnitin submission must still be confirmed separately.
+**Current status.** The code, experiment records and report are prepared. The standalone implementation reproduced both selected models on all 38 Validation volumes: 76 model/case comparisons in total. Input files, selected weights, confusion matrices and surface measurements matched the original evaluation. Detailed verification records are retained in the separate research archive. Tutor check-off, the course pull request and Turnitin submission must still be confirmed separately.
 
 **Reading guide.** Section 6 presents the numerical comparison; Section 7 explains five real-image cases; Section 9 gives installation and running instructions. Here, *patient-equal* means that each patient contributes the same weight, regardless of their number of visits. A *checkpoint* is a saved set of model weights from training.
 
@@ -208,7 +208,6 @@ The tested local CPU environment is Python 3.11, PyTorch 2.13.0+cpu, NumPy 2.4.6
 cd recognition/HipMRI_UNet_s4906923
 python -m pip install -r requirements.txt
 python -B -m unittest discover -s tests -v
-python -B verify_evidence.py
 ```
 
 In the existing Windows Conda environment, `MKL_THREADING_LAYER=SEQUENTIAL` and `OMP_NUM_THREADS=1` avoided an OpenMP runtime conflict; do not use a duplicate-runtime override. Run GPU training on allocated compute nodes, not the login node. A typical fresh-run allocation is one A100, two CPU cores, up to six hours; load and IO vary.
@@ -230,7 +229,7 @@ Resume requires the same source/config/runtime identity and submission-format re
 
 ### 9.3 Evaluate fixed weights and export an example
 
-Supply trusted local checkpoints explicitly; weights are excluded from Git. Best hashes appear in `preparation_verification.json` and the compact experiment evidence. Existing private backups can be used in place without copying into this folder. Historical files contain Python optimizer/RNG objects: load only trusted checkpoints.
+Supply trusted local checkpoints explicitly; weights are excluded from Git. The selected checkpoint hashes appear in `evidence/experiments.json`. Existing private backups can be used in place without copying into this folder. Historical files contain Python optimizer/RNG objects: load only trusted checkpoints.
 
 ```bash
 python -B train.py evaluate --model v3 --dataset-root /path/to/HipMRI_Study_open --checkpoint /path/to/v3/best.pt --split validation --output /path/to/new_validation.json --device cuda
@@ -238,15 +237,11 @@ python -B train.py evaluate --model v3 --dataset-root /path/to/HipMRI_Study_open
 python -B predict.py --model v3 --checkpoint /path/to/v3/best.pt --dataset-root /path/to/HipMRI_Study_open --split validation --case K008_Week0 --output-dir /path/to/new_example --device cuda
 ```
 
-Use `--model standard` with Standard weights for the baseline. Outputs: `metrics.json`, `overlay.png`, `prediction_downsampled.nii.gz`. Inference uses MRI only; paired GT is used afterwards for metrics/illustration. The exported NIfTI uses the downsampled affine, not original-resolution geometry. Outputs refuse overwrite. Without authorised MRI/weights, use the synthetic tests and evidence verifier; random weights must not be substituted for experimental results.
+Use `--model standard` with Standard weights for the baseline. Outputs: `metrics.json`, `overlay.png`, `prediction_downsampled.nii.gz`. Inference uses MRI only; paired GT is used afterwards for metrics/illustration. The exported NIfTI uses the downsampled affine, not original-resolution geometry. Outputs refuse overwrite. Without authorised MRI/weights, use the synthetic tests and inspect the recorded metrics; random weights must not be substituted for experimental results.
 
-### 9.4 Real-MRI migration check
+### 9.4 Completed Validation verification
 
-```bash
-python -B verify_replay.py --dataset-root /path/to/HipMRI_Study_open --standard-checkpoint /path/to/standard/best.pt --v3-checkpoint /path/to/v3/best.pt --output /path/to/new_migration_receipt.json --device cuda
-```
-
-This read-only verification step compares checkpoint/input hashes, all 76 Standard/v3 Validation confusion matrices, and physical surface measurements with the original audit. It does not train, decode Test or replace historical evidence. CPU actual-weight parity and the full real-MRI GPU verification step both passed. Job 682858 completed in 00:04:49 with exit 0:0 on 21 October 2026, using PyTorch 2.13.0+cu130. All seven package tests passed before the replay. The receipt records 38 matching cases for each model; Validation scores are 0.8502228594450512 (Standard) and 0.8563563984705311 (v3). Its SHA-256 is `14936ed27162acd63209f8ab34dec9fc05192f30746b80111e520c94abaa38fc`. This verifies migration equivalence, not new generalisation or clinical safety.
+Before submission, the standalone implementation reproduced all 76 Standard/v3 Validation confusion matrices, input and weight identities, and physical surface measurements. Job 682858 completed in 00:04:49 with exit 0:0 on 21 October 2026, using PyTorch 2.13.0+cu130. All seven package tests passed before that check. The Validation scores were 0.8502228594450512 (Standard) and 0.8563563984705311 (v3). Verification scripts, backup receipts and editorial checks are stored in the separate research archive; they are not needed to run the submitted models. This check establishes agreement with the earlier implementation, not new generalisation or clinical safety.
 
 ### 9.5 Export the report for Turnitin
 
@@ -270,14 +265,12 @@ HipMRI_UNet_s4906923/
   tests/                 Synthetic data, geometry, model and recovery tests
   evidence/              Ten-model count records, CSVs and source identities
   figures/               Method, curves, comparison and five real case panels
-  verify_evidence.py     Recompute metrics without data or weights
-  verify_replay.py       Read-only real-Validation migration check
   README.md              This report, with a companion PDF export
 ```
 
-The runtime has no import/path dependency on `20261017`, 2D or retired models. `evidence/experiments.json` preserves 500 epoch summaries and 680 best-model/case entries; the stored confusion counts allow readers to recalculate overlap metrics. The verifier checks 400 foreground metric values, checkpoint selection and five original figure hashes. Source/checkpoint identities preserve research provenance without submitting MRI or parameter files. Packaging does not overwrite historical metrics.
+The runtime has no import/path dependency on `20261017`, 2D or retired models. `evidence/experiments.json` preserves 500 epoch summaries and 680 best-model/case entries; the stored confusion counts allow readers to recalculate overlap metrics. The archived research checks verified 400 foreground metric values, checkpoint selection and five original figure hashes. Source/checkpoint identities preserve research provenance without submitting MRI or parameter files. Packaging does not overwrite historical metrics.
 
-Tests cover split leakage rejection, NIfTI pairing, spatial resampling, label retention, padding/crop inversion, patient aggregation, anisotropic distances/empty masks, both models' gradients/loading and interrupted-versus-uninterrupted optimizer recovery. A synthetic 211-case file-list fixture ran the predict CLI end to end; it is not a research cohort or a performance result. Earlier tests also checked actual downloaded best-weight logits against historical implementations. The separate real-MRI GPU verification step has now also passed for all 76 Validation model/case comparisons; the runtime source hashes matched at the time of that check. Subsequent edits changed only comments and documentation in those files. Their executable syntax trees are unchanged; [the editorial comparison](evidence/editorial_source_equivalence.json) links the current files to the GPU-verified versions.
+Tests cover split leakage rejection, NIfTI pairing, spatial resampling, label retention, padding/crop inversion, patient aggregation, anisotropic distances/empty masks, both models' gradients/loading and interrupted-versus-uninterrupted optimizer recovery. A synthetic 211-case file-list fixture ran the predict CLI end to end; it is not a research cohort or a performance result. Earlier tests also checked actual downloaded best-weight logits against historical implementations. The separate real-MRI GPU verification step has now also passed for all 76 Validation model/case comparisons; the runtime source hashes matched at the time of that check. Subsequent edits changed only comments and documentation in those files. Their executable syntax trees are unchanged; the comparison records are retained with the research archive.
 
 | Coursework requirement | Included evidence or remaining action |
 |---|---|
@@ -285,7 +278,7 @@ Tests cover split leakage rejection, NIfTI pairing, spatial resampling, label re
 | Implemented baseline, same split | Standard/v3, fixed split and input/weight identities |
 | Per-class DSC/IoU and resource profiling | Six-class table, boundaries, parameters/VRAM/latency |
 | Boundary/context dilemma and 3-5 failures | Five original MRI cases, prostate ends, OAR/slice diagnostics, recommendation |
-| Modular code and reproducibility | Five required files, dependencies, commands, tests and audit scripts |
+| Modular code and reproducibility | Five required files, dependencies, commands and tests |
 | Progressive originality | Existing staged Git history; adapted literature cited below |
 | No datasets/model files in Git | Code, count records and selected report visuals only |
 | Feasibility hurdle | Written review included; tutor registration must be confirmed |
