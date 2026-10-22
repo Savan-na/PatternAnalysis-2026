@@ -21,7 +21,12 @@ def inline(text):
     text=re.sub(r"`([^`]+)`",r'<font name="Courier">\1</font>',text)
     text=re.sub(r"\*\*([^*]+)\*\*",r'<b>\1</b>',text)
     text=re.sub(r"\*([^*]+)\*",r'<i>\1</i>',text)
-    text=re.sub(r"\[([^]]+)\]\(([^)]+)\)",r'\1',text)
+    def link(match):
+        label,target=match.groups()
+        if target.startswith("#"):
+            return f'<link href="{target}" color="#245b84"><u>{label}</u></link>'
+        return label
+    text=re.sub(r"\[([^]]+)\]\(([^)]+)\)",link,text)
     return text
 
 
@@ -76,46 +81,55 @@ def main():
             from PIL import Image as PILImage
             with PILImage.open(path) as im:w,h=im.size
             scale=min(width/w,390/h)
-            story.extend([Image(str(path),width=w*scale,height=h*scale),
-                Paragraph(inline(image[1]),styles["Cell"]),Spacer(1,10)])
+            story.append(KeepTogether([Image(str(path),width=w*scale,height=h*scale),
+                Paragraph(inline(image[1]),styles["Cell"]),Spacer(1,10)]))
             i+=1;continue
         heading=re.match(r"^(#{1,4}) (.*)",line)
         if heading:
-            if heading[2].startswith(("3. Research methods", "Appendix C. One-page feasibility")): story.append(PageBreak())
+            if heading[2].startswith(("2. Materials and methods", "Appendix C. Feasibility")): story.append(PageBreak())
             level=len(heading[1]);name="Title" if level==1 else f"Heading{level-1}"
-            story.append(Paragraph(inline(heading[2]),styles[name]));i+=1;continue
+            slug=re.sub(r"[^\w -]","",heading[2].lower()).replace(" ","-")
+            item=Paragraph(f'<a name="{slug}"/>'+inline(heading[2]),styles[name])
+            item._report_heading=heading[2]
+            story.append(item);i+=1;continue
         paragraph=[line];i+=1
         while i<len(lines) and lines[i].strip() and not re.match(r"^(#|\||```|!\[|\d+\.\s)",lines[i].strip()):
             paragraph.append(lines[i].strip());i+=1
         content = Paragraph(inline(" ".join(paragraph)), styles["Text"])
-        if paragraph[0].startswith(("Every model in the table", "These unchanged historical", "Ordinary panels show")):
+        if paragraph[0].startswith(("Every model in the table", "These unchanged historical", "Ordinary panels show", "These diagnostics were calculated")):
             content.keepWithNext = True
         story.append(content)
     # Keep a code block with its heading or introductory paragraph.
     linked=[];index=0
     while index<len(story):
         if (isinstance(story[index],Paragraph) and index+1<len(story)
-                and isinstance(story[index+1],KeepTogether)):
+                and isinstance(story[index+1],KeepTogether)
+                and isinstance(story[index+1]._content[0],Preformatted)):
             linked.append(KeepTogether([story[index],*story[index+1]._content]));index+=2
         else:
             linked.append(story[index]);index+=1
     story=linked
     # Keep each clinical heading, figure and autopsy together on a page.
+    def keep_block(items):
+        flat=[]
+        for item in items:
+            flat.extend(item._content if isinstance(item,KeepTogether) else [item])
+        return KeepTogether(flat)
     grouped=[];block=[];in_case=False;in_references=False
     for flow in story:
-        text=getattr(flow,"text","")
-        is_case=bool(re.match(r"4\.6\.[1-5] ",text))
-        is_next=text.startswith("5. ")
+        text=getattr(flow,"_report_heading",getattr(flow,"text",""))
+        is_case=bool(re.match(r"3\.6\.[1-5] ",text))
+        is_next=text.startswith("4. ")
         if is_case or (in_case and is_next):
-            if block:grouped.append(KeepTogether(block));block=[]
+            if block:grouped.append(keep_block(block));block=[]
             in_case=is_case
         if in_references and text.startswith("Appendix A."):
-            grouped.append(KeepTogether(block));block=[];in_references=False
-        if text.startswith("References and implementation attribution"):
+            grouped.append(keep_block(block));block=[];in_references=False
+        if text == "References":
             in_references=True
         if in_case or in_references:block.append(flow)
         else:grouped.append(flow)
-    if block:grouped.append(KeepTogether(block))
+    if block:grouped.append(keep_block(block))
     story=grouped
     def footer(canvas,doc):
         canvas.setFont("Helvetica",7)

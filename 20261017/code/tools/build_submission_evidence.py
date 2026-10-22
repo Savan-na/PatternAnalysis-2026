@@ -8,6 +8,45 @@ OUT=ROOT.parent/"recognition/HipMRI_UNet_s4906923"
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 
+def draw_method_figure(figures):
+    """Draw the submitted preprocessing and model paths; no data/inference needed."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import FancyBboxPatch
+    fig,ax=plt.subplots(figsize=(9.5,7.6))
+    ax.set(xlim=(0,1),ylim=(0,1));ax.axis("off")
+    xs=(.015,.353,.691);w=.294
+    def box(x,y,h,text,face):
+        ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle="round,pad=.008",linewidth=1.1,
+                                  facecolor=face,edgecolor="#46586b"))
+        ax.text(x+w/2,y+h/2,text,ha="center",va="center",fontsize=11.3,linespacing=1.45,color="#172c40")
+    def arrows(y):
+        for x in xs[:2]:
+            ax.annotate("",xy=(x+.338-.012,y),xytext=(x+w+.01,y),
+                        arrowprops=dict(arrowstyle="->",lw=1.5,color="#46586b"))
+    ax.text(.015,.977,"INPUT AND SPATIAL PREPARATION",fontsize=13,weight="bold",color="#172c40")
+    box(xs[0],.825,.12,"MRI + six-class mask\nMatching patient/visit\nMatching physical grids","#edf1f5")
+    box(xs[1],.825,.12,"Downsample X/Y/Z by 2\nLinear MRI; nearest mask\nNonzero MRI Z-score","#edf1f5")
+    box(xs[2],.825,.12,"Train: 64 x 64 x 32 crops\nInfer: padded whole volume\nOne MRI input channel","#edf1f5");arrows(.885)
+    ax.text(.015,.774,"STANDARD 3D U-NET  |  1,412,550 PARAMETERS",fontsize=13,weight="bold",color="#245b84")
+    box(xs[0],.542,.20,"ENCODER + BOTTLENECK\nChannels: 8,16,32,64,128\nTwo 3x3x3 convs per level\nGN1 + ReLU\nFour max-pooling steps","#edf5fb")
+    box(xs[1],.542,.20,"DECODER\nFour transposed conv steps\nConcatenate encoder skips\nTwo 3x3x3 convs per level\nGN1 + ReLU","#edf5fb")
+    box(xs[2],.542,.20,"SINGLE OUTPUT\nFull-resolution 1x1x1 head\nSix class logits\nWeighted CE + foreground Dice\n1,412,550 parameters","#edf5fb");arrows(.642)
+    ax.text(.015,.488,"IMPROVED 3D U-NET v3  |  2,366,946 PARAMETERS",fontsize=13,weight="bold",color="#8a4f20")
+    box(xs[0],.232,.222,"RESIDUAL CONTEXT\nChannels: 8,16,32,64,128\nFive identity residual blocks\nGN1 + LeakyReLU\nDropout3d: 0.3\nFour stride-2 conv steps","#fcf1e7")
+    box(xs[1],.232,.222,"DECODER\nNearest-neighbour resize\n3x3x3 channel reduction\nConcatenate context skips\n3x3x3 fusion + GN1\n1x1x1 channel reduction","#fcf1e7")
+    box(xs[2],.232,.222,"ADDITIVE OUTPUTS\nMain + half + quarter heads\nResize auxiliary logits\nSum all three outputs\nOne CE + Dice loss on sum\n2,366,946 parameters","#fcf1e7");arrows(.343)
+    ax.add_patch(FancyBboxPatch((.015,.025),.97,.137,boxstyle="round,pad=.008",linewidth=1.1,
+                              facecolor="#edf1f5",edgecolor="#46586b"))
+    ax.text(.5,.094,"EVALUATION: ARGMAX, REMOVE HIGH-END PADDING, RETAIN PHYSICAL GRID\n"
+            "Per-class Dice / IoU; physical surface errors; prostate ends and slice continuity\n"
+            "Training loss uses paired labels; prediction uses MRI without a GT-defined region",
+            ha="center",va="center",fontsize=11.5,linespacing=1.6,color="#172c40")
+    fig.subplots_adjust(left=.015,right=.985,bottom=.015,top=.985)
+    fig.savefig(Path(figures)/"method.png",dpi=240,facecolor="white");plt.close(fig)
+
+
 def main():
     checked=collect_evidence()
     evidence=OUT/"evidence";evidence.mkdir(exist_ok=True)
@@ -45,10 +84,16 @@ def main():
         ("validation/B040_Week1_Bones.png","failure_bones.png")]:
         source=ROOT/"results/experiments/improved_3d_v4/comprehensive_audit_20261021/images"/relative
         shutil.copyfile(source,figures/name)
+    previous_path=evidence/"provenance.json"
+    previous=json.loads(previous_path.read_text()) if previous_path.exists() else {}
     provenance={"research_root":"20261017", "sources":checked["sources"],
                 "clinical_figures":{p.name:sha(p) for p in figures.glob("failure_*.png")},
                 "preserved_original_panels":True,
                 "panel_note":"Seven historical model columns retained and labelled; no new inference or retouched contours"}
+    for key in ("pretraining_review","assessment_alignment","report_diagnostic_summaries","method_figure"):
+        if key in previous:provenance[key]=previous[key]
+    if "report_diagnostic_summaries" in provenance:
+        assert provenance["report_diagnostic_summaries"]["source_bundle_sha256"]==sha(evidence/"experiments.json")
     (evidence/"provenance.json").write_text(json.dumps(provenance,indent=2)+"\n",encoding="utf-8")
     # CSV tables are derived from integer confusion counts, not screenshots.
     import matplotlib
@@ -75,19 +120,10 @@ def main():
         ax.set(xticks=x,xticklabels=labels,ylim=(0,1),ylabel="Patient-equal Dice",title=split.title())
         ax.legend();ax.grid(axis="y",alpha=.2)
     fig.tight_layout();fig.savefig(figures/"foreground_comparison.png",dpi=180);plt.close(fig)
-    # Explicit architecture diagram: common physical data pipeline + model differences.
-    fig,ax=plt.subplots(figsize=(12,3.6));ax.axis("off")
-    boxes=[(.02,.48,.23,.37,"Paired MRI / labels\nPatient-disjoint 26 / 6 / 6\n2x XYZ downsample + Z-score"),
-           (.33,.61,.29,.28,"Standard 3D U-Net\nGN1, width 8, single output"),
-           (.33,.13,.29,.33,"Improved v3 residual U-Net\nGN1, width 8, dropout 0.3\nmain + half + quarter logits"),
-           (.72,.37,.26,.38,"6-class full-volume prediction\nRemove high-end padding\nPatient-equal + boundary audit")]
-    from matplotlib.patches import FancyBboxPatch
-    for x,y,w,h,text in boxes:
-        ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle="round,pad=.01",facecolor="#edf2f7",edgecolor="#456"))
-        ax.text(x+w/2,y+h/2,text,ha="center",va="center",fontsize=10)
-    for start,end in [((.25,.67),(.33,.75)),((.25,.55),(.33,.30)),((.62,.75),(.72,.62)),((.62,.30),(.72,.48))]:
-        ax.annotate("",xy=end,xytext=start,arrowprops=dict(arrowstyle="->",color="#456",lw=1.5))
-    fig.tight_layout();fig.savefig(figures/"method.png",dpi=180);plt.close(fig)
+    draw_method_figure(figures)
+    if "method_figure" in provenance:
+        provenance["method_figure"].update(sha256=sha(figures/"method.png"),generator_sha256=sha(Path(__file__)))
+        (evidence/"provenance.json").write_text(json.dumps(provenance,indent=2)+"\n",encoding="utf-8")
     print("Verified 500 epoch records, 680 best-checkpoint case results; wrote compact evidence and eight figures")
 
 if __name__=="__main__":main()

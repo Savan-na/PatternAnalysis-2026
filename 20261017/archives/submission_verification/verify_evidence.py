@@ -43,6 +43,77 @@ def verify_replayed_sources(root, replay):
         assert digest == change["executable_ast_sha256"], filename
 
 
+
+def verify_report_additions(bundle, provenance):
+    """Recalculate the diagnostic contrasts and check their saved source identities."""
+    research = ROOT.parents[1] / "20261017"
+    review = provenance["report_diagnostic_summaries"]
+    assert review["source_bundle_sha256"] == sha256_file(ROOT/"evidence/experiments.json")
+    for name, expected in review["body_comparison"].items():
+        model = bundle["models"][name]
+        median = np.median([r["surfaces"]["Body"]["hd95_mm"] for r in model["splits"]["validation"]])
+        assert abs(median-expected["validation_median_body_hd95_mm"])<1e-12
+        for split, count in expected["distant_body_fp_voxels"].items():
+            assert count == sum(r["far_background_to_body_voxels"] for r in model["splits"][split])
+    standard = {r["case"]:r for r in bundle["models"]["Standard"]["splits"]["validation"]}
+    assert all(r["surfaces"]["Body"]["hd95_mm"] > standard[r["case"]]["surfaces"]["Body"]["hd95_mm"]
+               for r in bundle["models"]["v1"]["splits"]["validation"])
+    for split, expected in review["patient_sensitivity"].items():
+        standard=aggregate_cases(bundle["models"]["Standard"]["splits"][split])
+        v3=aggregate_cases(bundle["models"]["v3"]["splits"][split])
+        delta={p:float(np.mean(list(v3["patient_small_organ_dice"][p].values()))-
+                       np.mean(list(standard["patient_small_organ_dice"][p].values())))
+               for p in standard["patients"]}
+        assert delta==expected["patient_deltas"]
+        assert sum(v>0 for v in delta.values())==expected["patients_improving"]
+        if split=="test":
+            without={m:aggregate_cases([r for r in bundle["models"][m]["splits"][split] if r["patient"]!="M015"])
+                     for m in ("Standard","v3")}
+            assert abs(without["v3"]["selection_score"]-without["Standard"]["selection_score"]-
+                       expected["delta_without_M015"])<1e-12
+            assert sum(r["dice"][5]<.7 for r in v3["patients"].values())==expected["v3_patients_prostate_dice_below_07"]
+    for expected in review["selected_four_case_inference_diagnostic"]:
+        source=research/expected["research_path"]
+        assert sha256_file(source)==expected["sha256"]
+        saved=json.loads(source.read_text())
+        assert saved["full_confusion_reproduced"]
+        for protocol, value in expected["protocols"].items():
+            raw=saved["protocols"][protocol]
+            assert value["distant_body_fp_voxels"]==raw["background_to_body_at_least_20mm"]
+            assert abs(value["volume_mean_small_organ_dice"]-np.mean(raw["overlap"]["dice"][3:6]))<1e-12
+    expected=review["auxiliary_output_diagnostic"]
+    source=research/expected["research_path"]
+    assert sha256_file(source)==expected["source_sha256"]
+    saved=json.loads(source.read_text())
+    for output, value in expected["outputs"].items():
+        rows=[dict(case=r["case"],patient=r["patient"],confusion=r["outputs"][output]["confusion"])
+              for r in saved["cases"]]
+        assert abs(aggregate_cases(rows)["selection_score"]-value["patient_small_organ_score"])<1e-12
+        assert abs(np.median([r["outputs"][output]["body_hd95_mm"] for r in saved["cases"]])-
+                   value["median_body_hd95_mm"])<1e-12
+    for key in ("raw_audit","preprocessing_audit"):
+        value=provenance["pretraining_review"][key]
+        source=research/value["research_path"]
+        assert sha256_file(source)==value["sha256"]
+        saved=json.loads(source.read_text())
+        assert len(saved["cases"])==value["cases"] and saved["case_error_count"]==0
+        if key=="raw_audit":
+            assert all(sum(r["class_counts"][label] for r in saved["cases"])==count
+                       for label,count in value["class_voxel_counts"].items())
+        else:
+            for label, stats in value["small_organ_physical_volume_ratio"].items():
+                ratios=[r["physical_volume_ratio"][label] for r in saved["cases"]]
+                assert min(ratios)==stats["minimum"] and max(ratios)==stats["maximum"]
+                assert np.median(ratios)==stats["median"]
+    for value in provenance["pretraining_review"]["optimizer_and_capacity_sources"]:
+        assert sha256_file(research/value["research_path"])==value["sha256"]
+    figure=provenance["method_figure"]
+    assert sha256_file(ROOT/figure["filename"])==figure["sha256"]
+    assert sha256_file(ROOT/"modules.py")==figure["architecture_source_sha256"]
+    assert sha256_file(research/"code/tools/build_submission_evidence.py")==figure["generator_sha256"]
+    print("PASS: pretraining source audits, Body counts, patient sensitivity, fixed-head/window diagnostics and method figure")
+
+
 def main():
     bundle=json.loads((ROOT/"evidence/experiments.json").read_text())
     summary=list(csv.DictReader((ROOT/"evidence/model_summary.csv").open(encoding="utf-8-sig")))
@@ -88,6 +159,7 @@ def main():
         assert abs(float(np.mean(rates))-record["true_oar_labelled_prostate_fraction"])<1e-12
     print("PASS: 18 end-region, continuity and adjacent-organ results recomputed")
     provenance=json.loads((ROOT/"evidence/provenance.json").read_text())
+    verify_report_additions(bundle, provenance)
     for filename,digest in provenance["clinical_figures"].items():
         assert sha256_file(ROOT/"figures"/filename)==digest
     replay_path=ARCHIVE/"migration_receipt.json"

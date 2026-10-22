@@ -572,6 +572,332 @@
       }
     },
     "visual_screen": "Two axial sections per Train volume; gross alignment screen, not expert anatomical certification",
-    "learning_diagnostic": "Controlled two-patch 500-update weighted/unweighted CE comparison; not a generalisation result"
+    "learning_diagnostic": "Controlled two-patch 500-update weighted/unweighted CE comparison; not a generalisation result",
+    "optimizer_and_capacity_sources": [
+      {
+        "research_path": "logs/profiles/g5_standard_500_20261018.json",
+        "sha256": "d10c454a24f1bdb1876fec034784a53fbb4d0a5c0da6fcfdcdc0dee75a72c53f",
+        "job_id": "672228",
+        "kind": "G5_two_patch_Train_only_learning_check_no_checkpoint",
+        "recorded_updates": 500,
+        "final_small_organ_metrics": {
+          "Bladder": {
+            "dice": 0.0,
+            "predicted_voxels": 0,
+            "recall": 0.0,
+            "true_positive_voxels": 0,
+            "true_voxels": 2450
+          },
+          "Rectum": {
+            "dice": 0.0,
+            "predicted_voxels": 0,
+            "recall": 0.0,
+            "true_positive_voxels": 0,
+            "true_voxels": 2723
+          },
+          "Prostate": {
+            "dice": 0.0,
+            "predicted_voxels": 0,
+            "recall": 0.0,
+            "true_positive_voxels": 0,
+            "true_voxels": 2171
+          }
+        }
+      },
+      {
+        "research_path": "logs/profiles/g5_standard_weighted_500_20261018.json",
+        "sha256": "f9f53f6eaaabb922f29e04d4905d5529ad24c668b3b2733620c9de340008b7c7",
+        "job_id": "672730",
+        "kind": "G5_two_patch_Train_only_learning_check_no_checkpoint",
+        "recorded_updates": 500,
+        "final_small_organ_metrics": {
+          "Bladder": {
+            "dice": 0.9842995169082126,
+            "predicted_voxels": 2518,
+            "recall": 0.9979591836734694,
+            "true_positive_voxels": 2445,
+            "true_voxels": 2450
+          },
+          "Rectum": {
+            "dice": 0.9795692987299834,
+            "predicted_voxels": 2710,
+            "recall": 0.9772309952258539,
+            "true_positive_voxels": 2661,
+            "true_voxels": 2723
+          },
+          "Prostate": {
+            "dice": 0.9721723518850988,
+            "predicted_voxels": 2285,
+            "recall": 0.9976969138645785,
+            "true_positive_voxels": 2166,
+            "true_voxels": 2171
+          }
+        }
+      },
+      {
+        "research_path": "logs/profiles/g5_training_smoke_20261018.json",
+        "sha256": "4161b30138243dbf3f52ba44cb097aead6046e50d60e37b60d64329bf6a336d5",
+        "job_id": "672807",
+        "kind": "G5_two_patient_paired_training_smoke_no_checkpoint"
+      },
+      {
+        "research_path": "logs/profiles/g5_full_volume_probe_20261018.json",
+        "sha256": "263c2309e00d21666e69418a8c82d436585e3037285c0e02f17f959488b21c53",
+        "job_id": "672782",
+        "kind": "G5_random_weight_full_Train_volume_inference_capacity_only"
+      }
+    ]
+  },
+  "assessment_alignment": {
+    "specification_name": "COMP3710_Report_2026_draft_v2.2.pdf",
+    "sha256": "0e05eab1e3f7597424a235e84db778106875ffa4419f0702c803ee2b052954ea",
+    "page_mapping": {
+      "spatial_context_boundary_dilemma_and_measurements": 5,
+      "baseline_and_hard_model_route": 6,
+      "README_method_figure_feasibility_and_disclosure": 14
+    },
+    "research_question_scope": "Course-derived 2D/3D continuity, local boundary errors and computation; methods and clinical measurement limitations stated separately"
+  },
+  "report_diagnostic_summaries": {
+    "source_bundle_sha256": "80047fcb5ebcf0522ab216b3e0adff2674386c2229216c9eeacb1001fe35aa87",
+    "body_comparison": {
+      "Standard": {
+        "validation_median_body_hd95_mm": 4.750873686097116,
+        "distant_body_fp_voxels": {
+          "validation": 1007,
+          "test": 2804
+        }
+      },
+      "v1": {
+        "validation_median_body_hd95_mm": 76.61218887436603,
+        "distant_body_fp_voxels": {
+          "validation": 1358516,
+          "test": 667239
+        }
+      },
+      "v3": {
+        "validation_median_body_hd95_mm": 4.58473226283704,
+        "distant_body_fp_voxels": {
+          "validation": 73204,
+          "test": 81145
+        }
+      },
+      "A0": {
+        "validation_median_body_hd95_mm": 4.750873686097116,
+        "distant_body_fp_voxels": {
+          "validation": 9572,
+          "test": 9636
+        }
+      },
+      "A1": {
+        "validation_median_body_hd95_mm": 5.683763745312066,
+        "distant_body_fp_voxels": {
+          "validation": 1171,
+          "test": 535
+        }
+      }
+    },
+    "auxiliary_output_diagnostic": {
+      "source_sha256": "117fc77eee556299144ee7e56354edcec0ac5524bc2a12f29d12067b9ee5bab2",
+      "research_path": "results/tables/comparisons/g5_validation_aux_logits.json",
+      "split": "validation",
+      "cases": 38,
+      "outputs": {
+        "combined": {
+          "patient_small_organ_score": 0.8419960108142014,
+          "median_body_hd95_mm": 76.61218887436603,
+          "background_to_body_at_least_20mm": 1358516
+        },
+        "main_only": {
+          "patient_small_organ_score": 0.24144979763109478,
+          "median_body_hd95_mm": 108.95698911300349,
+          "background_to_body_at_least_20mm": 7275330
+        }
+      }
+    },
+    "selected_four_case_inference_diagnostic": [
+      {
+        "case": "K018_Week4",
+        "research_path": "logs/validation/inference_context/p2_four_cases_20261020/K018_Week4_improved_3d.json",
+        "sha256": "a84c794963cc91b521f873a2749e57f8dbb66a2a6445fb6838610d92308626dd",
+        "full_confusion_reproduced": true,
+        "protocols": {
+          "full": {
+            "distant_body_fp_voxels": 58078,
+            "volume_mean_small_organ_dice": 0.7609512926345644
+          },
+          "sliding": {
+            "distant_body_fp_voxels": 18650,
+            "volume_mean_small_organ_dice": 0.7157906865787685
+          }
+        }
+      },
+      {
+        "case": "B040_Week4",
+        "research_path": "logs/validation/inference_context/p2_four_cases_20261020/B040_Week4_improved_3d.json",
+        "sha256": "845b51f18ccc61dbd664f2e3ce2b5219d4873b77306f3234e81bda78f7208b1a",
+        "full_confusion_reproduced": true,
+        "protocols": {
+          "full": {
+            "distant_body_fp_voxels": 31574,
+            "volume_mean_small_organ_dice": 0.8122714784431903
+          },
+          "sliding": {
+            "distant_body_fp_voxels": 6032,
+            "volume_mean_small_organ_dice": 0.831500099587572
+          }
+        }
+      },
+      {
+        "case": "J026_Week4",
+        "research_path": "logs/validation/inference_context/p2_four_cases_20261020/J026_Week4_improved_3d.json",
+        "sha256": "1add2084deb18cd46a7b9122a5852cd47e1c28545d98acb95dab7fd926270e22",
+        "full_confusion_reproduced": true,
+        "protocols": {
+          "full": {
+            "distant_body_fp_voxels": 59591,
+            "volume_mean_small_organ_dice": 0.8682979853186458
+          },
+          "sliding": {
+            "distant_body_fp_voxels": 4511,
+            "volume_mean_small_organ_dice": 0.8824662704021802
+          }
+        }
+      },
+      {
+        "case": "K008_Week0",
+        "research_path": "logs/validation/inference_context/p2_four_cases_20261020/K008_Week0_improved_3d.json",
+        "sha256": "21f3ad67ebc2299bb20708b2978095dc11694b646b3edacfb2759f6e2ce50171",
+        "full_confusion_reproduced": true,
+        "protocols": {
+          "full": {
+            "distant_body_fp_voxels": 4643,
+            "volume_mean_small_organ_dice": 0.8542818377304043
+          },
+          "sliding": {
+            "distant_body_fp_voxels": 955,
+            "volume_mean_small_organ_dice": 0.8285914111024318
+          }
+        }
+      }
+    ],
+    "patient_sensitivity": {
+      "validation": {
+        "v3_minus_standard_small_organ_dice": 0.006133539025479973,
+        "patients_improving": 5,
+        "patient_deltas": {
+          "B040": 0.0010290394635527056,
+          "J026": 0.0203121308440114,
+          "K008": -0.0034748239680262305,
+          "K018": 0.011672204025610089,
+          "M030": 0.0025533724207629227,
+          "S022": 0.004709311366969393
+        }
+      },
+      "test": {
+        "v3_minus_standard_small_organ_dice": 0.0293762003837974,
+        "patients_improving": 3,
+        "patient_deltas": {
+          "B037": -0.004181937859006779,
+          "L011": 0.02003502570709781,
+          "M015": 0.2010370554067425,
+          "M020": 0.00872684848308003,
+          "W029": -0.04439121157196568,
+          "W041": -0.0049685778631627375
+        },
+        "delta_without_M015": -0.004955970620791339,
+        "v3_patients_prostate_dice_below_07": 1
+      }
+    },
+    "case_autopsy_metrics": {
+      "M015_Week7": {
+        "Standard": {
+          "dice": 0.06756225425950196,
+          "status": "both_present",
+          "hd95_mm": 109.4880072591844,
+          "assd_mm": 58.087325022706786,
+          "far_body_fp": 244
+        },
+        "v3": {
+          "dice": 0.5223784341545208,
+          "status": "both_present",
+          "hd95_mm": 58.83866737772955,
+          "assd_mm": 11.455180437175223,
+          "far_body_fp": 2928
+        }
+      },
+      "W029_Week6": {
+        "Standard": {
+          "dice": 0.46226415094339623,
+          "status": "both_present",
+          "hd95_mm": 19.228737232254478,
+          "assd_mm": 7.375159704972785,
+          "far_body_fp": 2
+        },
+        "v3": {
+          "dice": 0.4376701143168209,
+          "status": "both_present",
+          "hd95_mm": 20.5894546924353,
+          "assd_mm": 8.107120989324052,
+          "far_body_fp": 2712
+        }
+      },
+      "K018_Week4": {
+        "Standard": {
+          "dice": 0.973969414893617,
+          "status": "both_present",
+          "hd95_mm": 4.750873686097116,
+          "assd_mm": 1.3153382316006492,
+          "far_body_fp": 5
+        },
+        "v3": {
+          "dice": 0.974201193724791,
+          "status": "both_present",
+          "hd95_mm": 6.239990234375,
+          "assd_mm": 2.5008359062454737,
+          "far_body_fp": 3128
+        }
+      },
+      "J026_Week4": {
+        "Standard": {
+          "dice": 0.810958904109589,
+          "status": "both_present",
+          "hd95_mm": 6.239990234375,
+          "assd_mm": 1.9977983682367868,
+          "far_body_fp": 38
+        },
+        "v3": {
+          "dice": 0.8436911487758946,
+          "status": "both_present",
+          "hd95_mm": 6.239990234375,
+          "assd_mm": 1.7305762627290926,
+          "far_body_fp": 303
+        }
+      },
+      "B040_Week1": {
+        "Standard": {
+          "dice": 0.8606647023250428,
+          "status": "both_present",
+          "hd95_mm": 7.407831740379491,
+          "assd_mm": 2.4630398589626887,
+          "far_body_fp": 1
+        },
+        "v3": {
+          "dice": 0.9026451294350003,
+          "status": "both_present",
+          "hd95_mm": 4.58473226283704,
+          "assd_mm": 1.7076462328402908,
+          "far_body_fp": 1610
+        }
+      }
+    }
+  },
+  "method_figure": {
+    "filename": "figures/method.png",
+    "sha256": "7d12042af161db3f54eee34c2891d9a57f6d5aae422a57407c0670c61a8056b4",
+    "generator": "20261017/code/tools/build_submission_evidence.py::draw_method_figure",
+    "generator_sha256": "a6dcc169cc6e2647e38393db8e67d5d5c9c06fe348b853cdeec4bf670a1b162a",
+    "architecture_source_sha256": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
+    "description": "Programmatically drawn from the implemented data path and model definitions; not a measured MRI image or prediction"
   }
 }
