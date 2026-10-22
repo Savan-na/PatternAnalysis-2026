@@ -68,6 +68,25 @@ def main():
                     assert abs(result["patient_equal"][metric][k]-float(row[metric]))<1e-12
             counts+=len(cases)
     assert counts==680
+    spatial=json.loads((ROOT/"evidence/spatial_context_summary.json").read_text())
+    assert spatial["source_sha256"]==sha256_file(ROOT/"evidence/experiments.json")
+    for name,record in spatial["models"].items():
+        grouped={}
+        for row in bundle["models"][name]["splits"]["test"]:
+            grouped.setdefault(row["patient"],[]).append(row)
+        for region in ("apex","central","base"):
+            value=float(np.mean([np.mean([r["prostate_regions"][region] for r in rows]) for rows in grouped.values()]))
+            assert abs(value-record[region+"_slice_dice"])<1e-12
+        gap=float(np.mean([np.mean([r["geometry"]["Prostate"]["prediction"]["internal_empty_z_slices"]>0 for r in rows]) for rows in grouped.values()]))
+        transition=float(np.mean([np.mean([abs(r["geometry"]["Prostate"]["area_transition"]["prediction"]-r["geometry"]["Prostate"]["area_transition"]["truth"]) for r in rows]) for rows in grouped.values()]))
+        rates=[]
+        for rows in grouped.values():
+            matrix=sum(np.asarray(r["confusion"]) for r in rows)
+            rates.append(float((matrix[3,5]+matrix[4,5])/matrix[[3,4],:].sum()))
+        assert abs(gap-record["prediction_internal_gap_visit_fraction"])<1e-12
+        assert abs(transition-record["area_transition_absolute_error"])<1e-12
+        assert abs(float(np.mean(rates))-record["true_oar_labelled_prostate_fraction"])<1e-12
+    print("PASS: 18 end-region, continuity and adjacent-organ results recomputed")
     provenance=json.loads((ROOT/"evidence/provenance.json").read_text())
     for filename,digest in provenance["clinical_figures"].items():
         assert sha256_file(ROOT/"figures"/filename)==digest

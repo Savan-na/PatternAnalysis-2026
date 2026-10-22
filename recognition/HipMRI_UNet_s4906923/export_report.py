@@ -37,7 +37,7 @@ def main():
         font="Body"
     else:font="Helvetica"
     styles=getSampleStyleSheet()
-    styles.add(ParagraphStyle(name="Text",fontName=font,fontSize=9,leading=12,spaceAfter=6))
+    styles.add(ParagraphStyle(name="Text",fontName=font,fontSize=9,leading=12,spaceAfter=6,allowWidows=0,allowOrphans=0))
     styles.add(ParagraphStyle(name="Cell",parent=styles["Text"],fontSize=7,leading=9,spaceAfter=0,splitLongWords=True))
     styles.add(ParagraphStyle(name="CodeSmall",fontName="Courier",fontSize=6.7,leading=9,spaceAfter=8))
     for name,size in [("Title",20),("Heading1",15),("Heading2",12),("Heading3",10)]:
@@ -94,7 +94,7 @@ def main():
     for flow in story:
         text=getattr(flow,"text","")
         is_case=bool(re.match(r"7\.[1-5] ",text))
-        is_next=text.startswith("8. Mechanisms")
+        is_next=text.startswith("8. ")
         if is_case or (in_case and is_next):
             if block:grouped.append(KeepTogether(block));block=[]
             in_case=is_case
