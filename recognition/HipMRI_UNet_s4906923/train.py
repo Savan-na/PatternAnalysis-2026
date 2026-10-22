@@ -18,7 +18,7 @@ from dataset import (discover, load_case, downsample, zscore_nonzero, epoch_case
                      crop_origin, crop_for_3d_model, ExposureRecorder)
 from modules import StandardUNet3D, ImprovedUNet3DV3
 from utils import (load_model, ce_dice_loss, evaluate, atomic_json,
-                   atomic_checkpoint, sha256_file, confusion, overlap)
+                   atomic_checkpoint, sha256_file, confusion, overlap, CLASS_NAMES)
 
 ROOT = Path(__file__).resolve().parent
 
@@ -33,6 +33,7 @@ def build_model(name):
 
 
 def plot_history(history, path):
+    """Save epoch losses and measured Validation scores; neither curve is a Test score."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -47,6 +48,11 @@ def plot_history(history, path):
 
 
 def train(args):
+    """Check the frozen recipe/output identity, acquire one writer lock, then train.
+
+    New runs create a directory; --resume requires its manifest and latest.pt.
+    The lock covers checkpoint and history writes for the entire invocation.
+    """
     config = json.loads(args.config.read_text())
     frozen = json.loads((ROOT / "config/training.json").read_text())
     if config != frozen:
@@ -68,6 +74,12 @@ def train(args):
 
 
 def _train_locked(args, config, groups):
+    """Optimise paired XYZ crops and evaluate full Validation volumes every five epochs.
+
+    epoch_index is zero-based; next_batch is the first unfinished batch. A saved
+    next_batch=130 means optimisation ended but epoch finalisation may still be
+    pending. Restored optimizer/RNG/exposure/count states continue that cursor.
+    """
     seed = config["seed"]
     torch.manual_seed(seed); np.random.seed(seed)
     if torch.cuda.is_available(): torch.cuda.manual_seed_all(seed)
@@ -96,6 +108,7 @@ def _train_locked(args, config, groups):
         batch_matrix = state["batch_matrix"]
         exposure = state["exposure"]
         best_score, best_epoch = state["best_score"], state["best_epoch"]
+        # Restore RNG after model construction/loading so dropout continues its stream.
         torch.set_rng_state(state["torch_rng_state"])
         np.random.set_state(state["numpy_rng_state"])
         if args.device.startswith("cuda"): torch.cuda.set_rng_state_all(state["cuda_rng_states"])
@@ -103,6 +116,7 @@ def _train_locked(args, config, groups):
         atomic_json(args.run_dir / "manifest.json", identity)
     cache = {}
     def checkpoint():
+        """Snapshot weights and the exact next operation, including partial-epoch counts."""
         return {"format": "submission_v1", "model": args.model, "epoch_index": epoch_index,
                 "next_batch": next_batch, "model_state": model.state_dict(),
                 "optimizer_state": optimizer.state_dict(), "history": history,
@@ -116,6 +130,7 @@ def _train_locked(args, config, groups):
         started = perf_counter(); model.train()
         chosen = epoch_cases(groups["train"], epoch=epoch, seed=seed)
         items = [(case, draw) for case in chosen for draw in range(10)]
+        # A separate hash-derived batch order does not consume the dropout RNG.
         order_seed = int.from_bytes(hashlib.sha256(f"{seed}|{epoch}|batches".encode()).digest()[:8], "little")
         items = [items[int(i)] for i in np.random.default_rng(order_seed).permutation(len(items))]
         for batch in range(next_batch, len(items) // 2):
@@ -141,6 +156,7 @@ def _train_locked(args, config, groups):
             truth = y.cpu().numpy()
             for a, b in zip(truth, prediction): batch_matrix += confusion(a, b)
             batch_losses.append(float(loss.detach())); next_batch = batch + 1
+            # Advance the cursor only after optimizer.step; this batch is not repeated on resume.
             atomic_checkpoint(args.run_dir / "latest.pt", checkpoint())
             if next_batch % 10 == 0: print(f"epoch {epoch+1}: {next_batch}/130 loss={batch_losses[-1]:.5f}", flush=True)
         validation = evaluate(model, groups["validation"], args.device) if (epoch+1) % 5 == 0 else None
@@ -162,26 +178,75 @@ def _train_locked(args, config, groups):
         print(f"Completed epoch {epoch+1}; best Validation {best_score:.6f} at {best_epoch}", flush=True)
 
 
+
+def inspect_record(args):
+    """Recalculate one saved confusion matrix without reading MRI or model weights.
+
+    This is an evidence/usage example, not a new inference run. Source and
+    checkpoint identities accompany the exported six-class metrics so a reader
+    can match the result to the locked experiment record.
+    """
+    bundle = json.loads(args.records.read_text(encoding="utf-8"))
+    if bundle.get("class_order") != list(CLASS_NAMES):
+        raise ValueError("Saved record has an unexpected class order")
+    key = "Standard" if args.model == "standard" else "v3"
+    model = bundle["models"][key]
+    rows = [row for row in model["splits"][args.split] if row["case"] == args.case]
+    if len(rows) != 1:
+        raise ValueError("Expected exactly one saved model/split/case record")
+    row = rows[0]
+    matrix = np.asarray(row["confusion"], dtype=np.int64)
+    metrics = overlap(matrix)
+    result = {
+        "kind": "saved_confusion_recalculation_not_new_inference",
+        "case": args.case, "split": args.split, "model": key,
+        "selected_epoch": model["best_epoch"],
+        "checkpoint_sha256": model["selected"]["checkpoint_sha256"],
+        "evidence_sha256": sha256_file(args.records),
+        "input_sha256": {role: row[role + "_sha256"] for role in ("mri", "mask")},
+        "shape_xyz": row["shape_xyz"], "spacing_mm": row["spacing_mm"],
+        "confusion": matrix.tolist(),
+        "per_class": {label: {name: value[index] for name, value in metrics.items()}
+                      for index, label in enumerate(CLASS_NAMES)},
+        "recorded_surface_distances": row["surfaces"],
+    }
+    if args.output is not None:
+        if args.output.exists():
+            raise FileExistsError("Use a new record-export path")
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        atomic_json(args.output, result)
+    print(json.dumps(result, indent=2, allow_nan=False))
+    return result
+
+
 def main():
+    """Expose training, fixed-weight evaluation and MRI-free saved-record inspection."""
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    fit = commands.add_parser("train")
+    fit = commands.add_parser("train", help="Train/resume the frozen Standard or v3 recipe")
     fit.add_argument("--model", choices=("standard", "v3"), required=True)
     fit.add_argument("--dataset-root", type=Path, required=True)
-    fit.add_argument("--run-dir", type=Path, required=True)
+    fit.add_argument("--run-dir", type=Path, required=True, help="New output directory, or an existing directory with --resume")
     fit.add_argument("--config", type=Path, default=ROOT / "config/training.json")
     fit.add_argument("--device", default="cuda")
-    fit.add_argument("--resume", action="store_true")
-    fit.add_argument("--keep-epoch-weights", action="store_true")
-    test = commands.add_parser("evaluate")
+    fit.add_argument("--resume", action="store_true", help="Restore latest.pt, optimizer, RNG and next batch from the same run")
+    fit.add_argument("--keep-epoch-weights", action="store_true", help="Also keep all epoch weights; increases disk use")
+    test = commands.add_parser("evaluate", help="Evaluate trusted fixed weights on a frozen split")
     test.add_argument("--model", choices=("standard", "v3"), required=True)
     test.add_argument("--dataset-root", type=Path, required=True)
     test.add_argument("--checkpoint", type=Path, required=True)
     test.add_argument("--split", choices=("validation", "test"), required=True)
     test.add_argument("--output", type=Path, required=True)
     test.add_argument("--device", default="cuda")
+    record = commands.add_parser("inspect-record", help="Recalculate saved metrics without MRI/weights")
+    record.add_argument("--model", choices=("standard", "v3"), required=True)
+    record.add_argument("--split", choices=("validation", "test"), default="validation")
+    record.add_argument("--case", required=True, help="Recorded patient/visit, e.g. K008_Week0")
+    record.add_argument("--records", type=Path, default=ROOT / "evidence/experiments.json")
+    record.add_argument("--output", type=Path, help="Optional new JSON path; existing files are refused")
     args = parser.parse_args()
     if args.command == "train": train(args)
+    elif args.command == "inspect-record": inspect_record(args)
     else:
         if args.output.exists(): raise ValueError("Refusing to overwrite evaluation output")
         args.output.parent.mkdir(parents=True, exist_ok=True)

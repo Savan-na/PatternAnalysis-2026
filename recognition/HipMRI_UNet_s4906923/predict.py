@@ -16,6 +16,12 @@ from utils import (load_model, predict_volume, confusion, overlap, spatial_diagn
 
 
 def make_panel(volume, prediction, output):
+    """Draw all five foreground labels on GT-largest-area and largest-error slices.
+
+    Red marks predicted-only voxels and blue marks missed GT. Slice selection
+    uses GT for illustration after inference; it does not constrain prediction.
+    The arrays and NIfTI export remain on the same downsampled XYZ grid.
+    """
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -47,6 +53,12 @@ def make_panel(volume, prediction, output):
 
 
 def main():
+    """Select one frozen-split case, time fixed-weight inference and export three files.
+
+    metrics.json records weights/input hashes and six-class/physical measurements;
+    overlay.png is the diagnostic view; prediction_downsampled.nii.gz contains
+    integer labels on the resampled affine. Existing output directories fail.
+    """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", choices=("standard", "v3"), required=True)
     parser.add_argument("--checkpoint", type=Path, required=True)

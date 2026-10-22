@@ -160,6 +160,30 @@ def main():
     print("PASS: 18 end-region, continuity and adjacent-organ results recomputed")
     provenance=json.loads((ROOT/"evidence/provenance.json").read_text())
     verify_report_additions(bundle, provenance)
+    additions=provenance["documentation_review_20261022"]
+    for key in ("cohort_resource_summary", "saved_record_example", "local_environment"):
+        value=additions[key]
+        assert sha256_file(ROOT/value["path"])==value["sha256"]
+    cohort=json.loads((ROOT/"evidence/cohort_inference_summary.json").read_text())
+    assert cohort["source_sha256"]==sha256_file(ROOT/"evidence/experiments.json")
+    for row in cohort["rows"]:
+        cases=bundle["models"][row["model"]]["splits"][row["split"]]
+        times=[c["inference_seconds_single_pass"] for c in cases]
+        peaks=[c["inference_peak_allocated_bytes"]/2**30 for c in cases]
+        assert row["volumes"]==len(cases) and row["patients"]==len({c["patient"] for c in cases})
+        for key,q in (("median",.5),("q1",.25),("q3",.75),("p95",.95)):
+            assert abs(row["seconds_"+key]-np.quantile(times,q,method="linear"))<1e-12
+        assert row["peak_allocated_gib_median"]==np.median(peaks)
+        assert row["peak_allocated_gib_max"]==max(peaks)
+    import train
+    from types import SimpleNamespace
+    from contextlib import redirect_stdout
+    from io import StringIO
+    with redirect_stdout(StringIO()):
+        example=train.inspect_record(SimpleNamespace(records=ROOT/"evidence/experiments.json",
+            model="v3",split="validation",case="K008_Week0",output=None))
+    assert example==json.loads((ROOT/"evidence/example_K008_v3_record.json").read_text())
+    print("PASS: cohort timing/memory quantiles and MRI-free worked example recomputed")
     for filename,digest in provenance["clinical_figures"].items():
         assert sha256_file(ROOT/"figures"/filename)==digest
     replay_path=ARCHIVE/"migration_receipt.json"

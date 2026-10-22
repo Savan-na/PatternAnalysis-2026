@@ -899,5 +899,27 @@
     "generator_sha256": "a6dcc169cc6e2647e38393db8e67d5d5c9c06fe348b853cdeec4bf670a1b162a",
     "architecture_source_sha256": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
     "description": "Programmatically drawn from the implemented data path and model definitions; not a measured MRI image or prediction"
+  },
+  "documentation_review_20261022": {
+    "cohort_resource_summary": {
+      "path": "evidence/cohort_inference_summary.json",
+      "sha256": "451835647b637c07336a2921fdd28ecd7452cca0c04b2963a0aa1d5c71793456"
+    },
+    "saved_record_example": {
+      "path": "evidence/example_K008_v3_record.json",
+      "sha256": "e874f7386296e5b63b40fc1ba59b68ccf030292759bf486955873e42c56bc1a7"
+    },
+    "local_environment": {
+      "path": "evidence/local_environment.json",
+      "sha256": "0a9c8caec757609fdf7a2d314f2aea53b28c71ad5a77d173a1b30628699c51d0"
+    },
+    "checkoff": {
+      "source": "Student statement in conversation received 2026-10-22",
+      "completed": true,
+      "reported_timing": "last Tuesday; exact date not inferred",
+      "original_written_review": "Lost according to student; Appendix C is retrospective reconstruction",
+      "original_plan": "At most five models, subsequently expanded to ten completed runs",
+      "independent_tutor_receipt_available": false
+    }
   }
 }

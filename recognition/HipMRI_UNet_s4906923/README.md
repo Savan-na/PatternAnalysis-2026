@@ -45,7 +45,9 @@ Checkpoint selection used Validation. Test was inspected during the research pro
 | Validation | 6 | 38 | Checkpoint selection and diagnosis |
 | Existing Test | 6 | 30 | Descriptive fixed-checkpoint evaluation |
 
-`config/patient_split.json` records the fixed patient lists. Visits from one patient never cross splits. Files are paired by patient/week. `dataset.py` checks matching 3D shape, affine and voxel spacing, finite arrays and integer labels 0-5. MRI must declare millimetres; matching masks with unknown spatial units are accepted as a documented source-metadata limitation. Metadata agreement is not expert confirmation of anatomy.
+`config/patient_split.json` records the fixed patient lists and their provenance: the previously approved split was preserved for comparability with the pre-restart experiments, rather than drawn again for this submission. Train contains 26 of 38 patients (68.4%); Validation and Test each contain six (15.8%). Keeping all visits from a patient together prevents within-patient visits from crossing the optimisation/evaluation boundary. Retaining this split also permits the ten runs to be compared on the same patients. The retained record does not document the original randomisation procedure or clinical stratification, so neither is claimed here. Six patients per evaluation split limits population-level conclusions.
+
+Files are paired by patient/week. `dataset.py` checks matching 3D shape, affine and voxel spacing, finite arrays and integer labels 0-5. MRI must declare millimetres; matching masks with unknown spatial units are accepted as a documented source-metadata limitation. Metadata agreement is not expert confirmation of anatomy.
 
 MRI and mask are jointly downsampled by (2,2,2). Output centre j samples source centre `(j+0.5)*2-0.5`; the affine uses the same transform. MRI interpolation is linear, mask nearest-neighbour; lost labels trigger failure. Image-only nonzero Z-score preserves outside zeros. The ground-truth mask (GT) never defines the region used for prediction.
 
@@ -211,6 +213,19 @@ v3 has a much lower Validation median and fewer distant Body false predictions t
 
 NVIDIA A100-PCIE-40GB, prepared Validation case K008_Week0, three warm-ups and five repetitions, one resident model. Latency includes transfer, execution, argmax and conversion, excluding decoding/preprocessing/metrics/IO. Peak figures are allocated inference memory, not training memory or device utilisation. The five recorded reference repetitions, per-case timings and patient records are retained in `evidence/experiments.json`.
 
+The following cohort summary uses the separate, single recorded inference pass for each volume in the same historical audit. Each Validation row contains 38 volumes from six patients; each Test row contains 30 volumes from six patients. Quartiles and P95 are calculated across volumes with linear interpolation, not across repeated benchmark passes. These timing summaries weight volumes equally; segmentation summaries elsewhere weight patients equally.
+
+| Model | Split | Median latency s | Q1-Q3 s | P95 s | Maximum peak allocated GiB |
+|---|---|---|---|---|---|
+| 2D | Validation | 0.1412 | 0.1406-0.1415 | 0.1417 | 0.0761 |
+| 2D | Test | 0.1401 | 0.1394-0.1410 | 0.1414 | 0.0761 |
+| Standard | Validation | 0.1733 | 0.1722-0.1737 | 0.1744 | 0.2460 |
+| Standard | Test | 0.1740 | 0.1700-0.1744 | 0.1747 | 0.2460 |
+| v3 | Validation | 0.1669 | 0.1665-0.1671 | 0.1675 | 0.3458 |
+| v3 | Test | 0.1666 | 0.1665-0.1668 | 0.1670 | 0.3458 |
+
+Inputs were prepared in RAM before each recorded pass; execution was GPU-synchronised and peak allocated memory was reset per case. The model remained resident. Thus these values exclude file loading, preprocessing and metrics, and do not measure an end-to-end service. The cohort and five-repeat reference protocols must not be combined into one latency estimate. Unrounded values and the source identity are in `evidence/cohort_inference_summary.json`.
+
 The supplementary 2D model segments slices independently and uses 0.0761 GiB in this reference inference measurement. The 3D models process the full downsampled volume. Their end-region, continuity and distant-component measurements are reported separately, rather than inferred from the convolution dimensionality. The supplementary 2D arm differs in sampling, weights and width; it is not a clean dimension-only ablation and does not claim to meet the separate Easy-route dataset/target. Measurements of prostate end regions, nearby organs at risk (OAR) and changes between adjacent slices remain in `evidence/experiments.json`.
 
 
@@ -311,6 +326,13 @@ For the coursework prototype, retain v3 under the original Validation small-orga
 
 Do not use these results as evidence for unattended radiotherapy contouring. If the prototype is used to generate contours for research review, explicitly inspect superior/inferior prostate slices, predictions entering labelled bladder/rectum regions, and disconnected/distant predictions. This is a recommendation based on the recorded errors; correction time, clinician agreement and dose effects were not measured. Any further model experiment should use Train/Validation, retain a new patient-independent final assessment and repeat the comparison across seeds. No performance improvement from those future actions is claimed here.
 
+| Recorded error | Consequence for this prototype | Review action before accepting a research contour |
+|---|---|---|
+| Base-region mean slice Dice about 0.51; W029_Week6 below 0.22 for both models | Whole-prostate Dice does not describe end-slice placement | Inspect physical superior/inferior extent and each end-region contour against MRI |
+| v3 labels 0.580% of GT Bladder/Rectum voxels as Prostate versus 0.485% for Standard | The measured class confusion persists despite higher average prostate Dice | Inspect the prostate boundary next to bladder and rectum; the recorded proxy cannot certify wall separation |
+| v3 maximum prostate HD95 115.37 mm and 81,145 distant Body FP voxels in Test | Typical surface scores omit large individual errors and distant components | Inspect the full 3D field and disconnected predictions, rather than only a central slice |
+| M015_Week7 bladder Dice remains 0.5224 with v3 | Improvement over Standard does not make this case a reliable automatic draft | Review target localisation and missing bladder extent; manual correction burden is unmeasured |
+
 ## 5. Artificial Intelligence Usage Disclosure
 
 ChatGPT/Codex assisted with scaffolding/refactoring, debugging, audits, metric checks, literature interpretation, plotting and report drafting, including the standalone submission packaging. Verification included source/weight hashes, historical initialization and actual-weight CPU logit parity, paired geometry/metric tests, all-head gradients, recovery equivalence and recomputation from integer confusion counts. Historical GPU audits reproduced fixed predictions; the standalone migration replay also reproduced all 76 Validation matrices with matching input/weight/source identities. No new training or Test decoding was performed for that migration check. Failed controls and negative experiments were not converted into positive findings. The student remains personally responsible for every formula/code line, understanding the work and responding to reviewers; this disclosure is not independent certification of all AI output.
@@ -327,7 +349,9 @@ The project attributes its encoder-decoder/skip design to [1], volumetric U-Net 
 
 ### A.1 Dependencies and installation
 
-The tested local CPU environment is Python 3.11, PyTorch 2.13.0+cpu, NumPy 2.4.6, SciPy 1.17.1, nibabel 5.4.2 and Matplotlib 3.11.0. `requirements.txt` pins core packages. Historical GPU records specify Python 3.11.15, PyTorch 2.13.0+cu130 and NumPy 2.4.6 on A100; not all historical auxiliary versions were recorded. These CPU package versions are not a complete record of the historical GPU environment. Install the official CUDA PyTorch wheel compatible with your compute environment; numerical replay is separately verified.
+The tested local CPU environment is Python 3.11.16, PyTorch 2.13.0+cpu, NumPy 2.4.6, SciPy 1.17.1, nibabel 5.4.2 and Matplotlib 3.11.0. `requirements.txt` pins core packages. Historical GPU records specify Python 3.11.15, PyTorch 2.13.0+cu130 and NumPy 2.4.6 on A100; not all historical auxiliary versions were recorded. These CPU package versions are not a complete record of the historical GPU environment. Install the official CUDA PyTorch wheel compatible with your compute environment; numerical replay is separately verified. The installation command below is the documented procedure, not evidence that a fresh isolated CUDA installation was tested.
+
+The imported local versions and nine-test result are recorded in [evidence/local_environment.json](evidence/local_environment.json). This CPU check validates the package's tests and count-recalculation example; the separate GPU replay in A.4 validates agreement with the historical Validation predictions.
 
 ```bash
 cd recognition/HipMRI_UNet_s4906923
@@ -377,6 +401,16 @@ python -B export_report.py
 
 `REPORT.pdf` is generated directly from this README and its figures. The feasibility review in Appendix C occupies one dedicated page. Review the export before submitting; this command does not upload to Turnitin.
 
+### A.6 Worked example without MRI or weights
+
+The saved K008_Week0 Validation record can be recalculated locally with the submitted command below. This reads the historical confusion counts; it does not rerun the network or generate a new mask.
+
+```bash
+python -B train.py inspect-record --model v3 --split validation --case K008_Week0 --output /path/to/new_record.json
+```
+
+The actual exported example is [evidence/example_K008_v3_record.json](evidence/example_K008_v3_record.json). It identifies epoch 50, the input/checkpoint hashes, a 128x128x64 downsampled XYZ grid and spacings 3.515625, 3.515625, 3.1199951171875 mm. Prostate TP=1,034, FP=242 and FN=199 give `Dice = 2068/2509 = 0.8242327621` and `IoU = 1034/1475 = 0.7010169492`. These are one-volume values, not the patient-equal cohort score. The command recalculates overlap and copies the recorded surface distances; surface distances cannot be reconstructed from a confusion matrix alone. It refuses to overwrite an existing export. The separate MRI/weight-based command in A.3 is required to create a new prediction volume and panel.
+
 ## Appendix B. Evidence files and assessment checklist
 
 ```text
@@ -395,7 +429,7 @@ HipMRI_UNet_s4906923/
 
 The runtime has no import/path dependency on `20261017`, 2D or retired models. `evidence/experiments.json` preserves 500 epoch summaries and 680 best-model/case entries; the stored confusion counts allow readers to recalculate overlap metrics. The archived research checks verified 400 foreground metric values, checkpoint selection and five original figure hashes. Source/checkpoint identities preserve research provenance without submitting MRI or parameter files. Packaging does not overwrite historical metrics.
 
-The current eight-test suite covers split leakage rejection, NIfTI pairing, spatial resampling, label retention, padding/crop inversion, patient aggregation, anisotropic distances/empty masks, both models' gradients/loading, direct model construction in the trainer, and interrupted-versus-uninterrupted optimizer recovery. A synthetic 211-case file-list fixture ran the predict CLI end to end; it is not a research cohort or a performance result. Earlier tests also checked actual downloaded best-weight logits against historical implementations. The separate real-MRI GPU verification step has now also passed for all 76 Validation model/case comparisons; the runtime source hashes matched at the time of that check. Subsequent edits changed only comments and documentation in those files. Their executable syntax trees are unchanged; the comparison records are retained with the research archive.
+The current nine-test suite covers split leakage rejection, NIfTI pairing, spatial resampling, label retention, padding/crop inversion, patient aggregation, anisotropic distances/empty masks, both models' gradients/loading, direct model construction in the trainer, interrupted-versus-uninterrupted optimizer recovery, and MRI-free count export with known metrics and overwrite rejection. A synthetic 211-case file-list fixture ran the predict CLI end to end; it is not a research cohort or a performance result. Earlier tests also checked actual downloaded best-weight logits against historical implementations. The separate real-MRI GPU verification step passed for all 76 Validation model/case comparisons. The replayed model/data/metric files subsequently received prose-only edits; their executable syntax trees remain unchanged. The new `inspect-record` mode in the trainer is separately tested and does not alter training or inference calculations. Comparison records are retained with the research archive.
 
 | Coursework requirement | Included evidence or remaining action |
 |---|---|
@@ -406,22 +440,24 @@ The current eight-test suite covers split leakage rejection, NIfTI pairing, spat
 | Modular code and reproducibility | Five required files, dependencies, commands and tests |
 | Progressive originality | Existing staged Git history; adapted literature listed in References |
 | No datasets/model files in Git | Code, count records and selected report visuals only |
-| Feasibility hurdle | Written review included; tutor registration must be confirmed |
+| Feasibility hurdle | Student confirmed completion on 22 October 2026; original written version lost; Appendix C is a retrospective reconstruction |
 | Upstream PR and code-review response | Lodge to upstream topic-recognition before the applicable deadline; respond during later feedback window |
 | Turnitin | Submit PDF export of this README; confirm it matches the final committed report |
 
-Before submission, confirm the tutor check-off, course PR, Turnitin upload and applicable Blackboard deadline. The requirements above follow the local 21-page COMP3710 draft specification; check for later course announcements and follow the teaching team's code-review instructions.
+The student confirmed that the practical check-off had already been completed, describing it as "last Tuesday" in the confirmation received on 22 October 2026. An exact check-off date and tutor feedback are not reconstructed from that relative date. Before submission, complete the course PR and Turnitin upload and check the applicable Blackboard deadline. The requirements above follow the local 21-page COMP3710 draft specification; follow any later teaching-team instructions.
 
 ## Appendix C. Feasibility review
 
+**Status and provenance.** This is a retrospective reconstruction and update, not the lost original one-page review. On 22 October 2026 the student confirmed that the practical check-off had already been completed (described as "last Tuesday"). The original direction was retained, but the planned maximum of five models expanded to ten completed runs. No exact consultation date, original wording, tutor feedback or original numerical budget is inferred from that confirmation.
+
 **User need and scope.** Evaluate a six-class improved 3D contouring prototype against an implemented baseline on supplied downsampled HipMRI. The comparison records patient-level splits, prostate precision, base/apex overlap, surface errors and disconnected predictions alongside whole-organ overlap.
 
-**Acceptance criteria.** (1) Paired grids/labels pass checks and patients never cross splits. (2) Implement volumetric residual context and multiscale supervision for the Hard route, reporting the stated Test Dice target of 0.7 with explicit aggregation. (3) Report all-class Dice/IoU, prostate precision/recall and physical boundary errors. (4) Measure peak allocated GPU memory, parameter count and reference latency. (5) Supply runnable commands, configuration, selection provenance and 3-5 representative failure analyses. These research criteria are not clinical safety thresholds.
+**Five review criteria and current evidence.** (1) Patient-disjoint lists and paired geometry/labels pass checks: 143/143 Train volumes passed the recorded pipeline audit. (2) Implement residual volumetric context and multiscale outputs; report the Hard-route Dice target of 0.7 with explicit aggregation: v3 Test prostate/small-organ means are 0.7485/0.8145, without per-patient attainment. (3) Compare per-class Dice/IoU, physical boundaries and 3-5 failures: Sections 3.2-3.6 provide these, including regressions. (4) Check compute feasibility within the recorded one-A100, two-CPU, six-hour training allocation: v3 completed in 02:02:48; inference peaked at 0.3458 GiB on K008_Week0. Training peak VRAM was not recorded, so inference memory does not substitute for it. (5) Provide executable commands and fixed-checkpoint reproducibility: the standalone code reproduced all 76 Validation confusion matrices. These are present review criteria, not a claim to reproduce the lost original criteria or clinical safety thresholds.
 
 **Choice and course concepts.** Standard provides volumetric encoder-decoder skip connections. v3 adds residual context, dropout and summed multiscale outputs. Normalisation uses one-group GroupNorm, written GroupNorm(1,C), where C is the number of channels. The work applies 3D convolution, multiclass supervised learning, imbalance weighting and patient-level generalisation analysis. It adapts the three cited papers rather than claiming full reproduction.
 
-**Feasibility evidence.** There are 26/6/6 patients and 143/38/30 volumes. Ten formal models completed 50 epochs. Standard/v3 Validation small-organ scores are 0.8502/0.8564; Test scores are 0.7851/0.8145. The reference inference profile in Section 3.4 records 0.3458 GiB peak allocated memory and 0.1452 s median latency for v3 on K008_Week0. The original v3 training job completed in 02:02:48 including Validation and checkpoint IO; this was not an architecture-only speed comparison.
+**Measured outcome.** There are 26/6/6 patients and 143/38/30 volumes. Ten formal models completed 50 epochs. Standard/v3 Validation small-organ scores are 0.8502/0.8564; Test scores are 0.7851/0.8145. The reference v3 inference latency was 0.1452 s on K008_Week0. Job wall time includes Validation/checkpoint IO, and neither it nor the one-case profile establishes an architecture-only training-speed comparison.
 
 **Risks, budget and fallback.** Each evaluation split contains six patients, Test was inspected repeatedly and no independent-seed or external-cohort comparison was completed. Saving every epoch exhausted HPC storage during A0/A1; both runs resumed and completed 50 epochs. The submission trainer saves latest/best by default, with optional epoch weights. Keep Standard as the comparison model. The edge-sampling candidate passed a Train exposure audit but was not trained; no segmentation gain is attributed to that audit. Further evaluation should use new, independent patients rather than reusing Test for tuning.
 
-**Consultation:** this written review does not establish that the compulsory practical check-off was recorded. The student must confirm that separately with the tutor.
+**Next decision.** Retain the Validation-selected v3 and Standard baseline for the coursework comparison. Further performance claims require an independent patient assessment; the existing Test cohort cannot provide a new blind selection test. This reconstruction documents the present evidence and the student's consultation confirmation; it is not a replacement copy of the original check-off document.

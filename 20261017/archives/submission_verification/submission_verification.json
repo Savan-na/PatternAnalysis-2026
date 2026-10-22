@@ -1,12 +1,12 @@
 {
-  "date": "2026-10-21",
+  "date": "2026-10-22",
   "status": "Standalone code, report, local checks and real-MRI GPU Validation migration replay verified",
   "required_five_files_present": true,
   "runtime_imports_old_research_package": false,
   "raw_datasets_or_weight_files_present": false,
   "markdown_asset_links_resolve": true,
   "local_tests": {
-    "standalone": 8,
+    "standalone": 9,
     "historical_model_parity": 4,
     "passed": true
   },
@@ -28,7 +28,6 @@
   },
   "synthetic_predict_cli": "passed; synthetic NIfTI fixture, not clinical evidence",
   "remaining": [
-    "Student confirmation of tutor check-off",
     "Upstream PR",
     "Turnitin upload",
     "Later code-review response"
@@ -40,11 +39,14 @@
     "config/training.json": "9ee34bb736d260720b96ef5f3958f37a9f1f045a3cc437ee3350954af37afadd",
     "dataset.py": "8a78c9eacdb84755d0696b8f11642a2c9eea2742302adac85ead83724aba9d43",
     "evidence/available_resource_benchmarks.csv": "29352904f030a24c6fe85d713f428aca9bb3669ed8a300ed94fd31714055923a",
+    "evidence/cohort_inference_summary.json": "451835647b637c07336a2921fdd28ecd7452cca0c04b2963a0aa1d5c71793456",
+    "evidence/example_K008_v3_record.json": "e874f7386296e5b63b40fc1ba59b68ccf030292759bf486955873e42c56bc1a7",
     "evidence/experiments.json": "80047fcb5ebcf0522ab216b3e0adff2674386c2229216c9eeacb1001fe35aa87",
     "evidence/foreground_metrics.csv": "c78e889ad16c21ee837e222993db9b9c99464fc63ff4bb60f847919ecaf11eeb",
+    "evidence/local_environment.json": "0a9c8caec757609fdf7a2d314f2aea53b28c71ad5a77d173a1b30628699c51d0",
     "evidence/model_summary.csv": "0a36045e0a85e621a956d6f033a6fdad6b0d2bd631da071a8acceb74411b2beb",
     "evidence/patient_scores.csv": "bf131d2f0c388088255fb2c29d7817ea54732fc2217c4682fb1dd4d3afdf3e1a",
-    "evidence/provenance.json": "3044ee5348baf3198621b67fbda313afe2d99d5845131276bcc2f89890503d1d",
+    "evidence/provenance.json": "37beb5b4c9064582b9de4787503dfb4c67d969883463db213710565e28546daf",
     "evidence/spatial_context_summary.json": "a7595c7a273374ee99b65953cc96665d518e167fa21bc540b699c284de95c5dd",
     "evidence/surface_metrics.csv": "1b0f1b2f4c2114fd59e158a35a246b482ad39c7713be6d8319f0d624a419612f",
     "evidence/training_curves.csv": "e07d9de033e05ecc3571a50fddcd096e9bff2896430de7730352a677733b8138",
@@ -58,12 +60,12 @@
     "figures/method.png": "7d12042af161db3f54eee34c2891d9a57f6d5aae422a57407c0670c61a8056b4",
     "figures/training_and_selection.png": "3dcdb132abbd9c7a66fd3a216ea9bf51803a9c741fb12f35e03fa9e3737614b0",
     "modules.py": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
-    "predict.py": "a884b452fc9f0d2179f23c765c4a2b7ab9e42f1405427fae233ee4a78c0dc2c8",
-    "README.md": "bf0ab49796af9ed33b6770e231f54b81abf26110228d348b6e117ee54ee7dd53",
-    "REPORT.pdf": "8dc51010b583984ee83308455a5d905f60cc2fbb309656aedd2ad487b38f1be8",
+    "predict.py": "5185ff2355282ca69e8e1036132c8137b92d35429919b37cbe365bf763a05d71",
+    "README.md": "303c5e3c9792c60e54add9e407f69f70554742d8cd6662b9c8d9fba076c4d13c",
+    "REPORT.pdf": "1a32410de92b85a1df9ea661f74c02df69c92308563a2ea6eba988296094495f",
     "requirements.txt": "d7f725c5d46fb71e99a36f97936d34caffde0956168d9bf45c7d67e6e8b661bc",
-    "tests/test_submission.py": "10ef6d73dd0c89c2815d8c4eaa7eb2a8e01b3c1c6d83adf1e135827180e245b7",
-    "train.py": "cb60b87302ac130306b04e7e272dfbff07cda79348f3e3e836744af54a5e47b6",
+    "tests/test_submission.py": "be63b61bda6245d725644dee9bac7de4a668b54f2ea13f6adf6a5bfbb25bdcad",
+    "train.py": "63c17fb1d59111b4aab6ed6e61b337c7feefccf848a5ad83864e4138159cce68",
     "utils.py": "6c87662c9271f04d96bbcac71e90bbd2a00ba4004dc2e231906e6d33491388b8"
   },
   "gpu_migration": {
@@ -115,5 +117,13 @@
     "parameter_initialization_and_rng_match_previous_factory": true,
     "test_passed": true
   },
-  "unused_augmentation_declarations_removed": true
+  "unused_augmentation_declarations_removed": true,
+  "documentation_revision_20261022": {
+    "completed_checkoff": "Student confirmation received 2026-10-22; exact consultation date not inferred",
+    "feasibility_review": "Retrospective reconstruction; lost original not recreated verbatim",
+    "cohort_resource_quantiles_verified": true,
+    "saved_record_cli_verified": true,
+    "real_panel_and_predict_cli_replay": "Transfer uploaded by student; remote execution pending",
+    "source_metric_records_unchanged": true
+  }
 }

@@ -15,6 +15,29 @@ import train
 
 
 class SubmissionTests(unittest.TestCase):
+    def test_saved_record_export_recalculates_without_mri_or_weights(self):
+        from contextlib import redirect_stdout
+        from io import StringIO
+        matrix = np.eye(6, dtype=int) * 10
+        matrix[5, 0] = 5
+        row = dict(case="example", confusion=matrix.tolist(), mri_sha256="mri",
+                   mask_sha256="mask", shape_xyz=[2, 3, 4], spacing_mm=[1, 2, 3], surfaces={})
+        bundle = dict(class_order=list(utils.CLASS_NAMES), models={"v3": dict(
+            best_epoch=50, selected={"checkpoint_sha256": "weights"},
+            splits={"validation": [row]})})
+        with tempfile.TemporaryDirectory() as folder:
+            source = Path(folder)/"records.json"; source.write_text(json.dumps(bundle))
+            args = SimpleNamespace(records=source, model="v3", split="validation",
+                                   case="example", output=Path(folder)/"export.json")
+            with patch.object(train, "load_case", side_effect=AssertionError("MRI read")), \
+                 patch.object(torch, "load", side_effect=AssertionError("weight read")), \
+                 redirect_stdout(StringIO()):
+                result = train.inspect_record(args)
+                self.assertEqual(result["per_class"]["Prostate"]["dice"], .8)
+                self.assertEqual(result["selected_epoch"], 50)
+                self.assertEqual(json.loads(args.output.read_text()), result)
+                with self.assertRaises(FileExistsError): train.inspect_record(args)
+
     def test_frozen_patient_split(self):
         record = data.read_split()
         self.assertEqual([len(record[k]) for k in ("train", "validation", "test")], [26, 6, 6])
