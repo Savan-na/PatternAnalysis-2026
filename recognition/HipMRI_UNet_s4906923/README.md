@@ -2,21 +2,17 @@
 
 **COMP3710 Final Assessment | Student ID: s4906923 | Final report updated 22 October 2026**
 
-## 1. Research question and principal findings
+## 1. Research scope and questions
 
-**Research question:** Does three-dimensional and multiscale context improve the anatomical usefulness of pelvic MRI segmentation, particularly prostate base/apex boundaries and separation from nearby organs, enough to justify its computational cost? Higher average Dice alone is insufficient to answer this question.
+**Research focus: the spatial context versus clinical boundary utility dilemma.** High whole-organ Dice can conceal errors at the prostate base and apex, discontinuities between slices, and predictions extending into nearby bladder or rectum. The practical question is whether true 3D continuity and the Improved model's multiscale outputs reduce these local failures compared with a standard 2D baseline, or mainly improve easy central slices while increasing computation.
+
+This report investigates three linked questions in prose. **RQ1:** Where do the tested 3D configurations improve prostate end-region overlap and slice continuity relative to the supplementary 2D configuration? **RQ2:** Does Improved v3 improve local boundaries and adjacent-organ separation beyond Standard 3D, including extreme errors that average Dice can hide? **RQ3:** Do those anatomical gains justify the measured memory and runtime budget in an operational contour-drafting workflow?
+
+The study concerns HipMRI rather than OASIS or CAN architectures. It measures segmentation overlap, physical surface errors, slice-transition proxies and adjacent-organ confusion. It does not measure radiation dose, rectal-wall or bladder-mucosa delineation, treatment toxicity or cancer outcomes. Therefore, the clinical motivation defines which errors matter; it does not establish clinical benefit or safety from these experiments.
 
 **Abstract.** This study compared ten completed training runs on a patient-disjoint HipMRI cohort: 26 Train, 6 Validation and 6 Test patients. Standard 3D U-Net and residual Improved v3 were selected for the final runnable package; every reported model uses its own best measured Validation checkpoint. v3 raised patient-equal Test small-organ Dice from 0.7851 to 0.8145 and five-foreground Dice from 0.8370 to 0.8631. The prostate gain was smaller, from 0.7433 to 0.7485. Median prostate HD95 improved from 7.98 to 6.65 mm, but the worst HD95 increased from 19.23 to 115.37 mm. Existing Test predictions also show that both 3D configurations improve end-region overlap and slice continuity over the supplementary 2D configuration, while v3 does not improve those measures over Standard. Thus, the experiments support useful average segmentation gains, but do not establish consistently better local contours or reliable automated contouring.
 
-| Research question | What would constitute supporting evidence? | Main finding |
-|---|---|---|
-| RQ1: Does 3D context improve spatial consistency over 2D? | Better end-region overlap and fewer missing intermediate slices, alongside whole-organ scores | Both 3D configurations improve these measurements; the comparison also changes other training/model factors |
-| RQ2: Does Improved v3 improve boundaries over Standard 3D? | Gains in prostate ends, adjacent-organ separation and boundary tails, rather than only mean Dice | Higher average overlap and better median prostate HD95, but no end-region gain and worse extreme errors |
-| RQ3: Is the additional computation worthwhile? | A measured accuracy/boundary benefit considered together with memory and latency | Feasible for the downsampled research setting; insufficient evidence for unattended clinical contouring |
-
 The existing Test cohort was inspected during the research process, so these findings are descriptive rather than a fresh blind assessment. The final recommendation is to retain v3 as the leading candidate under the original Validation rule, keep Standard as the reference model, and require human review of organ boundaries. No model is claimed to be best for every patient or metric.
-
-**Reading guide.** Sections 3-5 describe the methods; Section 6 presents the results; Section 7 examines five real-image cases; Section 8 answers RQ1-RQ3 and gives the final recommendation. Installation and running instructions are in Section 9. *Patient-equal* means that each patient has the same weight regardless of their number of visits. A *checkpoint* is a saved set of weights from training.
 
 ## 2. One-page feasibility review
 
@@ -32,7 +28,9 @@ The existing Test cohort was inspected during the research process, so these fin
 
 **Consultation:** this written review does not establish that the compulsory practical check-off was recorded. The student must confirm that separately with the tutor.
 
-## 3. Data, preprocessing and spatial integrity
+## 3. Research methods
+
+### 3.1 Data, preprocessing and spatial integrity
 
 | Split | Patients | Volumes | Purpose |
 |---|---|---|---|
@@ -54,7 +52,7 @@ HipMRI_Study_open/
   semantic_labels_only/PatientID_WeekN_SEMANTIC.nii.gz
 ```
 
-## 4. Models, loss and training
+### 3.2 Model architectures, loss and training
 
 | Item | Standard | Improved v3 |
 |---|---|---|
@@ -77,7 +75,7 @@ Validation runs every five epochs. Pool confusion matrices across visits within 
 
 ![Historical training and checkpoint selection](figures/training_and_selection.png)
 
-## 5. Evaluation definitions and limitations
+### 3.3 Evaluation definitions and limitations
 
 All models use identical patient splits and evaluation grids. 3D inference processes the complete downsampled volume once, not sliding windows. The supplementary 2D model processes slices and reconstructs a volume. No GT-dependent post-processing is used. Taking the largest class logit gives the same class as applying softmax first.
 
@@ -87,9 +85,9 @@ The 95th-percentile Hausdorff distance (HD95) and average symmetric surface dist
 
 **Test has already been repeatedly inspected.** Checkpoints were chosen using Validation. Because Test has already been examined, it is not a fresh blind holdout and should not guide further tuning. Six patients, not 30 correlated visits, are the independent Test units. No external cohort or independent multi-seed replication was completed.
 
-## 6. Results from every completed model
+## 4. Results and model comparisons
 
-### 6.1 Best Validation checkpoints
+### 4.1 Best Validation checkpoints
 
 Every model in the table completed 50 training epochs. Only Standard/v3 runtime implementations are retained here; the other experiments are retained as comparisons, including changes that did not improve performance.
 
@@ -122,7 +120,7 @@ Every model in the table completed 50 training epochs. Only Standard/v3 runtime 
 
 v3's Test small-organ gain over Standard is +0.0294, but only 3/6 patients improve; excluding influential M015 changes the contrast to approximately -0.0050. Validation improves for 5/6 patients. These descriptive sensitivities do not establish population superiority. C's higher Test prostate Dice is reported without switching the primary selection rule after seeing Test.
 
-### 6.2 Test results by class
+### 4.2 Test results by class
 
 | Class | Std Dice | v3 Dice | Std IoU | v3 IoU | Precision Std / v3 | Recall Std / v3 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -137,7 +135,7 @@ v3's Test small-organ gain over Standard is +0.0294, but only 3/6 patients impro
 
 v3 improves all five Test foreground mean Dice values here, but prostate gains only about 0.0052 while precision decreases from 0.7189 to 0.6983. Mean overlap can improve despite more false-positive prostate predictions, and individual cases regress.
 
-### 6.3 Physical boundary reliability
+### 4.3 Physical boundary reliability
 
 | Class | Median HD95 Std / v3 mm | Worst HD95 Std / v3 mm | Median ASSD Std / v3 mm |
 | --- | --- | --- | --- |
@@ -149,7 +147,7 @@ v3 improves all five Test foreground mean Dice values here, but prostate gains o
 
 Median prostate HD95 improves 7.98 to 6.65 mm, while the worst value worsens 19.23 to 115.37 mm. Body/Rectum also retain severe tails. The Hard-route average target of 0.7 is exceeded by v3's Test prostate (0.7485), small-organ (0.8145) and foreground (0.8631) means. The specification does not fully define aggregation; one of six Test patients still has prostate Dice below 0.7. Meeting an average target does not establish local contour safety.
 
-### 6.4 Resources and spatial context
+### 4.4 Resources and spatial context
 
 | Model | Parameters | Peak inference GiB | Reference latency s |
 | --- | --- | --- | --- |
@@ -162,7 +160,7 @@ NVIDIA A100-PCIE-40GB, prepared Validation case K008_Week0, three warm-ups and f
 The 2D model uses less GPU memory (VRAM) during inference but its kernels cannot directly see adjacent slices. 3D context can help continuity yet does not ensure correct prostate ends or exclude distant components. The supplementary 2D arm differs in sampling, weights and width; it is not a clean dimension-only ablation and does not claim to meet the separate Easy-route dataset/target. Measurements of prostate end regions, nearby organs at risk (OAR) and changes between adjacent slices remain in `evidence/experiments.json`.
 
 
-### 6.5 Prostate ends, slice continuity and adjacent-organ errors
+### 4.5 Prostate ends, slice continuity and adjacent-organ errors
 
 The following measurements bring the spatial research question into the report directly. They are calculated from the existing predictions and measurements already recorded for the 30 Test volumes; no new inference, tuning or checkpoint selection was performed.
 
@@ -175,7 +173,7 @@ The following measurements bring the spatial research question into the report d
 | Adjacent-area transition error (dimensionless) | 0.1953 | 0.0685 | 0.0720 |
 | GT Bladder/Rectum voxels labelled Prostate (%) | 0.386 | 0.485 | 0.580 |
 
-End-region values average GT-positive slice Dice within each visit, then visits within each patient, and finally the six patients equally. Base and apex are the physically superior and inferior 20% of GT-positive slices: geometric proxies rather than clinician-defined regions. These slice averages differ from the pooled whole-organ Dice in Section 6.2.
+End-region values average GT-positive slice Dice within each visit, then visits within each patient, and finally the six patients equally. Base and apex are the physically superior and inferior 20% of GT-positive slices: geometric proxies rather than clinician-defined regions. These slice averages differ from the pooled whole-organ Dice in Section 4.2.
 
 The gap statistic is the patient-equal mean fraction of visits with an empty predicted Z slice between nonempty predicted prostate slices. The GT has no such gaps in this cohort. A lower value is consistent with better slice presence, but a continuous prediction can still be in the wrong location. The area-transition error is the absolute difference between prediction and GT mean normalized adjacent-area changes on GT-positive adjacent slice pairs. It is a descriptive shape-change measure, not a validated anatomical quality score.
 
@@ -183,83 +181,87 @@ The adjacent-organ percentage pools counts within each patient before averaging 
 
 **Interpretation.** Standard/v3 improve apex and base overlap over this 2D configuration and show fewer internal gaps. However, v3's gains over Standard are concentrated in central slices; its apex and base means are slightly lower, its continuity measures are not better, and its adjacent-organ confusion percentage is higher. These results directly qualify the favourable whole-organ average: more sophisticated 3D processing did not consistently solve the boundary problem.
 
-## 7. Five real-image failure autopsies
+### 4.6 Five real-image failure autopsies
 
 These unchanged historical fixed-checkpoint panels are real MRI, not simulated or retouched contours. Cyan=GT, orange=prediction, red=FP, blue=FN. Seven labelled historical model columns are retained for provenance; compare **Standard** and **v3** for the submitted pair. Open the linked PNGs at full resolution to inspect small structures.
 
 Ordinary panels show the GT-largest-area slice and the slice with largest A1 FP+FN area, shared across models. The Body panel uses A1 maximum-error planes. This purposive selection is not a random sample or a whole-volume score. Prostate base/apex uses physical superior/inferior ordering as a geometric proxy, not expert end-region annotation.
 
-### 7.1 M015_Week7, Test: bladder localisation
+#### 4.6.1 M015_Week7, Test: bladder localisation
 
 ![M015 bladder errors](figures/failure_bladder.png)
 
 Standard includes distant non-bladder tissue and misses much of the bladder; v3 reduces distant predictions but still undersegments the target. Whole-volume bladder Dice is 0.0676 Standard versus 0.5224 v3; HD95 is 109.49 versus 58.84 mm. This is improvement within a poor case, not a successful contour. Patient-specific anatomy/intensity is a plausible trigger, not an established cause. The patient's influence requires sensitivity analysis rather than assuming the Test mean represents universal gain.
 
-### 7.2 W029_Week6, Test: prostate ends and adjacent tissue
+#### 4.6.2 W029_Week6, Test: prostate ends and adjacent tissue
 
 ![W029 prostate ends](figures/failure_prostate_ends.png)
 
 Both models have poor base overlap and extend beyond GT. Whole-volume prostate Dice is 0.4623 Standard versus 0.4377 v3; base-region mean slice Dice is 0.2111 versus 0.2158. Slight end-region improvement does not imply whole-organ improvement. HD95 increases 19.23 to 20.59 mm. Shrinking end cross-sections and neighbouring structures make precision difficult; no dose impact or expert clinical adjudication was measured.
 
-### 7.3 K018_Week4, Validation: Body and distant components
+#### 4.6.3 K018_Week4, Validation: Body and distant components
 
 ![K018 Body errors](figures/failure_body.png)
 
 v3 greatly reduces the gross outer-volume pattern in v1, but residual distant predictions remain. Standard/v3 Body Dice is almost equal (0.9740/0.9742); HD95 is 4.75/6.24 mm, and distant Background-to-Body voxels are 5/3,128. A large correct interior dominates Dice while small distant components damage surface reliability. Normalisation/context is a supported association, not proof of one isolated cause.
 
-### 7.4 J026_Week4, Validation: rectum extent
+#### 4.6.4 J026_Week4, Validation: rectum extent
 
 ![J026 rectum errors](figures/failure_rectum.png)
 
 The difficult lower slice shows predictions beyond the labelled rectum; organ-centre agreement misses this extent failure. Whole-volume Dice improves 0.8110 to 0.8437, ASSD improves 2.00 to 1.73 mm, but HD95 remains 6.24 mm. Precision-recall and extent errors coexist with better average localisation; this is not a claim of anatomical correctness.
 
-### 7.5 B040_Week1, Validation: bone coverage
+#### 4.6.5 B040_Week1, Validation: bone coverage
 
 ![B040 Bones errors](figures/failure_bones.png)
 
 The pelvis contains both missing bone and extra predicted regions. v3 improves whole-volume Bones Dice 0.8607 to 0.9026 and HD95 7.41 to 4.58 mm, but the difficult lower slice retains FP and FN. Imbalance/coverage concerns are not limited to three small organs. Bones and Body must be reported explicitly rather than hidden by small-organ-only analysis.
 
-## 8. Discussion: how the results answer the research question
+## 5. Final discussion and engineering recommendation
 
-### 8.1 RQ1: What did three-dimensional context contribute?
+### 5.1 RQ1: What did three-dimensional context contribute?
 
 Relative to the supplementary 2D configuration, Standard and v3 improve whole-prostate Test Dice from 0.6611 to 0.7433/0.7485. Apex mean slice Dice increases from 0.5186 to 0.7544/0.7523, and base Dice from 0.3473 to 0.5097/0.5069. The patient-equal frequency of visits with internal predicted prostate gaps falls from 43.75% to 0.00%/8.33%. The area-transition measurements also more closely resemble GT. Together, these observations support the usefulness of the implemented 3D configurations for spatial consistency beyond easy central overlap.
 
 This does not isolate a causal effect of dimensionality. The 2D run also differs in width, organ-aware sampling and class weights. The supported conclusion is that the tested 3D configurations performed better on these measurements, not that 3D kernels alone caused every gain. The low base-region means and the W029 example show that neighbouring-slice context still leaves ambiguous organ ends unresolved.
 
-### 8.2 RQ2: Did Improved v3 solve the boundary problem beyond Standard?
+### 5.2 RQ2: Did Improved v3 solve the boundary problem beyond Standard?
 
 The answer is mixed. v3 improves all five foreground Test mean Dice values, including a 0.0547 increase for Bladder and a smaller 0.0052 increase for Prostate. Median prostate HD95 improves by about 1.33 mm. These are useful average gains, and the bone and rectum examples show concrete benefits in some anatomy.
 
 The evidence does not support consistent boundary superiority. Compared with Standard, v3 has slightly lower apex/base slice Dice, a higher patient-equal frequency of internal gaps, and more GT Bladder/Rectum voxels assigned to Prostate. Prostate precision falls from 0.7189 to 0.6983 while recall rises from 0.8415 to 0.8516. Worst prostate and rectum HD95 rise to 115.37 and 109.19 mm. K018 demonstrates how nearly equal Body Dice can coexist with thousands of distant false-positive voxels. Therefore, v3's average improvement does not establish more dependable local contours.
 
-### 8.3 RQ3: Is the measured benefit worth the computation?
+### 5.3 RQ3: Is the measured benefit worth the computation?
 
 For the reference downsampled volume, Standard uses about 3.23 times the 2D peak allocated inference memory, and v3 about 4.54 times. v3 uses about 1.41 times Standard's memory and has 2.37 million versus 1.41 million parameters. Reference inference latencies are similar: 0.1452 s for v3 and 0.1552 s for Standard. Five repetitions on one case do not establish a general speed advantage.
 
 The additional memory is feasible on the tested A100 and accompanies higher average segmentation scores. That supports using v3 as a research candidate when average organ segmentation is the objective. It does not establish value for unattended contouring, because local failures would still require review. These are inference measurements on downsampled volumes and small-width networks; they do not demonstrate a universal 5-10 times training-cost penalty or predict full-resolution deployment cost.
 
-### 8.4 What mechanisms are supported, and what remains uncertain?
+### 5.4 What mechanisms are supported, and what remains uncertain?
 
 The earlier v1 had worse Body HD95 in all 38 Validation volumes: median 76.61 mm versus Standard 4.75 mm. Selected-case sliding-window inference with unchanged v1 weights reduced distant Body predictions but damaged small-organ overlap. Removing auxiliary outputs from a sum-trained model also severely degraded performance. Changing v1's InstanceNorm to GN1 in v3 reduced the gross Body failure and improved the original Validation score. These observations justify investigating normalisation, input context and output-head interactions.
 
-They do not establish one universal cause. A main-only diagnostic changes how a sum-trained model is used; it is not a comparison with a separately retrained architecture. A numerical head-replay control failed with small logit differences, so it is not used as causal proof. A Train edge-sampling audit passed, but exposure checks alone cannot show a segmentation benefit. Loss weighting, limited patient diversity and optimisation variability remain plausible contributors. The tested A1/L/S configurations did not improve the overall result: these changed paired spatial augmentation, small-organ weights and the learning-rate schedule, respectively. The A1 comparison is quantified in Section 6.1; its result does not establish that augmentation is ineffective in other settings.
+They do not establish one universal cause. A main-only diagnostic changes how a sum-trained model is used; it is not a comparison with a separately retrained architecture. A numerical head-replay control failed with small logit differences, so it is not used as causal proof. A Train edge-sampling audit passed, but exposure checks alone cannot show a segmentation benefit. Loss weighting, limited patient diversity and optimisation variability remain plausible contributors. The tested A1/L/S configurations did not improve the overall result: these changed paired spatial augmentation, small-organ weights and the learning-rate schedule, respectively. The A1 comparison is quantified in Section 4.1; its result does not establish that augmentation is ineffective in other settings.
 
-### 8.5 Generalisation and strength of evidence
+### 5.5 Generalisation and strength of evidence
 
 v3 improves the original Validation primary score for five of six patients, but its existing Test small-organ gain occurs in only three of six. Excluding influential patient M015 changes the Test contrast with Standard from positive to approximately -0.0050. The same-recipe control C also differs from the earlier v3 run despite the same nominal seed and has higher Test prostate Dice. These observations limit claims of a stable, population-wide advantage.
 
 All checkpoints were selected by Validation rather than by choosing the best Test epoch. Nevertheless, Test was repeatedly inspected during research, and no external cohort or independent multi-seed study was completed. Six patients per evaluation split provide limited diversity. The results therefore document observed gains and regressions in this cohort; they do not estimate clinical reliability in a new hospital or patient population.
 
-### 8.6 Conclusion and engineering recommendation
+### 5.6 Conclusion and engineering recommendation
 
 Retain v3 as the candidate selected by the original Validation rule and Standard as the implemented reference. The evidence supports improved average foreground segmentation, with some useful gains in bone coverage, rectum localisation and difficult bladder cases. It also shows persistent prostate-end errors, adjacent-organ confusion and distant components. A workflow using these outputs should retain human contour review, with explicit inspection of prostate ends and neighbouring organs; no automatic clinical acceptance threshold was established here.
 
 If further research is commissioned, first reserve a new patient-independent holdout and estimate variability across seeds. Then test one controlled intervention using Train/Validation, with both average overlap and boundary/continuity outcomes specified in advance. The current evidence does not justify further tuning against the already inspected Test cohort. For this assessment, the strongest conclusion is that 3D context is useful in the tested configurations, while higher mean Dice and a more elaborate architecture are insufficient evidence of reliable clinical boundaries.
 
-## 9. Environment and executable usage
+## 6. Artificial Intelligence Usage Disclosure
 
-### 9.1 Install and check
+ChatGPT/Codex assisted with scaffolding/refactoring, debugging, audits, metric checks, literature interpretation, plotting and report drafting, including the standalone submission packaging. Verification included source/weight hashes, historical initialization and actual-weight CPU logit parity, paired geometry/metric tests, all-head gradients, recovery equivalence and recomputation from integer confusion counts. Historical GPU audits reproduced fixed predictions; the standalone migration replay also reproduced all 76 Validation matrices with matching input/weight/source identities. No new training or Test decoding was performed for that migration check. Failed controls and negative experiments were not converted into positive findings. The student remains personally responsible for every formula/code line, understanding the work and responding to reviewers; this disclosure is not independent certification of all AI output.
+
+## Appendix A. Environment and executable usage
+
+### A.1 Install and check
 
 The tested local CPU environment is Python 3.11, PyTorch 2.13.0+cpu, NumPy 2.4.6, SciPy 1.17.1, nibabel 5.4.2 and Matplotlib 3.11.0. `requirements.txt` pins core packages. Historical GPU records specify Python 3.11.15, PyTorch 2.13.0+cu130 and NumPy 2.4.6 on A100; not all historical auxiliary versions were recorded. These CPU package versions are not a complete record of the historical GPU environment. Install the official CUDA PyTorch wheel compatible with your compute environment; numerical replay is separately verified.
 
@@ -271,7 +273,7 @@ python -B -m unittest discover -s tests -v
 
 In the existing Windows Conda environment, `MKL_THREADING_LAYER=SEQUENTIAL` and `OMP_NUM_THREADS=1` avoided an OpenMP runtime conflict; do not use a duplicate-runtime override. Run GPU training on allocated compute nodes, not the login node. A typical fresh-run allocation is one A100, two CPU cores, up to six hours; load and IO vary.
 
-### 9.2 Train, validate and save
+### A.2 Train, validate and save
 
 ```bash
 python -B train.py train --model standard --dataset-root /path/to/HipMRI_Study_open --run-dir /path/to/new_standard --device cuda
@@ -286,7 +288,7 @@ python -B train.py train --model v3 --dataset-root /path/to/HipMRI_Study_open --
 
 Resume requires the same source/config/runtime identity and submission-format recovery files. It does not mutate historical research runs. Two writers are rejected by `.writer.lock`; after a force-kill, confirm no writer remains before removing that stale lock. New 50-epoch training is not required to evaluate existing selected weights.
 
-### 9.3 Evaluate fixed weights and export an example
+### A.3 Evaluate fixed weights and export an example
 
 Supply trusted local checkpoints explicitly; weights are excluded from Git. The selected checkpoint hashes appear in `evidence/experiments.json`. Existing private backups can be used in place without copying into this folder. Historical files contain Python optimizer/RNG objects: load only trusted checkpoints.
 
@@ -298,11 +300,11 @@ python -B predict.py --model v3 --checkpoint /path/to/v3/best.pt --dataset-root 
 
 Use `--model standard` with Standard weights for the baseline. Outputs: `metrics.json`, `overlay.png`, `prediction_downsampled.nii.gz`. Inference uses MRI only; paired GT is used afterwards for metrics/illustration. The exported NIfTI uses the downsampled affine, not original-resolution geometry. Outputs refuse overwrite. Without authorised MRI/weights, use the synthetic tests and inspect the recorded metrics; random weights must not be substituted for experimental results.
 
-### 9.4 Completed Validation verification
+### A.4 Completed Validation verification
 
 Before submission, the standalone implementation reproduced all 76 Standard/v3 Validation confusion matrices, input and weight identities, and physical surface measurements. Job 682858 completed in 00:04:49 with exit 0:0 on 21 October 2026, using PyTorch 2.13.0+cu130. All seven package tests passed before that check. The Validation scores were 0.8502228594450512 (Standard) and 0.8563563984705311 (v3). Verification scripts, backup receipts and editorial checks are stored in the separate research archive; they are not needed to run the submitted models. This check establishes agreement with the earlier implementation, not new generalisation or clinical safety.
 
-### 9.5 Export the report for Turnitin
+### A.5 Export the report for Turnitin
 
 ```bash
 python -m pip install reportlab==5.0.1
@@ -311,7 +313,7 @@ python -B export_report.py
 
 `REPORT.pdf` is generated directly from this README and its figures. The feasibility review occupies one dedicated page. Review the export before submitting; this command does not upload to Turnitin.
 
-## 10. Files, experiment records and assessment requirements
+## Appendix B. Files, experiment records and assessment requirements
 
 ```text
 HipMRI_UNet_s4906923/
@@ -346,14 +348,10 @@ The current eight-test suite covers split leakage rejection, NIfTI pairing, spat
 
 Before submission, confirm the tutor check-off, course PR, Turnitin upload and applicable Blackboard deadline. The requirements above follow the local 21-page COMP3710 draft specification; check for later course announcements and follow the teaching team's code-review instructions.
 
-## 11. References and implementation attribution
+## Appendix C. References and implementation attribution
 
 1. Ronneberger, Fischer and Brox. *U-Net: Convolutional Networks for Biomedical Image Segmentation*. 2015. https://arxiv.org/abs/1505.04597
 2. Cicek et al. *3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation*. 2016. https://arxiv.org/abs/1606.06650
 3. Isensee et al. *Brain Tumor Segmentation and Radiomics Survival Prediction: Contribution to the BRATS 2017 Challenge*. 2018. https://arxiv.org/abs/1802.10508
 
 These motivate skips, volumetric context, residual blocks and multiscale supervision. GroupNorm, width, objective and preprocessing are explicit project adaptations; no paper is claimed to validate this exact HipMRI system. The package refactors this project's own verified implementation, not an externally pretrained model. Retain attribution when reusing components.
-
-## Artificial Intelligence Usage Disclosure
-
-ChatGPT/Codex assisted with scaffolding/refactoring, debugging, audits, metric checks, literature interpretation, plotting and report drafting, including the standalone submission packaging. Verification included source/weight hashes, historical initialization and actual-weight CPU logit parity, paired geometry/metric tests, all-head gradients, recovery equivalence and recomputation from integer confusion counts. Historical GPU audits reproduced fixed predictions; the standalone migration replay also reproduced all 76 Validation matrices with matching input/weight/source identities. No new training or Test decoding was performed for that migration check. Failed controls and negative experiments were not converted into positive findings. The student remains personally responsible for every formula/code line, understanding the work and responding to reviewers; this disclosure is not independent certification of all AI output.

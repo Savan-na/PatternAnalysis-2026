@@ -79,7 +79,7 @@ def main():
             i+=1;continue
         heading=re.match(r"^(#{1,4}) (.*)",line)
         if heading:
-            if heading[2].startswith(("2. One-page feasibility", "3. Data, preprocessing")): story.append(PageBreak())
+            if heading[2].startswith(("2. One-page feasibility", "3. Research methods")): story.append(PageBreak())
             level=len(heading[1]);name="Title" if level==1 else f"Heading{level-1}"
             story.append(Paragraph(inline(heading[2]),styles[name]));i+=1;continue
         paragraph=[line];i+=1
@@ -93,12 +93,12 @@ def main():
     grouped=[];block=[];in_case=False;in_references=False
     for flow in story:
         text=getattr(flow,"text","")
-        is_case=bool(re.match(r"7\.[1-5] ",text))
-        is_next=text.startswith("8. ")
+        is_case=bool(re.match(r"4\.6\.[1-5] ",text))
+        is_next=text.startswith("5. ")
         if is_case or (in_case and is_next):
             if block:grouped.append(KeepTogether(block));block=[]
             in_case=is_case
-        if text.startswith("11. References"):
+        if text.startswith("Appendix C. References"):
             in_references=True
         if in_case or in_references:block.append(flow)
         else:grouped.append(flow)
