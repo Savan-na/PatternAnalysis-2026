@@ -63,7 +63,9 @@ def main():
                 if not all(re.fullmatch(r":?-+:?",cell.replace(" ","")) for cell in row):
                     rows.append([Paragraph(inline(cell),styles["Cell"]) for cell in row])
                 i+=1
-            n=len(rows[0]);tab=Table(rows,colWidths=[width/n]*n,repeatRows=1,hAlign="LEFT",splitByRow=0,splitInRow=0)
+            n=len(rows[0])
+            development_table = rows[0][0].text == "Run / parent"
+            tab=Table(rows,colWidths=[width/n]*n,repeatRows=1,hAlign="LEFT",splitByRow=int(development_table),splitInRow=0)
             tab.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.HexColor("#e7edf3")),
                 ("VALIGN",(0,0),(-1,-1),"TOP"),("GRID",(0,0),(-1,-1),.3,colors.HexColor("#c9d0d8")),
                 ("TOPPADDING",(0,0),(-1,-1),5),("BOTTOMPADDING",(0,0),(-1,-1),5)]))
@@ -79,16 +81,25 @@ def main():
             i+=1;continue
         heading=re.match(r"^(#{1,4}) (.*)",line)
         if heading:
-            if heading[2].startswith(("2. One-page feasibility", "3. Research methods")): story.append(PageBreak())
+            if heading[2].startswith(("3. Research methods", "Appendix C. One-page feasibility")): story.append(PageBreak())
             level=len(heading[1]);name="Title" if level==1 else f"Heading{level-1}"
             story.append(Paragraph(inline(heading[2]),styles[name]));i+=1;continue
         paragraph=[line];i+=1
-        while i<len(lines) and lines[i].strip() and not re.match(r"^(#|\||```|!\[)",lines[i].strip()):
+        while i<len(lines) and lines[i].strip() and not re.match(r"^(#|\||```|!\[|\d+\.\s)",lines[i].strip()):
             paragraph.append(lines[i].strip());i+=1
         content = Paragraph(inline(" ".join(paragraph)), styles["Text"])
         if paragraph[0].startswith(("Every model in the table", "These unchanged historical", "Ordinary panels show")):
             content.keepWithNext = True
         story.append(content)
+    # Keep a code block with its heading or introductory paragraph.
+    linked=[];index=0
+    while index<len(story):
+        if (isinstance(story[index],Paragraph) and index+1<len(story)
+                and isinstance(story[index+1],KeepTogether)):
+            linked.append(KeepTogether([story[index],*story[index+1]._content]));index+=2
+        else:
+            linked.append(story[index]);index+=1
+    story=linked
     # Keep each clinical heading, figure and autopsy together on a page.
     grouped=[];block=[];in_case=False;in_references=False
     for flow in story:

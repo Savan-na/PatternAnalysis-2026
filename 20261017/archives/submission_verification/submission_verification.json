@@ -18,8 +18,8 @@
     "spatial_context_measurements": 18
   },
   "pdf": {
-    "pages": 13,
-    "feasibility_review_page": 2,
+    "pages": 15,
+    "feasibility_review_page": 15,
     "rendered_and_visually_checked": true
   },
   "synthetic_predict_cli": "passed; synthetic NIfTI fixture, not clinical evidence",
@@ -40,11 +40,11 @@
     "evidence/foreground_metrics.csv": "c78e889ad16c21ee837e222993db9b9c99464fc63ff4bb60f847919ecaf11eeb",
     "evidence/model_summary.csv": "0a36045e0a85e621a956d6f033a6fdad6b0d2bd631da071a8acceb74411b2beb",
     "evidence/patient_scores.csv": "bf131d2f0c388088255fb2c29d7817ea54732fc2217c4682fb1dd4d3afdf3e1a",
-    "evidence/provenance.json": "20654be65a0d56eba10b30997ecf753160555ed4facb510f6238985574f758e8",
+    "evidence/provenance.json": "e188fa8331af6f5d7e5c8752b35537aab1eef054e7e56076b3aaa92a2b63fec5",
     "evidence/spatial_context_summary.json": "a7595c7a273374ee99b65953cc96665d518e167fa21bc540b699c284de95c5dd",
     "evidence/surface_metrics.csv": "1b0f1b2f4c2114fd59e158a35a246b482ad39c7713be6d8319f0d624a419612f",
     "evidence/training_curves.csv": "e07d9de033e05ecc3571a50fddcd096e9bff2896430de7730352a677733b8138",
-    "export_report.py": "449345dcc2c3dcc5705b596e39413634186a2e454210f24f6cb793223b0cb6b8",
+    "export_report.py": "c73e1ab5d8f172444b9145e20e2cb1fed01bf4a7583abc4a2ce6c3d48e1d2650",
     "figures/failure_bladder.png": "b19326f250acf041371b0699fc7dfc45fc5a686375c58bc9e94d76e9b4ca080b",
     "figures/failure_body.png": "cd16b47656440fbb8284b9283633afb9eec11d059e4e99e81f311685ac5bb258",
     "figures/failure_bones.png": "a56b42acf1ed0836a560eb1b63dc6d7bd64c618f7316f821552a9f7a72baa9a1",
@@ -55,8 +55,8 @@
     "figures/training_and_selection.png": "3dcdb132abbd9c7a66fd3a216ea9bf51803a9c741fb12f35e03fa9e3737614b0",
     "modules.py": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
     "predict.py": "a884b452fc9f0d2179f23c765c4a2b7ab9e42f1405427fae233ee4a78c0dc2c8",
-    "README.md": "1ce1154dc1965bedd9aa8b4330c7bfd8ab8802bfdc6a49acdc5666d25ed40b58",
-    "REPORT.pdf": "ecaa24efdec0b2d38dda1ac98dc6051a9bf0345b489ce545467006709ba356be",
+    "README.md": "8518fc24c1b32a3c5480631960518f5f8f0000ee3eb49c355416744a979c6d1d",
+    "REPORT.pdf": "043b07aaa77998c9e334fa130b295704b41b29c18876b08c0ed3124d78834531",
     "requirements.txt": "d7f725c5d46fb71e99a36f97936d34caffde0956168d9bf45c7d67e6e8b661bc",
     "tests/test_submission.py": "10ef6d73dd0c89c2815d8c4eaa7eb2a8e01b3c1c6d83adf1e135827180e245b7",
     "train.py": "cb60b87302ac130306b04e7e272dfbff07cda79348f3e3e836744af54a5e47b6",
@@ -80,7 +80,10 @@
     "numerical_table_rows_unchanged": true,
     "replayed_runtime_executable_ast_unchanged": true,
     "proof": "20261017/archives/submission_verification/editorial_source_equivalence.json",
-    "notes": "Readability edits only in model/data/inference/replay runtime; verification tools also accept the documented editorial equivalence; PDF tables remain on single pages."
+    "notes": "Readability edits only in model/data/inference/replay runtime; verification tools also accept the documented editorial equivalence; PDF tables remain on single pages.",
+    "architecture_specification_checked_against_modules": true,
+    "all_ten_run_designs_documented": true,
+    "pretraining_summary_matches_hashed_train_audits": true
   },
   "archive_location": "20261017/archives/submission_verification",
   "archive_cleanup": {

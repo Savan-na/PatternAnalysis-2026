@@ -2,35 +2,38 @@
 
 **COMP3710 Final Assessment | Student ID: s4906923 | Final report updated 22 October 2026**
 
-## 1. Research scope and questions
+## 1. Abstract
+
+This study compared ten completed training runs on a patient-disjoint HipMRI cohort: 26 Train, 6 Validation and 6 Test patients. Standard 3D U-Net and residual Improved v3 were selected for the final runnable package; every reported model uses its own best measured Validation checkpoint. v3 raised patient-equal Test small-organ Dice from 0.7851 to 0.8145 and five-foreground Dice from 0.8370 to 0.8631. The prostate gain was smaller, from 0.7433 to 0.7485. Median prostate HD95 improved from 7.98 to 6.65 mm, but the worst HD95 increased from 19.23 to 115.37 mm. Existing Test predictions also show that both 3D configurations improve end-region overlap and slice continuity over the supplementary 2D configuration, while v3 does not improve those measures over Standard. Thus, the experiments support useful average segmentation gains, but do not establish consistently better local contours or reliable automated contouring.
+
+## 2. Introduction
 
 **Research focus: the spatial context versus clinical boundary utility dilemma.** High whole-organ Dice can conceal errors at the prostate base and apex, discontinuities between slices, and predictions extending into nearby bladder or rectum. The practical question is whether true 3D continuity and the Improved model's multiscale outputs reduce these local failures compared with a standard 2D baseline, or mainly improve easy central slices while increasing computation.
 
-This report investigates three linked questions in prose. **RQ1:** Where do the tested 3D configurations improve prostate end-region overlap and slice continuity relative to the supplementary 2D configuration? **RQ2:** Does Improved v3 improve local boundaries and adjacent-organ separation beyond Standard 3D, including extreme errors that average Dice can hide? **RQ3:** Do those anatomical gains justify the measured memory and runtime budget in an operational contour-drafting workflow?
+This report investigates three linked questions. **RQ1:** Where do the tested 3D configurations improve prostate end-region overlap and slice continuity relative to the supplementary 2D configuration? **RQ2:** Does Improved v3 improve local boundaries and adjacent-organ separation beyond Standard 3D, including extreme errors that average Dice can hide? **RQ3:** Do those anatomical gains justify the measured memory and runtime budget in an operational contour-drafting workflow?
 
 The study concerns HipMRI rather than OASIS or CAN architectures. It measures segmentation overlap, physical surface errors, slice-transition proxies and adjacent-organ confusion. It does not measure radiation dose, rectal-wall or bladder-mucosa delineation, treatment toxicity or cancer outcomes. Therefore, the clinical motivation defines which errors matter; it does not establish clinical benefit or safety from these experiments.
 
-**Abstract.** This study compared ten completed training runs on a patient-disjoint HipMRI cohort: 26 Train, 6 Validation and 6 Test patients. Standard 3D U-Net and residual Improved v3 were selected for the final runnable package; every reported model uses its own best measured Validation checkpoint. v3 raised patient-equal Test small-organ Dice from 0.7851 to 0.8145 and five-foreground Dice from 0.8370 to 0.8631. The prostate gain was smaller, from 0.7433 to 0.7485. Median prostate HD95 improved from 7.98 to 6.65 mm, but the worst HD95 increased from 19.23 to 115.37 mm. Existing Test predictions also show that both 3D configurations improve end-region overlap and slice continuity over the supplementary 2D configuration, while v3 does not improve those measures over Standard. Thus, the experiments support useful average segmentation gains, but do not establish consistently better local contours or reliable automated contouring.
-
 The existing Test cohort was inspected during the research process, so these findings are descriptive rather than a fresh blind assessment. The final recommendation is to retain v3 as the leading candidate under the original Validation rule, keep Standard as the reference model, and require human review of organ boundaries. No model is claimed to be best for every patient or metric.
 
-## 2. One-page feasibility review
-
-**User need and scope.** Evaluate a six-class improved 3D contouring prototype against an implemented baseline on supplied downsampled HipMRI. Prioritise patient independence, prostate precision and local boundary failures alongside overlap.
-
-**Acceptance criteria.** (1) Paired grids/labels pass checks and patients never cross splits. (2) Implement volumetric residual context and multiscale supervision for the Hard route, reporting the stated Test Dice target of 0.7 with explicit aggregation. (3) Report all-class Dice/IoU, prostate precision/recall and physical boundary errors. (4) Measure peak allocated GPU memory, parameter count and reference latency. (5) Supply runnable commands, configuration, selection provenance and 3-5 representative failure analyses. These research criteria are not clinical safety thresholds.
-
-**Choice and course concepts.** Standard provides volumetric encoder-decoder skip connections. v3 adds residual context, dropout and summed multiscale outputs. Normalisation uses one-group GroupNorm, written GroupNorm(1,C), where C is the number of channels. The work applies 3D convolution, multiclass supervised learning, imbalance weighting and patient-level generalisation analysis. It adapts the three cited papers rather than claiming full reproduction.
-
-**Feasibility evidence.** There are 26/6/6 patients and 143/38/30 volumes. Ten formal models completed 50 epochs. Standard/v3 Validation small-organ scores are 0.8502/0.8564; Test scores are 0.7851/0.8145. A100 profiling below establishes operational feasibility. The original v3 training job completed in 02:02:48 including checkpoint IO and Validation; filesystem load affects wall time.
-
-**Risks, budget and fallback.** Six evaluation patients per split, repeated visits, imbalance, input-context sensitivity and boundary outliers limit inference. Saving every epoch previously exhausted storage on the high-performance computing (HPC) system. The submission trainer saves latest/best by default, with optional epoch weights. Packaging and the standalone Validation check are now complete; confirm the course submission requirements before considering more tuning. Keep Standard as a fallback. Stronger claims about generalisation require evaluation on new, independent patients. The earlier proposed edge-sampling intervention was revised after diagnostics; its audit alone is not a completed segmentation improvement.
-
-**Consultation:** this written review does not establish that the compulsory practical check-off was recorded. The student must confirm that separately with the tutor.
+**Report organisation.** Section 3 documents the pretraining data checks, the two final architectures, the training protocol and the development of all ten model configurations. Section 4 presents the measured comparisons and five image-based failure analyses; Section 5 gives the engineering recommendation. The [one-page feasibility review is retained in Appendix C](#appendix-c-one-page-feasibility-review), within this README as required by the coursework.
 
 ## 3. Research methods
 
-### 3.1 Data, preprocessing and spatial integrity
+### 3.1 Pretraining data investigation, preprocessing and spatial integrity
+
+**Pretraining data investigation and acceptance decision.** Training began only after checking the source pairs, the actual preprocessing path, the delivered samples and basic learning behaviour. The initial audit decoded Train arrays only; Validation/Test filenames were inventoried to check the split, without using their label distributions to design the recipe.
+
+| Check before formal cohort training | Recorded evidence and decision |
+|---|---|
+| Cohort and mechanical integrity | All 143 Train MRI/mask pairs from 26 patients were audited; no inventory/case errors, non-finite values or illegal labels were found. All six labels occurred in every Train volume; no identical-file hash groups were found within Train. |
+| Geometry and gross alignment | Every MRI/mask affine matched exactly. All Train MRI used LPS orientation and millimetres; 142 volumes were 256x256x128 and one was 256x256x144. Two axial overlays per volume showed no obvious gross displacement. This screen did not certify every local contour. |
+| Documented metadata warning | All 143 mask headers left spatial units unspecified. Matching grids, affines and spacings supported using the paired MRI geometry, with this limitation retained rather than silently correcting the source. |
+| Distribution and supervision | Train-only counts showed Background 59.99%, Body 35.75%, Bones 3.41%, Bladder 0.60%, Rectum 0.15% and Prostate 0.11%. Visit counts varied from 1 to 8 per patient. This motivated patient-balanced sampling and Train-derived CE weights, rather than treating correlated visits as independent patients. |
+| Actual preprocessing | The factor-two pipeline processed 143/143 Train cases without errors; all small organs survived. Prostate physical label volume after/before resampling ranged from 0.9383 to 1.0423. Normalised nonzero MRI values had mean approximately 0 and standard deviation approximately 1. Organ survival did not prove thin-boundary preservation. |
+| Delivered samples and learning checks | Patient-balanced CPU sampling/tensor checks preceded a paired GPU optimiser smoke and full-volume capacity probe. In a controlled two-patch, 500-update check, unweighted CE left Standard predicting no small-organ voxels; Train-derived weights enabled fitting those same organs. This justified a weighted learning protocol, not a claim about unseen-patient accuracy. |
+
+**Go/no-go interpretation.** Zero unresolved mechanical errors, matching paired geometry, preserved labels through the actual transform, finite model inputs, verified sampling and a working optimiser/inference path supported proceeding to controlled training. They established usable engineering inputs, not expert-certified annotations or clinical suitability. The unspecified mask units and downsampling's potential loss of millimetre-scale detail remained explicit limitations. The numerical summaries and original audit hashes are retained under `pretraining_review` in `evidence/provenance.json`.
 
 | Split | Patients | Volumes | Purpose |
 |---|---|---|---|
@@ -52,20 +55,42 @@ HipMRI_Study_open/
   semantic_labels_only/PatientID_WeekN_SEMANTIC.nii.gz
 ```
 
-### 3.2 Model architectures, loss and training
+### 3.2 Final model architectures: Standard 3D and Improved v3
 
-| Item | Standard | Improved v3 |
+**Why these architectures?** Standard supplies an implemented volumetric encoder-decoder reference. The residual Improved family adapts Isensee-style context modules and multiscale supervision to the coursework Hard route. The compact starting width of eight channels makes the downsampled experiments feasible; it is a project choice rather than a full-size reproduction of a cited paper. The following specification describes the networks without requiring the reader to inspect their implementation.
+
+| Property | Standard 3D U-Net | Improved 3D U-Net v3 |
 |---|---|---|
-| Backbone | Four-level 3D U-Net, width 8 | Residual 3D U-Net, width 8 |
-| Normalisation | GroupNorm(1,C) | 14 GroupNorm(1,C) sites |
-| Activation / upsampling | ReLU / transposed convolution | LeakyReLU / interpolation plus convolution |
-| Residual / dropout | No / none | Yes / 0.3 |
-| Output | One full-resolution head | Main + resized half + quarter logits |
-| Parameters | 1,412,550 | 2,366,946 |
+| Input and output | One MRI channel; six class logits | One MRI channel; six combined class logits |
+| Feature hierarchy | Five resolutions, channels 8,16,32,64,128; four downsampling steps | Same five resolutions and channel widths |
+| Encoder stage | Two 3x3x3 convolutions, each followed by GN1 and ReLU | 3x3x3 stem; a residual context block at every resolution |
+| Downsampling | 2x2x2 max pooling, stride 2 | 3x3x3 convolution, stride 2, padding 1; channels double |
+| Decoder step | 2x2x2 transposed convolution, stride 2; concatenate matching encoder features; two-convolution block | Nearest-neighbour upsampling to the skip grid, 3x3x3 channel reduction and LeakyReLU; concatenate matching context features; localisation block |
+| Localisation / block details | 3x3x3 convolutions use padding 1 and no bias | Localisation: 3x3x3 convolution on 2C channels, GN1 and LeakyReLU, then 1x1x1 reduction to C |
+| Normalisation and activation | GN(1,C), epsilon 1e-5, learned scale/offset; ReLU | Fourteen GN(1,C) sites, epsilon 1e-5, learned scale/offset; LeakyReLU slope 0.01 |
+| Residual and regularisation | No residual blocks or dropout | Five identity residual blocks; Dropout3d probability 0.3 between each block's two convolutions, active during training |
+| Segmentation heads | One 1x1x1 convolution at full resolution | 1x1x1 heads at full, half and quarter resolution; resize the latter two and sum the logits |
+| Trainable parameters | 1,412,550 | 2,366,946 |
+
+For a training patch, both encoders follow this spatial/channel schedule. Sizes are X/Y/Z voxels; the implementation receives Bx1x32x64x64 after conversion to depth/height/width order. B is batch size.
+
+| Encoder level | Channels | Patch feature size X/Y/Z |
+|---|---|---|
+| Full resolution | 8 | 64x64x32 |
+| Half resolution | 16 | 32x32x16 |
+| Quarter resolution | 32 | 16x16x8 |
+| One eighth | 64 | 8x8x4 |
+| Bottleneck, one sixteenth | 128 | 4x4x2 |
+
+The decoder reverses this hierarchy, using four feature-concatenation skips, and ends with Bx6x32x64x64 logits for a training patch. Evaluation accepts a larger padded whole volume with the same channel hierarchy; this is not a fixed patch-size inference model.
+
+**The v3 residual block.** For feature tensor x with C channels, the branch applies GN1 -> LeakyReLU -> 3x3x3 convolution -> Dropout3d -> GN1 -> LeakyReLU -> 3x3x3 convolution, then adds the original x. The spatial convolutions use stride 1 and padding 1. GN1 normalises across channels and spatial positions within each sample, not across the batch; this differs from v1's per-channel InstanceNorm and can interact with input extent.
+
+**Output fusion and supervision.** The full-resolution head sees eight decoder channels; the half- and quarter-resolution heads see 16 and 32. Auxiliary logits are resized to the main grid by trilinear interpolation with `align_corners=False`. Training and inference both use `combined = main + resized_half + resized_quarter`; one loss is applied to this sum, so all three heads receive gradients. This is additive multiscale supervision, not the independent head losses of v2. Class order is Background, Body, Bones, Bladder, Rectum, Prostate. Softmax supplies probabilities for the Dice loss; inference uses the largest combined logit per voxel.
 
 ![Data and model pipeline](figures/method.png)
 
-v3 computes one loss on summed outputs; gradients reach all heads. This is additive multiscale supervision, not the independent head losses tested as v2. v3 replaces v1's InstanceNorm with one-group GroupNorm (GN1); it is not derived from v2. Standard-v3 differs in several architectural components, so its net difference cannot isolate normalisation alone.
+### 3.3 Training objective, sampling and checkpoint selection
 
 Both models use random seed 371017 and the Adam optimiser, with a fixed learning rate of 0.001 and no weight decay. One shuffled/cycled visit per Train patient supplies ten uniform 64x64x32 XYZ patches per epoch: 260 patches, batch size 2, 130 updates; 50 epochs yield 6,500 updates. The submission preserves the deterministic visit/crop/batch schedule. Exact GPU rerun weights are not guaranteed across kernels, hardware and library versions.
 
@@ -75,7 +100,32 @@ Validation runs every five epochs. Pool confusion matrices across visits within 
 
 ![Historical training and checkpoint selection](figures/training_and_selection.png)
 
-### 3.3 Evaluation definitions and limitations
+### 3.4 Model development: observations, hypotheses and controlled changes
+
+**Development logic.** The study completed ten formal 50-epoch runs: Standard, supplementary 2D, v1, v2, v3, A0, A1 and v5-C/L/S. Tiny-batch checks, inference probes and sampler audits were diagnostics, not additional successful cohort models. The sequence used Train exposure records and Validation predictions to decide what to test next. Recorded configuration changes below describe intended mechanisms; they are not by themselves proof of the cause of an error. The complete numerical comparisons are in Section 4. Standard, v1 and the supplementary 2D run were extended from the initial 40-epoch budget to 50; the final comparison uses the same 50-epoch total budget for every run. Earlier v2/v3 mechanism plans also specified fixed-epoch checks. Those historical checks are distinct from the final benchmark, which consistently reports each model's best measured Validation checkpoint.
+
+**Starting comparison and diagnostic loop.** Standard and the first Improved network, subsequently called v1, were given the same patient-balanced 3D crops, loss, split and optimisation recipe. The residual context, InstanceNorm, dropout and additive output heads in v1 were intended to add contextual representation and regularisation. After training, review moved from loss curves to per-class Validation confusion counts, precision/recall, physical Body surfaces and MRI overlays. Reproducing the fixed predictions before calculating new measurements prevented a change of checkpoint or preprocessing from masquerading as a diagnostic finding.
+
+The striking v1 Body error prompted competing explanations: insufficient boundary/background exposure; coupled output heads; imbalance weights; and normalisation or full-volume context. Train geometry/exposure audits tested what the sampler supplied. Fixed-weight Validation probes compared full-volume and sliding-window inputs and inspected the individual output heads. Neither inference-context changes nor removal of auxiliary outputs was treated as a retrained architecture comparison. Small numerical differences caused a head-replay control to fail; that control was not used as causal proof. These limits motivated bounded training interventions rather than assuming one established root cause.
+
+| Run / parent | Design decision and question tested | Comparison logic |
+|---|---|---|
+| Standard / initial reference | Basic 3D U-Net, GN1, one head; establish a volumetric baseline under the verified pipeline | Same 3D split, patch schedule, objective and update budget as v1 |
+| v1 / initial Improved | Residual context, InstanceNorm, dropout 0.3 and summed multiscale logits; test the contextual Hard architecture | Several components differ from Standard, so the aggregate contrast cannot identify one causal component |
+| 2D / supplementary branch | Width-16 slice U-Net; four uniform plus two crops per small organ per patient, with its own Train-derived weights | Slice-only context and lower resource use provide an engineering reference; different width/sampling/weights prevent a pure dimensionality ablation |
+| v2 / v1 | Train main, half and quarter heads independently: `(Lmain + 0.5 Lhalf + 0.25 Lquarter) / 1.75`; use the main head at inference | Tests whether individually useful heads avoid reliance on summed predictions; keeps v1's backbone and InstanceNorm. Training supervision and inference output change together |
+| v3 / v1 | Replace all 14 InstanceNorm sites with GN1; retain v1's residual blocks, dropout, additive heads and loss | Isolates the declared normalisation change relative to the historical v1 recipe; does not inherit v2's independent losses |
+| A0 / v3 | AdamW, decay 1e-5 excluding bias/normalisation, cosine learning rate from 0.001 towards 1e-5 over 6,500 updates | Tests a conventional optimisation/regularisation package; the combined changes cannot isolate decay from optimiser or schedule |
+| A1 / A0 | With probability 0.3, apply paired physical-axis rotations up to 10 degrees and isotropic scaling 0.9-1.1; linear MRI and nearest-neighbour mask interpolation | A1-A0 tests this specific spatial augmentation under the AdamW/cosine recipe. A Train-only 26-patient geometry/exposure audit and real previews preceded training |
+| v5-C / v3 | Concurrent run using the original v3 settings and nominal seed | Provides a contemporary control for L/S and reveals same-recipe run variation; this is not an independent-seed replication |
+| v5-L / C | Compress only the three small-organ CE weights by square root: 4.498586/8.893215/9.699950 become 2.120987/2.982149/3.114474 | Tests a less aggressive imbalance penalty while retaining Adam, constant learning rate, architecture and sampling |
+| v5-S / C | Retain Adam and zero decay; change only the learning-rate rule to cosine over 6,500 updates, towards 1e-5 | Separates the schedule question from A0's additional optimiser/decay changes |
+
+**How each redesign followed the evidence.** v2 was a targeted response to the head-coupling hypothesis, not a cosmetic extension of v1. Its independently supervised design did not resolve the overall Validation trade-off, so v3 returned to v1 and tested the alternative normalisation hypothesis. v3's improvement justified retaining it as a reference for further research, while residual boundary errors motivated the A0/A1 regularisation and spatial-exposure experiment. A1 was accepted for training only after paired-transform checks; passing those checks supported mechanical validity, not effectiveness. The absence of an overall gain from that package then motivated C/L/S, which separated a smaller class-weight intervention and the learning-rate schedule from other changes. The Train edge-sampling candidate was audited but never trained as a formal segmentation run; it is not counted among the ten models.
+
+**Why the final report centres on Standard and v3.** The original selection endpoint remained patient-equal Validation Dice for Bladder, Rectum and Prostate, measured every five epochs. Each run first contributes its best measured checkpoint; comparing those checkpoints places v3 first under this rule. The selection advantage over Standard and C is small, not evidence of universal superiority. Body/surface diagnostics also show that v3 mitigates the severe failure that motivated revising v1, while keeping the residual/multiscale architecture. No later branch supplied a better overall Validation candidate. Standard remains the operational reference because its simpler architecture and boundary behaviour remain informative. C's higher existing Test prostate score does not justify changing the rule after seeing Test; v3 is the selected research candidate, not the winner of every metric or a clinically approved model. Section 4 quantifies those gains and regressions; Section 5 weighs their practical importance.
+
+### 3.5 Evaluation definitions and limitations
 
 All models use identical patient splits and evaluation grids. 3D inference processes the complete downsampled volume once, not sliding windows. The supplementary 2D model processes slices and reconstructs a volume. No GT-dependent post-processing is used. Taking the largest class logit gives the same class as applying softmax first.
 
@@ -104,19 +154,7 @@ Every model in the table completed 50 training epochs. Only Standard/v3 runtime 
 | v5-L | 45 | 0.8426 | 0.7858 | 0.8388 | 0.7361 |
 | v5-S | 45 | 0.8465 | 0.7788 | 0.8350 | 0.7281 |
 
-| Model | Change and interpretation |
-|---|---|
-| 2D | Slice-wise width 16, organ-aware crops and different weights; low VRAM, weaker mean prostate overlap. Not a pure 2D/3D factor comparison. |
-| v1 | Residual context, InstanceNorm, dropout, additive outputs; severe distant Body false positives. |
-| v2 | Independently weighted head losses, main-only inference; no overall Validation gain. |
-| v3 | Replace v1 IN with GN1, retaining additive outputs; highest original Validation score. |
-| A0 | AdamW + 1e-5 decay + cosine LR; no net gain; combined changes confound attribution. |
-| A1 | A0 + paired small rotation/scaling; fewer Body false positives but worse overall overlap. |
-| v5-C | Concurrent repeat of v3 training settings; higher Test prostate Dice but lower original Validation score. Same nominal seed is not independent-seed replication. |
-| v5-L | Square-root small-organ CE weights relative to C; no overall improvement. |
-| v5-S | Adam plus cosine schedule only relative to C; no overall improvement within this budget/seed. |
-
-**Spatial augmentation was tested in A1.** Relative to A0, A1 applied paired MRI/mask rotations of up to 10 degrees around the physical axes and isotropic scaling from 0.9 to 1.1, with probability 0.3; masks used nearest-neighbour interpolation. The best Validation small-organ Dice decreased from 0.8450 to 0.8298, and existing Test Dice from 0.7836 to 0.7801. Distant Body false positives decreased, but this did not yield an overall segmentation gain. This result concerns one tested augmentation scheme and training budget; it does not show that data augmentation is generally ineffective.
+**A1 augmentation result (design in Section 3.4).** The best Validation small-organ Dice decreased from 0.8450 to 0.8298, and existing Test Dice from 0.7836 to 0.7801. Distant Body false positives decreased, but this did not yield an overall segmentation gain. This result concerns one tested augmentation scheme and training budget; it does not show that data augmentation is generally ineffective.
 
 v3's Test small-organ gain over Standard is +0.0294, but only 3/6 patients improve; excluding influential M015 changes the contrast to approximately -0.0050. Validation improves for 5/6 patients. These descriptive sensitivities do not establish population superiority. C's higher Test prostate Dice is reported without switching the primary selection rule after seeing Test.
 
@@ -260,6 +298,7 @@ If further research is commissioned, first reserve a new patient-independent hol
 ChatGPT/Codex assisted with scaffolding/refactoring, debugging, audits, metric checks, literature interpretation, plotting and report drafting, including the standalone submission packaging. Verification included source/weight hashes, historical initialization and actual-weight CPU logit parity, paired geometry/metric tests, all-head gradients, recovery equivalence and recomputation from integer confusion counts. Historical GPU audits reproduced fixed predictions; the standalone migration replay also reproduced all 76 Validation matrices with matching input/weight/source identities. No new training or Test decoding was performed for that migration check. Failed controls and negative experiments were not converted into positive findings. The student remains personally responsible for every formula/code line, understanding the work and responding to reviewers; this disclosure is not independent certification of all AI output.
 
 ## References and implementation attribution
+
 1. Ronneberger, Fischer and Brox. *U-Net: Convolutional Networks for Biomedical Image Segmentation*. 2015. https://arxiv.org/abs/1505.04597
 2. Cicek et al. *3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation*. 2016. https://arxiv.org/abs/1606.06650
 3. Isensee et al. *Brain Tumor Segmentation and Radiomics Survival Prediction: Contribution to the BRATS 2017 Challenge*. 2018. https://arxiv.org/abs/1802.10508
@@ -318,7 +357,7 @@ python -m pip install reportlab==5.0.1
 python -B export_report.py
 ```
 
-`REPORT.pdf` is generated directly from this README and its figures. The feasibility review occupies one dedicated page. Review the export before submitting; this command does not upload to Turnitin.
+`REPORT.pdf` is generated directly from this README and its figures. The feasibility review in Appendix C occupies one dedicated page. Review the export before submitting; this command does not upload to Turnitin.
 
 ## Appendix B. Files, experiment records and assessment requirements
 
@@ -354,3 +393,17 @@ The current eight-test suite covers split leakage rejection, NIfTI pairing, spat
 | Turnitin | Submit PDF export of this README; confirm it matches the final committed report |
 
 Before submission, confirm the tutor check-off, course PR, Turnitin upload and applicable Blackboard deadline. The requirements above follow the local 21-page COMP3710 draft specification; check for later course announcements and follow the teaching team's code-review instructions.
+
+## Appendix C. One-page feasibility review
+
+**User need and scope.** Evaluate a six-class improved 3D contouring prototype against an implemented baseline on supplied downsampled HipMRI. Prioritise patient independence, prostate precision and local boundary failures alongside overlap.
+
+**Acceptance criteria.** (1) Paired grids/labels pass checks and patients never cross splits. (2) Implement volumetric residual context and multiscale supervision for the Hard route, reporting the stated Test Dice target of 0.7 with explicit aggregation. (3) Report all-class Dice/IoU, prostate precision/recall and physical boundary errors. (4) Measure peak allocated GPU memory, parameter count and reference latency. (5) Supply runnable commands, configuration, selection provenance and 3-5 representative failure analyses. These research criteria are not clinical safety thresholds.
+
+**Choice and course concepts.** Standard provides volumetric encoder-decoder skip connections. v3 adds residual context, dropout and summed multiscale outputs. Normalisation uses one-group GroupNorm, written GroupNorm(1,C), where C is the number of channels. The work applies 3D convolution, multiclass supervised learning, imbalance weighting and patient-level generalisation analysis. It adapts the three cited papers rather than claiming full reproduction.
+
+**Feasibility evidence.** There are 26/6/6 patients and 143/38/30 volumes. Ten formal models completed 50 epochs. Standard/v3 Validation small-organ scores are 0.8502/0.8564; Test scores are 0.7851/0.8145. The A100 profiling in Section 4.4 establishes operational feasibility. The original v3 training job completed in 02:02:48 including checkpoint IO and Validation; filesystem load affects wall time.
+
+**Risks, budget and fallback.** Six evaluation patients per split, repeated visits, imbalance, input-context sensitivity and boundary outliers limit inference. Saving every epoch previously exhausted storage on the high-performance computing (HPC) system. The submission trainer saves latest/best by default, with optional epoch weights. Packaging and the standalone Validation check are now complete; confirm the course submission requirements before considering more tuning. Keep Standard as a fallback. Stronger claims about generalisation require evaluation on new, independent patients. The earlier proposed edge-sampling intervention was revised after diagnostics; its audit alone is not a completed segmentation improvement.
+
+**Consultation:** this written review does not establish that the compulsory practical check-off was recorded. The student must confirm that separately with the tutor.

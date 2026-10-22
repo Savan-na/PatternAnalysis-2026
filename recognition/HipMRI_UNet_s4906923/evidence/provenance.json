@@ -515,5 +515,63 @@
     "failure_rectum.png": "801ae7f9ea9a7b38e7eb2f021250505eed847b38d16766537c5d4446e7114e72"
   },
   "preserved_original_panels": true,
-  "panel_note": "Seven historical model columns retained and labelled; no new inference or retouched contours"
+  "panel_note": "Seven historical model columns retained and labelled; no new inference or retouched contours",
+  "pretraining_review": {
+    "scope": "Existing Train-only audits; no new MRI decoding, training or Test tuning for report revision",
+    "raw_audit": {
+      "research_path": "logs/audits/train_full_20261018_job671208.json",
+      "sha256": "6a4c674564a0364f5f56730cbc31e67b3ff9a8ffeae7d9d3dd18b198bbd0e1a1",
+      "cases": 143,
+      "case_errors": 0,
+      "mechanical_pass": true,
+      "anatomical_review_complete": false,
+      "unknown_mask_unit_count": 143,
+      "max_affine_absolute_difference": 0.0,
+      "class_voxel_counts": {
+        "Background": 720230975,
+        "Bladder": 7253501,
+        "Body": 429188773,
+        "Bones": 40906813,
+        "Prostate": 1295814,
+        "Rectum": 1743644
+      },
+      "class_share_percent": {
+        "Background": 59.98827796836087,
+        "Bladder": 0.6041465159586944,
+        "Body": 35.74727595633294,
+        "Bones": 3.4071420894439566,
+        "Prostate": 0.10792877996852825,
+        "Rectum": 0.14522868993500956
+      }
+    },
+    "preprocessing_audit": {
+      "research_path": "logs/audits/g3_existing_pipeline_full_20261018_job671892.json",
+      "sha256": "319973a8759265521870f831e7b17eb7249f4130b6a9e9634fe993f22bf687e9",
+      "cases": 143,
+      "case_errors": 0,
+      "pipeline_pass": true,
+      "small_organ_physical_volume_ratio": {
+        "Bladder": {
+          "minimum": 0.9760489213521317,
+          "median": 0.9997118875208879,
+          "maximum": 1.0172822539082629,
+          "volumes_retaining_organ": 143
+        },
+        "Rectum": {
+          "minimum": 0.9720718398212597,
+          "median": 1.0020562028786841,
+          "maximum": 1.027981866499922,
+          "volumes_retaining_organ": 143
+        },
+        "Prostate": {
+          "minimum": 0.938345864661654,
+          "median": 0.9980715027443999,
+          "maximum": 1.0422976501305485,
+          "volumes_retaining_organ": 143
+        }
+      }
+    },
+    "visual_screen": "Two axial sections per Train volume; gross alignment screen, not expert anatomical certification",
+    "learning_diagnostic": "Controlled two-patch 500-update weighted/unweighted CE comparison; not a generalisation result"
+  }
 }
