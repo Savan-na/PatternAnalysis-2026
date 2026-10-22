@@ -20,7 +20,6 @@
     8.893215,
     9.69995
   ],
-  "augmentation": "none",
   "scheduler": "none",
   "checkpoint_selection": "patient_equal_small_organ_dice; validation only; earlier tie"
 }

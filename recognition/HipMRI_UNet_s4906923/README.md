@@ -44,7 +44,7 @@ The existing Test cohort was inspected during the research process, so these fin
 
 MRI and mask are jointly downsampled by (2,2,2). Output centre j samples source centre `(j+0.5)*2-0.5`; the affine uses the same transform. MRI interpolation is linear, mask nearest-neighbour; lost labels trigger failure. Image-only nonzero Z-score preserves outside zeros. The ground-truth mask (GT) never defines the region used for prediction.
 
-Arrays use X/Y/Z voxel order until conversion to channel/depth/height/width (CDHW) model input. High-end zero padding makes dimensions divisible by 16 and is removed before metrics/export. Evaluation is on the downsampled physical grid, not original resolution. No augmentation is enabled in the selected training configurations. Cross-entropy (CE) takes integer labels; Dice converts them to six-channel one-hot internally; `one_hot()` is also available.
+Arrays use X/Y/Z voxel order until conversion to channel/depth/height/width (CDHW) model input. High-end zero padding makes dimensions divisible by 16 and is removed before metrics/export. Evaluation is on the downsampled physical grid, not original resolution. Cross-entropy (CE) takes integer labels; Dice converts them to six-channel one-hot internally; `one_hot()` is also available.
 
 Keep raw files outside Git:
 
@@ -117,6 +117,8 @@ Every model in the table completed 50 training epochs. Only Standard/v3 runtime 
 | v5-C | Concurrent repeat of v3 training settings; higher Test prostate Dice but lower original Validation score. Same nominal seed is not independent-seed replication. |
 | v5-L | Square-root small-organ CE weights relative to C; no overall improvement. |
 | v5-S | Adam plus cosine schedule only relative to C; no overall improvement within this budget/seed. |
+
+**Spatial augmentation was tested in A1.** Relative to A0, A1 applied paired MRI/mask rotations of up to 10 degrees around the physical axes and isotropic scaling from 0.9 to 1.1, with probability 0.3; masks used nearest-neighbour interpolation. The best Validation small-organ Dice decreased from 0.8450 to 0.8298, and existing Test Dice from 0.7836 to 0.7801. Distant Body false positives decreased, but this did not yield an overall segmentation gain. This result concerns one tested augmentation scheme and training budget; it does not show that data augmentation is generally ineffective.
 
 v3's Test small-organ gain over Standard is +0.0294, but only 3/6 patients improve; excluding influential M015 changes the contrast to approximately -0.0050. Validation improves for 5/6 patients. These descriptive sensitivities do not establish population superiority. C's higher Test prostate Dice is reported without switching the primary selection rule after seeing Test.
 
@@ -241,7 +243,7 @@ The additional memory is feasible on the tested A100 and accompanies higher aver
 
 The earlier v1 had worse Body HD95 in all 38 Validation volumes: median 76.61 mm versus Standard 4.75 mm. Selected-case sliding-window inference with unchanged v1 weights reduced distant Body predictions but damaged small-organ overlap. Removing auxiliary outputs from a sum-trained model also severely degraded performance. Changing v1's InstanceNorm to GN1 in v3 reduced the gross Body failure and improved the original Validation score. These observations justify investigating normalisation, input context and output-head interactions.
 
-They do not establish one universal cause. A main-only diagnostic changes how a sum-trained model is used; it is not a comparison with a separately retrained architecture. A numerical head-replay control failed with small logit differences, so it is not used as causal proof. A Train edge-sampling audit passed, but exposure checks alone cannot show a segmentation benefit. Loss weighting, limited patient diversity and optimisation variability remain plausible contributors. The negative A1/L/S experiments show that augmentation, lower small-organ weights and learning-rate decay are not guaranteed improvements under the tested conditions.
+They do not establish one universal cause. A main-only diagnostic changes how a sum-trained model is used; it is not a comparison with a separately retrained architecture. A numerical head-replay control failed with small logit differences, so it is not used as causal proof. A Train edge-sampling audit passed, but exposure checks alone cannot show a segmentation benefit. Loss weighting, limited patient diversity and optimisation variability remain plausible contributors. The tested A1/L/S configurations did not improve the overall result: these changed paired spatial augmentation, small-organ weights and the learning-rate schedule, respectively. The A1 comparison is quantified in Section 6.1; its result does not establish that augmentation is ineffective in other settings.
 
 ### 8.5 Generalisation and strength of evidence
 
@@ -315,7 +317,7 @@ python -B export_report.py
 HipMRI_UNet_s4906923/
   modules.py             PyTorch-only Standard/v3 components
   dataset.py             Fixed patient split, paired preprocessing and sampling
-  train.py               Training, Validation selection, explicit fixed evaluation
+  train.py               Direct model imports, training, Validation and fixed evaluation
   predict.py             Saved-model example, metrics, overlay and NIfTI export
   utils.py               Loss, inference, overlap and physical boundaries
   config/                Fixed patient split and training settings
@@ -327,7 +329,7 @@ HipMRI_UNet_s4906923/
 
 The runtime has no import/path dependency on `20261017`, 2D or retired models. `evidence/experiments.json` preserves 500 epoch summaries and 680 best-model/case entries; the stored confusion counts allow readers to recalculate overlap metrics. The archived research checks verified 400 foreground metric values, checkpoint selection and five original figure hashes. Source/checkpoint identities preserve research provenance without submitting MRI or parameter files. Packaging does not overwrite historical metrics.
 
-Tests cover split leakage rejection, NIfTI pairing, spatial resampling, label retention, padding/crop inversion, patient aggregation, anisotropic distances/empty masks, both models' gradients/loading and interrupted-versus-uninterrupted optimizer recovery. A synthetic 211-case file-list fixture ran the predict CLI end to end; it is not a research cohort or a performance result. Earlier tests also checked actual downloaded best-weight logits against historical implementations. The separate real-MRI GPU verification step has now also passed for all 76 Validation model/case comparisons; the runtime source hashes matched at the time of that check. Subsequent edits changed only comments and documentation in those files. Their executable syntax trees are unchanged; the comparison records are retained with the research archive.
+The current eight-test suite covers split leakage rejection, NIfTI pairing, spatial resampling, label retention, padding/crop inversion, patient aggregation, anisotropic distances/empty masks, both models' gradients/loading, direct model construction in the trainer, and interrupted-versus-uninterrupted optimizer recovery. A synthetic 211-case file-list fixture ran the predict CLI end to end; it is not a research cohort or a performance result. Earlier tests also checked actual downloaded best-weight logits against historical implementations. The separate real-MRI GPU verification step has now also passed for all 76 Validation model/case comparisons; the runtime source hashes matched at the time of that check. Subsequent edits changed only comments and documentation in those files. Their executable syntax trees are unchanged; the comparison records are retained with the research archive.
 
 | Coursework requirement | Included evidence or remaining action |
 |---|---|

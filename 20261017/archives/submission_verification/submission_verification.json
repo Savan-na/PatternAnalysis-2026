@@ -6,7 +6,7 @@
   "raw_datasets_or_weight_files_present": false,
   "markdown_asset_links_resolve": true,
   "local_tests": {
-    "standalone": 7,
+    "standalone": 8,
     "historical_model_parity": 4,
     "passed": true
   },
@@ -32,17 +32,17 @@
   "files": {
     ".gitattributes": "5158557f20b2da1093eb8b472c5a9fbf0d558d07b97fe26ac49f75f2d186ad6e",
     ".gitignore": "cc5af417577cc25132e7780171cdf8e4fa32d132e6958e9dd866b6ba0d5a231f",
-    "dataset.py": "c1da546f98f2cd6978ac69cf1af487edd86d4efd342d17b3d36296ce3dc50c92",
+    "dataset.py": "8a78c9eacdb84755d0696b8f11642a2c9eea2742302adac85ead83724aba9d43",
     "export_report.py": "b09228a57fe582224e186477c95f1335b47b48198c83800a197876e6d27e9285",
     "modules.py": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
     "predict.py": "a884b452fc9f0d2179f23c765c4a2b7ab9e42f1405427fae233ee4a78c0dc2c8",
-    "README.md": "7e6beb88654a47fdab8078201ecba87e0926e8ffcb249e0a65648c93cf98fcda",
-    "REPORT.pdf": "86933c443503a64148c25d05e483046753fbce8807fbd85eec052e34e2cf8547",
+    "README.md": "a33e26e2b6db59afe996227d479f19a5adf696ea614ccacc833d1fc88d02e27c",
+    "REPORT.pdf": "dd33cf371cd3b236d0fd11a4dc14ff961937fb2ed9539da1ba0e2e8b6cbcc587",
     "requirements.txt": "d7f725c5d46fb71e99a36f97936d34caffde0956168d9bf45c7d67e6e8b661bc",
-    "train.py": "94457f69cd7f5e019f35ba0625940bc4d13c19696996cff9f850fc7de1c3cb63",
+    "train.py": "cb60b87302ac130306b04e7e272dfbff07cda79348f3e3e836744af54a5e47b6",
     "utils.py": "6c87662c9271f04d96bbcac71e90bbd2a00ba4004dc2e231906e6d33491388b8",
     "config\\patient_split.json": "81531ec7cb84ef58c41393ff23e1105e7cf03aa97828fb12853ce8624fcb8900",
-    "config\\training.json": "19cb240dd25b8d8769bd1531f8871c37dd2d70e0f33f7d86ecc24c7f4f3795e7",
+    "config\\training.json": "9ee34bb736d260720b96ef5f3958f37a9f1f045a3cc437ee3350954af37afadd",
     "evidence\\available_resource_benchmarks.csv": "29352904f030a24c6fe85d713f428aca9bb3669ed8a300ed94fd31714055923a",
     "evidence\\experiments.json": "80047fcb5ebcf0522ab216b3e0adff2674386c2229216c9eeacb1001fe35aa87",
     "evidence\\foreground_metrics.csv": "c78e889ad16c21ee837e222993db9b9c99464fc63ff4bb60f847919ecaf11eeb",
@@ -60,7 +60,7 @@
     "figures\\foreground_comparison.png": "238d9c8acc02f243ee250120318ef265554a6dc39999052a3492b755cc2dbff5",
     "figures\\method.png": "eaf65a540f844d9d8d460bf0110da9a03f1c7dff5d8e5fc66bd5ee78be8ef927",
     "figures\\training_and_selection.png": "3dcdb132abbd9c7a66fd3a216ea9bf51803a9c741fb12f35e03fa9e3737614b0",
-    "tests\\test_submission.py": "263a9365585820297faf7f798822ba3d552358c39de46ba82ef55911fa667de0"
+    "tests\\test_submission.py": "10ef6d73dd0c89c2815d8c4eaa7eb2a8e01b3c1c6d83adf1e135827180e245b7"
   },
   "gpu_migration": {
     "job_id": "682858",
@@ -99,5 +99,11 @@
     ],
     "new_analysis_scope": "Existing saved prediction measurements only; no training, new inference or checkpoint selection",
     "original_quantitative_tables_retained": true
-  }
+  },
+  "trainer_direct_imports": {
+    "model_classes_imported_from": "modules.py",
+    "parameter_initialization_and_rng_match_previous_factory": true,
+    "test_passed": true
+  },
+  "unused_augmentation_declarations_removed": true
 }

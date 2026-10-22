@@ -16,10 +16,20 @@ import numpy as np
 import torch
 from dataset import (discover, load_case, downsample, zscore_nonzero, epoch_cases,
                      crop_origin, crop_for_3d_model, ExposureRecorder)
-from utils import (build_model, load_model, ce_dice_loss, evaluate, atomic_json,
+from modules import StandardUNet3D, ImprovedUNet3DV3
+from utils import (load_model, ce_dice_loss, evaluate, atomic_json,
                    atomic_checkpoint, sha256_file, confusion, overlap)
 
 ROOT = Path(__file__).resolve().parent
+
+
+def build_model(name):
+    """Construct the model classes imported directly from modules.py."""
+    if name == "standard":
+        return StandardUNet3D()
+    if name == "v3":
+        return ImprovedUNet3DV3()
+    raise ValueError("Model must be standard or v3")
 
 
 def plot_history(history, path):

@@ -83,6 +83,20 @@ class SubmissionTests(unittest.TestCase):
                 restored=utils.load_model(name,path,"cpu")
                 with torch.no_grad():self.assertTrue(torch.equal(out,restored(x)))
 
+    def test_trainer_direct_imports_preserve_models_and_random_state(self):
+        from modules import StandardUNet3D, ImprovedUNet3DV3
+        self.assertIs(train.StandardUNet3D, StandardUNet3D)
+        self.assertIs(train.ImprovedUNet3DV3, ImprovedUNet3DV3)
+        for name in ("standard", "v3"):
+            torch.manual_seed(371017)
+            previous = utils.build_model(name)
+            previous_rng = torch.get_rng_state()
+            torch.manual_seed(371017)
+            current = train.build_model(name)
+            self.assertTrue(torch.equal(previous_rng, torch.get_rng_state()))
+            for key, value in previous.state_dict().items():
+                self.assertTrue(torch.equal(value, current.state_dict()[key]), key)
+
     def test_midbatch_resume_matches_uninterrupted_optimizer(self):
         # Tiny model/data isolate the recovery engine from full MRI/GPU cost.
         torch.set_num_threads(1)

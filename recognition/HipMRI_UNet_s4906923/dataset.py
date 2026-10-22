@@ -2,7 +2,7 @@
 
 Patients stay in one split throughout the experiment. Images and masks share
 the same spatial transformations. Arrays use XYZ voxel order until conversion
-to channel/depth/height/width for the model. Standard and v3 use no augmentation.
+to channel/depth/height/width for the model.
 Source MRI and mask files are never modified.
 """
 from __future__ import annotations
@@ -224,7 +224,7 @@ def from_3d_model_prediction(prediction_dhw: np.ndarray, shape_xyz: tuple[int, i
 #
 # Coordinates remain XYZ until ``crop_for_3d_model`` converts them to DHW.
 # No source MRI or mask is modified. Call the exposure recorder on the exact
-# mask returned with each model input, after any later spatial augmentation.
+# mask delivered with each model input.
 
 
 import hashlib
