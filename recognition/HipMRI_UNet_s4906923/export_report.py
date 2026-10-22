@@ -98,7 +98,9 @@ def main():
         if is_case or (in_case and is_next):
             if block:grouped.append(KeepTogether(block));block=[]
             in_case=is_case
-        if text.startswith("Appendix C. References"):
+        if in_references and text.startswith("Appendix A."):
+            grouped.append(KeepTogether(block));block=[];in_references=False
+        if text.startswith("References and implementation attribution"):
             in_references=True
         if in_case or in_references:block.append(flow)
         else:grouped.append(flow)

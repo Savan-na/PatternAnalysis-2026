@@ -259,6 +259,13 @@ If further research is commissioned, first reserve a new patient-independent hol
 
 ChatGPT/Codex assisted with scaffolding/refactoring, debugging, audits, metric checks, literature interpretation, plotting and report drafting, including the standalone submission packaging. Verification included source/weight hashes, historical initialization and actual-weight CPU logit parity, paired geometry/metric tests, all-head gradients, recovery equivalence and recomputation from integer confusion counts. Historical GPU audits reproduced fixed predictions; the standalone migration replay also reproduced all 76 Validation matrices with matching input/weight/source identities. No new training or Test decoding was performed for that migration check. Failed controls and negative experiments were not converted into positive findings. The student remains personally responsible for every formula/code line, understanding the work and responding to reviewers; this disclosure is not independent certification of all AI output.
 
+## References and implementation attribution
+1. Ronneberger, Fischer and Brox. *U-Net: Convolutional Networks for Biomedical Image Segmentation*. 2015. https://arxiv.org/abs/1505.04597
+2. Cicek et al. *3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation*. 2016. https://arxiv.org/abs/1606.06650
+3. Isensee et al. *Brain Tumor Segmentation and Radiomics Survival Prediction: Contribution to the BRATS 2017 Challenge*. 2018. https://arxiv.org/abs/1802.10508
+
+These motivate skips, volumetric context, residual blocks and multiscale supervision. GroupNorm, width, objective and preprocessing are explicit project adaptations; no paper is claimed to validate this exact HipMRI system. The package refactors this project's own verified implementation, not an externally pretrained model. Retain attribution when reusing components.
+
 ## Appendix A. Environment and executable usage
 
 ### A.1 Install and check
@@ -347,11 +354,3 @@ The current eight-test suite covers split leakage rejection, NIfTI pairing, spat
 | Turnitin | Submit PDF export of this README; confirm it matches the final committed report |
 
 Before submission, confirm the tutor check-off, course PR, Turnitin upload and applicable Blackboard deadline. The requirements above follow the local 21-page COMP3710 draft specification; check for later course announcements and follow the teaching team's code-review instructions.
-
-## Appendix C. References and implementation attribution
-
-1. Ronneberger, Fischer and Brox. *U-Net: Convolutional Networks for Biomedical Image Segmentation*. 2015. https://arxiv.org/abs/1505.04597
-2. Cicek et al. *3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation*. 2016. https://arxiv.org/abs/1606.06650
-3. Isensee et al. *Brain Tumor Segmentation and Radiomics Survival Prediction: Contribution to the BRATS 2017 Challenge*. 2018. https://arxiv.org/abs/1802.10508
-
-These motivate skips, volumetric context, residual blocks and multiscale supervision. GroupNorm, width, objective and preprocessing are explicit project adaptations; no paper is claimed to validate this exact HipMRI system. The package refactors this project's own verified implementation, not an externally pretrained model. Retain attribution when reusing components.
