@@ -1,6 +1,6 @@
 {
   "date": "2026-10-22",
-  "status": "Standalone code, report, local checks and real-MRI GPU Validation migration replay verified",
+  "status": "Technical checks passed; concise AI disclosure updated; loader augmentation wording and external submission actions remain open",
   "required_five_files_present": true,
   "runtime_imports_old_research_package": false,
   "raw_datasets_or_weight_files_present": false,
@@ -28,6 +28,7 @@
   },
   "synthetic_predict_cli": "passed; synthetic NIfTI fixture, not clinical evidence",
   "remaining": [
+    "Clarify submitted loader augmentation requirement",
     "Upstream PR",
     "Turnitin upload",
     "Later code-review response"
@@ -65,8 +66,8 @@
     "figures/training_and_selection.png": "3dcdb132abbd9c7a66fd3a216ea9bf51803a9c741fb12f35e03fa9e3737614b0",
     "modules.py": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
     "predict.py": "5185ff2355282ca69e8e1036132c8137b92d35429919b37cbe365bf763a05d71",
-    "README.md": "4f7331f8b08fcaad6c7db121e15a769918c249a968f8021f0a3a140b8777034a",
-    "REPORT.pdf": "f0fef34e1d44dfca6a536143382d4aadee8a8048c392791bcd82519aeca4dc58",
+    "README.md": "232e637be03b500c5ecc66c7cfd2b4f3bae7248d6088309479a9d06b81b0d328",
+    "REPORT.pdf": "bf98cf9b4fb69e72c46bc35440ec67f1646b666e5b486514289483a4bae0bcf3",
     "requirements.txt": "d7f725c5d46fb71e99a36f97936d34caffde0956168d9bf45c7d67e6e8b661bc",
     "tests/test_submission.py": "be63b61bda6245d725644dee9bac7de4a668b54f2ea13f6adf6a5bfbb25bdcad",
     "train.py": "63c17fb1d59111b4aab6ed6e61b337c7feefccf848a5ad83864e4138159cce68",
@@ -113,7 +114,7 @@
       "v3 boundary utility versus Standard",
       "measured computational trade-off"
     ],
-    "new_analysis_scope": "Existing saved prediction measurements only; no training, new inference or checkpoint selection",
+    "new_analysis_scope": "Historical metrics unchanged; fixed Standard/v3 predictions replayed only for presentation and a real CLI example; no training or checkpoint selection",
     "original_quantitative_tables_retained": true
   },
   "trainer_direct_imports": {
@@ -142,5 +143,38 @@
       "nifti_excluded_from_download": true
     },
     "source_metric_records_unchanged": true
+  },
+  "final_requirement_review_20261022": {
+    "specification_sha256": "0e05eab1e3f7597424a235e84db778106875ffa4419f0702c803ee2b052954ea",
+    "sections_reviewed": [
+      "2.2 segmentation dilemma and Hard route",
+      "3 feasibility and check-off",
+      "4 submission/file structure",
+      "5.2-5.4 commits/documentation/PR",
+      "6.1 AI disclosure"
+    ],
+    "five_required_files_present": true,
+    "modules_imports_only_pytorch_and_future": true,
+    "local_tests_passed": 9,
+    "saved_evidence_verification_passed": true,
+    "ai_disclosure": {
+      "tools": [
+        "OpenAI ChatGPT",
+        "Codex"
+      ],
+      "substantial_code_and_text_generation_disclosed": true,
+      "specific_assisted_tasks": true,
+      "empirical_verification_summarised": true,
+      "student_responsibility_explicit": true,
+      "word_count": 164,
+      "full_prompt_logs_not_in_readme": true
+    },
+    "open_items": [
+      "Section 4.1 loader augmentation wording: A1 tested in research, selected final loader has no augmentation; teaching-team interpretation unconfirmed",
+      "Upstream PR not confirmed; GitHub search for author Savan-na and base topic-recognition returned no matching PR",
+      "Turnitin upload unconfirmed",
+      "Respond to later teaching-team code review"
+    ],
+    "checkoff": "Completed according to student confirmation; original one-page document lost; Appendix C explicitly reconstructed"
   }
 }

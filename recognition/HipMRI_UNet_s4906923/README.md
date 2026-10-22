@@ -339,7 +339,11 @@ Do not use these results as evidence for unattended radiotherapy contouring. If 
 
 ## 5. Artificial Intelligence Usage Disclosure
 
-ChatGPT/Codex assisted with scaffolding/refactoring, debugging, audits, metric checks, literature interpretation, plotting and report drafting, including the standalone submission packaging. Verification included source/weight hashes, historical initialization and actual-weight CPU logit parity, paired geometry/metric tests, all-head gradients, recovery equivalence and recomputation from integer confusion counts. Historical GPU audits reproduced fixed predictions; the standalone migration replay also reproduced all 76 Validation matrices with matching input/weight/source identities. No new training or Test decoding was performed for that migration check. Failed controls and negative experiments were not converted into positive findings. The student remains personally responsible for every formula/code line, understanding the work and responding to reviewers; this disclosure is not independent certification of all AI output.
+OpenAI ChatGPT and Codex were used extensively for research planning, literature interpretation, model and experiment proposals, implementation, debugging, diagnostics, metric analysis, visualisation, report drafting and submission preparation. This included substantial code and text generation, not only language editing.
+
+AI suggestions were treated as proposals requiring verification. Checks included patient-split and paired-geometry tests, loss/gradient and recovery tests, recomputation from integer confusion counts, and input/checkpoint/source hashes. GPU replays reproduced all 76 Standard/v3 Validation matrices and ten fixed model/case matrices; the actual prediction CLI was also checked. Reported metrics and MRI figures are tied to saved experimental outputs. Negative results and failed controls are retained; unresolved causes are not presented as findings.
+
+I remain personally responsible for understanding, reviewing and defending every submitted architectural decision, code component, equation and experimental claim. The working rule is to disclose AI contributions, cite adapted sources, test generated work against reproducible evidence and limit conclusions to that evidence. AI assistance and automated checks do not themselves establish correctness or clinical utility.
 
 ## References
 
@@ -468,6 +472,7 @@ The current nine-test suite covers split leakage rejection, NIfTI pairing, spati
 | Per-class DSC/IoU and resource profiling | Six-class table, boundaries, parameters/VRAM/latency |
 | Boundary/context dilemma and 3-5 failures | Five original MRI cases, prostate ends, OAR/slice diagnostics, recommendation |
 | Modular code and reproducibility | Five required files, dependencies, commands and tests |
+| Data augmentation wording in Section 4.1 | A1 augmentation was evaluated and documented, but the selected Standard/v3 recipes use none and the submitted loader has no augmentation transform; whether an additional loader feature is required needs teaching-team clarification |
 | Progressive originality | Existing staged Git history; adapted literature listed in References |
 | No datasets/model files in Git | Code, count records and selected report visuals only |
 | Feasibility hurdle | Student confirmed completion on 22 October 2026; original written version lost; Appendix C is a retrospective reconstruction |
