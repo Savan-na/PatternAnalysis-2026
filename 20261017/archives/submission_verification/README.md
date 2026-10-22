@@ -19,3 +19,5 @@ python -B 20261017/archives/submission_verification/verify_replay.py --dataset-r
 ```
 
 The replay command requires a fresh output path. The archived scripts read the current submission folder; the submission itself has no dependency on this archive. An isolated HPC extraction can set `HIPMRI_SUBMISSION_ROOT` to its extracted code directory.
+
+The `documentation_replay_20261022/` directory retains the fixed slice plan, transfer/output hash manifests, CLI stdout and five original multi-model panels. Job 686318 reproduced ten Standard/v3 case matrices and the actual prediction CLI before producing the focused report figures. Its receipt and CLI metrics are in the submitted `evidence/` directory; extracted duplicate downloads and the transport ZIP stay local and are excluded from Git. The NIfTI listed in the output manifest was generated on the server but intentionally omitted from the downloaded publication ZIP.

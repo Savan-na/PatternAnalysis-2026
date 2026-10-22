@@ -184,8 +184,37 @@ def main():
             model="v3",split="validation",case="K008_Week0",output=None))
     assert example==json.loads((ROOT/"evidence/example_K008_v3_record.json").read_text())
     print("PASS: cohort timing/memory quantiles and MRI-free worked example recomputed")
+    original_panels=ROOT.parents[1]/provenance["clinical_figure_archive"]
     for filename,digest in provenance["clinical_figures"].items():
+        assert sha256_file(original_panels/filename)==digest
+    documentation=additions["fixed_prediction_replay"]
+    assert sha256_file(ROOT/documentation["receipt_path"])==documentation["receipt_sha256"]
+    receipt=json.loads((ROOT/documentation["receipt_path"]).read_text())
+    assert receipt["job_id"]=="686318" and receipt["cli_returncode"]==0
+    assert receipt["cli_reference_matrix_reproduced"]
+    comparisons=0
+    for case,models in receipt["cases"].items():
+        for name,row in models.items():
+            model=bundle["models"][name]
+            expected=next(r for rows in model["splits"].values() for r in rows if r["case"]==case)
+            assert row["reproduced"] and row["confusion"]==expected["confusion"]
+            assert receipt["checkpoint_sha256"][name]==model["selected"]["checkpoint_sha256"]
+            comparisons+=1
+    assert comparisons==10
+    for filename,digest in documentation["figure_sha256"].items():
         assert sha256_file(ROOT/"figures"/filename)==digest
+    assert sha256_file(ROOT/"figures/example_K008_v3.png")==documentation["cli_figure_sha256"]
+    assert sha256_file(ROOT/documentation["cli_metrics_path"])==documentation["cli_metrics_sha256"]
+    cli=json.loads((ROOT/documentation["cli_metrics_path"]).read_text())
+    expected=next(r for r in bundle["models"]["v3"]["splits"]["validation"] if r["case"]=="K008_Week0")
+    assert cli["confusion"]==expected["confusion"]
+    for filename,digest in receipt["sources"].items():
+        if filename in ("render_submission_examples.py","reference_cases.json"):
+            source=(ROOT.parents[1]/"20261017/code/tools"/filename if filename.endswith(".py")
+                    else ARCHIVE/"documentation_replay_20261022"/filename)
+        else:source=ROOT/filename
+        assert sha256_file(source)==digest,filename
+    print("PASS: documentation GPU receipt, ten locked matrices, six focused panels and actual prediction CLI output")
     replay_path=ARCHIVE/"migration_receipt.json"
     assert sha256_file(replay_path)=="14936ed27162acd63209f8ab34dec9fc05192f30746b80111e520c94abaa38fc"
     replay=json.loads(replay_path.read_text())

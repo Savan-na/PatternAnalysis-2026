@@ -96,9 +96,9 @@ def main():
         while i<len(lines) and lines[i].strip() and not re.match(r"^(#|\||```|!\[|\d+\.\s)",lines[i].strip()):
             paragraph.append(lines[i].strip());i+=1
         content = Paragraph(inline(" ".join(paragraph)), styles["Text"])
-        if paragraph[0].startswith(("Every model in the table", "These unchanged historical", "Ordinary panels show", "These diagnostics were calculated")):
+        if paragraph[0].startswith(("Every model in the table", "These panels use real MRI", "These diagnostics were calculated", "The documentation replay on 22 October captured")):
             content.keepWithNext = True
-        story.append(content)
+        story.append(KeepTogether([content]) if paragraph[0].startswith("The current nine-test suite") else content)
     # Keep a code block with its heading or introductory paragraph.
     linked=[];index=0
     while index<len(story):

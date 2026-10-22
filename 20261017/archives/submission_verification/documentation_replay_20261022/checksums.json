@@ -1,0 +1,14 @@
+{
+  "replay_receipt.json": "f902fce6554871b9a03c946fcaa684c1eb41966c38b46eae016d1ba66433c2ab",
+  "failure_rectum_clear.png": "6140234094e19aa6e67b55cc488d1e158d20eb933a7b8b2a14f899fe4ae8a1b8",
+  "failure_body_clear.png": "f24bf6bae0990eab2b3f4e7ecdfafa65c7d52472f5efd3fd51ed8031c6dc4c64",
+  "failure_prostate_apex_clear.png": "5c17edf00902ffcc7bebf4d3be516348062453134e6ae0ec31b4390197c0153b",
+  "failure_bladder_clear.png": "f4e07a6f31f7c0f0624e28539da2264eb7c76a71bd59af7d5c60d19f611c430b",
+  "failure_prostate_base_clear.png": "a2949fbedb622b2b6660bf7e459bd11b1b59ef4f7b0b5205bd799a7e3ecb2601",
+  "environment.json": "e539b8b52adcd94311f52e9e29e4b50a4a2668fe9ef6f701a5313a507287ce5a",
+  "failure_bones_clear.png": "e0d06d3ecbcf746fe14238f73f437a1c491508d692e979c59da2fae0ce2ac728",
+  "cli_stdout.txt": "3fbd55e450632c50fba4ff9c559e4db46903e0289b3f2c8c0d663f759047338f",
+  "cli_example_K008_v3/metrics.json": "1b550dd61adf81f5214b746cc92debd729bf337dd02f9952a324c223fb637b69",
+  "cli_example_K008_v3/prediction_downsampled.nii.gz": "a7c799a592f4323a41dd423a69efefce78ebb6d4c0485783021c89c12d21e9c1",
+  "cli_example_K008_v3/overlay.png": "9ba3bf636510c8cb613af0bdc1a24100bde195f3c51cc139e467441f97f48ece"
+}

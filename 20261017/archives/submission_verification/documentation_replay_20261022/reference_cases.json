@@ -1,0 +1,2720 @@
+{
+  "scope": "Read-only documentation replay; existing cases/slices selected before this run; no new Test selection or training",
+  "source_evidence_sha256": "80047fcb5ebcf0522ab216b3e0adff2674386c2229216c9eeacb1001fe35aa87",
+  "panels": {
+    "M015_Week7": {
+      "split": "test",
+      "label": 3,
+      "filename": "failure_bladder_clear.png",
+      "views": [
+        {
+          "axis": 2,
+          "index": 47,
+          "organ": "Bladder"
+        }
+      ]
+    },
+    "W029_Week6": {
+      "split": "test",
+      "label": 5,
+      "filename": "failure_prostate_base_clear.png",
+      "views": [
+        {
+          "axis": 2,
+          "index": 41,
+          "organ": "Prostate base"
+        }
+      ],
+      "additional_panels": [
+        {
+          "filename": "failure_prostate_apex_clear.png",
+          "views": [
+            {
+              "axis": 2,
+              "index": 32,
+              "organ": "Prostate apex"
+            }
+          ]
+        }
+      ]
+    },
+    "K018_Week4": {
+      "split": "validation",
+      "label": 1,
+      "filename": "failure_body_clear.png",
+      "views": [
+        {
+          "axis": 2,
+          "index": 0,
+          "organ": "Body"
+        }
+      ]
+    },
+    "J026_Week4": {
+      "split": "validation",
+      "label": 4,
+      "filename": "failure_rectum_clear.png",
+      "views": [
+        {
+          "axis": 2,
+          "index": 49,
+          "organ": "Rectum"
+        }
+      ]
+    },
+    "B040_Week1": {
+      "split": "validation",
+      "label": 2,
+      "filename": "failure_bones_clear.png",
+      "views": [
+        {
+          "axis": 2,
+          "index": 63,
+          "organ": "Bones"
+        }
+      ]
+    }
+  },
+  "models": {
+    "Standard": {
+      "best_epoch": 50,
+      "checkpoint_sha256": "8baafdcbcb0a0bcfc79483dcb212cb4c42d3b39ed09576efdb6c7f0fe2196675",
+      "cases": {
+        "B040_Week1": {
+          "case": "B040_Week1",
+          "patient": "B040",
+          "confusion": [
+            [
+              653641,
+              1278,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              672,
+              337445,
+              9589,
+              319,
+              1284,
+              178
+            ],
+            [
+              0,
+              1239,
+              33445,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              237,
+              0,
+              7308,
+              4,
+              3
+            ],
+            [
+              0,
+              120,
+              0,
+              0,
+              1099,
+              0
+            ],
+            [
+              0,
+              40,
+              0,
+              0,
+              0,
+              674
+            ]
+          ],
+          "mri_sha256": "939844920110df7b4e99c9beeadbf2f515d754847877b98bf260b161761ea90b",
+          "mask_sha256": "1c6a5395894680c235e74655f16052a3eaf4ba76f9850e6e7e424b9fa6353783",
+          "inference_seconds_single_pass": 0.17226005299016833,
+          "inference_peak_allocated_bytes": 264154112,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 1,
+          "background_voxels": 654919,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 4.58473226283704,
+              "assd_mm": 1.088664611326668
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 7.407831740379491,
+              "assd_mm": 2.4630398589626887
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 3.359375,
+              "assd_mm": 1.0453623636310025
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 28.742596560380132,
+              "assd_mm": 7.44038367381069
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 3.359375,
+              "assd_mm": 1.8241058688759222
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 349487,
+                "volume_mm3": 12305575.007808954,
+                "components_6": 20,
+                "largest_component_fraction": 0.9999055758869428,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 340359,
+                "volume_mm3": 11984174.530334026,
+                "components_6": 38,
+                "largest_component_fraction": 0.9998237155474073,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 34685,
+                "volume_mm3": 1221272.519852966,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 43034,
+                "volume_mm3": 1515244.1003128886,
+                "components_6": 4,
+                "largest_component_fraction": 0.9999302876795092,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 7552,
+                "volume_mm3": 265908.8963508606,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 24,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 7628,
+                "volume_mm3": 268584.88630354404,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 24,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.24626583103790986,
+                "prediction": 0.2733543765412735,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 1219,
+                "volume_mm3": 42921.47042527795,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 21,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 2387,
+                "volume_mm3": 84047.21075072885,
+                "components_6": 2,
+                "largest_component_fraction": 0.9995810640971932,
+                "occupied_z_slices": 29,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.14028122418038463,
+                "prediction": 0.09296193561820763,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 714,
+                "volume_mm3": 25140.221397578716,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 10,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 855,
+                "volume_mm3": 30104.8869676888,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 12,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.32367434989289623,
+                "prediction": 0.1915516634460944,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.6081481481481481,
+            "central": 0.9260591644411019,
+            "base": 0.8481240981240981
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 3,
+            "Rectum": 0
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 0,
+            "predicted_slices_outside_GT_extent": 2,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "J026_Week4": {
+          "case": "J026_Week4",
+          "patient": "J026",
+          "confusion": [
+            [
+              657392,
+              1494,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3430,
+              335276,
+              7080,
+              590,
+              361,
+              322
+            ],
+            [
+              0,
+              1583,
+              32196,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              123,
+              0,
+              7055,
+              0,
+              2
+            ],
+            [
+              0,
+              53,
+              0,
+              0,
+              888,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0,
+              0,
+              730
+            ]
+          ],
+          "mri_sha256": "dea9d89701e02ec6cb9c1b47f052b8d8f96af7316c6925bf02c86589ef4b2855",
+          "mask_sha256": "0d994f4367fb61f3b0792e107322d40c73c32c97e282745662d2adb3df9ab931",
+          "inference_seconds_single_pass": 0.17274522595107555,
+          "inference_peak_allocated_bytes": 264154112,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 38,
+          "background_voxels": 658886,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 4.58473226283704,
+              "assd_mm": 1.1447171743286546
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 6.239990234375,
+              "assd_mm": 2.1287198114499506
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 3.359375,
+              "assd_mm": 1.2434228003529952
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 6.239990234375,
+              "assd_mm": 1.9977983682367868
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 4.750873686097116,
+              "assd_mm": 2.451696082791779
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 347059,
+                "volume_mm3": 12220084.17089954,
+                "components_6": 11,
+                "largest_component_fraction": 0.9999625423919276,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 338530,
+                "volume_mm3": 11919774.719499052,
+                "components_6": 19,
+                "largest_component_fraction": 0.999553953859333,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 33779,
+                "volume_mm3": 1189371.9027854502,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 39276,
+                "volume_mm3": 1382923.439231515,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 7180,
+                "volume_mm3": 252810.6297403574,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 18,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 7645,
+                "volume_mm3": 269183.4630034864,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 19,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.2566584693327834,
+                "prediction": 0.26797656535190667,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 941,
+                "volume_mm3": 33132.98086151481,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 23,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1249,
+                "volume_mm3": 43977.782248705626,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 30,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.11511743478796045,
+                "prediction": 0.10131777464779992,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 731,
+                "volume_mm3": 25738.798097521067,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 12,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1054,
+                "volume_mm3": 37111.755396425724,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 14,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.18786892256675333,
+                "prediction": 0.22119423702467642,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.8842083746088653,
+            "central": 0.8133956108049798,
+            "base": 0.8110390130577585
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 2,
+            "Rectum": 0
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 0,
+            "predicted_slices_outside_GT_extent": 2,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "K008_Week0": {
+          "case": "K008_Week0",
+          "patient": "K008",
+          "confusion": [
+            [
+              589615,
+              1166,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              3020,
+              399242,
+              8323,
+              357,
+              860,
+              213
+            ],
+            [
+              0,
+              2588,
+              32111,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              865,
+              9,
+              6872,
+              0,
+              13
+            ],
+            [
+              0,
+              260,
+              0,
+              0,
+              1829,
+              0
+            ],
+            [
+              0,
+              191,
+              0,
+              0,
+              1,
+              1041
+            ]
+          ],
+          "mri_sha256": "b836e722cce5b90f5fa2d7d987a80efbae600ebe202952b2f2cf299db9f2284e",
+          "mask_sha256": "93b5f7ab6a6fefe7328eb1d9dbc012790f7f3493eb416ed69ddc6871a92e2210",
+          "inference_seconds_single_pass": 0.16981641296297312,
+          "inference_peak_allocated_bytes": 264154112,
+          "spacing_mm": [
+            3.515625,
+            3.515625,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 0,
+          "background_voxels": 590781,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 5.869719568473765,
+              "assd_mm": 1.280923611159733
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 7.97851592756105,
+              "assd_mm": 2.940377975634833
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 7.162199191988475,
+              "assd_mm": 2.0938218158501574
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 18.719970703125,
+              "assd_mm": 3.7562974450710183
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 6.239990234375,
+              "assd_mm": 2.3755831655467303
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 412015,
+                "volume_mm3": 15888102.393317968,
+                "components_6": 9,
+                "largest_component_fraction": 0.9999733019428905,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 404312,
+                "volume_mm3": 15591059.681922197,
+                "components_6": 11,
+                "largest_component_fraction": 0.9998862264785611,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 34699,
+                "volume_mm3": 1338061.1505545676,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 40443,
+                "volume_mm3": 1559560.9992183745,
+                "components_6": 6,
+                "largest_component_fraction": 0.9972059441683356,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 7759,
+                "volume_mm3": 299202.18067243695,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 24,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 7229,
+                "volume_mm3": 278764.34644684196,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 22,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.1836116976257081,
+                "prediction": 0.32196500131699,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 2089,
+                "volume_mm3": 80555.91640993953,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 26,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 2690,
+                "volume_mm3": 103731.64918273687,
+                "components_6": 3,
+                "largest_component_fraction": 0.9985130111524163,
+                "occupied_z_slices": 36,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.12277898087808127,
+                "prediction": 0.10987057137876534,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 1233,
+                "volume_mm3": 47546.886038035154,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 14,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1267,
+                "volume_mm3": 48857.99238458276,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 16,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.10786368404466738,
+                "prediction": 0.17333353826729023,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.6543829336282166,
+            "central": 0.896471705483478,
+            "base": 0.8537229809937515
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 13,
+            "Rectum": 0
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 0,
+            "predicted_slices_outside_GT_extent": 2,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "K018_Week4": {
+          "case": "K018_Week4",
+          "patient": "K018",
+          "confusion": [
+            [
+              740061,
+              1594,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1861,
+              263673,
+              7453,
+              153,
+              814,
+              323
+            ],
+            [
+              0,
+              1260,
+              27803,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              308,
+              6,
+              508,
+              0,
+              73
+            ],
+            [
+              0,
+              252,
+              3,
+              0,
+              1168,
+              22
+            ],
+            [
+              0,
+              76,
+              0,
+              0,
+              0,
+              1165
+            ]
+          ],
+          "mri_sha256": "8bf0a925439bc47a052fc20dde57072a86bf7e3083abbd49f3a62038ac6465c5",
+          "mask_sha256": "0b371661938df07b004f1d12ce0621464d6b4c9b03fde9295cce45ea17bfc640",
+          "inference_seconds_single_pass": 0.1740420968271792,
+          "inference_peak_allocated_bytes": 264154112,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 5,
+          "background_voxels": 741655,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 4.750873686097116,
+              "assd_mm": 1.3153382316006492
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 6.71875,
+              "assd_mm": 2.318834267776861
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 8.133964069529618,
+              "assd_mm": 2.9466040715192467
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 25.36318342553039,
+              "assd_mm": 5.591659693050924
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 5.683763745312066,
+              "assd_mm": 2.4850381532235435
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 274277,
+                "volume_mm3": 9657401.266475767,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 267163,
+                "volume_mm3": 9406914.52274695,
+                "components_6": 10,
+                "largest_component_fraction": 0.9999363684342517,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 29063,
+                "volume_mm3": 1023319.6841426194,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 35265,
+                "volume_mm3": 1241694.5484392345,
+                "components_6": 6,
+                "largest_component_fraction": 0.9993477952644265,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 895,
+                "volume_mm3": 31513.302732259035,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 8,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 661,
+                "volume_mm3": 23274.070509523153,
+                "components_6": 3,
+                "largest_component_fraction": 0.9969742813918305,
+                "occupied_z_slices": 10,
+                "internal_empty_z_slices": 4
+              },
+              "area_transition": {
+                "truth": 0.43807062767436783,
+                "prediction": 0.3178186315067271,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 1445,
+                "volume_mm3": 50879.01949509978,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 20,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1982,
+                "volume_mm3": 69787.0011344552,
+                "components_6": 2,
+                "largest_component_fraction": 0.9994954591321897,
+                "occupied_z_slices": 31,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.16471983540446614,
+                "prediction": 0.09845841687132163,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 1241,
+                "volume_mm3": 43696.09909579158,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 15,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1583,
+                "volume_mm3": 55738.0538828671,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 17,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.28041657412143534,
+                "prediction": 0.24629191022487765,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.5717436382154032,
+            "central": 0.8809919071499744,
+            "base": 0.5359735697890436
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 73,
+            "Rectum": 22
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 0,
+            "predicted_slices_outside_GT_extent": 2,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "M015_Week7": {
+          "case": "M015_Week7",
+          "patient": "M015",
+          "confusion": [
+            [
+              517113,
+              43441,
+              5293,
+              180,
+              0,
+              0
+            ],
+            [
+              5855,
+              406655,
+              6686,
+              24333,
+              167,
+              125
+            ],
+            [
+              0,
+              938,
+              30661,
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              3841,
+              89,
+              1031,
+              0,
+              14
+            ],
+            [
+              4,
+              313,
+              0,
+              0,
+              522,
+              0
+            ],
+            [
+              0,
+              450,
+              46,
+              0,
+              71,
+              747
+            ]
+          ],
+          "mri_sha256": "9309a54f644558de1a70eed8a678e362b6de44abdeda5d011a2ed5a2acfd4339",
+          "mask_sha256": "cfa0dbbefb6131e9fd5916ee09cb32b78ca641e2bfcb662d4c34e1808844d921",
+          "inference_seconds_single_pass": 0.16993726091459394,
+          "inference_peak_allocated_bytes": 264154112,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1200103759765625
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 244,
+          "background_voxels": 566027,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 18.720062255859375,
+              "assd_mm": 4.658888222589489
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 18.96801179413487,
+              "assd_mm": 4.498183069633682
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 109.4880072591844,
+              "assd_mm": 58.087325022706786
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 36.1369658564093,
+              "assd_mm": 7.446849160688505
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 10.075257799166918,
+              "assd_mm": 4.054687385700919
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 443821,
+                "volume_mm3": 15627188.75284465,
+                "components_6": 3,
+                "largest_component_fraction": 0.9999954936787578,
+                "occupied_z_slices": 58,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 455638,
+                "volume_mm3": 16043272.014998458,
+                "components_6": 75,
+                "largest_component_fraction": 0.9993306089483318,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 31599,
+                "volume_mm3": 1112618.6850129627,
+                "components_6": 2,
+                "largest_component_fraction": 0.9629418652489002,
+                "occupied_z_slices": 58,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 42775,
+                "volume_mm3": 1506131.974158343,
+                "components_6": 6,
+                "largest_component_fraction": 0.9945061367621274,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 4976,
+                "volume_mm3": 175207.77798742056,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 17,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 25544,
+                "volume_mm3": 899418.705970794,
+                "components_6": 2,
+                "largest_component_fraction": 0.9590510491700595,
+                "occupied_z_slices": 28,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.28254169673081686,
+                "prediction": 0.08673201322170634,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 839,
+                "volume_mm3": 29541.66513895616,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 22,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 760,
+                "volume_mm3": 26760.030400007963,
+                "components_6": 2,
+                "largest_component_fraction": 0.8736842105263158,
+                "occupied_z_slices": 18,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.1127919860331299,
+                "prediction": 0.24160932511446778,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 1314,
+                "volume_mm3": 46266.684138961136,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 14,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 886,
+                "volume_mm3": 31196.561755798757,
+                "components_6": 2,
+                "largest_component_fraction": 0.9988713318284425,
+                "occupied_z_slices": 15,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.2012655727026722,
+                "prediction": 0.31715568637878605,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.9012695893069252,
+            "central": 0.7010680458898253,
+            "base": 0.07222222222222223
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 14,
+            "Rectum": 0
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 2,
+            "predicted_slices_outside_GT_extent": 3,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "W029_Week6": {
+          "case": "W029_Week6",
+          "patient": "W029",
+          "confusion": [
+            [
+              618581,
+              726,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              4048,
+              377568,
+              8957,
+              61,
+              253,
+              631
+            ],
+            [
+              0,
+              1824,
+              32734,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              216,
+              0,
+              1118,
+              0,
+              240
+            ],
+            [
+              0,
+              144,
+              0,
+              0,
+              1042,
+              24
+            ],
+            [
+              0,
+              17,
+              0,
+              0,
+              0,
+              392
+            ]
+          ],
+          "mri_sha256": "73a18d0eb5e47ab895591d1a29aaece64239a1c57d6d7643c06acacbb70e09bc",
+          "mask_sha256": "f9d461b9254e6e95d33fa4dacc72c9c75ca8d3d89eee0a70c673794ce34662ce",
+          "inference_seconds_single_pass": 0.17458396730944514,
+          "inference_peak_allocated_bytes": 264154112,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 2,
+          "background_voxels": 619307,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 5.683763745312066,
+              "assd_mm": 1.2624373156640454
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 8.133964069529618,
+              "assd_mm": 2.8371262697189494
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 9.16946452567408,
+              "assd_mm": 2.368946069767715
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 5.683763745312066,
+              "assd_mm": 2.1310965375810063
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 19.228737232254478,
+              "assd_mm": 7.375159704972785
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 391518,
+                "volume_mm3": 13785503.082825243,
+                "components_6": 2,
+                "largest_component_fraction": 0.999984675034098,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 380495,
+                "volume_mm3": 13397378.9085038,
+                "components_6": 4,
+                "largest_component_fraction": 0.9999894873782835,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 34558,
+                "volume_mm3": 1216800.7998004556,
+                "components_6": 2,
+                "largest_component_fraction": 0.9997685051218241,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 41691,
+                "volume_mm3": 1467956.541017443,
+                "components_6": 9,
+                "largest_component_fraction": 0.9995202801563887,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 1574,
+                "volume_mm3": 55421.160335838795,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 11,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1179,
+                "volume_mm3": 41513.05466070771,
+                "components_6": 2,
+                "largest_component_fraction": 0.9991518235793045,
+                "occupied_z_slices": 11,
+                "internal_empty_z_slices": 13
+              },
+              "area_transition": {
+                "truth": 0.41616536775333046,
+                "prediction": 0.5151293443372806,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 1210,
+                "volume_mm3": 42604.576878249645,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 26,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1295,
+                "volume_mm3": 45597.4603779614,
+                "components_6": 3,
+                "largest_component_fraction": 0.9891891891891892,
+                "occupied_z_slices": 28,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.15214984669650725,
+                "prediction": 0.16790973064399903,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 409,
+                "volume_mm3": 14401.051192730665,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 12,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1287,
+                "volume_mm3": 45315.77722504735,
+                "components_6": 2,
+                "largest_component_fraction": 0.9992229992229992,
+                "occupied_z_slices": 16,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.24037531888769237,
+                "prediction": 0.27958804594207076,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.727170868347339,
+            "central": 0.6154620574385781,
+            "base": 0.21114223467164642
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 240,
+            "Rectum": 24
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 0,
+            "predicted_slices_outside_GT_extent": 4,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        }
+      }
+    },
+    "v3": {
+      "best_epoch": 50,
+      "checkpoint_sha256": "2225787d9371f34b3d8976d9119b9669fe4111f090a5ee6a0cef90941ed0bf1e",
+      "cases": {
+        "B040_Week1": {
+          "case": "B040_Week1",
+          "patient": "B040",
+          "confusion": [
+            [
+              651701,
+              3218,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              403,
+              342912,
+              4203,
+              427,
+              1449,
+              93
+            ],
+            [
+              0,
+              2689,
+              31992,
+              4,
+              0,
+              0
+            ],
+            [
+              0,
+              142,
+              5,
+              7403,
+              0,
+              2
+            ],
+            [
+              0,
+              69,
+              0,
+              0,
+              1150,
+              0
+            ],
+            [
+              0,
+              56,
+              0,
+              0,
+              0,
+              658
+            ]
+          ],
+          "mri_sha256": "939844920110df7b4e99c9beeadbf2f515d754847877b98bf260b161761ea90b",
+          "mask_sha256": "1c6a5395894680c235e74655f16052a3eaf4ba76f9850e6e7e424b9fa6353783",
+          "inference_seconds_single_pass": 0.16731856064870954,
+          "inference_peak_allocated_bytes": 371270656,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 1610,
+          "background_voxels": 654919,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 3.359375,
+              "assd_mm": 1.284364566341345
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 4.58473226283704,
+              "assd_mm": 1.7076462328402908
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 3.359375,
+              "assd_mm": 1.0507529510452884
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 25.309957426319183,
+              "assd_mm": 7.134896495904954
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 3.359375,
+              "assd_mm": 1.3632755609712324
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 349487,
+                "volume_mm3": 12305575.007808954,
+                "components_6": 20,
+                "largest_component_fraction": 0.9999055758869428,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 349086,
+                "volume_mm3": 12291455.639769137,
+                "components_6": 30,
+                "largest_component_fraction": 0.9952590479136946,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 34685,
+                "volume_mm3": 1221272.519852966,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 36200,
+                "volume_mm3": 1274616.2669360638,
+                "components_6": 9,
+                "largest_component_fraction": 0.9994475138121547,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 7552,
+                "volume_mm3": 265908.8963508606,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 24,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 7834,
+                "volume_mm3": 275838.22749108076,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 24,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.24626583103790986,
+                "prediction": 0.23716860625579966,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 1219,
+                "volume_mm3": 42921.47042527795,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 21,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 2599,
+                "volume_mm3": 91511.8143029511,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 31,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.14028122418038463,
+                "prediction": 0.0853664371369243,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 714,
+                "volume_mm3": 25140.221397578716,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 10,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 753,
+                "volume_mm3": 26513.426768034697,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 12,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.32367434989289623,
+                "prediction": 0.21614837042307114,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.7412023460410557,
+            "central": 0.9411516284126056,
+            "base": 0.9015121630506246
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 2,
+            "Rectum": 0
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 0,
+            "predicted_slices_outside_GT_extent": 2,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "J026_Week4": {
+          "case": "J026_Week4",
+          "patient": "J026",
+          "confusion": [
+            [
+              656418,
+              2468,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1981,
+              339941,
+              4024,
+              659,
+              287,
+              167
+            ],
+            [
+              0,
+              2861,
+              30916,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              124,
+              3,
+              7050,
+              0,
+              3
+            ],
+            [
+              0,
+              45,
+              0,
+              0,
+              896,
+              0
+            ],
+            [
+              0,
+              13,
+              0,
+              0,
+              0,
+              718
+            ]
+          ],
+          "mri_sha256": "dea9d89701e02ec6cb9c1b47f052b8d8f96af7316c6925bf02c86589ef4b2855",
+          "mask_sha256": "0d994f4367fb61f3b0792e107322d40c73c32c97e282745662d2adb3df9ab931",
+          "inference_seconds_single_pass": 0.16702237306162715,
+          "inference_peak_allocated_bytes": 371270656,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 303,
+          "background_voxels": 658886,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 3.359375,
+              "assd_mm": 1.1070663363864404
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 4.58473226283704,
+              "assd_mm": 1.8359136438059518
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 3.359375,
+              "assd_mm": 1.3689259827458529
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 6.239990234375,
+              "assd_mm": 1.7305762627290926
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 3.359375,
+              "assd_mm": 1.4875463914993245
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 347059,
+                "volume_mm3": 12220084.17089954,
+                "components_6": 11,
+                "largest_component_fraction": 0.9999625423919276,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 345452,
+                "volume_mm3": 12163501.067557931,
+                "components_6": 26,
+                "largest_component_fraction": 0.9996613132938874,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 33779,
+                "volume_mm3": 1189371.9027854502,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 34943,
+                "volume_mm3": 1230356.801534444,
+                "components_6": 2,
+                "largest_component_fraction": 0.9999713819649143,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 7180,
+                "volume_mm3": 252810.6297403574,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 18,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 7711,
+                "volume_mm3": 271507.3490150273,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 21,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.2566584693327834,
+                "prediction": 0.24719315408720077,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 941,
+                "volume_mm3": 33132.98086151481,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 23,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1183,
+                "volume_mm3": 41653.896237164736,
+                "components_6": 2,
+                "largest_component_fraction": 0.9983093829247676,
+                "occupied_z_slices": 30,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.11511743478796045,
+                "prediction": 0.12021675182940685,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 731,
+                "volume_mm3": 25738.798097521067,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 12,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 888,
+                "volume_mm3": 31266.829973459244,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 13,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.18786892256675333,
+                "prediction": 0.21011929018838088,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.8884461333059464,
+            "central": 0.9075943197445259,
+            "base": 0.8659297232177511
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 3,
+            "Rectum": 0
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 0,
+            "predicted_slices_outside_GT_extent": 1,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "K008_Week0": {
+          "case": "K008_Week0",
+          "patient": "K008",
+          "confusion": [
+            [
+              585200,
+              5581,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1773,
+              404950,
+              3719,
+              435,
+              921,
+              217
+            ],
+            [
+              0,
+              3827,
+              30872,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              678,
+              1,
+              7064,
+              0,
+              16
+            ],
+            [
+              0,
+              255,
+              0,
+              0,
+              1825,
+              9
+            ],
+            [
+              0,
+              196,
+              0,
+              2,
+              1,
+              1034
+            ]
+          ],
+          "mri_sha256": "b836e722cce5b90f5fa2d7d987a80efbae600ebe202952b2f2cf299db9f2284e",
+          "mask_sha256": "93b5f7ab6a6fefe7328eb1d9dbc012790f7f3493eb416ed69ddc6871a92e2210",
+          "inference_seconds_single_pass": 0.1671431609429419,
+          "inference_peak_allocated_bytes": 371270656,
+          "spacing_mm": [
+            3.515625,
+            3.515625,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 3921,
+          "background_voxels": 590781,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 5.869719568473765,
+              "assd_mm": 1.8452654774284032
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 5.869719568473765,
+              "assd_mm": 2.1480534910812152
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 9.3599853515625,
+              "assd_mm": 1.93635517852312
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 18.499626791015164,
+              "assd_mm": 3.8585135783538758
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 6.239990234375,
+              "assd_mm": 2.5288643326960476
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 412015,
+                "volume_mm3": 15888102.393317968,
+                "components_6": 9,
+                "largest_component_fraction": 0.9999733019428905,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 415487,
+                "volume_mm3": 16021989.4884713,
+                "components_6": 31,
+                "largest_component_fraction": 0.9898191760512363,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 34699,
+                "volume_mm3": 1338061.1505545676,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 34592,
+                "volume_mm3": 1333935.0217580795,
+                "components_6": 8,
+                "largest_component_fraction": 0.999277289546716,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 7759,
+                "volume_mm3": 299202.18067243695,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 24,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 7501,
+                "volume_mm3": 289253.1972192228,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 21,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.1836116976257081,
+                "prediction": 0.2630435922006634,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 2089,
+                "volume_mm3": 80555.91640993953,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 26,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 2747,
+                "volume_mm3": 105929.68041077256,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 32,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.12277898087808127,
+                "prediction": 0.2090284933022643,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 1233,
+                "volume_mm3": 47546.886038035154,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 14,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1276,
+                "volume_mm3": 49205.04994690418,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 16,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.10786368404466738,
+                "prediction": 0.21453979386390112,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.6097238265252547,
+            "central": 0.87695713826628,
+            "base": 0.8537573767371026
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 16,
+            "Rectum": 9
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 0,
+            "predicted_slices_outside_GT_extent": 2,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "K018_Week4": {
+          "case": "K018_Week4",
+          "patient": "K018",
+          "confusion": [
+            [
+              735498,
+              6157,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              719,
+              268824,
+              3971,
+              237,
+              309,
+              217
+            ],
+            [
+              0,
+              1945,
+              27118,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              156,
+              8,
+              731,
+              0,
+              0
+            ],
+            [
+              0,
+              351,
+              14,
+              0,
+              1069,
+              11
+            ],
+            [
+              0,
+              176,
+              0,
+              79,
+              0,
+              986
+            ]
+          ],
+          "mri_sha256": "8bf0a925439bc47a052fc20dde57072a86bf7e3083abbd49f3a62038ac6465c5",
+          "mask_sha256": "0b371661938df07b004f1d12ce0621464d6b4c9b03fde9295cce45ea17bfc640",
+          "inference_seconds_single_pass": 0.1667781239375472,
+          "inference_peak_allocated_bytes": 371270656,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 3128,
+          "background_voxels": 741655,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 6.239990234375,
+              "assd_mm": 2.5008359062454737
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 4.58473226283704,
+              "assd_mm": 1.6606313055212962
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 7.0868101791793725,
+              "assd_mm": 3.3916702959960285
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 14.42885808171688,
+              "assd_mm": 3.296163136669066
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 5.683763745312066,
+              "assd_mm": 2.709066371152107
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 274277,
+                "volume_mm3": 9657401.266475767,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 277609,
+                "volume_mm3": 9774722.299664468,
+                "components_6": 117,
+                "largest_component_fraction": 0.9881235838895713,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 29063,
+                "volume_mm3": 1023319.6841426194,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 31111,
+                "volume_mm3": 1095430.5712886155,
+                "components_6": 4,
+                "largest_component_fraction": 0.9998392851403041,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 895,
+                "volume_mm3": 31513.302732259035,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 8,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1047,
+                "volume_mm3": 36865.28263762593,
+                "components_6": 13,
+                "largest_component_fraction": 0.9703915950334289,
+                "occupied_z_slices": 14,
+                "internal_empty_z_slices": 16
+              },
+              "area_transition": {
+                "truth": 0.43807062767436783,
+                "prediction": 0.37820743971173315,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 1445,
+                "volume_mm3": 50879.01949509978,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 20,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1378,
+                "volume_mm3": 48519.92308944464,
+                "components_6": 3,
+                "largest_component_fraction": 0.9934687953555879,
+                "occupied_z_slices": 29,
+                "internal_empty_z_slices": 1
+              },
+              "area_transition": {
+                "truth": 0.16471983540446614,
+                "prediction": 0.13487229186241698,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 1241,
+                "volume_mm3": 43696.09909579158,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 15,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1214,
+                "volume_mm3": 42745.41845470667,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 16,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.28041657412143534,
+                "prediction": 0.3752518970322223,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.6426581660492231,
+            "central": 0.8495102189435413,
+            "base": 0.3961046865489957
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 0,
+            "Rectum": 11
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 1,
+            "predicted_slices_outside_GT_extent": 2,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "M015_Week7": {
+          "case": "M015_Week7",
+          "patient": "M015",
+          "confusion": [
+            [
+              516418,
+              45015,
+              4594,
+              0,
+              0,
+              0
+            ],
+            [
+              5170,
+              434184,
+              3368,
+              722,
+              168,
+              209
+            ],
+            [
+              0,
+              1859,
+              29725,
+              15,
+              0,
+              0
+            ],
+            [
+              164,
+              2785,
+              1,
+              2025,
+              0,
+              1
+            ],
+            [
+              0,
+              131,
+              0,
+              0,
+              708,
+              0
+            ],
+            [
+              13,
+              193,
+              0,
+              15,
+              0,
+              1093
+            ]
+          ],
+          "mri_sha256": "9309a54f644558de1a70eed8a678e362b6de44abdeda5d011a2ed5a2acfd4339",
+          "mask_sha256": "cfa0dbbefb6131e9fd5916ee09cb32b78ca641e2bfcb662d4c34e1808844d921",
+          "inference_seconds_single_pass": 0.16649002069607377,
+          "inference_peak_allocated_bytes": 371270656,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1200103759765625
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 2928,
+          "background_voxels": 566027,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 18.720062255859375,
+              "assd_mm": 4.264687800304015
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 19.01909911783089,
+              "assd_mm": 4.01943974919452
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 58.83866737772955,
+              "assd_mm": 11.455180437175223
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 9.1694852934778,
+              "assd_mm": 2.178717921744673
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 6.240020751953125,
+              "assd_mm": 2.3660933807674946
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 443821,
+                "volume_mm3": 15627188.75284465,
+                "components_6": 3,
+                "largest_component_fraction": 0.9999954936787578,
+                "occupied_z_slices": 58,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 484167,
+                "volume_mm3": 17047794.261421915,
+                "components_6": 27,
+                "largest_component_fraction": 0.9937315017339059,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 31599,
+                "volume_mm3": 1112618.6850129627,
+                "components_6": 2,
+                "largest_component_fraction": 0.9629418652489002,
+                "occupied_z_slices": 58,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 37688,
+                "volume_mm3": 1327015.8233098686,
+                "components_6": 9,
+                "largest_component_fraction": 0.9877945234557419,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 4976,
+                "volume_mm3": 175207.77798742056,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 17,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 2777,
+                "volume_mm3": 97779.74265897647,
+                "components_6": 10,
+                "largest_component_fraction": 0.9078141879726324,
+                "occupied_z_slices": 21,
+                "internal_empty_z_slices": 5
+              },
+              "area_transition": {
+                "truth": 0.28254169673081686,
+                "prediction": 0.6240634774628109,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 839,
+                "volume_mm3": 29541.66513895616,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 22,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 876,
+                "volume_mm3": 30844.456092640758,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 21,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.1127919860331299,
+                "prediction": 0.2554756572432907,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 1314,
+                "volume_mm3": 46266.684138961136,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 14,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1303,
+                "volume_mm3": 45879.36790948734,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 16,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.2012655727026722,
+                "prediction": 0.4310687431218664,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.9020462285633678,
+            "central": 0.901526739471324,
+            "base": 0.25326847065977504
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 1,
+            "Rectum": 0
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 1,
+            "predicted_slices_outside_GT_extent": 3,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        },
+        "W029_Week6": {
+          "case": "W029_Week6",
+          "patient": "W029",
+          "confusion": [
+            [
+              615170,
+              4137,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              1958,
+              383145,
+              3539,
+              1761,
+              360,
+              755
+            ],
+            [
+              0,
+              3156,
+              31402,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              113,
+              3,
+              1231,
+              0,
+              227
+            ],
+            [
+              0,
+              128,
+              0,
+              0,
+              1038,
+              44
+            ],
+            [
+              0,
+              7,
+              0,
+              0,
+              0,
+              402
+            ]
+          ],
+          "mri_sha256": "73a18d0eb5e47ab895591d1a29aaece64239a1c57d6d7643c06acacbb70e09bc",
+          "mask_sha256": "f9d461b9254e6e95d33fa4dacc72c9c75ca8d3d89eee0a70c673794ce34662ce",
+          "inference_seconds_single_pass": 0.16702867485582829,
+          "inference_peak_allocated_bytes": 371270656,
+          "spacing_mm": [
+            3.359375,
+            3.359375,
+            3.1199951171875
+          ],
+          "shape_xyz": [
+            128,
+            128,
+            64
+          ],
+          "far_background_to_body_voxels": 2712,
+          "background_voxels": 619307,
+          "surfaces": {
+            "Body": {
+              "status": "both_present",
+              "hd95_mm": 5.683763745312066,
+              "assd_mm": 1.7189713993060838
+            },
+            "Bones": {
+              "status": "both_present",
+              "hd95_mm": 4.58473226283704,
+              "assd_mm": 1.8821409080284468
+            },
+            "Bladder": {
+              "status": "both_present",
+              "hd95_mm": 25.861862146277154,
+              "assd_mm": 7.718057113824164
+            },
+            "Rectum": {
+              "status": "both_present",
+              "hd95_mm": 19.75017578048284,
+              "assd_mm": 3.4511444731867327
+            },
+            "Prostate": {
+              "status": "both_present",
+              "hd95_mm": 20.5894546924353,
+              "assd_mm": 8.107120989324052
+            }
+          },
+          "geometry": {
+            "Body": {
+              "truth": {
+                "voxels": 391518,
+                "volume_mm3": 13785503.082825243,
+                "components_6": 2,
+                "largest_component_fraction": 0.999984675034098,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 390686,
+                "volume_mm3": 13756208.034922183,
+                "components_6": 19,
+                "largest_component_fraction": 0.9920242854875783,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bones": {
+              "truth": {
+                "voxels": 34558,
+                "volume_mm3": 1216800.7998004556,
+                "components_6": 2,
+                "largest_component_fraction": 0.9997685051218241,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 34944,
+                "volume_mm3": 1230392.0119285583,
+                "components_6": 15,
+                "largest_component_fraction": 0.9991701007326007,
+                "occupied_z_slices": 64,
+                "internal_empty_z_slices": 0
+              }
+            },
+            "Bladder": {
+              "truth": {
+                "voxels": 1574,
+                "volume_mm3": 55421.160335838795,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 11,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 2992,
+                "volume_mm3": 105349.49918985367,
+                "components_6": 5,
+                "largest_component_fraction": 0.9973262032085561,
+                "occupied_z_slices": 19,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.41616536775333046,
+                "prediction": 0.3484444093950464,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Rectum": {
+              "truth": {
+                "voxels": 1210,
+                "volume_mm3": 42604.576878249645,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 26,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1398,
+                "volume_mm3": 49224.130971729755,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 33,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.15214984669650725,
+                "prediction": 0.11113073389613318,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            },
+            "Prostate": {
+              "truth": {
+                "voxels": 409,
+                "volume_mm3": 14401.051192730665,
+                "components_6": 1,
+                "largest_component_fraction": 1.0,
+                "occupied_z_slices": 12,
+                "internal_empty_z_slices": 0
+              },
+              "prediction": {
+                "voxels": 1428,
+                "volume_mm3": 50280.44279515743,
+                "components_6": 3,
+                "largest_component_fraction": 0.9985994397759104,
+                "occupied_z_slices": 17,
+                "internal_empty_z_slices": 0
+              },
+              "area_transition": {
+                "truth": 0.24037531888769237,
+                "prediction": 0.19390405828527504,
+                "definition": "Mean normalized adjacent area change on GT-positive adjacent pairs; descriptive, not anatomy validity"
+              }
+            }
+          },
+          "prostate_regions": {
+            "apex": 0.8273606283388188,
+            "central": 0.6068857290746247,
+            "base": 0.21584100973796494
+          },
+          "prostate_region_status": "physical_superior_axis_partition",
+          "prostate_in_true_oar": {
+            "Bladder": 227,
+            "Rectum": 44
+          },
+          "prostate_extent": {
+            "GT_positive_slices_without_any_predicted_prostate": 0,
+            "predicted_slices_outside_GT_extent": 5,
+            "note": "Slice presence is not correct localization; read alongside base/apex Dice and voxel errors"
+          }
+        }
+      }
+    }
+  }
+}

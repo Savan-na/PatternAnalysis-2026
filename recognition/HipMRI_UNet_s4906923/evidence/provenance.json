@@ -920,6 +920,28 @@
       "original_written_review": "Lost according to student; Appendix C is retrospective reconstruction",
       "original_plan": "At most five models, subsequently expanded to ten completed runs",
       "independent_tutor_receipt_available": false
+    },
+    "fixed_prediction_replay": {
+      "job_id": "686318",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:26",
+      "download_archive_sha256": "65ecca8db94822fe0e4ed96f60aeab2b282fdcdb72a777fd09399d2d40fec1dc",
+      "receipt_path": "evidence/documentation_replay.json",
+      "receipt_sha256": "f902fce6554871b9a03c946fcaa684c1eb41966c38b46eae016d1ba66433c2ab",
+      "cli_metrics_path": "evidence/example_K008_v3_prediction.json",
+      "cli_metrics_sha256": "1b550dd61adf81f5214b746cc92debd729bf337dd02f9952a324c223fb637b69",
+      "figure_sha256": {
+        "failure_bladder_clear.png": "f4e07a6f31f7c0f0624e28539da2264eb7c76a71bd59af7d5c60d19f611c430b",
+        "failure_body_clear.png": "f24bf6bae0990eab2b3f4e7ecdfafa65c7d52472f5efd3fd51ed8031c6dc4c64",
+        "failure_bones_clear.png": "e0d06d3ecbcf746fe14238f73f437a1c491508d692e979c59da2fae0ce2ac728",
+        "failure_prostate_apex_clear.png": "5c17edf00902ffcc7bebf4d3be516348062453134e6ae0ec31b4390197c0153b",
+        "failure_prostate_base_clear.png": "a2949fbedb622b2b6660bf7e459bd11b1b59ef4f7b0b5205bd799a7e3ecb2601",
+        "failure_rectum_clear.png": "6140234094e19aa6e67b55cc488d1e158d20eb933a7b8b2a14f899fe4ae8a1b8"
+      },
+      "cli_figure_sha256": "9ba3bf636510c8cb613af0bdc1a24100bde195f3c51cc139e467441f97f48ece",
+      "purpose": "Documentation only; fixed weights and slices; no training or new selection"
     }
-  }
+  },
+  "clinical_figure_archive": "20261017/archives/submission_verification/documentation_replay_20261022/historical_panels"
 }

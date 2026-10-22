@@ -252,39 +252,43 @@ The adjacent-organ percentage pools counts within each patient before averaging 
 
 ### 3.6 Case-level error analysis
 
-These unchanged historical fixed-checkpoint panels are real MRI, not simulated or retouched contours. Cyan=GT, orange=prediction, red=FP, blue=FN. Seven labelled historical model columns are retained for provenance; compare **Standard** and **v3** for the submitted pair. Open the linked PNGs at full resolution to inspect small structures.
+These panels use real MRI and the selected Standard/v3 checkpoints. A read-only replay (job 686318) reproduced all ten historical whole-volume confusion matrices before drawing them. No training, checkpoint selection or new Test-case selection was performed. The original multi-model panels are retained in the research archive; the figures below separate the submitted pair for readability.
 
-Ordinary panels show the GT-largest-area slice and the slice with largest A1 FP+FN area, shared across models. The Body panel uses A1 maximum-error planes. This purposive selection is not a random sample or a whole-volume score. Prostate base/apex uses physical superior/inferior ordering as a geometric proxy, not expert end-region annotation.
+Each upper row shows full-field MRI, the GT mask in cyan, Standard prediction and v3 prediction in orange. The lower row shows MRI, GT and red FP/blue FN overlays in the same display region. That region is the 2D GT bounding box plus ten voxels; if GT is absent on the plane, the full field is retained. Cropping affects display only, never inference or metrics. Physical pixel aspect is preserved. Voxel axis 2 is the axial Z direction here; indices are zero-based on the downsampled grid.
+
+The fixed slices were taken from the previously documented cases: M015 z=47, W029 base z=41 and apex z=32, K018 z=0, J026 z=49, and B040 z=63. They were not reselected to favour v3. The Body, Rectum and Bones views retain earlier A1-error-selected planes; this remains purposive rather than random sampling. Prostate base/apex uses physical superior/inferior ordering as a geometric proxy, not expert end-region annotation.
 
 #### 3.6.1 M015_Week7, Test: bladder localisation
 
-![Figure 4. M015_Week7 Test Bladder: GT-largest-area and A1-error-selected axial slices.](figures/failure_bladder.png)
+![Figure 4. M015_Week7 Test Bladder at z=47: full-field masks and a shared enlarged error region.](figures/failure_bladder_clear.png)
 
 Standard includes distant non-bladder tissue and misses much of the bladder; v3 reduces distant predictions but still undersegments the target. Whole-volume bladder Dice is 0.0676 Standard versus 0.5224 v3; HD95 is 109.49 versus 58.84 mm. The v3 bladder Dice in this visit remained 0.5224 despite the increase over Standard. The saved evaluation did not isolate anatomy, intensity or annotation effects as the cause. Section 4.5 reports the Test comparison with and without patient M015.
 
 #### 3.6.2 W029_Week6, Test: prostate ends and adjacent tissue
 
-![Figure 5. W029_Week6 Test Prostate: geometric apex, central and base slices.](figures/failure_prostate_ends.png)
+![Figure 5. W029_Week6 Test Prostate base at z=41: both predictions extend beyond the small GT cross-section.](figures/failure_prostate_base_clear.png)
+
+![Figure 6. W029_Week6 Test Prostate apex at z=32: the same full-field and enlarged error layout.](figures/failure_prostate_apex_clear.png)
 
 Both displayed base predictions extend beyond GT; their base-region mean slice Dice values are below 0.22. Whole-volume prostate Dice is 0.4623 Standard versus 0.4377 v3; base-region mean slice Dice is 0.2111 versus 0.2158. Slight end-region improvement does not imply whole-organ improvement. HD95 increases 19.23 to 20.59 mm. No controlled test established why this visit failed; no radiation-dose evaluation or expert clinical adjudication was performed.
 
 #### 3.6.3 K018_Week4, Validation: Body and distant components
 
-![Figure 6. K018_Week4 Validation Body: one A1-error-selected plane per voxel-grid axis.](figures/failure_body.png)
+![Figure 7. K018_Week4 Validation Body at z=0: full-field masks retain distant predictions outside the local display region.](figures/failure_body_clear.png)
 
-The displayed v1 distant FP pattern is reduced in v3, but isolated FP regions remain in the v3 column. Standard/v3 Body Dice is almost equal (0.9740/0.9742); HD95 is 4.75/6.24 mm, and distant Background-to-Body voxels are 5/3,128. The near-equal Dice values therefore coexist with different surface distances and distant-error counts. This case does not isolate normalisation or input context as the cause.
+The full-field v3 prediction includes small regions outside the main Body prediction, and the enlarged overlay retains both FP and FN. Standard/v3 whole-volume Body Dice is almost equal (0.9740/0.9742); HD95 is 4.75/6.24 mm, and distant Background-to-Body voxels are 5/3,128. The near-equal Dice values therefore coexist with different surface distances and distant-error counts. This case does not isolate normalisation or input context as the cause.
 
 #### 3.6.4 J026_Week4, Validation: rectum extent
 
-![Figure 7. J026_Week4 Validation Rectum: GT-largest-area and A1-error-selected axial slices.](figures/failure_rectum.png)
+![Figure 8. J026_Week4 Validation Rectum at z=49: GT is absent on this plane, while both predictions contain Rectum FP. The lower row therefore retains the full field.](figures/failure_rectum_clear.png)
 
-The GT-largest-area row contains overlapping GT and predicted Rectum contours. The error-selected row shows predicted Rectum outside the GT contour. Whole-volume Dice improves 0.8110 to 0.8437, ASSD improves 2.00 to 1.73 mm, but HD95 remains 6.24 mm. The lower ASSD and higher Dice do not remove the displayed false-positive extent or change the recorded HD95.
+The empty GT mask and nonempty predicted masks expose a false-positive Rectum cross-section in both models. This is one selected slice, not a claim that the whole-volume Rectum is absent. Whole-volume Dice improves 0.8110 to 0.8437, ASSD improves 2.00 to 1.73 mm, but HD95 remains 6.24 mm. The lower ASSD and higher Dice do not remove the displayed false-positive extent or change the recorded HD95. The records do not isolate why either network predicts Rectum on this plane.
 
 #### 3.6.5 B040_Week1, Validation: bone coverage
 
-![Figure 8. B040_Week1 Validation Bones: GT-largest-area and A1-error-selected axial slices.](figures/failure_bones.png)
+![Figure 9. B040_Week1 Validation Bones at z=63: separate masks and the same-region FP/FN overlays.](figures/failure_bones_clear.png)
 
-The pelvis contains both missing bone and extra predicted regions. v3 improves whole-volume Bones Dice 0.8607 to 0.9026 and HD95 7.41 to 4.58 mm, but the error-selected row retains FP and FN. The displayed FP/FN and the whole-volume metrics are reported for Bones separately from the three-small-organ selection score.
+The selected plane contains both missing bone and extra predicted regions. v3 improves whole-volume Bones Dice 0.8607 to 0.9026 and HD95 7.41 to 4.58 mm, but the enlarged error views retain FP and FN. The displayed FP/FN and the whole-volume metrics are reported for Bones separately from the three-small-organ selection score. No controlled test attributes these residual errors to a specific tissue-intensity or anatomical trigger.
 
 ## 4. Discussion
 
@@ -353,6 +357,19 @@ The tested local CPU environment is Python 3.11.16, PyTorch 2.13.0+cpu, NumPy 2.
 
 The imported local versions and nine-test result are recorded in [evidence/local_environment.json](evidence/local_environment.json). This CPU check validates the package's tests and count-recalculation example; the separate GPU replay in A.4 validates agreement with the historical Validation predictions.
 
+The documentation replay on 22 October captured the following environment directly. It is an exact record of that replay environment, not a reconstruction of every earlier training environment.
+
+| Component | Local CPU verification | GPU documentation replay, job 686318 |
+|---|---|---|
+| Python | 3.11.16 | 3.11.15 |
+| PyTorch | 2.13.0+cpu | 2.13.0+cu130 |
+| CUDA build / GPU | Not available | 13.0 / NVIDIA A100-PCIE-40GB |
+| NumPy / SciPy | 2.4.6 / 1.17.1 | 2.4.6 / 1.17.1 |
+| nibabel / Matplotlib | 5.4.2 / 3.11.0 | 5.4.2 / 3.11.2 |
+| Pillow | Not captured in the local verification record | 12.3.0 |
+
+GPU versions, source hashes, the actual command and prediction checks are retained in [evidence/documentation_replay.json](evidence/documentation_replay.json). Library differences are recorded rather than treated as interchangeable proof of a fresh installation.
+
 ```bash
 cd recognition/HipMRI_UNet_s4906923
 python -m pip install -r requirements.txt
@@ -388,9 +405,22 @@ python -B predict.py --model v3 --checkpoint /path/to/v3/best.pt --dataset-root 
 
 Use `--model standard` with Standard weights for the baseline. Outputs: `metrics.json`, `overlay.png`, `prediction_downsampled.nii.gz`. Inference uses MRI only; paired GT is used afterwards for metrics/illustration. The exported NIfTI uses the downsampled affine, not original-resolution geometry. Outputs refuse overwrite. Without authorised MRI/weights, use the synthetic tests and inspect the recorded metrics; random weights must not be substituted for experimental results.
 
+**Executed example.** Job 686318 ran the `predict.py` command above with the recorded v3 `best.pt`, the authorised HipMRI root and Validation case K008_Week0. The process returned 0 and its six-class confusion matrix exactly matched the historical record. Its real outputs were:
+
+```text
+cli_example_K008_v3/
+  metrics.json                    Six-class counts, overlap, physical surfaces and source hashes
+  overlay.png                     GT/prediction contours and FP/FN views for five foreground classes
+  prediction_downsampled.nii.gz    Predicted labels on the downsampled physical grid
+```
+
+The submitted [metrics example](evidence/example_K008_v3_prediction.json) and [actual output panel](figures/example_K008_v3.png) are copied from this execution. The label volume remains outside Git. For this one volume, Body/Bones/Bladder/Rectum/Prostate Dice are 0.978729/0.891083/0.925819/0.754756/0.824233; these values are not patient-equal cohort scores. The panel selects each class's GT-largest-area and maximum-error axial slices after prediction, rather than using GT to constrain inference. This example verifies executable output and historical agreement; it is not a new generalisation test or a latency benchmark.
+
 ### A.4 Standalone Validation replay
 
 Before submission, the standalone implementation reproduced all 76 Standard/v3 Validation confusion matrices, input and weight identities, and physical surface measurements. Job 682858 completed in 00:04:49 with exit 0:0 on 21 October 2026, using PyTorch 2.13.0+cu130. All seven package tests passed before that check. The Validation scores were 0.8502228594450512 (Standard) and 0.8563563984705311 (v3). Verification scripts, backup receipts and editorial checks are stored in the separate research archive; they are not needed to run the submitted models. This check establishes agreement with the earlier implementation, not new generalisation or clinical safety.
+
+The later documentation replay, job 686318, completed in 00:00:26 with exit 0:0 on 22 October 2026. It separately ran the submitted prediction CLI on K008_Week0 and reproduced ten fixed Standard/v3 case matrices before rendering Section 3.6. Two of those cases are from the previously inspected Test cohort; their weights, identities and slices were fixed before replay. The operation refreshed presentation and verified the example command; it did not select a new model or add independent Test evidence.
 
 ### A.5 Report export
 
@@ -423,11 +453,11 @@ HipMRI_UNet_s4906923/
   config/                Fixed patient split and training settings
   tests/                 Synthetic data, geometry, model and recovery tests
   evidence/              Ten-model count records, CSVs and source identities
-  figures/               Method, curves, comparison and five real case panels
+  figures/               Method, curves, comparison, five real case studies and CLI example
   README.md              This report, with a companion PDF export
 ```
 
-The runtime has no import/path dependency on `20261017`, 2D or retired models. `evidence/experiments.json` preserves 500 epoch summaries and 680 best-model/case entries; the stored confusion counts allow readers to recalculate overlap metrics. The archived research checks verified 400 foreground metric values, checkpoint selection and five original figure hashes. Source/checkpoint identities preserve research provenance without submitting MRI or parameter files. Packaging does not overwrite historical metrics.
+The runtime has no import/path dependency on `20261017`, 2D or retired models. `evidence/experiments.json` preserves 500 epoch summaries and 680 best-model/case entries; the stored confusion counts allow readers to recalculate overlap metrics. The archived research checks verified 400 foreground metric values, checkpoint selection and five original figure hashes. Those original multi-model panels now reside in the research archive; six focused Standard/v3 panels cover the same five cases in this report. The documentation receipt records their fixed-prediction replay, the CLI example and exact GPU environment. Source/checkpoint identities preserve research provenance without submitting MRI volumes or parameter files. Packaging does not overwrite historical metrics.
 
 The current nine-test suite covers split leakage rejection, NIfTI pairing, spatial resampling, label retention, padding/crop inversion, patient aggregation, anisotropic distances/empty masks, both models' gradients/loading, direct model construction in the trainer, interrupted-versus-uninterrupted optimizer recovery, and MRI-free count export with known metrics and overwrite rejection. A synthetic 211-case file-list fixture ran the predict CLI end to end; it is not a research cohort or a performance result. Earlier tests also checked actual downloaded best-weight logits against historical implementations. The separate real-MRI GPU verification step passed for all 76 Validation model/case comparisons. The replayed model/data/metric files subsequently received prose-only edits; their executable syntax trees remain unchanged. The new `inspect-record` mode in the trainer is separately tested and does not alter training or inference calculations. Comparison records are retained with the research archive.
 
