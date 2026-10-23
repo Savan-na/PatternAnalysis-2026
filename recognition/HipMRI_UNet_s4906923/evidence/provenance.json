@@ -943,5 +943,200 @@
       "purpose": "Documentation only; fixed weights and slices; no training or new selection"
     }
   },
-  "clinical_figure_archive": "20261017/archives/submission_verification/documentation_replay_20261022/historical_panels"
+  "clinical_figure_archive": "20261017/archives/submission_verification/documentation_replay_20261022/historical_panels",
+  "section_3_6_review_20261023": {
+    "source_bundle_sha256": "80047fcb5ebcf0522ab216b3e0adff2674386c2229216c9eeacb1001fe35aa87",
+    "scope": "Existing fixed cases/slices/checkpoints; whole-volume count recalculation and editorial clarification only; no new inference or case replacement",
+    "selection": "Purposive examples of observed error patterns, not a random sample or a claim about prevalence",
+    "clinical_limit": "Disagreement with supplied labels does not establish annotation completeness, true anatomical absence or dose effects",
+    "cases": {
+      "M015_Week7": {
+        "split": "test",
+        "label": "Bladder",
+        "label_index": 3,
+        "views": [
+          {
+            "axis": 2,
+            "index": 47,
+            "organ": "Bladder"
+          }
+        ],
+        "models": {
+          "Standard": {
+            "tp_voxels": 1031,
+            "fp_voxels": 24513,
+            "fn_voxels": 3945,
+            "gt_voxels": 4976,
+            "prediction_voxels": 25544,
+            "gt_occupied_z_slices": 17,
+            "ascending_volume_dice_rank": 1,
+            "split_volumes": 30
+          },
+          "v3": {
+            "tp_voxels": 2025,
+            "fp_voxels": 752,
+            "fn_voxels": 2951,
+            "gt_voxels": 4976,
+            "prediction_voxels": 2777,
+            "gt_occupied_z_slices": 17,
+            "ascending_volume_dice_rank": 6,
+            "split_volumes": 30
+          }
+        }
+      },
+      "W029_Week6": {
+        "split": "test",
+        "label": "Prostate",
+        "label_index": 5,
+        "views": [
+          {
+            "axis": 2,
+            "index": 41,
+            "organ": "Prostate base"
+          }
+        ],
+        "models": {
+          "Standard": {
+            "tp_voxels": 392,
+            "fp_voxels": 895,
+            "fn_voxels": 17,
+            "gt_voxels": 409,
+            "prediction_voxels": 1287,
+            "gt_occupied_z_slices": 12,
+            "ascending_volume_dice_rank": 5,
+            "split_volumes": 30,
+            "prostate_regions": {
+              "apex": 0.727170868347339,
+              "central": 0.6154620574385781,
+              "base": 0.21114223467164642
+            }
+          },
+          "v3": {
+            "tp_voxels": 402,
+            "fp_voxels": 1026,
+            "fn_voxels": 7,
+            "gt_voxels": 409,
+            "prediction_voxels": 1428,
+            "gt_occupied_z_slices": 12,
+            "ascending_volume_dice_rank": 6,
+            "split_volumes": 30,
+            "prostate_regions": {
+              "apex": 0.8273606283388188,
+              "central": 0.6068857290746247,
+              "base": 0.21584100973796494
+            }
+          }
+        },
+        "additional_views": [
+          {
+            "axis": 2,
+            "index": 32,
+            "organ": "Prostate apex"
+          }
+        ]
+      },
+      "K018_Week4": {
+        "split": "validation",
+        "label": "Body",
+        "label_index": 1,
+        "views": [
+          {
+            "axis": 2,
+            "index": 0,
+            "organ": "Body"
+          }
+        ],
+        "models": {
+          "Standard": {
+            "tp_voxels": 263673,
+            "fp_voxels": 3490,
+            "fn_voxels": 10604,
+            "gt_voxels": 274277,
+            "prediction_voxels": 267163,
+            "gt_occupied_z_slices": 64,
+            "ascending_volume_dice_rank": 9,
+            "split_volumes": 38
+          },
+          "v3": {
+            "tp_voxels": 268824,
+            "fp_voxels": 8785,
+            "fn_voxels": 5453,
+            "gt_voxels": 274277,
+            "prediction_voxels": 277609,
+            "gt_occupied_z_slices": 64,
+            "ascending_volume_dice_rank": 6,
+            "split_volumes": 38
+          }
+        }
+      },
+      "J026_Week4": {
+        "split": "validation",
+        "label": "Rectum",
+        "label_index": 4,
+        "views": [
+          {
+            "axis": 2,
+            "index": 49,
+            "organ": "Rectum"
+          }
+        ],
+        "models": {
+          "Standard": {
+            "tp_voxels": 888,
+            "fp_voxels": 361,
+            "fn_voxels": 53,
+            "gt_voxels": 941,
+            "prediction_voxels": 1249,
+            "gt_occupied_z_slices": 23,
+            "ascending_volume_dice_rank": 24,
+            "split_volumes": 38
+          },
+          "v3": {
+            "tp_voxels": 896,
+            "fp_voxels": 287,
+            "fn_voxels": 45,
+            "gt_voxels": 941,
+            "prediction_voxels": 1183,
+            "gt_occupied_z_slices": 23,
+            "ascending_volume_dice_rank": 21,
+            "split_volumes": 38
+          }
+        }
+      },
+      "B040_Week1": {
+        "split": "validation",
+        "label": "Bones",
+        "label_index": 2,
+        "views": [
+          {
+            "axis": 2,
+            "index": 63,
+            "organ": "Bones"
+          }
+        ],
+        "models": {
+          "Standard": {
+            "tp_voxels": 33445,
+            "fp_voxels": 9589,
+            "fn_voxels": 1240,
+            "gt_voxels": 34685,
+            "prediction_voxels": 43034,
+            "gt_occupied_z_slices": 64,
+            "ascending_volume_dice_rank": 25,
+            "split_volumes": 38
+          },
+          "v3": {
+            "tp_voxels": 31992,
+            "fp_voxels": 4208,
+            "fn_voxels": 2693,
+            "gt_voxels": 34685,
+            "prediction_voxels": 36200,
+            "gt_occupied_z_slices": 64,
+            "ascending_volume_dice_rank": 27,
+            "split_volumes": 38
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,6 +1,6 @@
 # HipMRI Segmentation: Spatial Continuity, Boundary Errors and Computational Cost
 
-**COMP3710 Final Assessment | Student ID: s4906923 | Updated 22 October 2026**
+**COMP3710 Final Assessment | Student ID: s4906923 | Updated 23 October 2026**
 
 ## Abstract
 
@@ -252,43 +252,55 @@ The adjacent-organ percentage pools counts within each patient before averaging 
 
 ### 3.6 Case-level error analysis
 
-These panels use real MRI and the selected Standard/v3 checkpoints. A read-only replay (job 686318) reproduced all ten historical whole-volume confusion matrices before drawing them. No training, checkpoint selection or new Test-case selection was performed. The original multi-model panels are retained in the research archive; the figures below separate the submitted pair for readability.
+These five cases illustrate distinct documented error patterns, not their frequency in the cohort. They were selected for error analysis rather than sampled randomly; M015 is an extreme failure example, while the Rectum and Bones examples show residual local errors despite improved whole-volume scores. The panels use real MRI and the selected Standard/v3 checkpoints. Read-only replay job 686318 reproduced all ten historical whole-volume confusion matrices before drawing them. The six panel hashes also match that replay. No training, checkpoint selection or new Test-case selection was performed; the original multi-model panels remain in the research archive.
 
-Each upper row shows full-field MRI, the GT mask in cyan, Standard prediction and v3 prediction in orange. The lower row shows MRI, GT and red FP/blue FN overlays in the same display region. That region is the 2D GT bounding box plus ten voxels; if GT is absent on the plane, the full field is retained. Cropping affects display only, never inference or metrics. Physical pixel aspect is preserved. Voxel axis 2 is the axial Z direction here; indices are zero-based on the downsampled grid.
+**Reading the panels.** Each figure concerns one target class. In the upper row, MRI is followed by the target's binary GT mask (cyan) and Standard/v3 predictions (orange). Black in a mask panel means "not this target class"; it does not mean missing MRI or missing annotations for every class. The lower row shows MRI, GT and red FP/blue FN overlays in the same display region. The region is the 2D GT bounding box plus ten voxels; when the target GT is absent, the full field is retained. Display crops do not affect inference or metrics. Physical pixel aspect is preserved; axis 2 is axial Z and indices are zero-based on the downsampled grid.
 
 The fixed slices were taken from the previously documented cases: M015 z=47, W029 base z=41 and apex z=32, K018 z=0, J026 z=49, and B040 z=63. They were not reselected to favour v3. The Body, Rectum and Bones views retain earlier A1-error-selected planes; this remains purposive rather than random sampling. Prostate base/apex uses physical superior/inferior ordering as a geometric proxy, not expert end-region annotation.
 
-#### 3.6.1 M015_Week7, Test: bladder localisation
+**Scope of the measurements.** Dice, surface distances and voxel counts below describe the whole volume unless explicitly labelled as a prostate-region mean. They are not scores for the displayed slice or crop. FP/FN are disagreements with the supplied labels, not expert adjudications of the true anatomical boundary. No case-specific controlled experiment established a unique anatomical, intensity or model mechanism for these errors.
+
+#### 3.6.1 M015_Week7, Test: extreme bladder mismatch
 
 ![Figure 4. M015_Week7 Test Bladder at z=47: full-field masks and a shared enlarged error region.](figures/failure_bladder_clear.png)
 
-Standard includes distant non-bladder tissue and misses much of the bladder; v3 reduces distant predictions but still undersegments the target. Whole-volume bladder Dice is 0.0676 Standard versus 0.5224 v3; HD95 is 109.49 versus 58.84 mm. The v3 bladder Dice in this visit remained 0.5224 despite the increase over Standard. The saved evaluation did not isolate anatomy, intensity or annotation effects as the cause. Section 4.5 reports the Test comparison with and without patient M015.
+**Observed error and measurements.** Standard predicts Bladder well outside the GT region and misses much of the labelled target. v3 reduces whole-volume Bladder FP from 24,513 to 752 voxels, but still misses 2,951 of the 4,976 GT voxels. Dice is 0.0676 Standard versus 0.5224 v3; HD95 is 109.49 versus 58.84 mm.
 
-#### 3.6.2 W029_Week6, Test: prostate ends and adjacent tissue
+**Selection and interpretation.** This is Standard's lowest Bladder Dice among the 30 Test volumes, so it illustrates severe failure rather than a typical level of performance. The patient sensitivity analysis in Section 4.5 shows why this case's improvement must not be generalised to every patient. The records do not isolate anatomy, intensity or annotation effects as its cause. A research draft still requires checking bladder localisation and missing extent; higher Dice alone does not resolve this case.
+
+#### 3.6.2 W029_Week6, Test: prostate base overprediction and apex comparison
 
 ![Figure 5. W029_Week6 Test Prostate base at z=41: both predictions extend beyond the small GT cross-section.](figures/failure_prostate_base_clear.png)
 
 ![Figure 6. W029_Week6 Test Prostate apex at z=32: the same full-field and enlarged error layout.](figures/failure_prostate_apex_clear.png)
 
-Both displayed base predictions extend beyond GT; their base-region mean slice Dice values are below 0.22. Whole-volume prostate Dice is 0.4623 Standard versus 0.4377 v3; base-region mean slice Dice is 0.2111 versus 0.2158. Slight end-region improvement does not imply whole-organ improvement. HD95 increases 19.23 to 20.59 mm. No controlled test established why this visit failed; no radiation-dose evaluation or expert clinical adjudication was performed.
+**Observed error and measurements.** Both base predictions extend beyond the small GT cross-section. Standard/v3 base-region mean slice Dice is 0.2111/0.2158, whereas apex-region Dice is 0.7272/0.8274. The apex comparison therefore shows a v3 gain, not failure of both ends to the same degree. Whole-volume prostate Dice is 0.4623/0.4377 and HD95 is 19.23/20.59 mm; whole-volume FP increases from 895 to 1,026 voxels.
 
-#### 3.6.3 K018_Week4, Validation: Body and distant components
+**Interpretation and use.** These regional means cover the geometric end regions, not only the two displayed planes. The base remains poorly matched despite the apex improvement. Both drafts require end-region inspection, particularly excess base extent. No controlled test established the trigger, and the images do not establish which neighbouring tissue receives dose or whether a clinical wall is invaded.
 
-![Figure 7. K018_Week4 Validation Body at z=0: full-field masks retain distant predictions outside the local display region.](figures/failure_body_clear.png)
+#### 3.6.3 K018_Week4, Validation: Body boundary errors despite similar Dice
 
-The full-field v3 prediction includes small regions outside the main Body prediction, and the enlarged overlay retains both FP and FN. Standard/v3 whole-volume Body Dice is almost equal (0.9740/0.9742); HD95 is 4.75/6.24 mm, and distant Background-to-Body voxels are 5/3,128. The near-equal Dice values therefore coexist with different surface distances and distant-error counts. This case does not isolate normalisation or input context as the cause.
+![Figure 7. K018_Week4 Validation Body at z=0, the first downsampled image plane: full-field masks and enlarged boundary-error views.](figures/failure_body_clear.png)
 
-#### 3.6.4 J026_Week4, Validation: rectum extent
+**Observed error and measurements.** The displayed masks and overlays retain Body FP and FN. Standard/v3 whole-volume Body Dice is almost equal (0.9740/0.9742), but HD95 is 4.75/6.24 mm and Background-to-Body predictions at least 20 mm from GT Body total 5/3,128 voxels. The latter counts come from whole-volume distance analysis; the display does not label every visible FP as at least 20 mm away.
+
+**Interpretation and use.** The slice lies at the image-grid boundary, which is not an anatomical endpoint of the body. The case demonstrates why a similar Dice cannot replace full-volume inspection for extra predictions. The v1 fixed-weight input-context diagnostic on this visit is discussed separately in Section 4.4; it does not establish the cause of v3's errors. Check the complete prediction field rather than accepting the displayed slice as a complete component audit.
+
+#### 3.6.4 J026_Week4, Validation: Rectum prediction on a GT-negative slice
+
+**Why the GT panels are black.** On the selected z=49 plane, no voxel has the Rectum label. Both GT panels are therefore deliberately black, and the lower row repeats the full field because there is no target GT box to enlarge. Other anatomical classes are suppressed in these binary views. This is a false-positive example relative to the supplied annotation, not a missing-mask illustration.
 
 ![Figure 8. J026_Week4 Validation Rectum at z=49: GT is absent on this plane, while both predictions contain Rectum FP. The lower row therefore retains the full field.](figures/failure_rectum_clear.png)
 
-The empty GT mask and nonempty predicted masks expose a false-positive Rectum cross-section in both models. This is one selected slice, not a claim that the whole-volume Rectum is absent. Whole-volume Dice improves 0.8110 to 0.8437, ASSD improves 2.00 to 1.73 mm, but HD95 remains 6.24 mm. The lower ASSD and higher Dice do not remove the displayed false-positive extent or change the recorded HD95. The records do not isolate why either network predicts Rectum on this plane.
+**Measurements and interpretation.** The full volume contains 941 GT Rectum voxels on 23 axial slices; the label is not absent from the case. Standard/v3 whole-volume Dice is 0.8110/0.8437, ASSD is 2.00/1.73 mm and HD95 is 6.24 mm for both. Thus improved overlap and mean surface distance coexist with a nonempty prediction on this GT-negative plane. This example does not prove anatomical absence of rectum, annotation completeness or invasion of the rectal wall. Review the predicted extent against MRI and the supplied labels; the cause of the discrepancy remains unresolved.
 
-#### 3.6.5 B040_Week1, Validation: bone coverage
+#### 3.6.5 B040_Week1, Validation: bone FP/FN trade-off
 
 ![Figure 9. B040_Week1 Validation Bones at z=63: separate masks and the same-region FP/FN overlays.](figures/failure_bones_clear.png)
 
-The selected plane contains both missing bone and extra predicted regions. v3 improves whole-volume Bones Dice 0.8607 to 0.9026 and HD95 7.41 to 4.58 mm, but the enlarged error views retain FP and FN. The displayed FP/FN and the whole-volume metrics are reported for Bones separately from the three-small-organ selection score. No controlled test attributes these residual errors to a specific tissue-intensity or anatomical trigger.
+**Observed error and measurements.** The selected plane retains both FP and FN relative to the Bones annotation. Standard/v3 whole-volume Dice is 0.8607/0.9026 and HD95 is 7.41/4.58 mm. However, FP decreases from 9,589 to 4,208 voxels while FN increases from 1,240 to 2,693. The overlap gain therefore does not imply improvement in both error types.
+
+**Interpretation and use.** This illustrates residual errors in a case whose overall Bones scores improve, rather than an extreme failure of every metric. Missing as well as extra bone regions still require inspection. Bones is reported separately from the three-small-organ selection score; neither a tissue-intensity cause nor a dose consequence was established.
 
 ## 4. Discussion
 

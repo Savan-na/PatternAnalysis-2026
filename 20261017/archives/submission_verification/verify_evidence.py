@@ -6,7 +6,7 @@ import sys
 ARCHIVE = Path(__file__).resolve().parent
 ROOT = ARCHIVE.parents[2] / "recognition/HipMRI_UNet_s4906923"
 sys.path.insert(0, str(ROOT))
-from utils import aggregate_cases, sha256_file
+from utils import aggregate_cases, sha256_file, overlap
 
 
 def verify_replayed_sources(root, replay):
@@ -107,6 +107,31 @@ def verify_report_additions(bundle, provenance):
                 assert np.median(ratios)==stats["median"]
     for value in provenance["pretraining_review"]["optimizer_and_capacity_sources"]:
         assert sha256_file(research/value["research_path"])==value["sha256"]
+    cases=provenance["section_3_6_review_20261023"]
+    assert cases["source_bundle_sha256"]==sha256_file(ROOT/"evidence/experiments.json")
+    for case,record in cases["cases"].items():
+        k=record["label_index"];label=record["label"]
+        assert bundle["class_order"][k]==label
+        for name,expected in record["models"].items():
+            rows=bundle["models"][name]["splits"][record["split"]]
+            row=next(r for r in rows if r["case"]==case)
+            matrix=np.asarray(row["confusion"])
+            tp=int(matrix[k,k]);gt=int(matrix[k].sum());pred=int(matrix[:,k].sum())
+            assert expected["tp_voxels"]==tp
+            assert expected["gt_voxels"]==gt and expected["prediction_voxels"]==pred
+            assert expected["fp_voxels"]==pred-tp and expected["fn_voxels"]==gt-tp
+            assert expected["gt_occupied_z_slices"]==row["geometry"][label]["truth"]["occupied_z_slices"]
+            dice=2*tp/(gt+pred)
+            rank=1+sum(overlap(np.asarray(r["confusion"]))["dice"][k]<dice for r in rows)
+            assert expected["ascending_volume_dice_rank"]==rank
+            assert expected["split_volumes"]==len(rows)
+            if k==5:assert expected["prostate_regions"]==row["prostate_regions"]
+            prior=review["case_autopsy_metrics"][case][name]
+            assert prior["dice"]==dice
+            for metric in ("hd95_mm","assd_mm"):
+                assert prior[metric]==row["surfaces"][label][metric]
+            assert prior["far_body_fp"]==row["far_background_to_body_voxels"]
+    print("PASS: five case autopsies, whole-volume FP/FN, GT extent, Dice ranks and prostate region scores")
     figure=provenance["method_figure"]
     assert sha256_file(ROOT/figure["filename"])==figure["sha256"]
     assert sha256_file(ROOT/"modules.py")==figure["architecture_source_sha256"]

@@ -1,6 +1,6 @@
 {
-  "date": "2026-10-22",
-  "status": "Technical checks passed; concise AI disclosure updated; loader augmentation wording and external submission actions remain open",
+  "date": "2026-10-23",
+  "status": "Technical checks passed; Section 3.6 case provenance, interpretation and ambiguity review completed; loader augmentation wording and external submission actions remain open",
   "required_five_files_present": true,
   "runtime_imports_old_research_package": false,
   "raw_datasets_or_weight_files_present": false,
@@ -18,8 +18,8 @@
     "spatial_context_measurements": 18
   },
   "pdf": {
-    "pages": 20,
-    "feasibility_review_page": 20,
+    "pages": 21,
+    "feasibility_review_page": 21,
     "rendered_and_visually_checked": true,
     "internal_markdown_link_targets": 12,
     "internal_pdf_link_annotations": 14,
@@ -49,7 +49,7 @@
     "evidence/local_environment.json": "0a9c8caec757609fdf7a2d314f2aea53b28c71ad5a77d173a1b30628699c51d0",
     "evidence/model_summary.csv": "0a36045e0a85e621a956d6f033a6fdad6b0d2bd631da071a8acceb74411b2beb",
     "evidence/patient_scores.csv": "bf131d2f0c388088255fb2c29d7817ea54732fc2217c4682fb1dd4d3afdf3e1a",
-    "evidence/provenance.json": "de16b30346f85da2c6f6a5d5d4709c545f405ea04a23cdc95503e50fdcb2decf",
+    "evidence/provenance.json": "2556cb4a874043af3dd537f2f952a0b1a23bba467f634af2394613352295cb90",
     "evidence/spatial_context_summary.json": "a7595c7a273374ee99b65953cc96665d518e167fa21bc540b699c284de95c5dd",
     "evidence/surface_metrics.csv": "1b0f1b2f4c2114fd59e158a35a246b482ad39c7713be6d8319f0d624a419612f",
     "evidence/training_curves.csv": "e07d9de033e05ecc3571a50fddcd096e9bff2896430de7730352a677733b8138",
@@ -66,8 +66,8 @@
     "figures/training_and_selection.png": "3dcdb132abbd9c7a66fd3a216ea9bf51803a9c741fb12f35e03fa9e3737614b0",
     "modules.py": "5aef53b4b1b3b282c1964338fe610af8dfc0c62258e3f7291a83bc18da479914",
     "predict.py": "5185ff2355282ca69e8e1036132c8137b92d35429919b37cbe365bf763a05d71",
-    "README.md": "232e637be03b500c5ecc66c7cfd2b4f3bae7248d6088309479a9d06b81b0d328",
-    "REPORT.pdf": "bf98cf9b4fb69e72c46bc35440ec67f1646b666e5b486514289483a4bae0bcf3",
+    "README.md": "c752ffcbff9f107e5a6d06c068960ec1e235efbb3909ed98387b3cd9d3dc4db8",
+    "REPORT.pdf": "a9f1075f2095e1452ccda632e096ced9ea7a4aae07097871548393ef09c9edd3",
     "requirements.txt": "d7f725c5d46fb71e99a36f97936d34caffde0956168d9bf45c7d67e6e8b661bc",
     "tests/test_submission.py": "be63b61bda6245d725644dee9bac7de4a668b54f2ea13f6adf6a5bfbb25bdcad",
     "train.py": "63c17fb1d59111b4aab6ed6e61b337c7feefccf848a5ad83864e4138159cce68",
@@ -176,5 +176,21 @@
       "Respond to later teaching-team code review"
     ],
     "checkoff": "Completed according to student confirmation; original one-page document lost; Appendix C explicitly reconstructed"
+  },
+  "section_3_6_review_20261023": {
+    "five_real_cases_retained": true,
+    "six_original_replay_panel_hashes_unchanged": true,
+    "whole_volume_confusion_counts_and_surface_values_rechecked": true,
+    "M015_extreme_not_prevalence_example": true,
+    "W029_apex_gain_separated_from_base_failure": true,
+    "K018_first_image_plane_not_anatomical_endpoint": true,
+    "K018_20mm_counts_not_assigned_to_every_visible_FP": true,
+    "J026_empty_target_GT_explained_before_figure": true,
+    "J026_whole_volume_GT_941_voxels_23_slices_verified": true,
+    "B040_more_FN_despite_higher_Dice_reported": true,
+    "display_roi_and_binary_mask_conventions_explicit": true,
+    "clinical_annotation_limits_explicit": true,
+    "training_or_inference_performed": false,
+    "old_metrics_and_figures_overwritten": false
   }
 }
