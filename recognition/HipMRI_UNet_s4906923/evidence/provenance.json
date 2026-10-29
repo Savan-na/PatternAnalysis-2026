@@ -1138,5 +1138,37 @@
         }
       }
     }
+  },
+  "final_packaging_review_20261029": {
+    "historical_sources": "Original research files and private weight backups archived separately; historical origin paths are not runtime dependencies",
+    "archived_tracked_files_found": 393,
+    "missing_archived_tracked_files": 0,
+    "archive_files_matching_HEAD_allowing_line_endings": 387,
+    "existing_local_revisions_preserved": 6,
+    "isolated_submission_tests_passed": 9,
+    "cli_smoke_checks_passed": 3,
+    "saved_K008_export_matches": true,
+    "standard_v3_checkpoint_identities_and_synthetic_cpu_forward_verified": true,
+    "historical_metric_recalculation": "500 epochs, 680 case entries, 400 foreground values, case autopsies, resources and replay hashes verified against relocated archive",
+    "new_training_or_MRI_decoding": false,
+    "selected_weights_or_metrics_changed": false,
+    "historical_repository_commit_before_archive": "f4ae12c53933eb248f258225ce3e8d5ab17e9371",
+    "course_target_branch_commit": "552b9029a3fbee3e12d0b4e95f38e73d8d1d51a5",
+    "course_root_readme_and_license_restored_exactly": true,
+    "shared_recognition_index_preserved_with_project_entry_appended": true,
+    "obsolete_attributes_for_archived_directory_removed": true,
+    "history_archive_cleanup_commit": "b1f11ad",
+    "shared_repository_correction_commit": "85122ac",
+    "historical_commits_preserved": true
+  },
+  "earlier_feasibility_proposal": {
+    "filename": "feasidual report.docx",
+    "sha256": "d3e6b914220d28d16aff3b89506e77f6f50651c8b56a376f480e6b13dc1f7756",
+    "location": "Separately archived research documents",
+    "document_role": "Surviving earlier bilingual proposal; not independently authenticated as the exact tutor check-off version",
+    "planned_initial_testing_gpu_hours_maximum": 1,
+    "planned_gpu_memory_envelope": "A100 40 GB",
+    "budget_scope": "Provisional initial smoke tests and throughput measurements, not total formal training cost",
+    "split_seed_3710_in_proposal": "A proposal statement, not a verified record of the original split-generation procedure; the submitted fixed patient lists are unchanged"
   }
 }

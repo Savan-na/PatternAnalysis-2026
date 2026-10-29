@@ -1,6 +1,6 @@
 # HipMRI Segmentation: Spatial Continuity, Boundary Errors and Computational Cost
 
-**COMP3710 Final Assessment | Student ID: s4906923 | Updated 23 October 2026**
+**COMP3710 Final Assessment | Student ID: s4906923 | Updated 29 October 2026**
 
 ## Abstract
 
@@ -473,7 +473,9 @@ HipMRI_UNet_s4906923/
   README.md              This report, with a companion PDF export
 ```
 
-The runtime has no import/path dependency on `20261017`, 2D or retired models. `evidence/experiments.json` preserves 500 epoch summaries and 680 best-model/case entries; the stored confusion counts allow readers to recalculate overlap metrics. The archived research checks verified 400 foreground metric values, checkpoint selection and five original figure hashes. Those original multi-model panels now reside in the research archive; six focused Standard/v3 panels cover the same five cases in this report. The documentation receipt records their fixed-prediction replay, the CLI example and exact GPU environment. Source/checkpoint identities preserve research provenance without submitting MRI volumes or parameter files. Packaging does not overwrite historical metrics.
+The runtime has no import/path dependency on `20261017`, 2D or retired models. The historical research directory and private weight backups are archived separately. Paths beginning with `20261017` in `evidence/provenance.json` identify original research sources; they are not required paths within this submission. The tests and the saved-record command in A.6 run without the archive, MRI or weights. New inference instead requires the explicit data/checkpoint inputs in A.3.
+
+`evidence/experiments.json` preserves 500 epoch summaries and 680 best-model/case entries; the stored confusion counts allow readers to recalculate overlap metrics. The archived research checks verified 400 foreground metric values, checkpoint selection and five original figure hashes. Those original multi-model panels now reside in the research archive; six focused Standard/v3 panels cover the same five cases in this report. The documentation receipt records their fixed-prediction replay, the CLI example and exact GPU environment. Source/checkpoint identities preserve research provenance without submitting MRI volumes or parameter files. Packaging does not overwrite historical metrics.
 
 The current nine-test suite covers split leakage rejection, NIfTI pairing, spatial resampling, label retention, padding/crop inversion, patient aggregation, anisotropic distances/empty masks, both models' gradients/loading, direct model construction in the trainer, interrupted-versus-uninterrupted optimizer recovery, and MRI-free count export with known metrics and overwrite rejection. A synthetic 211-case file-list fixture ran the predict CLI end to end; it is not a research cohort or a performance result. Earlier tests also checked actual downloaded best-weight logits against historical implementations. The separate real-MRI GPU verification step passed for all 76 Validation model/case comparisons. The replayed model/data/metric files subsequently received prose-only edits; their executable syntax trees remain unchanged. The new `inspect-record` mode in the trainer is separately tested and does not alter training or inference calculations. Comparison records are retained with the research archive.
 
@@ -485,9 +487,9 @@ The current nine-test suite covers split leakage rejection, NIfTI pairing, spati
 | Boundary/context dilemma and 3-5 failures | Five original MRI cases, prostate ends, OAR/slice diagnostics, recommendation |
 | Modular code and reproducibility | Five required files, dependencies, commands and tests |
 | Data augmentation wording in Section 4.1 | A1 augmentation was evaluated and documented, but the selected Standard/v3 recipes use none and the submitted loader has no augmentation transform; whether an additional loader feature is required needs teaching-team clarification |
-| Progressive originality | Existing staged Git history; adapted literature listed in References |
+| Progressive originality | Progressive commit history; adapted literature attributed in References and model docstrings |
 | No datasets/model files in Git | Code, count records and selected report visuals only |
-| Feasibility hurdle | Student confirmed completion on 22 October 2026; original written version lost; Appendix C is a retrospective reconstruction |
+| Feasibility hurdle | Student confirmed completion on 22 October 2026; an earlier proposal survives separately, but the exact checked-off text is unconfirmed; Appendix C is a retrospective review |
 | Upstream PR and code-review response | Lodge to upstream topic-recognition before the applicable deadline; respond during later feedback window |
 | Turnitin | Submit PDF export of this README; confirm it matches the final committed report |
 
@@ -495,7 +497,7 @@ The student confirmed that the practical check-off had already been completed, d
 
 ## Appendix C. Feasibility review
 
-**Status and provenance.** This is a retrospective reconstruction and update, not the lost original one-page review. On 22 October 2026 the student confirmed that the practical check-off had already been completed (described as "last Tuesday"). The original direction was retained, but the planned maximum of five models expanded to ten completed runs. No exact consultation date, original wording, tutor feedback or original numerical budget is inferred from that confirmation.
+**Status and provenance.** This is a retrospective review, not a verified copy of the check-off document. On 22 October 2026 the student confirmed completed check-off (described as "last Tuesday") and reported the original review lost; the exact date and reviewed text remain unconfirmed. The direction was retained while the planned maximum of five models expanded to ten runs. An earlier separately archived proposal records an A100 40 GB envelope and up to one GPU-hour for initial smoke tests and throughput measurement. Those are proposed initial-test limits, not the formal training cost; its source hash is retained in `evidence/provenance.json`.
 
 **User need and scope.** Evaluate a six-class improved 3D contouring prototype against an implemented baseline on supplied downsampled HipMRI. The comparison records patient-level splits, prostate precision, base/apex overlap, surface errors and disconnected predictions alongside whole-organ overlap.
 
