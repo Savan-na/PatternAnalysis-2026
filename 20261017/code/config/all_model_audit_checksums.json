@@ -1,7 +1,0 @@
-{
-  "tools/audit_all_models.py": "976167d30a4102a47a3ea8167e7eab8fa761302410adb88b9ddf81547631779b",
-  "tools/submit_all_model_audit.sh": "2e30d8542dd33d4c213383776294bf7e0b4bb7dccedb181010ff02ae025d2538",
-  "tests/test_all_model_audit.py": "98161410da1dfbbfc3c06abe5c91bdb6f7a888e9a75145297b649e511aacac06",
-  "config/all_model_assessment_audit.json": "8f197ba8be1830b05d96622a81c875997dc034cee9f3059a3b718ce07c2cc4c0",
-  "docs/ALL_MODEL_ASSESSMENT_AUDIT.md": "5f0a5f1e93fdb4e18856b40432c7239875580d5ca96c55572f7a5294d3de3ce8"
-}

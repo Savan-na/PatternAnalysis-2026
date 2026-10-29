@@ -1,7 +1,0 @@
-{
-  "arm_id": "baseline_2d",
-  "role": "slice-wise 2D U-Net baseline",
-  "model_import": "hipmri_rewrite.models.UNet2D",
-  "training_status": "ready_to_submit; no 2D checkpoint yet",
-  "training_config_status": "frozen in code/config/g5_2d_training_frozen.json"
-}

@@ -1,8 +1,0 @@
-{
-  "tools/audit_best_checkpoints.py": "ed439ee290c55eb4e629724bc33c60a9e81783fd7a365569af1f25055ecf4a28",
-  "tests/test_best_checkpoint_audit.py": "df2650ee83de4d33ecb162dc1f596e02130da279494073d294f0d803faa704eb",
-  "config/best_checkpoint_audit.json": "a1bef52592365c38ea51fe21e1436fecd9ce409632ed4ab0fa0bb46eb27db2ba",
-  "tools/submit_best_checkpoint_audit.sh": "26f79b5c0b079d24ae68bc5f0ccb1b59b4241ea2695f0154a8069e08b50f5b6c",
-  "docs/V4_Paired_Training_ZH.md": "4c68f79e411d8e2ebc996fa435f994abb31f661944fe471a20231c590f60e029",
-  "docs/BEST_CHECKPOINT_AUDIT.md": "e974332c6955ea027e45cacb413669b39acb770834e3553de2a4a10f040960dd"
-}

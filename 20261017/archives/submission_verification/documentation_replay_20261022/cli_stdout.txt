@@ -1,3 +1,0 @@
-Classes: ('Background', 'Body', 'Bones', 'Bladder', 'Rectum', 'Prostate')
-Dice: [0.9937559116759527, 0.9787287523172149, 0.8910825359714826, 0.9258191349934469, 0.7547559966914805, 0.8242327620565962]
-Saved: /home/Student/s4906923/hipmri_readme_examples_20261022/outputs/cli_example_K008_v3

@@ -1,8 +1,0 @@
-{
-  "hipmri_rewrite/improved_v2.py": "6795562eaae3eedfe163fb53282b23008058259887f76d04f2225fc801634500",
-  "tools/train_v2_cohort.py": "8ca3c59144464355d56f65fa4595dcafebe6f5ea9f670fcc11a0d088f3c19071",
-  "config/v2_independent_supervision_frozen.json": "8a356408aef80b5041a0cca4caf2b64c0be0e726a1049cc42945196324d73712",
-  "tests/test_improved_v2.py": "456da9f07e696a0bc15f6f90ccbf4608ca5f0c8a8b66ace1b447b10a0ad817ae",
-  "tools/submit_v2_50.sh": "943c2c7dc5828faa5a4f6ac87c0f7de91e7104efaaebf51d54042a8092357be1",
-  "docs/V2_TRAINING.md": "d27cc65b523733a06e4747a481b8a050690f392d09f8dacec164a1bbd730354c"
-}

@@ -1,6 +1,0 @@
-﻿model,parameters,measured_train_peak_allocated_GiB,summed_epoch_train_and_checkpoint_seconds,matched_inference_peak_vram,matched_inference_latency,warning
-2D,1942374,0.07298612594604492,4752.511431139894,pending fixed-checkpoint audit,pending fixed-checkpoint audit,Training/IO measurements are not pure inference performance; 2D recipe differs
-Standard,1412550,0.19646501541137695,5207.482535159215,pending fixed-checkpoint audit,pending fixed-checkpoint audit,Training/IO measurements are not pure inference performance; 2D recipe differs
-v1,2366946,0.31960630416870117,7239.998196698492,pending fixed-checkpoint audit,pending fixed-checkpoint audit,Training/IO measurements are not pure inference performance; 2D recipe differs
-v2,2366946,0.32778358459472656,5648.798239851603,pending fixed-checkpoint audit,pending fixed-checkpoint audit,Training/IO measurements are not pure inference performance; 2D recipe differs
-v3,2366946,0.28540515899658203,5891.110888409428,pending fixed-checkpoint audit,pending fixed-checkpoint audit,Training/IO measurements are not pure inference performance; 2D recipe differs

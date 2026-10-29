@@ -1,6 +1,0 @@
-# Preserve byte-level SHA contracts across Windows, GitHub and Rangpur.
-# This disables newline conversion without marking source files as binary.
-20261017/code/** -text whitespace=cr-at-eol
-20261017/results/** -text whitespace=cr-at-eol
-# Matplotlib emits intentional whitespace inside generated SVG path data.
-20261017/results/**/*.svg -text -whitespace
