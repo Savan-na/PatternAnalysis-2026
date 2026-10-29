@@ -35,5 +35,3 @@ HipMRI_UNet_s4906923/
 ├── requirements.txt   # Pinned core Python dependencies
 └── export_report.py   # Rebuild REPORT.pdf from README.md and its figures
 ```
-
-The historical `20261017` research workspace and private model backups are archived separately from this submission. Tests and saved-record inspection run without that archive. New MRI inference requires authorised data and trusted weights supplied through the documented command-line arguments; datasets and weight files are excluded from this folder and Git.
