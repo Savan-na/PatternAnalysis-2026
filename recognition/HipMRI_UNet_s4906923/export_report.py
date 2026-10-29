@@ -50,7 +50,7 @@ def main():
         styles[name].leading=size*1.25;styles[name].spaceBefore=12;styles[name].spaceAfter=7;styles[name].keepWithNext=True
     width=A4[0]-84
     doc=SimpleDocTemplate(str(args.output),pagesize=A4,rightMargin=42,leftMargin=42,topMargin=42,bottomMargin=40,
-                          title="HipMRI Segmentation - COMP3710 Final Assessment",author="s4906923")
+                          title="HipMRI Segmentation - COMP3710 Final Assessment",author="RuiJie Gong")
     lines=(ROOT/"README.md").read_text(encoding="utf-8").splitlines();story=[];i=0
     while i<len(lines):
         line=lines[i].strip()
@@ -134,7 +134,6 @@ def main():
     def footer(canvas,doc):
         canvas.setFont("Helvetica",7)
         canvas.setFillColor(colors.HexColor("#5a6470"))
-        canvas.drawString(42,24,"COMP3710 | HipMRI | s4906923 | README export")
         canvas.drawRightString(A4[0]-42,24,str(doc.page))
     doc.build(story,onFirstPage=footer,onLaterPages=footer)
     print(args.output)
