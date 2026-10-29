@@ -1165,10 +1165,15 @@
     "filename": "feasidual report.docx",
     "sha256": "d3e6b914220d28d16aff3b89506e77f6f50651c8b56a376f480e6b13dc1f7756",
     "location": "Separately archived research documents",
-    "document_role": "Surviving earlier bilingual proposal; not independently authenticated as the exact tutor check-off version",
+    "document_role": "Surviving earlier bilingual proposal; student cannot confirm whether it was the tutor check-off version",
     "planned_initial_testing_gpu_hours_maximum": 1,
     "planned_gpu_memory_envelope": "A100 40 GB",
     "budget_scope": "Provisional initial smoke tests and throughput measurements, not total formal training cost",
-    "split_seed_3710_in_proposal": "A proposal statement, not a verified record of the original split-generation procedure; the submitted fixed patient lists are unchanged"
+    "split_seed_3710_in_proposal": "A proposal statement, not a verified record of the original split-generation procedure; the submitted fixed patient lists are unchanged",
+    "student_document_identity_confirmation": {
+      "received": "2026-10-29",
+      "response": "Cannot confirm whether this is the check-off version",
+      "scope": "Document identity only; does not retract the previously reported completion of check-off"
+    }
   }
 }
